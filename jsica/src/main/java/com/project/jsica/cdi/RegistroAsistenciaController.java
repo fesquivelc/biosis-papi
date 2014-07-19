@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.RegistroAsistenciaFacadeLocal;
 import com.project.jsica.ejb.entidades.RegistroAsistencia;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "registroAsistenciaController")
 @ViewScoped
 public class RegistroAsistenciaController extends AbstractController<RegistroAsistencia> {
-
+    @EJB
+    private RegistroAsistenciaFacadeLocal registroAsistenciaFacade;
     @Inject
     private BiometricoController biometricoIdController;
     @Inject
@@ -53,5 +58,40 @@ public class RegistroAsistenciaController extends AbstractController<RegistroAsi
         if (this.getSelected() != null && empleadoIdController.getSelected() == null) {
             empleadoIdController.setSelected(this.getSelected().getEmpleadoId());
         }
+    }
+
+    @Override
+    protected void edit(RegistroAsistencia objeto) {
+        this.registroAsistenciaFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(RegistroAsistencia objeto) {
+        this.registroAsistenciaFacade.remove(objeto);
+    }
+
+    @Override
+    public RegistroAsistencia find(Object id) {
+        return this.registroAsistenciaFacade.find(id);
+    }
+
+    @Override
+    public List<RegistroAsistencia> getItems() {
+        return this.registroAsistenciaFacade.findAll();
+    }
+
+    @Override
+    public List<RegistroAsistencia> search(String namedQuery) {
+        return this.registroAsistenciaFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<RegistroAsistencia> search(String namedQuery, Map<String, Object> parametros) {
+        return this.registroAsistenciaFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<RegistroAsistencia> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.registroAsistenciaFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 }

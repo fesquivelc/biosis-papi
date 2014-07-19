@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.FeriadoFacadeLocal;
 import com.project.jsica.ejb.entidades.Feriado;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "feriadoController")
 @ViewScoped
 public class FeriadoController extends AbstractController<Feriado> {
-
+    @EJB
+    private FeriadoFacadeLocal feriadoFacade;
     @Inject
     private AnioController anioIdController;
 
@@ -36,5 +41,40 @@ public class FeriadoController extends AbstractController<Feriado> {
         if (this.getSelected() != null && anioIdController.getSelected() == null) {
             anioIdController.setSelected(this.getSelected().getAnioId());
         }
+    }
+
+    @Override
+    protected void edit(Feriado objeto) {
+        this.feriadoFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(Feriado objeto) {
+        this.feriadoFacade.remove(objeto);
+    }
+
+    @Override
+    public Feriado find(Object id) {
+        return this.feriadoFacade.find(id);
+    }
+
+    @Override
+    public List<Feriado> getItems() {
+        return this.feriadoFacade.findAll();
+    }
+
+    @Override
+    public List<Feriado> search(String namedQuery) {
+        return this.feriadoFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<Feriado> search(String namedQuery, Map<String, Object> parametros) {
+        return this.feriadoFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<Feriado> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.feriadoFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 }

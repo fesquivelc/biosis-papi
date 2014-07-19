@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.ServicioFacadeLocal;
 import com.project.jsica.ejb.entidades.Servicio;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "servicioController")
 @ViewScoped
 public class ServicioController extends AbstractController<Servicio> {
-
+    @EJB
+    private ServicioFacadeLocal servicioFacade;
     @Inject
     private JornadaController jornadaListController;
     @Inject
@@ -66,5 +71,40 @@ public class ServicioController extends AbstractController<Servicio> {
         if (this.getSelected() != null && areaIdController.getSelected() == null) {
             areaIdController.setSelected(this.getSelected().getAreaId());
         }
+    }
+
+    @Override
+    protected void edit(Servicio objeto) {
+        this.servicioFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(Servicio objeto) {
+        this.servicioFacade.remove(objeto);
+    }
+
+    @Override
+    public Servicio find(Object id) {
+        return this.servicioFacade.find(id);
+    }
+
+    @Override
+    public List<Servicio> getItems() {
+        return this.servicioFacade.findAll();
+    }
+
+    @Override
+    public List<Servicio> search(String namedQuery) {
+        return this.servicioFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<Servicio> search(String namedQuery, Map<String, Object> parametros) {
+        return this.servicioFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<Servicio> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.servicioFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 }

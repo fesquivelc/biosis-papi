@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.TipoEmpleadoFacadeLocal;
 import com.project.jsica.ejb.entidades.TipoEmpleado;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "tipoEmpleadoController")
 @ViewScoped
 public class TipoEmpleadoController extends AbstractController<TipoEmpleado> {
-
+    @EJB
+    private TipoEmpleadoFacadeLocal tipoEmpleadoFacade;
     @Inject
     private FichaLaboralEmpleadoController fichaLaboralEmpleadoListController;
 
@@ -37,6 +42,41 @@ public class TipoEmpleadoController extends AbstractController<TipoEmpleado> {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("FichaLaboralEmpleado_items", this.getSelected().getFichaLaboralEmpleadoList());
         }
         return "/fichaLaboralEmpleado/index";
+    }
+
+    @Override
+    protected void edit(TipoEmpleado objeto) {
+        this.tipoEmpleadoFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(TipoEmpleado objeto) {
+        this.tipoEmpleadoFacade.remove(objeto);
+    }
+
+    @Override
+    public TipoEmpleado find(Object id) {
+        return this.tipoEmpleadoFacade.find(id);
+    }
+
+    @Override
+    public List<TipoEmpleado> getItems() {
+        return this.tipoEmpleadoFacade.findAll();
+    }
+
+    @Override
+    public List<TipoEmpleado> search(String namedQuery) {
+        return this.tipoEmpleadoFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<TipoEmpleado> search(String namedQuery, Map<String, Object> parametros) {
+        return this.tipoEmpleadoFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<TipoEmpleado> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.tipoEmpleadoFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 
 }

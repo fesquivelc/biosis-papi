@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.JornadaFacadeLocal;
 import com.project.jsica.ejb.entidades.Jornada;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "jornadaController")
 @ViewScoped
 public class JornadaController extends AbstractController<Jornada> {
-
+    @EJB
+    private JornadaFacadeLocal jornadaFacade;
     @Inject
     private ServicioController servicioIdController;
     @Inject
@@ -53,6 +58,41 @@ public class JornadaController extends AbstractController<Jornada> {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("DetalleHorario_items", this.getSelected().getDetalleHorarioList());
         }
         return "/detalleHorario/index";
+    }
+
+    @Override
+    protected void edit(Jornada objeto) {
+        this.jornadaFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(Jornada objeto) {
+        this.jornadaFacade.remove(objeto);
+    }
+
+    @Override
+    public Jornada find(Object id) {
+        return this.jornadaFacade.find(id);
+    }
+
+    @Override
+    public List<Jornada> getItems() {
+        return this.jornadaFacade.findAll();
+    }
+
+    @Override
+    public List<Jornada> search(String namedQuery) {
+        return this.jornadaFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<Jornada> search(String namedQuery, Map<String, Object> parametros) {
+        return this.jornadaFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<Jornada> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.jornadaFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 
 }

@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.HorarioFacadeLocal;
 import com.project.jsica.ejb.entidades.Horario;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "horarioController")
 @ViewScoped
 public class HorarioController extends AbstractController<Horario> {
-
+    @EJB
+    private HorarioFacadeLocal horarioFacade;
     @Inject
     private DetalleHorarioController detalleHorarioListController;
     @Inject
@@ -53,6 +58,41 @@ public class HorarioController extends AbstractController<Horario> {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("EmpleadoHorario_items", this.getSelected().getEmpleadoHorarioList());
         }
         return "/empleadoHorario/index";
+    }
+
+    @Override
+    protected void edit(Horario objeto) {
+        this.horarioFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(Horario objeto) {
+        this.horarioFacade.remove(objeto);
+    }
+
+    @Override
+    public Horario find(Object id) {
+        return this.horarioFacade.find(id);
+    }
+
+    @Override
+    public List<Horario> getItems() {
+        return this.horarioFacade.findAll();
+    }
+
+    @Override
+    public List<Horario> search(String namedQuery) {
+        return this.horarioFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<Horario> search(String namedQuery, Map<String, Object> parametros) {
+        return this.horarioFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<Horario> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.horarioFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 
 }

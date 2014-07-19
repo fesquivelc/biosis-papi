@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.PermisoFacadeLocal;
 import com.project.jsica.ejb.entidades.Permiso;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "permisoController")
 @ViewScoped
 public class PermisoController extends AbstractController<Permiso> {
-
+    @EJB
+    private PermisoFacadeLocal permisoFacade;
     @Inject
     private MotivoPermisoController motivoPermisoCodigoController;
     @Inject
@@ -53,6 +58,41 @@ public class PermisoController extends AbstractController<Permiso> {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("EmpleadoPermiso_items", this.getSelected().getEmpleadoPermisoList());
         }
         return "/empleadoPermiso/index";
+    }
+
+    @Override
+    protected void edit(Permiso objeto) {
+        this.permisoFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(Permiso objeto) {
+        this.permisoFacade.remove(objeto);
+    }
+
+    @Override
+    public Permiso find(Object id) {
+        return this.permisoFacade.find(id);
+    }
+
+    @Override
+    public List<Permiso> getItems() {
+        return this.permisoFacade.findAll();
+    }
+
+    @Override
+    public List<Permiso> search(String namedQuery) {
+        return this.permisoFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<Permiso> search(String namedQuery, Map<String, Object> parametros) {
+        return this.permisoFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<Permiso> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.permisoFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 
 }

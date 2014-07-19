@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.RegimenLaboralFacadeLocal;
 import com.project.jsica.ejb.entidades.RegimenLaboral;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "regimenLaboralController")
 @ViewScoped
 public class RegimenLaboralController extends AbstractController<RegimenLaboral> {
-
+    @EJB
+    private RegimenLaboralFacadeLocal regimenLaboralFacade;
     @Inject
     private ContratoController contratoListController;
 
@@ -37,6 +42,41 @@ public class RegimenLaboralController extends AbstractController<RegimenLaboral>
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Contrato_items", this.getSelected().getContratoList());
         }
         return "/contrato/index";
+    }
+
+    @Override
+    protected void edit(RegimenLaboral objeto) {
+        this.regimenLaboralFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(RegimenLaboral objeto) {
+        this.regimenLaboralFacade.remove(objeto);
+    }
+
+    @Override
+    public RegimenLaboral find(Object id) {
+        return this.regimenLaboralFacade.find(id);
+    }
+
+    @Override
+    public List<RegimenLaboral> getItems() {
+        return this.regimenLaboralFacade.findAll();
+    }
+
+    @Override
+    public List<RegimenLaboral> search(String namedQuery) {
+        return this.regimenLaboralFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<RegimenLaboral> search(String namedQuery, Map<String, Object> parametros) {
+        return this.regimenLaboralFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<RegimenLaboral> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.regimenLaboralFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 
 }

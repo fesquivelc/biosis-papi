@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.SuspensionFacadeLocal;
 import com.project.jsica.ejb.entidades.Suspension;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "suspensionController")
 @ViewScoped
 public class SuspensionController extends AbstractController<Suspension> {
-
+    @EJB
+    private SuspensionFacadeLocal suspensionFacade;
     @Inject
     private EmpleadoController empleadoIdempleadoController;
 
@@ -37,5 +42,40 @@ public class SuspensionController extends AbstractController<Suspension> {
         if (this.getSelected() != null && empleadoIdempleadoController.getSelected() == null) {
             empleadoIdempleadoController.setSelected(this.getSelected().getEmpleadoIdempleado());
         }
+    }
+
+    @Override
+    protected void edit(Suspension objeto) {
+        this.suspensionFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(Suspension objeto) {
+        this.suspensionFacade.remove(objeto);
+    }
+
+    @Override
+    public Suspension find(Object id) {
+        return this.suspensionFacade.find(id);
+    }
+
+    @Override
+    public List<Suspension> getItems() {
+        return this.suspensionFacade.findAll();
+    }
+
+    @Override
+    public List<Suspension> search(String namedQuery) {
+        return this.suspensionFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<Suspension> search(String namedQuery, Map<String, Object> parametros) {
+        return this.suspensionFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<Suspension> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.suspensionFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 }

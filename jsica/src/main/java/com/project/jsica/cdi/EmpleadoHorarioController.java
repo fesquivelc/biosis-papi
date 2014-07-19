@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.EmpleadoHorarioFacadeLocal;
 import com.project.jsica.ejb.entidades.EmpleadoHorario;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "empleadoHorarioController")
 @ViewScoped
 public class EmpleadoHorarioController extends AbstractController<EmpleadoHorario> {
-
+    @EJB
+    private EmpleadoHorarioFacadeLocal empleadoHorarioFacade;
     @Inject
     private EmpleadoController empleadoIdController;
     @Inject
@@ -69,5 +74,40 @@ public class EmpleadoHorarioController extends AbstractController<EmpleadoHorari
         if (this.getSelected() != null && grupoHorarioIdController.getSelected() == null) {
             grupoHorarioIdController.setSelected(this.getSelected().getGrupoHorarioId());
         }
+    }
+
+    @Override
+    protected void edit(EmpleadoHorario objeto) {
+        this.empleadoHorarioFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(EmpleadoHorario objeto) {
+        this.empleadoHorarioFacade.remove(objeto);
+    }
+
+    @Override
+    public EmpleadoHorario find(Object id) {
+        return this.empleadoHorarioFacade.find(id);
+    }
+
+    @Override
+    public List<EmpleadoHorario> getItems() {
+        return this.empleadoHorarioFacade.findAll();
+    }
+
+    @Override
+    public List<EmpleadoHorario> search(String namedQuery) {
+        return this.empleadoHorarioFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<EmpleadoHorario> search(String namedQuery, Map<String, Object> parametros) {
+        return this.empleadoHorarioFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<EmpleadoHorario> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.empleadoHorarioFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 }

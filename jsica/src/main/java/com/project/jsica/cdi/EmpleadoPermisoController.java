@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.EmpleadoPermisoFacadeLocal;
 import com.project.jsica.ejb.entidades.EmpleadoPermiso;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "empleadoPermisoController")
 @ViewScoped
 public class EmpleadoPermisoController extends AbstractController<EmpleadoPermiso> {
-
+    @EJB
+    private EmpleadoPermisoFacadeLocal empleadoPermisoFacade;
     @Inject
     private EmpleadoController empleadoIdController;
     @Inject
@@ -69,6 +74,41 @@ public class EmpleadoPermisoController extends AbstractController<EmpleadoPermis
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Papeleta_items", this.getSelected().getPapeletaList());
         }
         return "/papeleta/index";
+    }
+
+    @Override
+    protected void edit(EmpleadoPermiso objeto) {
+        this.empleadoPermisoFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(EmpleadoPermiso objeto) {
+        this.empleadoPermisoFacade.remove(objeto);
+    }
+
+    @Override
+    public EmpleadoPermiso find(Object id) {
+        return this.empleadoPermisoFacade.find(id);
+    }
+
+    @Override
+    public List<EmpleadoPermiso> getItems() {
+        return this.empleadoPermisoFacade.findAll();
+    }
+
+    @Override
+    public List<EmpleadoPermiso> search(String namedQuery) {
+        return this.empleadoPermisoFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<EmpleadoPermiso> search(String namedQuery, Map<String, Object> parametros) {
+        return this.empleadoPermisoFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<EmpleadoPermiso> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.empleadoPermisoFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 
 }

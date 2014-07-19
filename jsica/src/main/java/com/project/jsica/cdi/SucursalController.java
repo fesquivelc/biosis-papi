@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.SucursalFacadeLocal;
 import com.project.jsica.ejb.entidades.Sucursal;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "sucursalController")
 @ViewScoped
 public class SucursalController extends AbstractController<Sucursal> {
-
+    @EJB
+    private SucursalFacadeLocal sucursalFacade;
     @Inject
     private AreaController areaListController;
     @Inject
@@ -82,6 +87,41 @@ public class SucursalController extends AbstractController<Sucursal> {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Biometrico_items", this.getSelected().getBiometricoList());
         }
         return "/biometrico/index";
+    }
+
+    @Override
+    protected void edit(Sucursal objeto) {
+        this.sucursalFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(Sucursal objeto) {
+        this.sucursalFacade.remove(objeto);
+    }
+
+    @Override
+    public Sucursal find(Object id) {
+        return this.sucursalFacade.find(id);
+    }
+
+    @Override
+    public List<Sucursal> getItems() {
+        return this.sucursalFacade.findAll();
+    }
+
+    @Override
+    public List<Sucursal> search(String namedQuery) {
+        return this.sucursalFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<Sucursal> search(String namedQuery, Map<String, Object> parametros) {
+        return this.sucursalFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<Sucursal> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.sucursalFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 
 }

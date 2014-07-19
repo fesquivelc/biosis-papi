@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.FichaGeneralEmpleadoFacadeLocal;
 import com.project.jsica.ejb.entidades.FichaGeneralEmpleado;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "fichaGeneralEmpleadoController")
 @ViewScoped
 public class FichaGeneralEmpleadoController extends AbstractController<FichaGeneralEmpleado> {
-
+    @EJB
+    private FichaGeneralEmpleadoFacadeLocal fichaGeneralEmpleadoFacade;
     @Inject
     private EmpleadoController empleadoIdController;
     @Inject
@@ -69,5 +74,40 @@ public class FichaGeneralEmpleadoController extends AbstractController<FichaGene
         if (this.getSelected() != null && nivelEducativoIdController.getSelected() == null) {
             nivelEducativoIdController.setSelected(this.getSelected().getNivelEducativoId());
         }
+    }
+
+    @Override
+    protected void edit(FichaGeneralEmpleado objeto) {
+        this.fichaGeneralEmpleadoFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(FichaGeneralEmpleado objeto) {
+        this.fichaGeneralEmpleadoFacade.remove(objeto);
+    }
+
+    @Override
+    public FichaGeneralEmpleado find(Object id) {
+        return this.fichaGeneralEmpleadoFacade.find(id);
+    }
+
+    @Override
+    public List<FichaGeneralEmpleado> getItems() {
+        return this.fichaGeneralEmpleadoFacade.findAll();
+    }
+
+    @Override
+    public List<FichaGeneralEmpleado> search(String namedQuery) {
+        return this.fichaGeneralEmpleadoFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<FichaGeneralEmpleado> search(String namedQuery, Map<String, Object> parametros) {
+        return this.fichaGeneralEmpleadoFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<FichaGeneralEmpleado> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.fichaGeneralEmpleadoFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 }
