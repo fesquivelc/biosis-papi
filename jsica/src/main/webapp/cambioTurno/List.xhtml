@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CambioTurnoListForm">
+
+        <p:panel header="#{myBundle.ListCambioTurnoTitle}">
+            <p:contextMenu id="CambioTurnoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CambioTurnoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CambioTurnoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CambioTurnoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CambioTurnoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.CambioTurnoMenuItem_detalleHorarioOriginal}" icon="ui-icon-search"  actionListener="#{cambioTurnoController.prepareDetalleHorarioOriginal}" update=":DetalleHorarioViewForm" oncomplete="PF('DetalleHorarioViewDialog').show()" disabled="#{empty cambioTurnoController.selected.detalleHorarioOriginal}"/>  
+                <p:menuitem value="#{myBundle.CambioTurnoMenuItem_detalleHorarioReemplazo}" icon="ui-icon-search"  actionListener="#{cambioTurnoController.prepareDetalleHorarioReemplazo}" update=":DetalleHorarioViewForm" oncomplete="PF('DetalleHorarioViewDialog').show()" disabled="#{empty cambioTurnoController.selected.detalleHorarioReemplazo}"/>  
+                <p:menuitem value="#{myBundle.CambioTurnoMenuItem_jefeInmediatoId}" icon="ui-icon-search"  actionListener="#{cambioTurnoController.prepareJefeInmediatoId}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty cambioTurnoController.selected.jefeInmediatoId}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{cambioTurnoController.items}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{cambioTurnoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":CambioTurnoListForm:createButton :CambioTurnoListForm:viewButton :CambioTurnoListForm:editButton :CambioTurnoListForm:deleteButton :CambioTurnoListForm:CambioTurnoDataTableContextMenu" listener="#{cambioTurnoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":CambioTurnoListForm:createButton :CambioTurnoListForm:viewButton :CambioTurnoListForm:editButton :CambioTurnoListForm:deleteButton :CambioTurnoListForm:CambioTurnoDataTableContextMenu" listener="#{cambioTurnoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CambioTurnoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCambioTurnoTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaPedido}" filterBy="#{item.fechaPedido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCambioTurnoTitle_fechaPedido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaPedido}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.horaPedido}" filterBy="#{item.horaPedido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCambioTurnoTitle_horaPedido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horaPedido}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.detalleHorarioOriginal.id}" filterBy="#{item.detalleHorarioOriginal.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCambioTurnoTitle_detalleHorarioOriginal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.detalleHorarioOriginal.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.detalleHorarioReemplazo.id}" filterBy="#{item.detalleHorarioReemplazo.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCambioTurnoTitle_detalleHorarioReemplazo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.detalleHorarioReemplazo.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.jefeInmediatoId.id}" filterBy="#{item.jefeInmediatoId.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCambioTurnoTitle_jefeInmediatoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.jefeInmediatoId.id}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{cambioTurnoController.prepareCreate}" update=":CambioTurnoCreateForm" oncomplete="PF('CambioTurnoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":CambioTurnoViewForm" oncomplete="PF('CambioTurnoViewDialog').show()" disabled="#{empty cambioTurnoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CambioTurnoEditForm" oncomplete="PF('CambioTurnoEditDialog').show()" disabled="#{empty cambioTurnoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{cambioTurnoController.delete}" update=":growl,datalist" disabled="#{empty cambioTurnoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

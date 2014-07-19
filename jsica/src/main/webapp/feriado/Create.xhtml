@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FeriadoCreateDlg" widgetVar="FeriadoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateFeriadoTitle}" closeOnEscape="true">
+
+            <h:form id="FeriadoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{feriadoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateFeriadoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{feriadoController.selected.nombre}" title="#{myBundle.CreateFeriadoTitle_nombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFeriadoLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{feriadoController.selected.fecha}" title="#{myBundle.CreateFeriadoTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateFeriadoRequiredMessage_fecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFeriadoLabel_anioId}" for="anioId" />
+                        <p:selectOneMenu id="anioId" value="#{feriadoController.selected.anioId}" required="true" requiredMessage="#{myBundle.CreateFeriadoRequiredMessage_anioId}" converter="anioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{anioController.items}"
+                                           var="anioIdItem"
+                                           itemValue="#{anioIdItem}"
+                                           itemLabel="#{anioIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{feriadoController.saveNew}" value="#{myBundle.Save}" update="display,:FeriadoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FeriadoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('FeriadoCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

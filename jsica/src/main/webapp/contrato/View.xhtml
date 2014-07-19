@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ContratoViewDlg" widgetVar="ContratoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewContratoTitle}" closeOnEscape="true">
+
+            <h:form id="ContratoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{contratoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewContratoLabel_id}"/>
+                        <h:outputText value="#{contratoController.selected.id}" title="#{myBundle.ViewContratoTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewContratoLabel_fechaInicio}"/>
+                        <h:outputText value="#{contratoController.selected.fechaInicio}" title="#{myBundle.ViewContratoTitle_fechaInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewContratoLabel_fechaFin}"/>
+                        <h:outputText value="#{contratoController.selected.fechaFin}" title="#{myBundle.ViewContratoTitle_fechaFin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewContratoLabel_codigo}"/>
+                        <h:outputText value="#{contratoController.selected.codigo}" title="#{myBundle.ViewContratoTitle_codigo}"/>
+
+                        <h:outputText value="#{myBundle.ViewContratoLabel_sueldoBasico}"/>
+                        <h:outputText value="#{contratoController.selected.sueldoBasico}" title="#{myBundle.ViewContratoTitle_sueldoBasico}"/>
+
+                        <h:outputText value="#{myBundle.ViewContratoLabel_condicionLaboralId}"/>
+                        <h:outputText value="#{contratoController.selected.condicionLaboralId.id}"/>
+
+                        <h:outputText value="#{myBundle.ViewContratoLabel_regimenLaboralId}"/>
+                        <h:outputText value="#{contratoController.selected.regimenLaboralId.id}"/>
+
+                        <h:outputText value="#{myBundle.ViewContratoLabel_anioId}"/>
+                        <h:outputText value="#{contratoController.selected.anioId.id}"/>
+
+                        <h:outputText value="#{myBundle.ViewContratoLabel_tipoContratoId}"/>
+                        <h:outputText value="#{contratoController.selected.tipoContratoId.id}"/>
+
+                        <h:outputText value="#{myBundle.ViewContratoLabel_ocupacionId}"/>
+                        <h:outputText value="#{contratoController.selected.ocupacionId.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ContratoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

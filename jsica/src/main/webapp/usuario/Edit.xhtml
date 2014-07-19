@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="UsuarioEditDlg" widgetVar="UsuarioEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditUsuarioTitle}" closeOnEscape="true">
+
+            <h:form id="UsuarioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{usuarioController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditUsuarioLabel_id}" for="id" />
+                        <h:outputText id="id" value="#{usuarioController.selected.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_username}" for="username" />
+                        <p:inputText id="username" value="#{usuarioController.selected.username}" title="#{myBundle.EditUsuarioTitle_username}" required="true" requiredMessage="#{myBundle.EditUsuarioRequiredMessage_username}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_password}" for="password" />
+                        <p:inputText id="password" value="#{usuarioController.selected.password}" title="#{myBundle.EditUsuarioTitle_password}" required="true" requiredMessage="#{myBundle.EditUsuarioRequiredMessage_password}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_empleadoId}" for="empleadoId" />
+                        <p:selectOneMenu id="empleadoId" value="#{usuarioController.selected.empleadoId}" required="true" requiredMessage="#{myBundle.EditUsuarioRequiredMessage_empleadoId}" converter="empleadoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoController.items}"
+                                           var="empleadoIdItem"
+                                           itemValue="#{empleadoIdItem}"
+                                           itemLabel="#{empleadoIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditUsuarioLabel_rolId}" for="rolId" />
+                        <p:selectOneMenu id="rolId" value="#{usuarioController.selected.rolId}" required="true" requiredMessage="#{myBundle.EditUsuarioRequiredMessage_rolId}" converter="rolConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{rolController.items}"
+                                           var="rolIdItem"
+                                           itemValue="#{rolIdItem}"
+                                           itemLabel="#{rolIdItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuarioController.save}" value="#{myBundle.Save}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UsuarioEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('UsuarioEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpleadoHorarioViewDlg" widgetVar="EmpleadoHorarioViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEmpleadoHorarioTitle}" closeOnEscape="true">
+
+            <h:form id="EmpleadoHorarioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{empleadoHorarioController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEmpleadoHorarioLabel_id}"/>
+                        <h:outputText value="#{empleadoHorarioController.selected.id}" title="#{myBundle.ViewEmpleadoHorarioTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadoHorarioLabel_fecha}"/>
+                        <h:outputText value="#{empleadoHorarioController.selected.fecha}" title="#{myBundle.ViewEmpleadoHorarioTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadoHorarioLabel_porGrupo}"/>
+                        <h:selectBooleanCheckbox id="porGrupo" value="#{empleadoHorarioController.selected.porGrupo}" title="#{myBundle.EditEmpleadoHorarioTitle_porGrupo}" required="true" requiredMessage="#{myBundle.EditEmpleadoHorarioRequiredMessage_porGrupo}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadoHorarioLabel_empleadoId}"/>
+                        <h:outputText value="#{empleadoHorarioController.selected.empleadoId.id}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadoHorarioLabel_horarioId}"/>
+                        <h:outputText value="#{empleadoHorarioController.selected.horarioId.descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadoHorarioLabel_grupoHorarioId}"/>
+                        <h:outputText value="#{empleadoHorarioController.selected.grupoHorarioId.id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('EmpleadoHorarioViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

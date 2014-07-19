@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PermisoViewDlg" widgetVar="PermisoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewPermisoTitle}" closeOnEscape="true">
+
+            <h:form id="PermisoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{permisoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPermisoLabel_id}"/>
+                        <h:outputText value="#{permisoController.selected.id}" title="#{myBundle.ViewPermisoTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewPermisoLabel_horaInicio}"/>
+                        <h:outputText value="#{permisoController.selected.horaInicio}" title="#{myBundle.ViewPermisoTitle_horaInicio}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPermisoLabel_horaFin}"/>
+                        <h:outputText value="#{permisoController.selected.horaFin}" title="#{myBundle.ViewPermisoTitle_horaFin}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPermisoLabel_fechaInicio}"/>
+                        <h:outputText value="#{permisoController.selected.fechaInicio}" title="#{myBundle.ViewPermisoTitle_fechaInicio}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPermisoLabel_fechaFin}"/>
+                        <h:outputText value="#{permisoController.selected.fechaFin}" title="#{myBundle.ViewPermisoTitle_fechaFin}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPermisoLabel_tipo}"/>
+                        <h:outputText value="#{permisoController.selected.tipo}" title="#{myBundle.ViewPermisoTitle_tipo}"/>
+
+                        <h:outputText value="#{myBundle.ViewPermisoLabel_porFecha}"/>
+                        <h:selectBooleanCheckbox id="porFecha" value="#{permisoController.selected.porFecha}" title="#{myBundle.EditPermisoTitle_porFecha}" required="true" requiredMessage="#{myBundle.EditPermisoRequiredMessage_porFecha}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewPermisoLabel_motivoPermisoCodigo}"/>
+                        <h:outputText value="#{permisoController.selected.motivoPermisoCodigo.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('PermisoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ServicioEditDlg" widgetVar="ServicioEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditServicioTitle}" closeOnEscape="true">
+
+            <h:form id="ServicioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{servicioController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditServicioLabel_id}" for="id" />
+                        <h:outputText id="id" value="#{servicioController.selected.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditServicioLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{servicioController.selected.nombre}" title="#{myBundle.EditServicioTitle_nombre}" required="true" requiredMessage="#{myBundle.EditServicioRequiredMessage_nombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditServicioLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{servicioController.selected.descripcion}" title="#{myBundle.EditServicioTitle_descripcion}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditServicioLabel_areaId}" for="areaId" />
+                        <p:selectOneMenu id="areaId" value="#{servicioController.selected.areaId}" required="true" requiredMessage="#{myBundle.EditServicioRequiredMessage_areaId}" converter="areaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{areaController.items}"
+                                           var="areaIdItem"
+                                           itemValue="#{areaIdItem}"
+                                           itemLabel="#{areaIdItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{servicioController.save}" value="#{myBundle.Save}" update="display,:ServicioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ServicioEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('ServicioEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

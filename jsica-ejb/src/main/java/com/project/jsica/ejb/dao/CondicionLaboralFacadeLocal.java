@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.CondicionLaboral;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface CondicionLaboralFacadeLocal {
     List<CondicionLaboral> findAll();
 
     List<CondicionLaboral> findRange(int[] range);
+    
+    List<CondicionLaboral> search(String namedQuery);
+    
+    List<CondicionLaboral> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<CondicionLaboral> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     

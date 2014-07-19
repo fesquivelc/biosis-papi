@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="PapeletaEditDlg" widgetVar="PapeletaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditPapeletaTitle}" closeOnEscape="true">
+
+            <h:form id="PapeletaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{papeletaController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditPapeletaLabel_id}" for="id" />
+                        <h:outputText id="id" value="#{papeletaController.selected.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditPapeletaLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{papeletaController.selected.codigo}" title="#{myBundle.EditPapeletaTitle_codigo}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditPapeletaLabel_empleadoIdempleado}" for="empleadoIdempleado" />
+                        <p:selectOneMenu id="empleadoIdempleado" value="#{papeletaController.selected.empleadoIdempleado}" required="true" requiredMessage="#{myBundle.EditPapeletaRequiredMessage_empleadoIdempleado}" converter="empleadoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoController.items}"
+                                           var="empleadoIdempleadoItem"
+                                           itemValue="#{empleadoIdempleadoItem}"
+                                           itemLabel="#{empleadoIdempleadoItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditPapeletaLabel_empleadoIdjefeInmediato}" for="empleadoIdjefeInmediato" />
+                        <p:selectOneMenu id="empleadoIdjefeInmediato" value="#{papeletaController.selected.empleadoIdjefeInmediato}" required="true" requiredMessage="#{myBundle.EditPapeletaRequiredMessage_empleadoIdjefeInmediato}" converter="empleadoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoController.items}"
+                                           var="empleadoIdjefeInmediatoItem"
+                                           itemValue="#{empleadoIdjefeInmediatoItem}"
+                                           itemLabel="#{empleadoIdjefeInmediatoItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditPapeletaLabel_empleadoIdjefePersonal}" for="empleadoIdjefePersonal" />
+                        <p:selectOneMenu id="empleadoIdjefePersonal" value="#{papeletaController.selected.empleadoIdjefePersonal}" required="true" requiredMessage="#{myBundle.EditPapeletaRequiredMessage_empleadoIdjefePersonal}" converter="empleadoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoController.items}"
+                                           var="empleadoIdjefePersonalItem"
+                                           itemValue="#{empleadoIdjefePersonalItem}"
+                                           itemLabel="#{empleadoIdjefePersonalItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditPapeletaLabel_empleadoPermisoId}" for="empleadoPermisoId" />
+                        <p:selectOneMenu id="empleadoPermisoId" value="#{papeletaController.selected.empleadoPermisoId}" required="true" requiredMessage="#{myBundle.EditPapeletaRequiredMessage_empleadoPermisoId}" converter="empleadoPermisoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoPermisoController.items}"
+                                           var="empleadoPermisoIdItem"
+                                           itemValue="#{empleadoPermisoIdItem}"
+                                           itemLabel="#{empleadoPermisoIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{papeletaController.save}" value="#{myBundle.Save}" update="display,:PapeletaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PapeletaEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('PapeletaEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

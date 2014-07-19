@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="VacacionEditDlg" widgetVar="VacacionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditVacacionTitle}" closeOnEscape="true">
+
+            <h:form id="VacacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{vacacionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditVacacionLabel_idvacaciones}" for="idvacaciones" />
+                        <h:outputText id="idvacaciones" value="#{vacacionController.selected.idvacaciones}" />
+
+                        <p:outputLabel value="#{myBundle.EditVacacionLabel_diasRestantes}" for="diasRestantes" />
+                        <p:inputText id="diasRestantes" value="#{vacacionController.selected.diasRestantes}" title="#{myBundle.EditVacacionTitle_diasRestantes}" required="true" requiredMessage="#{myBundle.EditVacacionRequiredMessage_diasRestantes}"/>
+
+                        <p:outputLabel value="#{myBundle.EditVacacionLabel_anioId}" for="anioId" />
+                        <p:selectOneMenu id="anioId" value="#{vacacionController.selected.anioId}" required="true" requiredMessage="#{myBundle.EditVacacionRequiredMessage_anioId}" converter="anioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{anioController.items}"
+                                           var="anioIdItem"
+                                           itemValue="#{anioIdItem}"
+                                           itemLabel="#{anioIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditVacacionLabel_empleadoId}" for="empleadoId" />
+                        <p:selectOneMenu id="empleadoId" value="#{vacacionController.selected.empleadoId}" required="true" requiredMessage="#{myBundle.EditVacacionRequiredMessage_empleadoId}" converter="empleadoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoController.items}"
+                                           var="empleadoIdItem"
+                                           itemValue="#{empleadoIdItem}"
+                                           itemLabel="#{empleadoIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vacacionController.save}" value="#{myBundle.Save}" update="display,:VacacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VacacionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('VacacionEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

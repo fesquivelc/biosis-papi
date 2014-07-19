@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="JornadaViewDlg" widgetVar="JornadaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewJornadaTitle}" closeOnEscape="true">
+
+            <h:form id="JornadaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{jornadaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewJornadaLabel_codigo}"/>
+                        <h:outputText value="#{jornadaController.selected.codigo}" title="#{myBundle.ViewJornadaTitle_codigo}"/>
+
+                        <h:outputText value="#{myBundle.ViewJornadaLabel_nombre}"/>
+                        <h:outputText value="#{jornadaController.selected.nombre}" title="#{myBundle.ViewJornadaTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewJornadaLabel_HEntrada}"/>
+                        <h:outputText value="#{jornadaController.selected.HEntrada}" title="#{myBundle.ViewJornadaTitle_HEntrada}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewJornadaLabel_HSalida}"/>
+                        <h:outputText value="#{jornadaController.selected.HSalida}" title="#{myBundle.ViewJornadaTitle_HSalida}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewJornadaLabel_flexible}"/>
+                        <h:selectBooleanCheckbox id="flexible" value="#{jornadaController.selected.flexible}" title="#{myBundle.EditJornadaTitle_flexible}" required="true" requiredMessage="#{myBundle.EditJornadaRequiredMessage_flexible}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewJornadaLabel_servicioId}"/>
+                        <h:outputText value="#{jornadaController.selected.servicioId.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('JornadaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

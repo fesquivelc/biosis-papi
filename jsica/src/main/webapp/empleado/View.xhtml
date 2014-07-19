@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpleadoViewDlg" widgetVar="EmpleadoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEmpleadoTitle}" closeOnEscape="true">
+
+            <h:form id="EmpleadoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:tabView id="EmpleadoTabView">
+
+                        <p:tab id="EmpleadoTab1" title="#{myBundle.TabHeaderPrefix} 1">
+                            <p:panelGrid columns="2" columnClasses="column" rendered="#{empleadoController.selected != null}">
+                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_id}"/>
+                                <h:outputText value="#{empleadoController.selected.id}" title="#{myBundle.ViewEmpleadoTitle_id}"/>
+
+                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_nombres}"/>
+                                <h:outputText value="#{empleadoController.selected.nombres}" title="#{myBundle.ViewEmpleadoTitle_nombres}"/>
+
+                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_apellidos}"/>
+                                <h:outputText value="#{empleadoController.selected.apellidos}" title="#{myBundle.ViewEmpleadoTitle_apellidos}"/>
+
+                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_docIdentidad}"/>
+                                <h:outputText value="#{empleadoController.selected.docIdentidad}" title="#{myBundle.ViewEmpleadoTitle_docIdentidad}"/>
+
+                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_fechaNacimiento}"/>
+                                <h:outputText value="#{empleadoController.selected.fechaNacimiento}" title="#{myBundle.ViewEmpleadoTitle_fechaNacimiento}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+
+                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_situacionTrabajador}"/>
+                                <h:outputText value="#{empleadoController.selected.situacionTrabajador}" title="#{myBundle.ViewEmpleadoTitle_situacionTrabajador}"/>
+
+                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_sexo}"/>
+                                <h:outputText value="#{empleadoController.selected.sexo}" title="#{myBundle.ViewEmpleadoTitle_sexo}"/>
+
+                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_foto}"/>
+                                <h:outputText value="#{empleadoController.selected.foto}" title="#{myBundle.ViewEmpleadoTitle_foto}"/>
+
+                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_grupoHorarioId}"/>
+                                <h:outputText value="#{empleadoController.selected.grupoHorarioId.id}"/>
+
+                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoId}"/>
+                                <h:outputText value="#{empleadoController.selected.empleadoId.id}"/>
+
+                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_servicioId}"/>
+                                <h:outputText value="#{empleadoController.selected.servicioId.descripcion}"/>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('EmpleadoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

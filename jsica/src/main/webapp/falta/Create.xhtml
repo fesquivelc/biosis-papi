@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FaltaCreateDlg" widgetVar="FaltaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateFaltaTitle}" closeOnEscape="true">
+
+            <h:form id="FaltaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{faltaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateFaltaLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{faltaController.selected.fecha}" title="#{myBundle.CreateFaltaTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateFaltaRequiredMessage_fecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFaltaLabel_empleadoId}" for="empleadoId" />
+                        <p:selectOneMenu id="empleadoId" value="#{faltaController.selected.empleadoId}" required="true" requiredMessage="#{myBundle.CreateFaltaRequiredMessage_empleadoId}" converter="empleadoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoController.items}"
+                                           var="empleadoIdItem"
+                                           itemValue="#{empleadoIdItem}"
+                                           itemLabel="#{empleadoIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{faltaController.saveNew}" value="#{myBundle.Save}" update="display,:FaltaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FaltaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('FaltaCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

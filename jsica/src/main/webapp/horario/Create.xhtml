@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HorarioCreateDlg" widgetVar="HorarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateHorarioTitle}" closeOnEscape="true">
+
+            <h:form id="HorarioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{horarioController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateHorarioLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{horarioController.selected.nombre}" title="#{myBundle.CreateHorarioTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateHorarioRequiredMessage_nombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHorarioLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{horarioController.selected.descripcion}" title="#{myBundle.CreateHorarioTitle_descripcion}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHorarioLabel_lunes}" for="lunes" />
+                        <p:selectBooleanCheckbox id="lunes" value="#{horarioController.selected.lunes}" required="true" requiredMessage="#{myBundle.CreateHorarioRequiredMessage_lunes}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHorarioLabel_martes}" for="martes" />
+                        <p:selectBooleanCheckbox id="martes" value="#{horarioController.selected.martes}" required="true" requiredMessage="#{myBundle.CreateHorarioRequiredMessage_martes}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHorarioLabel_miercoles}" for="miercoles" />
+                        <p:selectBooleanCheckbox id="miercoles" value="#{horarioController.selected.miercoles}" required="true" requiredMessage="#{myBundle.CreateHorarioRequiredMessage_miercoles}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHorarioLabel_jueves}" for="jueves" />
+                        <p:selectBooleanCheckbox id="jueves" value="#{horarioController.selected.jueves}" required="true" requiredMessage="#{myBundle.CreateHorarioRequiredMessage_jueves}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHorarioLabel_viernes}" for="viernes" />
+                        <p:selectBooleanCheckbox id="viernes" value="#{horarioController.selected.viernes}" required="true" requiredMessage="#{myBundle.CreateHorarioRequiredMessage_viernes}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHorarioLabel_sabado}" for="sabado" />
+                        <p:selectBooleanCheckbox id="sabado" value="#{horarioController.selected.sabado}" required="true" requiredMessage="#{myBundle.CreateHorarioRequiredMessage_sabado}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHorarioLabel_domingo}" for="domingo" />
+                        <p:selectBooleanCheckbox id="domingo" value="#{horarioController.selected.domingo}" required="true" requiredMessage="#{myBundle.CreateHorarioRequiredMessage_domingo}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHorarioLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{horarioController.selected.fecha}" title="#{myBundle.CreateHorarioTitle_fecha}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHorarioLabel_porFecha}" for="porFecha" />
+                        <p:selectBooleanCheckbox id="porFecha" value="#{horarioController.selected.porFecha}" required="true" requiredMessage="#{myBundle.CreateHorarioRequiredMessage_porFecha}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{horarioController.saveNew}" value="#{myBundle.Save}" update="display,:HorarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('HorarioCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('HorarioCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.Biometrico;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface BiometricoFacadeLocal {
     List<Biometrico> findAll();
 
     List<Biometrico> findRange(int[] range);
+    
+    List<Biometrico> search(String namedQuery);
+    
+    List<Biometrico> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<Biometrico> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AnioCreateDlg" widgetVar="AnioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateAnioTitle}" closeOnEscape="true">
+
+            <h:form id="AnioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{anioController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateAnioLabel_anio}" for="anio" />
+                        <p:inputText id="anio" value="#{anioController.selected.anio}" title="#{myBundle.CreateAnioTitle_anio}" required="true" requiredMessage="#{myBundle.CreateAnioRequiredMessage_anio}" size="4" maxlength="4"/>
+
+                        <p:outputLabel value="#{myBundle.CreateAnioLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{anioController.selected.nombre}" title="#{myBundle.CreateAnioTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateAnioRequiredMessage_nombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateAnioLabel_vigente}" for="vigente" />
+                        <p:selectBooleanCheckbox id="vigente" value="#{anioController.selected.vigente}" required="true" requiredMessage="#{myBundle.CreateAnioRequiredMessage_vigente}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{anioController.saveNew}" value="#{myBundle.Save}" update="display,:AnioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AnioCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('AnioCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

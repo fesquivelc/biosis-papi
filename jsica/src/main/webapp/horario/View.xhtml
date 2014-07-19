@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HorarioViewDlg" widgetVar="HorarioViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewHorarioTitle}" closeOnEscape="true">
+
+            <h:form id="HorarioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{horarioController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewHorarioLabel_id}"/>
+                        <h:outputText value="#{horarioController.selected.id}" title="#{myBundle.ViewHorarioTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewHorarioLabel_nombre}"/>
+                        <h:outputText value="#{horarioController.selected.nombre}" title="#{myBundle.ViewHorarioTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewHorarioLabel_descripcion}"/>
+                        <h:outputText value="#{horarioController.selected.descripcion}" title="#{myBundle.ViewHorarioTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewHorarioLabel_lunes}"/>
+                        <h:selectBooleanCheckbox id="lunes" value="#{horarioController.selected.lunes}" title="#{myBundle.EditHorarioTitle_lunes}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_lunes}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewHorarioLabel_martes}"/>
+                        <h:selectBooleanCheckbox id="martes" value="#{horarioController.selected.martes}" title="#{myBundle.EditHorarioTitle_martes}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_martes}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewHorarioLabel_miercoles}"/>
+                        <h:selectBooleanCheckbox id="miercoles" value="#{horarioController.selected.miercoles}" title="#{myBundle.EditHorarioTitle_miercoles}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_miercoles}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewHorarioLabel_jueves}"/>
+                        <h:selectBooleanCheckbox id="jueves" value="#{horarioController.selected.jueves}" title="#{myBundle.EditHorarioTitle_jueves}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_jueves}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewHorarioLabel_viernes}"/>
+                        <h:selectBooleanCheckbox id="viernes" value="#{horarioController.selected.viernes}" title="#{myBundle.EditHorarioTitle_viernes}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_viernes}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewHorarioLabel_sabado}"/>
+                        <h:selectBooleanCheckbox id="sabado" value="#{horarioController.selected.sabado}" title="#{myBundle.EditHorarioTitle_sabado}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_sabado}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewHorarioLabel_domingo}"/>
+                        <h:selectBooleanCheckbox id="domingo" value="#{horarioController.selected.domingo}" title="#{myBundle.EditHorarioTitle_domingo}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_domingo}" disabled="true"/>
+
+                        <h:outputText value="#{myBundle.ViewHorarioLabel_fecha}"/>
+                        <h:outputText value="#{horarioController.selected.fecha}" title="#{myBundle.ViewHorarioTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewHorarioLabel_porFecha}"/>
+                        <h:selectBooleanCheckbox id="porFecha" value="#{horarioController.selected.porFecha}" title="#{myBundle.EditHorarioTitle_porFecha}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_porFecha}" disabled="true"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('HorarioViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

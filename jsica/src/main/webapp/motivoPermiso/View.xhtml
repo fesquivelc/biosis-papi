@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MotivoPermisoViewDlg" widgetVar="MotivoPermisoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewMotivoPermisoTitle}" closeOnEscape="true">
+
+            <h:form id="MotivoPermisoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{motivoPermisoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewMotivoPermisoLabel_codigo}"/>
+                        <h:outputText value="#{motivoPermisoController.selected.codigo}" title="#{myBundle.ViewMotivoPermisoTitle_codigo}"/>
+
+                        <h:outputText value="#{myBundle.ViewMotivoPermisoLabel_nombre}"/>
+                        <h:outputText value="#{motivoPermisoController.selected.nombre}" title="#{myBundle.ViewMotivoPermisoTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewMotivoPermisoLabel_descripcion}"/>
+                        <h:outputText value="#{motivoPermisoController.selected.descripcion}" title="#{myBundle.ViewMotivoPermisoTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewMotivoPermisoLabel_conGoce}"/>
+                        <h:selectBooleanCheckbox id="conGoce" value="#{motivoPermisoController.selected.conGoce}" title="#{myBundle.EditMotivoPermisoTitle_conGoce}" required="true" requiredMessage="#{myBundle.EditMotivoPermisoRequiredMessage_conGoce}" disabled="true"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('MotivoPermisoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

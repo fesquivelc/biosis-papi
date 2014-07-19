@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UbigeoViewDlg" widgetVar="UbigeoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewUbigeoTitle}" closeOnEscape="true">
+
+            <h:form id="UbigeoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{ubigeoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewUbigeoLabel_codigo}"/>
+                        <h:outputText value="#{ubigeoController.selected.codigo}" title="#{myBundle.ViewUbigeoTitle_codigo}"/>
+
+                        <h:outputText value="#{myBundle.ViewUbigeoLabel_provincia}"/>
+                        <h:outputText value="#{ubigeoController.selected.provincia}" title="#{myBundle.ViewUbigeoTitle_provincia}"/>
+
+                        <h:outputText value="#{myBundle.ViewUbigeoLabel_departamento}"/>
+                        <h:outputText value="#{ubigeoController.selected.departamento}" title="#{myBundle.ViewUbigeoTitle_departamento}"/>
+
+                        <h:outputText value="#{myBundle.ViewUbigeoLabel_distrito}"/>
+                        <h:outputText value="#{ubigeoController.selected.distrito}" title="#{myBundle.ViewUbigeoTitle_distrito}"/>
+
+                        <h:outputText value="#{myBundle.ViewUbigeoLabel_pais}"/>
+                        <h:outputText value="#{ubigeoController.selected.pais}" title="#{myBundle.ViewUbigeoTitle_pais}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('UbigeoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="DetalleHorarioEditDlg" widgetVar="DetalleHorarioEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditDetalleHorarioTitle}" closeOnEscape="true">
+
+            <h:form id="DetalleHorarioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{detalleHorarioController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditDetalleHorarioLabel_id}" for="id" />
+                        <h:outputText id="id" value="#{detalleHorarioController.selected.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditDetalleHorarioLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{detalleHorarioController.selected.fecha}" title="#{myBundle.EditDetalleHorarioTitle_fecha}" required="true" requiredMessage="#{myBundle.EditDetalleHorarioRequiredMessage_fecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleHorarioLabel_horarioId}" for="horarioId" />
+                        <p:selectOneMenu id="horarioId" value="#{detalleHorarioController.selected.horarioId}" required="true" requiredMessage="#{myBundle.EditDetalleHorarioRequiredMessage_horarioId}" converter="horarioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{horarioController.items}"
+                                           var="horarioIdItem"
+                                           itemValue="#{horarioIdItem}"
+                                           itemLabel="#{horarioIdItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditDetalleHorarioLabel_jornadaCodigo}" for="jornadaCodigo" />
+                        <p:selectOneMenu id="jornadaCodigo" value="#{detalleHorarioController.selected.jornadaCodigo}" required="true" requiredMessage="#{myBundle.EditDetalleHorarioRequiredMessage_jornadaCodigo}" converter="jornadaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{jornadaController.items}"
+                                           var="jornadaCodigoItem"
+                                           itemValue="#{jornadaCodigoItem}"
+                                           itemLabel="#{jornadaCodigoItem.codigo.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detalleHorarioController.save}" value="#{myBundle.Save}" update="display,:DetalleHorarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DetalleHorarioEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('DetalleHorarioEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

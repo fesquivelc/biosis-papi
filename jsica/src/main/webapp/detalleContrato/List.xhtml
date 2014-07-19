@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="DetalleContratoListForm">
+
+        <p:panel header="#{myBundle.ListDetalleContratoTitle}">
+            <p:contextMenu id="DetalleContratoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('DetalleContratoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('DetalleContratoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('DetalleContratoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('DetalleContratoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.DetalleContratoMenuItem_areaId}" icon="ui-icon-search"  actionListener="#{detalleContratoController.prepareAreaId}" update=":AreaViewForm" oncomplete="PF('AreaViewDialog').show()" disabled="#{empty detalleContratoController.selected.areaId}"/>  
+                <p:menuitem value="#{myBundle.DetalleContratoMenuItem_contratoId}" icon="ui-icon-search"  actionListener="#{detalleContratoController.prepareContratoId}" update=":ContratoViewForm" oncomplete="PF('ContratoViewDialog').show()" disabled="#{empty detalleContratoController.selected.contratoId}"/>  
+                <p:menuitem value="#{myBundle.DetalleContratoMenuItem_empleadoId}" icon="ui-icon-search"  actionListener="#{detalleContratoController.prepareEmpleadoId}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty detalleContratoController.selected.empleadoId}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{detalleContratoController.items}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{detalleContratoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":DetalleContratoListForm:createButton :DetalleContratoListForm:viewButton :DetalleContratoListForm:editButton :DetalleContratoListForm:deleteButton :DetalleContratoListForm:DetalleContratoDataTableContextMenu" listener="#{detalleContratoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":DetalleContratoListForm:createButton :DetalleContratoListForm:viewButton :DetalleContratoListForm:editButton :DetalleContratoListForm:deleteButton :DetalleContratoListForm:DetalleContratoDataTableContextMenu" listener="#{detalleContratoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('DetalleContratoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleContratoTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.FInicio}" filterBy="#{item.FInicio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleContratoTitle_FInicio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.FInicio}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.FFin}" filterBy="#{item.FFin}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleContratoTitle_FFin}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.FFin}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.areaId.descripcion}" filterBy="#{item.areaId.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleContratoTitle_areaId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.areaId.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.contratoId.id}" filterBy="#{item.contratoId.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleContratoTitle_contratoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.contratoId.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleContratoTitle_empleadoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleadoId.id}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{detalleContratoController.prepareCreate}" update=":DetalleContratoCreateForm" oncomplete="PF('DetalleContratoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":DetalleContratoViewForm" oncomplete="PF('DetalleContratoViewDialog').show()" disabled="#{empty detalleContratoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DetalleContratoEditForm" oncomplete="PF('DetalleContratoEditDialog').show()" disabled="#{empty detalleContratoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{detalleContratoController.delete}" update=":growl,datalist" disabled="#{empty detalleContratoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

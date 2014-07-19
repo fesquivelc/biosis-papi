@@ -7,7 +7,10 @@
 package com.project.jsica.ejb.dao;
 
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 /**
  *
@@ -61,6 +64,38 @@ public abstract class AbstractFacade<T> {
         cq.select(getEntityManager().getCriteriaBuilder().count(rt));
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
+    }
+    
+    public List<T> search(String namedQuery){
+        return this.search(namedQuery,null,-1,-1);
+    }
+    
+    public List<T> search(String namedQuery, Map<String, Object> parametros){
+        return this.search(namedQuery, parametros, -1, -1);
+    }
+    
+    public List<T> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio){
+        Query query = getEntityManager().createQuery(namedQuery);
+
+        if (parametros != null) {
+            for (Map.Entry<String, Object> entry : parametros.entrySet()) {
+                query.setParameter(entry.getKey(), entry.getValue());
+            }
+        }                
+        
+        if(inicio != -1){
+            query.setFirstResult(inicio);            
+        }
+                
+        
+        if(tamanio != -1){
+            query.setMaxResults(tamanio);
+        }
+        
+        List<T> lista = query.getResultList();
+                
+        
+        return lista;
     }
     
 }

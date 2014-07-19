@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LogsViewDlg" widgetVar="LogsViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewLogsTitle}" closeOnEscape="true">
+
+            <h:form id="LogsViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{logsController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewLogsLabel_userId}"/>
+                        <h:outputText value="#{logsController.selected.userId}" title="#{myBundle.ViewLogsTitle_userId}"/>
+
+                        <h:outputText value="#{myBundle.ViewLogsLabel_dated}"/>
+                        <h:outputText value="#{logsController.selected.dated}" title="#{myBundle.ViewLogsTitle_dated}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewLogsLabel_logger}"/>
+                        <h:outputText value="#{logsController.selected.logger}" title="#{myBundle.ViewLogsTitle_logger}"/>
+
+                        <h:outputText value="#{myBundle.ViewLogsLabel_level}"/>
+                        <h:outputText value="#{logsController.selected.level}" title="#{myBundle.ViewLogsTitle_level}"/>
+
+                        <h:outputText value="#{myBundle.ViewLogsLabel_message}"/>
+                        <h:outputText value="#{logsController.selected.message}" title="#{myBundle.ViewLogsTitle_message}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('LogsViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VacacionViewDlg" widgetVar="VacacionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewVacacionTitle}" closeOnEscape="true">
+
+            <h:form id="VacacionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{vacacionController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewVacacionLabel_idvacaciones}"/>
+                        <h:outputText value="#{vacacionController.selected.idvacaciones}" title="#{myBundle.ViewVacacionTitle_idvacaciones}"/>
+
+                        <h:outputText value="#{myBundle.ViewVacacionLabel_diasRestantes}"/>
+                        <h:outputText value="#{vacacionController.selected.diasRestantes}" title="#{myBundle.ViewVacacionTitle_diasRestantes}"/>
+
+                        <h:outputText value="#{myBundle.ViewVacacionLabel_anioId}"/>
+                        <h:outputText value="#{vacacionController.selected.anioId.id}"/>
+
+                        <h:outputText value="#{myBundle.ViewVacacionLabel_empleadoId}"/>
+                        <h:outputText value="#{vacacionController.selected.empleadoId.id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('VacacionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

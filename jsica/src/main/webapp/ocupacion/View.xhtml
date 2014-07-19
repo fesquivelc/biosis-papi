@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="OcupacionViewDlg" widgetVar="OcupacionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewOcupacionTitle}" closeOnEscape="true">
+
+            <h:form id="OcupacionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{ocupacionController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewOcupacionLabel_id}"/>
+                        <h:outputText value="#{ocupacionController.selected.id}" title="#{myBundle.ViewOcupacionTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewOcupacionLabel_nombre}"/>
+                        <h:outputText value="#{ocupacionController.selected.nombre}" title="#{myBundle.ViewOcupacionTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewOcupacionLabel_descripcion}"/>
+                        <h:outputText value="#{ocupacionController.selected.descripcion}" title="#{myBundle.ViewOcupacionTitle_descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('OcupacionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

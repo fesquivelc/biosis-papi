@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EmpleadoHorarioListForm">
+
+        <p:panel header="#{myBundle.ListEmpleadoHorarioTitle}">
+            <p:contextMenu id="EmpleadoHorarioDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('EmpleadoHorarioListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('EmpleadoHorarioListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('EmpleadoHorarioListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('EmpleadoHorarioListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.EmpleadoHorarioMenuItem_empleadoId}" icon="ui-icon-search"  actionListener="#{empleadoHorarioController.prepareEmpleadoId}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty empleadoHorarioController.selected.empleadoId}"/>  
+                <p:menuitem value="#{myBundle.EmpleadoHorarioMenuItem_horarioId}" icon="ui-icon-search"  actionListener="#{empleadoHorarioController.prepareHorarioId}" update=":HorarioViewForm" oncomplete="PF('HorarioViewDialog').show()" disabled="#{empty empleadoHorarioController.selected.horarioId}"/>  
+                <p:menuitem value="#{myBundle.EmpleadoHorarioMenuItem_grupoHorarioId}" icon="ui-icon-search"  actionListener="#{empleadoHorarioController.prepareGrupoHorarioId}" update=":GrupoHorarioViewForm" oncomplete="PF('GrupoHorarioViewDialog').show()" disabled="#{empty empleadoHorarioController.selected.grupoHorarioId}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{empleadoHorarioController.items}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{empleadoHorarioController.selected}">
+
+                <p:ajax event="rowSelect"   update=":EmpleadoHorarioListForm:createButton :EmpleadoHorarioListForm:viewButton :EmpleadoHorarioListForm:editButton :EmpleadoHorarioListForm:deleteButton :EmpleadoHorarioListForm:EmpleadoHorarioDataTableContextMenu" listener="#{empleadoHorarioController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":EmpleadoHorarioListForm:createButton :EmpleadoHorarioListForm:viewButton :EmpleadoHorarioListForm:editButton :EmpleadoHorarioListForm:deleteButton :EmpleadoHorarioListForm:EmpleadoHorarioDataTableContextMenu" listener="#{empleadoHorarioController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EmpleadoHorarioListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpleadoHorarioTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpleadoHorarioTitle_fecha}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.porGrupo}" filterBy="#{item.porGrupo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpleadoHorarioTitle_porGrupo}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="porGrupo" value="#{item.porGrupo}" title="#{myBundle.EditEmpleadoHorarioTitle_porGrupo}" required="true" requiredMessage="#{myBundle.EditEmpleadoHorarioRequiredMessage_porGrupo}" disabled="true"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpleadoHorarioTitle_empleadoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleadoId.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.horarioId.descripcion}" filterBy="#{item.horarioId.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpleadoHorarioTitle_horarioId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horarioId.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.grupoHorarioId.id}" filterBy="#{item.grupoHorarioId.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpleadoHorarioTitle_grupoHorarioId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.grupoHorarioId.id}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{empleadoHorarioController.prepareCreate}" update=":EmpleadoHorarioCreateForm" oncomplete="PF('EmpleadoHorarioCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":EmpleadoHorarioViewForm" oncomplete="PF('EmpleadoHorarioViewDialog').show()" disabled="#{empty empleadoHorarioController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EmpleadoHorarioEditForm" oncomplete="PF('EmpleadoHorarioEditDialog').show()" disabled="#{empty empleadoHorarioController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{empleadoHorarioController.delete}" update=":growl,datalist" disabled="#{empty empleadoHorarioController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

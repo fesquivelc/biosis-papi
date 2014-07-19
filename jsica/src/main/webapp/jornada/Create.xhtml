@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="JornadaCreateDlg" widgetVar="JornadaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateJornadaTitle}" closeOnEscape="true">
+
+            <h:form id="JornadaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{jornadaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateJornadaLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{jornadaController.selected.codigo}" title="#{myBundle.CreateJornadaTitle_codigo}" required="true" requiredMessage="#{myBundle.CreateJornadaRequiredMessage_codigo}" size="10" maxlength="10"/>
+
+                        <p:outputLabel value="#{myBundle.CreateJornadaLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{jornadaController.selected.nombre}" title="#{myBundle.CreateJornadaTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateJornadaRequiredMessage_nombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateJornadaLabel_HEntrada}" for="HEntrada" />
+                        <p:calendar id="HEntrada" pattern="HH:mm:ss" value="#{jornadaController.selected.HEntrada}" title="#{myBundle.CreateJornadaTitle_HEntrada}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateJornadaLabel_HSalida}" for="HSalida" />
+                        <p:calendar id="HSalida" pattern="HH:mm:ss" value="#{jornadaController.selected.HSalida}" title="#{myBundle.CreateJornadaTitle_HSalida}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateJornadaLabel_flexible}" for="flexible" />
+                        <p:selectBooleanCheckbox id="flexible" value="#{jornadaController.selected.flexible}" required="true" requiredMessage="#{myBundle.CreateJornadaRequiredMessage_flexible}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateJornadaLabel_servicioId}" for="servicioId" />
+                        <p:selectOneMenu id="servicioId" value="#{jornadaController.selected.servicioId}" required="true" requiredMessage="#{myBundle.CreateJornadaRequiredMessage_servicioId}" converter="servicioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{servicioController.items}"
+                                           var="servicioIdItem"
+                                           itemValue="#{servicioIdItem}"
+                                           itemLabel="#{servicioIdItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{jornadaController.saveNew}" value="#{myBundle.Save}" update="display,:JornadaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('JornadaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('JornadaCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

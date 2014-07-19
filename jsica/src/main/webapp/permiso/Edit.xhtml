@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="PermisoEditDlg" widgetVar="PermisoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditPermisoTitle}" closeOnEscape="true">
+
+            <h:form id="PermisoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{permisoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditPermisoLabel_id}" for="id" />
+                        <h:outputText id="id" value="#{permisoController.selected.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditPermisoLabel_horaInicio}" for="horaInicio" />
+                        <p:calendar id="horaInicio" pattern="HH:mm:ss" value="#{permisoController.selected.horaInicio}" title="#{myBundle.EditPermisoTitle_horaInicio}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditPermisoLabel_horaFin}" for="horaFin" />
+                        <p:calendar id="horaFin" pattern="HH:mm:ss" value="#{permisoController.selected.horaFin}" title="#{myBundle.EditPermisoTitle_horaFin}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditPermisoLabel_fechaInicio}" for="fechaInicio" />
+                        <p:calendar id="fechaInicio" pattern="HH:mm:ss" value="#{permisoController.selected.fechaInicio}" title="#{myBundle.EditPermisoTitle_fechaInicio}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditPermisoLabel_fechaFin}" for="fechaFin" />
+                        <p:calendar id="fechaFin" pattern="HH:mm:ss" value="#{permisoController.selected.fechaFin}" title="#{myBundle.EditPermisoTitle_fechaFin}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditPermisoLabel_tipo}" for="tipo" />
+                        <p:inputText id="tipo" value="#{permisoController.selected.tipo}" title="#{myBundle.EditPermisoTitle_tipo}" required="true" requiredMessage="#{myBundle.EditPermisoRequiredMessage_tipo}" size="2" maxlength="2"/>
+
+                        <p:outputLabel value="#{myBundle.EditPermisoLabel_porFecha}" for="porFecha" />
+                        <p:selectBooleanCheckbox id="porFecha" value="#{permisoController.selected.porFecha}" required="true" requiredMessage="#{myBundle.EditPermisoRequiredMessage_porFecha}"/>
+
+                        <p:outputLabel value="#{myBundle.EditPermisoLabel_motivoPermisoCodigo}" for="motivoPermisoCodigo" />
+                        <p:selectOneMenu id="motivoPermisoCodigo" value="#{permisoController.selected.motivoPermisoCodigo}" required="true" requiredMessage="#{myBundle.EditPermisoRequiredMessage_motivoPermisoCodigo}" converter="motivoPermisoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{motivoPermisoController.items}"
+                                           var="motivoPermisoCodigoItem"
+                                           itemValue="#{motivoPermisoCodigoItem}"
+                                           itemLabel="#{motivoPermisoCodigoItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{permisoController.save}" value="#{myBundle.Save}" update="display,:PermisoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PermisoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('PermisoEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

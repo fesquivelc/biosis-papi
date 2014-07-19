@@ -25,7 +25,7 @@ public interface DetalleContratoFacadeLocal {
 
     DetalleContrato find(Object id);
 
-    List<DetalleContrato> findAll();
+    List<DetalleContrato> findAll();        
 
     List<DetalleContrato> findRange(int[] range);
 

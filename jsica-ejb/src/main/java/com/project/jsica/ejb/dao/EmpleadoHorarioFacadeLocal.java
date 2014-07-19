@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.EmpleadoHorario;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface EmpleadoHorarioFacadeLocal {
     List<EmpleadoHorario> findAll();
 
     List<EmpleadoHorario> findRange(int[] range);
+    
+    List<EmpleadoHorario> search(String namedQuery);
+    
+    List<EmpleadoHorario> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<EmpleadoHorario> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     

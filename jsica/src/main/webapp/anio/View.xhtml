@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AnioViewDlg" widgetVar="AnioViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewAnioTitle}" closeOnEscape="true">
+
+            <h:form id="AnioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{anioController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewAnioLabel_id}"/>
+                        <h:outputText value="#{anioController.selected.id}" title="#{myBundle.ViewAnioTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewAnioLabel_anio}"/>
+                        <h:outputText value="#{anioController.selected.anio}" title="#{myBundle.ViewAnioTitle_anio}"/>
+
+                        <h:outputText value="#{myBundle.ViewAnioLabel_nombre}"/>
+                        <h:outputText value="#{anioController.selected.nombre}" title="#{myBundle.ViewAnioTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewAnioLabel_vigente}"/>
+                        <h:selectBooleanCheckbox id="vigente" value="#{anioController.selected.vigente}" title="#{myBundle.EditAnioTitle_vigente}" required="true" requiredMessage="#{myBundle.EditAnioRequiredMessage_vigente}" disabled="true"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('AnioViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

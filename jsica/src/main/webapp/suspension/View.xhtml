@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SuspensionViewDlg" widgetVar="SuspensionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewSuspensionTitle}" closeOnEscape="true">
+
+            <h:form id="SuspensionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{suspensionController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewSuspensionLabel_id}"/>
+                        <h:outputText value="#{suspensionController.selected.id}" title="#{myBundle.ViewSuspensionTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewSuspensionLabel_motivo}"/>
+                        <h:outputText value="#{suspensionController.selected.motivo}" title="#{myBundle.ViewSuspensionTitle_motivo}"/>
+
+                        <h:outputText value="#{myBundle.ViewSuspensionLabel_fechaInicio}"/>
+                        <h:outputText value="#{suspensionController.selected.fechaInicio}" title="#{myBundle.ViewSuspensionTitle_fechaInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewSuspensionLabel_fechaFin}"/>
+                        <h:outputText value="#{suspensionController.selected.fechaFin}" title="#{myBundle.ViewSuspensionTitle_fechaFin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewSuspensionLabel_empleadoIdempleado}"/>
+                        <h:outputText value="#{suspensionController.selected.empleadoIdempleado.id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('SuspensionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

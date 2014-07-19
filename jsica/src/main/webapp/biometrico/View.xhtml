@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BiometricoViewDlg" widgetVar="BiometricoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewBiometricoTitle}" closeOnEscape="true">
+
+            <h:form id="BiometricoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{biometricoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewBiometricoLabel_id}"/>
+                        <h:outputText value="#{biometricoController.selected.id}" title="#{myBundle.ViewBiometricoTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewBiometricoLabel_ipv4}"/>
+                        <h:outputText value="#{biometricoController.selected.ipv4}" title="#{myBundle.ViewBiometricoTitle_ipv4}"/>
+
+                        <h:outputText value="#{myBundle.ViewBiometricoLabel_ipv6}"/>
+                        <h:outputText value="#{biometricoController.selected.ipv6}" title="#{myBundle.ViewBiometricoTitle_ipv6}"/>
+
+                        <h:outputText value="#{myBundle.ViewBiometricoLabel_modelo}"/>
+                        <h:outputText value="#{biometricoController.selected.modelo}" title="#{myBundle.ViewBiometricoTitle_modelo}"/>
+
+                        <h:outputText value="#{myBundle.ViewBiometricoLabel_marca}"/>
+                        <h:outputText value="#{biometricoController.selected.marca}" title="#{myBundle.ViewBiometricoTitle_marca}"/>
+
+                        <h:outputText value="#{myBundle.ViewBiometricoLabel_sucursalId}"/>
+                        <h:outputText value="#{biometricoController.selected.sucursalId.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('BiometricoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

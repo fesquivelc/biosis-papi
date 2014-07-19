@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RegimenLaboralCreateDlg" widgetVar="RegimenLaboralCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateRegimenLaboralTitle}" closeOnEscape="true">
+
+            <h:form id="RegimenLaboralCreateForm">
+
+                <h:panelGroup id="display" rendered="#{regimenLaboralController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateRegimenLaboralLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{regimenLaboralController.selected.codigo}" title="#{myBundle.CreateRegimenLaboralTitle_codigo}" required="true" requiredMessage="#{myBundle.CreateRegimenLaboralRequiredMessage_codigo}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRegimenLaboralLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{regimenLaboralController.selected.nombre}" title="#{myBundle.CreateRegimenLaboralTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateRegimenLaboralRequiredMessage_nombre}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{regimenLaboralController.saveNew}" value="#{myBundle.Save}" update="display,:RegimenLaboralListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RegimenLaboralCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('RegimenLaboralCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

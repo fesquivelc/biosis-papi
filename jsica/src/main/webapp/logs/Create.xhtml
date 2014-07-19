@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LogsCreateDlg" widgetVar="LogsCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateLogsTitle}" closeOnEscape="true">
+
+            <h:form id="LogsCreateForm">
+
+                <h:panelGroup id="display" rendered="#{logsController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateLogsLabel_userId}" for="userId" />
+                        <p:inputText id="userId" value="#{logsController.selected.userId}" title="#{myBundle.CreateLogsTitle_userId}" required="true" requiredMessage="#{myBundle.CreateLogsRequiredMessage_userId}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.CreateLogsLabel_dated}" for="dated" />
+                        <p:calendar id="dated" pattern="MM/dd/yyyy" value="#{logsController.selected.dated}" title="#{myBundle.CreateLogsTitle_dated}" required="true" requiredMessage="#{myBundle.CreateLogsRequiredMessage_dated}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateLogsLabel_logger}" for="logger" />
+                        <p:inputText id="logger" value="#{logsController.selected.logger}" title="#{myBundle.CreateLogsTitle_logger}" required="true" requiredMessage="#{myBundle.CreateLogsRequiredMessage_logger}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateLogsLabel_level}" for="level" />
+                        <p:inputText id="level" value="#{logsController.selected.level}" title="#{myBundle.CreateLogsTitle_level}" required="true" requiredMessage="#{myBundle.CreateLogsRequiredMessage_level}" size="10" maxlength="10"/>
+
+                        <p:outputLabel value="#{myBundle.CreateLogsLabel_message}" for="message" />
+                        <p:inputTextarea rows="4" cols="30" id="message" value="#{logsController.selected.message}" title="#{myBundle.CreateLogsTitle_message}" required="true" requiredMessage="#{myBundle.CreateLogsRequiredMessage_message}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{logsController.saveNew}" value="#{myBundle.Save}" update="display,:LogsListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('LogsCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('LogsCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

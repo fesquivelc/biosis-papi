@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RegistroAsistenciaCreateDlg" widgetVar="RegistroAsistenciaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateRegistroAsistenciaTitle}" closeOnEscape="true">
+
+            <h:form id="RegistroAsistenciaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{registroAsistenciaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroAsistenciaLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{registroAsistenciaController.selected.fecha}" title="#{myBundle.CreateRegistroAsistenciaTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateRegistroAsistenciaRequiredMessage_fecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroAsistenciaLabel_hora}" for="hora" />
+                        <p:calendar id="hora" pattern="HH:mm:ss" value="#{registroAsistenciaController.selected.hora}" title="#{myBundle.CreateRegistroAsistenciaTitle_hora}" required="true" requiredMessage="#{myBundle.CreateRegistroAsistenciaRequiredMessage_hora}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroAsistenciaLabel_biometricoId}" for="biometricoId" />
+                        <p:selectOneMenu id="biometricoId" value="#{registroAsistenciaController.selected.biometricoId}" required="true" requiredMessage="#{myBundle.CreateRegistroAsistenciaRequiredMessage_biometricoId}" converter="biometricoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{biometricoController.items}"
+                                           var="biometricoIdItem"
+                                           itemValue="#{biometricoIdItem}"
+                                           itemLabel="#{biometricoIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroAsistenciaLabel_empleadoId}" for="empleadoId" />
+                        <p:selectOneMenu id="empleadoId" value="#{registroAsistenciaController.selected.empleadoId}" required="true" requiredMessage="#{myBundle.CreateRegistroAsistenciaRequiredMessage_empleadoId}" converter="empleadoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoController.items}"
+                                           var="empleadoIdItem"
+                                           itemValue="#{empleadoIdItem}"
+                                           itemLabel="#{empleadoIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{registroAsistenciaController.saveNew}" value="#{myBundle.Save}" update="display,:RegistroAsistenciaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RegistroAsistenciaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('RegistroAsistenciaCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

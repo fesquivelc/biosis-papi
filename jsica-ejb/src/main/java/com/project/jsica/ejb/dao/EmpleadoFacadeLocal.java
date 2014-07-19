@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.Empleado;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface EmpleadoFacadeLocal {
     List<Empleado> findAll();
 
     List<Empleado> findRange(int[] range);
+    
+    List<Empleado> search(String namedQuery);
+    
+    List<Empleado> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<Empleado> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     

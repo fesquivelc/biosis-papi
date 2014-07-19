@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FichaLaboralEmpleadoListForm">
+
+        <p:panel header="#{myBundle.ListFichaLaboralEmpleadoTitle}">
+            <p:contextMenu id="FichaLaboralEmpleadoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('FichaLaboralEmpleadoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('FichaLaboralEmpleadoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('FichaLaboralEmpleadoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('FichaLaboralEmpleadoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.FichaLaboralEmpleadoMenuItem_empleadoId}" icon="ui-icon-search"  actionListener="#{fichaLaboralEmpleadoController.prepareEmpleadoId}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty fichaLaboralEmpleadoController.selected.empleadoId}"/>  
+                <p:menuitem value="#{myBundle.FichaLaboralEmpleadoMenuItem_tipoEmpleadoId}" icon="ui-icon-search"  actionListener="#{fichaLaboralEmpleadoController.prepareTipoEmpleadoId}" update=":TipoEmpleadoViewForm" oncomplete="PF('TipoEmpleadoViewDialog').show()" disabled="#{empty fichaLaboralEmpleadoController.selected.tipoEmpleadoId}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fichaLaboralEmpleadoController.items}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fichaLaboralEmpleadoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":FichaLaboralEmpleadoListForm:createButton :FichaLaboralEmpleadoListForm:viewButton :FichaLaboralEmpleadoListForm:editButton :FichaLaboralEmpleadoListForm:deleteButton :FichaLaboralEmpleadoListForm:FichaLaboralEmpleadoDataTableContextMenu" listener="#{fichaLaboralEmpleadoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":FichaLaboralEmpleadoListForm:createButton :FichaLaboralEmpleadoListForm:viewButton :FichaLaboralEmpleadoListForm:editButton :FichaLaboralEmpleadoListForm:deleteButton :FichaLaboralEmpleadoListForm:FichaLaboralEmpleadoDataTableContextMenu" listener="#{fichaLaboralEmpleadoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FichaLaboralEmpleadoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListFichaLaboralEmpleadoTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.codigoTrabajador}" filterBy="#{item.codigoTrabajador}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListFichaLaboralEmpleadoTitle_codigoTrabajador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codigoTrabajador}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListFichaLaboralEmpleadoTitle_empleadoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleadoId.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipoEmpleadoId.id}" filterBy="#{item.tipoEmpleadoId.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListFichaLaboralEmpleadoTitle_tipoEmpleadoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipoEmpleadoId.id}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{fichaLaboralEmpleadoController.prepareCreate}" update=":FichaLaboralEmpleadoCreateForm" oncomplete="PF('FichaLaboralEmpleadoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":FichaLaboralEmpleadoViewForm" oncomplete="PF('FichaLaboralEmpleadoViewDialog').show()" disabled="#{empty fichaLaboralEmpleadoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":FichaLaboralEmpleadoEditForm" oncomplete="PF('FichaLaboralEmpleadoEditDialog').show()" disabled="#{empty fichaLaboralEmpleadoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{fichaLaboralEmpleadoController.delete}" update=":growl,datalist" disabled="#{empty fichaLaboralEmpleadoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

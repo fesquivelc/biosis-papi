@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FichaGeneralEmpleadoViewDlg" widgetVar="FichaGeneralEmpleadoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewFichaGeneralEmpleadoTitle}" closeOnEscape="true">
+
+            <h:form id="FichaGeneralEmpleadoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fichaGeneralEmpleadoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_id}"/>
+                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.id}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_telefonoFijo}"/>
+                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.telefonoFijo}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_telefonoFijo}"/>
+
+                        <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_telefonoCelular}"/>
+                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.telefonoCelular}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_telefonoCelular}"/>
+
+                        <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_direccion}"/>
+                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.direccion}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_direccion}"/>
+
+                        <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_direccionTipoZona}"/>
+                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.direccionTipoZona}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_direccionTipoZona}"/>
+
+                        <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_direccionTipoVia}"/>
+                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.direccionTipoVia}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_direccionTipoVia}"/>
+
+                        <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_estadoCivil}"/>
+                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.estadoCivil}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_estadoCivil}"/>
+
+                        <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_email}"/>
+                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.email}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_email}"/>
+
+                        <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_empleadoId}"/>
+                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.empleadoId.id}"/>
+
+                        <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_ubigeoCodigo}"/>
+                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.ubigeoCodigo.codigo}"/>
+
+                        <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_nivelEducativoId}"/>
+                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.nivelEducativoId.id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('FichaGeneralEmpleadoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

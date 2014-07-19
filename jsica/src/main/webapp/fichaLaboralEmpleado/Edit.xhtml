@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="FichaLaboralEmpleadoEditDlg" widgetVar="FichaLaboralEmpleadoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditFichaLaboralEmpleadoTitle}" closeOnEscape="true">
+
+            <h:form id="FichaLaboralEmpleadoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{fichaLaboralEmpleadoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditFichaLaboralEmpleadoLabel_id}" for="id" />
+                        <h:outputText id="id" value="#{fichaLaboralEmpleadoController.selected.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditFichaLaboralEmpleadoLabel_codigoTrabajador}" for="codigoTrabajador" />
+                        <p:inputText id="codigoTrabajador" value="#{fichaLaboralEmpleadoController.selected.codigoTrabajador}" title="#{myBundle.EditFichaLaboralEmpleadoTitle_codigoTrabajador}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditFichaLaboralEmpleadoLabel_empleadoId}" for="empleadoId" />
+                        <p:selectOneMenu id="empleadoId" value="#{fichaLaboralEmpleadoController.selected.empleadoId}" required="true" requiredMessage="#{myBundle.EditFichaLaboralEmpleadoRequiredMessage_empleadoId}" converter="empleadoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoController.items}"
+                                           var="empleadoIdItem"
+                                           itemValue="#{empleadoIdItem}"
+                                           itemLabel="#{empleadoIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditFichaLaboralEmpleadoLabel_tipoEmpleadoId}" for="tipoEmpleadoId" />
+                        <p:selectOneMenu id="tipoEmpleadoId" value="#{fichaLaboralEmpleadoController.selected.tipoEmpleadoId}" required="true" requiredMessage="#{myBundle.EditFichaLaboralEmpleadoRequiredMessage_tipoEmpleadoId}" converter="tipoEmpleadoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoEmpleadoController.items}"
+                                           var="tipoEmpleadoIdItem"
+                                           itemValue="#{tipoEmpleadoIdItem}"
+                                           itemLabel="#{tipoEmpleadoIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fichaLaboralEmpleadoController.save}" value="#{myBundle.Save}" update="display,:FichaLaboralEmpleadoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FichaLaboralEmpleadoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('FichaLaboralEmpleadoEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

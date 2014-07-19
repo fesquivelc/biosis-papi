@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoContratoCreateDlg" widgetVar="TipoContratoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateTipoContratoTitle}" closeOnEscape="true">
+
+            <h:form id="TipoContratoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{tipoContratoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateTipoContratoLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{tipoContratoController.selected.id}" title="#{myBundle.CreateTipoContratoTitle_id}" required="true" requiredMessage="#{myBundle.CreateTipoContratoRequiredMessage_id}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateTipoContratoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{tipoContratoController.selected.nombre}" title="#{myBundle.CreateTipoContratoTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateTipoContratoRequiredMessage_nombre}" size="255" maxlength="255"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoContratoController.saveNew}" value="#{myBundle.Save}" update="display,:TipoContratoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoContratoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('TipoContratoCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

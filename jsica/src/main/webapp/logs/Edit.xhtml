@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="LogsEditDlg" widgetVar="LogsEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditLogsTitle}" closeOnEscape="true">
+
+            <h:form id="LogsEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{logsController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditLogsLabel_userId}" for="userId" />
+                        <h:outputText id="userId" value="#{logsController.selected.userId}" />
+
+                        <p:outputLabel value="#{myBundle.EditLogsLabel_dated}" for="dated" />
+                        <p:calendar id="dated" pattern="MM/dd/yyyy" value="#{logsController.selected.dated}" title="#{myBundle.EditLogsTitle_dated}" required="true" requiredMessage="#{myBundle.EditLogsRequiredMessage_dated}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditLogsLabel_logger}" for="logger" />
+                        <p:inputText id="logger" value="#{logsController.selected.logger}" title="#{myBundle.EditLogsTitle_logger}" required="true" requiredMessage="#{myBundle.EditLogsRequiredMessage_logger}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.EditLogsLabel_level}" for="level" />
+                        <p:inputText id="level" value="#{logsController.selected.level}" title="#{myBundle.EditLogsTitle_level}" required="true" requiredMessage="#{myBundle.EditLogsRequiredMessage_level}" size="10" maxlength="10"/>
+
+                        <p:outputLabel value="#{myBundle.EditLogsLabel_message}" for="message" />
+                        <p:inputTextarea rows="4" cols="30" id="message" value="#{logsController.selected.message}" title="#{myBundle.EditLogsTitle_message}" required="true" requiredMessage="#{myBundle.EditLogsRequiredMessage_message}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{logsController.save}" value="#{myBundle.Save}" update="display,:LogsListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('LogsEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('LogsEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.MotivoPermiso;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface MotivoPermisoFacadeLocal {
     List<MotivoPermiso> findAll();
 
     List<MotivoPermiso> findRange(int[] range);
+    
+    List<MotivoPermiso> search(String namedQuery);
+    
+    List<MotivoPermiso> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<MotivoPermiso> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     

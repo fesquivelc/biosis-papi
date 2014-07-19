@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FichaLaboralEmpleadoViewDlg" widgetVar="FichaLaboralEmpleadoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewFichaLaboralEmpleadoTitle}" closeOnEscape="true">
+
+            <h:form id="FichaLaboralEmpleadoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fichaLaboralEmpleadoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewFichaLaboralEmpleadoLabel_id}"/>
+                        <h:outputText value="#{fichaLaboralEmpleadoController.selected.id}" title="#{myBundle.ViewFichaLaboralEmpleadoTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewFichaLaboralEmpleadoLabel_codigoTrabajador}"/>
+                        <h:outputText value="#{fichaLaboralEmpleadoController.selected.codigoTrabajador}" title="#{myBundle.ViewFichaLaboralEmpleadoTitle_codigoTrabajador}"/>
+
+                        <h:outputText value="#{myBundle.ViewFichaLaboralEmpleadoLabel_empleadoId}"/>
+                        <h:outputText value="#{fichaLaboralEmpleadoController.selected.empleadoId.id}"/>
+
+                        <h:outputText value="#{myBundle.ViewFichaLaboralEmpleadoLabel_tipoEmpleadoId}"/>
+                        <h:outputText value="#{fichaLaboralEmpleadoController.selected.tipoEmpleadoId.id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('FichaLaboralEmpleadoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

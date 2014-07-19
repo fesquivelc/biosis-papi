@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="SucursalEditDlg" widgetVar="SucursalEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditSucursalTitle}" closeOnEscape="true">
+
+            <h:form id="SucursalEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{sucursalController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditSucursalLabel_id}" for="id" />
+                        <h:outputText id="id" value="#{sucursalController.selected.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditSucursalLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{sucursalController.selected.nombre}" title="#{myBundle.EditSucursalTitle_nombre}" required="true" requiredMessage="#{myBundle.EditSucursalRequiredMessage_nombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditSucursalLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{sucursalController.selected.descripcion}" title="#{myBundle.EditSucursalTitle_descripcion}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditSucursalLabel_principalId}" for="principalId" />
+                        <p:selectOneMenu id="principalId" value="#{sucursalController.selected.principalId}" required="true" requiredMessage="#{myBundle.EditSucursalRequiredMessage_principalId}" converter="sucursalConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{sucursalController.items}"
+                                           var="principalIdItem"
+                                           itemValue="#{principalIdItem}"
+                                           itemLabel="#{principalIdItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sucursalController.save}" value="#{myBundle.Save}" update="display,:SucursalListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SucursalEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('SucursalEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

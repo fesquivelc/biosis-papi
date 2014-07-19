@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FichaGeneralEmpleadoListForm">
+
+        <p:panel header="#{myBundle.ListFichaGeneralEmpleadoTitle}">
+            <p:contextMenu id="FichaGeneralEmpleadoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('FichaGeneralEmpleadoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('FichaGeneralEmpleadoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('FichaGeneralEmpleadoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('FichaGeneralEmpleadoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.FichaGeneralEmpleadoMenuItem_empleadoId}" icon="ui-icon-search"  actionListener="#{fichaGeneralEmpleadoController.prepareEmpleadoId}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty fichaGeneralEmpleadoController.selected.empleadoId}"/>  
+                <p:menuitem value="#{myBundle.FichaGeneralEmpleadoMenuItem_ubigeoCodigo}" icon="ui-icon-search"  actionListener="#{fichaGeneralEmpleadoController.prepareUbigeoCodigo}" update=":UbigeoViewForm" oncomplete="PF('UbigeoViewDialog').show()" disabled="#{empty fichaGeneralEmpleadoController.selected.ubigeoCodigo}"/>  
+                <p:menuitem value="#{myBundle.FichaGeneralEmpleadoMenuItem_nivelEducativoId}" icon="ui-icon-search"  actionListener="#{fichaGeneralEmpleadoController.prepareNivelEducativoId}" update=":NivelEducativoViewForm" oncomplete="PF('NivelEducativoViewDialog').show()" disabled="#{empty fichaGeneralEmpleadoController.selected.nivelEducativoId}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fichaGeneralEmpleadoController.items}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fichaGeneralEmpleadoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":FichaGeneralEmpleadoListForm:createButton :FichaGeneralEmpleadoListForm:viewButton :FichaGeneralEmpleadoListForm:editButton :FichaGeneralEmpleadoListForm:deleteButton :FichaGeneralEmpleadoListForm:FichaGeneralEmpleadoDataTableContextMenu" listener="#{fichaGeneralEmpleadoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":FichaGeneralEmpleadoListForm:createButton :FichaGeneralEmpleadoListForm:viewButton :FichaGeneralEmpleadoListForm:editButton :FichaGeneralEmpleadoListForm:deleteButton :FichaGeneralEmpleadoListForm:FichaGeneralEmpleadoDataTableContextMenu" listener="#{fichaGeneralEmpleadoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FichaGeneralEmpleadoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.telefonoFijo}" filterBy="#{item.telefonoFijo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_telefonoFijo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telefonoFijo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.telefonoCelular}" filterBy="#{item.telefonoCelular}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_telefonoCelular}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telefonoCelular}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.direccion}" filterBy="#{item.direccion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_direccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.direccion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.direccionTipoZona}" filterBy="#{item.direccionTipoZona}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_direccionTipoZona}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.direccionTipoZona}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.direccionTipoVia}" filterBy="#{item.direccionTipoVia}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_direccionTipoVia}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.direccionTipoVia}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.estadoCivil}" filterBy="#{item.estadoCivil}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_estadoCivil}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.estadoCivil}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.email}" filterBy="#{item.email}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_email}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.email}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_empleadoId}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.empleadoId.id}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.ubigeoCodigo.codigo}" filterBy="#{item.ubigeoCodigo.codigo}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_ubigeoCodigo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.ubigeoCodigo.codigo}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.nivelEducativoId.id}" filterBy="#{item.nivelEducativoId.id}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_nivelEducativoId}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nivelEducativoId.id}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{fichaGeneralEmpleadoController.prepareCreate}" update=":FichaGeneralEmpleadoCreateForm" oncomplete="PF('FichaGeneralEmpleadoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":FichaGeneralEmpleadoViewForm" oncomplete="PF('FichaGeneralEmpleadoViewDialog').show()" disabled="#{empty fichaGeneralEmpleadoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":FichaGeneralEmpleadoEditForm" oncomplete="PF('FichaGeneralEmpleadoEditDialog').show()" disabled="#{empty fichaGeneralEmpleadoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{fichaGeneralEmpleadoController.delete}" update=":growl,datalist" disabled="#{empty fichaGeneralEmpleadoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

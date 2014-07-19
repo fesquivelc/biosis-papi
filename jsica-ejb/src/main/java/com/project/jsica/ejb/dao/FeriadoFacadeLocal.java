@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.Feriado;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface FeriadoFacadeLocal {
     List<Feriado> findAll();
 
     List<Feriado> findRange(int[] range);
+    
+    List<Feriado> search(String namedQuery);
+    
+    List<Feriado> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<Feriado> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     

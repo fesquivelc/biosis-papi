@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ContratoCreateDlg" widgetVar="ContratoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateContratoTitle}" closeOnEscape="true">
+
+            <h:form id="ContratoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{contratoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateContratoLabel_fechaInicio}" for="fechaInicio" />
+                        <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{contratoController.selected.fechaInicio}" title="#{myBundle.CreateContratoTitle_fechaInicio}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateContratoLabel_fechaFin}" for="fechaFin" />
+                        <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{contratoController.selected.fechaFin}" title="#{myBundle.CreateContratoTitle_fechaFin}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateContratoLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{contratoController.selected.codigo}" title="#{myBundle.CreateContratoTitle_codigo}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreateContratoLabel_sueldoBasico}" for="sueldoBasico" />
+                        <p:inputText id="sueldoBasico" value="#{contratoController.selected.sueldoBasico}" title="#{myBundle.CreateContratoTitle_sueldoBasico}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateContratoLabel_condicionLaboralId}" for="condicionLaboralId" />
+                        <p:selectOneMenu id="condicionLaboralId" value="#{contratoController.selected.condicionLaboralId}" required="true" requiredMessage="#{myBundle.CreateContratoRequiredMessage_condicionLaboralId}" converter="condicionLaboralConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{condicionLaboralController.items}"
+                                           var="condicionLaboralIdItem"
+                                           itemValue="#{condicionLaboralIdItem}"
+                                           itemLabel="#{condicionLaboralIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateContratoLabel_regimenLaboralId}" for="regimenLaboralId" />
+                        <p:selectOneMenu id="regimenLaboralId" value="#{contratoController.selected.regimenLaboralId}" required="true" requiredMessage="#{myBundle.CreateContratoRequiredMessage_regimenLaboralId}" converter="regimenLaboralConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{regimenLaboralController.items}"
+                                           var="regimenLaboralIdItem"
+                                           itemValue="#{regimenLaboralIdItem}"
+                                           itemLabel="#{regimenLaboralIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateContratoLabel_anioId}" for="anioId" />
+                        <p:selectOneMenu id="anioId" value="#{contratoController.selected.anioId}" required="true" requiredMessage="#{myBundle.CreateContratoRequiredMessage_anioId}" converter="anioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{anioController.items}"
+                                           var="anioIdItem"
+                                           itemValue="#{anioIdItem}"
+                                           itemLabel="#{anioIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateContratoLabel_tipoContratoId}" for="tipoContratoId" />
+                        <p:selectOneMenu id="tipoContratoId" value="#{contratoController.selected.tipoContratoId}" required="true" requiredMessage="#{myBundle.CreateContratoRequiredMessage_tipoContratoId}" converter="tipoContratoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoContratoController.items}"
+                                           var="tipoContratoIdItem"
+                                           itemValue="#{tipoContratoIdItem}"
+                                           itemLabel="#{tipoContratoIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateContratoLabel_ocupacionId}" for="ocupacionId" />
+                        <p:selectOneMenu id="ocupacionId" value="#{contratoController.selected.ocupacionId}" required="true" requiredMessage="#{myBundle.CreateContratoRequiredMessage_ocupacionId}" converter="ocupacionConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{ocupacionController.items}"
+                                           var="ocupacionIdItem"
+                                           itemValue="#{ocupacionIdItem}"
+                                           itemLabel="#{ocupacionIdItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{contratoController.saveNew}" value="#{myBundle.Save}" update="display,:ContratoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ContratoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('ContratoCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

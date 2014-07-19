@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UbigeoCreateDlg" widgetVar="UbigeoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateUbigeoTitle}" closeOnEscape="true">
+
+            <h:form id="UbigeoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{ubigeoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateUbigeoLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{ubigeoController.selected.codigo}" title="#{myBundle.CreateUbigeoTitle_codigo}" required="true" requiredMessage="#{myBundle.CreateUbigeoRequiredMessage_codigo}" size="6" maxlength="6"/>
+
+                        <p:outputLabel value="#{myBundle.CreateUbigeoLabel_provincia}" for="provincia" />
+                        <p:inputText id="provincia" value="#{ubigeoController.selected.provincia}" title="#{myBundle.CreateUbigeoTitle_provincia}" required="true" requiredMessage="#{myBundle.CreateUbigeoRequiredMessage_provincia}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateUbigeoLabel_departamento}" for="departamento" />
+                        <p:inputText id="departamento" value="#{ubigeoController.selected.departamento}" title="#{myBundle.CreateUbigeoTitle_departamento}" required="true" requiredMessage="#{myBundle.CreateUbigeoRequiredMessage_departamento}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateUbigeoLabel_distrito}" for="distrito" />
+                        <p:inputText id="distrito" value="#{ubigeoController.selected.distrito}" title="#{myBundle.CreateUbigeoTitle_distrito}" required="true" requiredMessage="#{myBundle.CreateUbigeoRequiredMessage_distrito}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateUbigeoLabel_pais}" for="pais" />
+                        <p:inputText id="pais" value="#{ubigeoController.selected.pais}" title="#{myBundle.CreateUbigeoTitle_pais}" size="255" maxlength="255"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{ubigeoController.saveNew}" value="#{myBundle.Save}" update="display,:UbigeoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UbigeoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('UbigeoCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

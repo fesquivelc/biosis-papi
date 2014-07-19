@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleContratoCreateDlg" widgetVar="DetalleContratoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateDetalleContratoTitle}" closeOnEscape="true">
+
+            <h:form id="DetalleContratoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{detalleContratoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateDetalleContratoLabel_FInicio}" for="FInicio" />
+                        <p:calendar id="FInicio" pattern="MM/dd/yyyy" value="#{detalleContratoController.selected.FInicio}" title="#{myBundle.CreateDetalleContratoTitle_FInicio}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDetalleContratoLabel_FFin}" for="FFin" />
+                        <p:calendar id="FFin" pattern="MM/dd/yyyy" value="#{detalleContratoController.selected.FFin}" title="#{myBundle.CreateDetalleContratoTitle_FFin}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDetalleContratoLabel_areaId}" for="areaId" />
+                        <p:selectOneMenu id="areaId" value="#{detalleContratoController.selected.areaId}" required="true" requiredMessage="#{myBundle.CreateDetalleContratoRequiredMessage_areaId}" converter="areaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{areaController.items}"
+                                           var="areaIdItem"
+                                           itemValue="#{areaIdItem}"
+                                           itemLabel="#{areaIdItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateDetalleContratoLabel_contratoId}" for="contratoId" />
+                        <p:selectOneMenu id="contratoId" value="#{detalleContratoController.selected.contratoId}" required="true" requiredMessage="#{myBundle.CreateDetalleContratoRequiredMessage_contratoId}" converter="contratoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{contratoController.items}"
+                                           var="contratoIdItem"
+                                           itemValue="#{contratoIdItem}"
+                                           itemLabel="#{contratoIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateDetalleContratoLabel_empleadoId}" for="empleadoId" />
+                        <p:selectOneMenu id="empleadoId" value="#{detalleContratoController.selected.empleadoId}" required="true" requiredMessage="#{myBundle.CreateDetalleContratoRequiredMessage_empleadoId}" converter="empleadoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoController.items}"
+                                           var="empleadoIdItem"
+                                           itemValue="#{empleadoIdItem}"
+                                           itemLabel="#{empleadoIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detalleContratoController.saveNew}" value="#{myBundle.Save}" update="display,:DetalleContratoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('DetalleContratoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('DetalleContratoCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

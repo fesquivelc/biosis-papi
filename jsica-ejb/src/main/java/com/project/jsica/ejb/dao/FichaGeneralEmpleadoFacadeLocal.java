@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.FichaGeneralEmpleado;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface FichaGeneralEmpleadoFacadeLocal {
     List<FichaGeneralEmpleado> findAll();
 
     List<FichaGeneralEmpleado> findRange(int[] range);
+    
+    List<FichaGeneralEmpleado> search(String namedQuery);
+    
+    List<FichaGeneralEmpleado> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<FichaGeneralEmpleado> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     

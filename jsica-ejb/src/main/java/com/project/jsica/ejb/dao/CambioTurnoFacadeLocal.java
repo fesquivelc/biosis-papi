@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.CambioTurno;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface CambioTurnoFacadeLocal {
     List<CambioTurno> findAll();
 
     List<CambioTurno> findRange(int[] range);
+    
+    List<CambioTurno> search(String namedQuery);
+    
+    List<CambioTurno> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<CambioTurno> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     

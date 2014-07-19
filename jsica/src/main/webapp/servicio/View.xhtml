@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ServicioViewDlg" widgetVar="ServicioViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewServicioTitle}" closeOnEscape="true">
+
+            <h:form id="ServicioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{servicioController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewServicioLabel_id}"/>
+                        <h:outputText value="#{servicioController.selected.id}" title="#{myBundle.ViewServicioTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewServicioLabel_nombre}"/>
+                        <h:outputText value="#{servicioController.selected.nombre}" title="#{myBundle.ViewServicioTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewServicioLabel_descripcion}"/>
+                        <h:outputText value="#{servicioController.selected.descripcion}" title="#{myBundle.ViewServicioTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewServicioLabel_areaId}"/>
+                        <h:outputText value="#{servicioController.selected.areaId.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ServicioViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

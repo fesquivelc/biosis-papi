@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="EmpleadoHorarioEditDlg" widgetVar="EmpleadoHorarioEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditEmpleadoHorarioTitle}" closeOnEscape="true">
+
+            <h:form id="EmpleadoHorarioEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{empleadoHorarioController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditEmpleadoHorarioLabel_id}" for="id" />
+                        <h:outputText id="id" value="#{empleadoHorarioController.selected.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditEmpleadoHorarioLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{empleadoHorarioController.selected.fecha}" title="#{myBundle.EditEmpleadoHorarioTitle_fecha}" required="true" requiredMessage="#{myBundle.EditEmpleadoHorarioRequiredMessage_fecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditEmpleadoHorarioLabel_porGrupo}" for="porGrupo" />
+                        <p:selectBooleanCheckbox id="porGrupo" value="#{empleadoHorarioController.selected.porGrupo}" required="true" requiredMessage="#{myBundle.EditEmpleadoHorarioRequiredMessage_porGrupo}"/>
+
+                        <p:outputLabel value="#{myBundle.EditEmpleadoHorarioLabel_empleadoId}" for="empleadoId" />
+                        <p:selectOneMenu id="empleadoId" value="#{empleadoHorarioController.selected.empleadoId}"  converter="empleadoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoController.items}"
+                                           var="empleadoIdItem"
+                                           itemValue="#{empleadoIdItem}"
+                                           itemLabel="#{empleadoIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditEmpleadoHorarioLabel_horarioId}" for="horarioId" />
+                        <p:selectOneMenu id="horarioId" value="#{empleadoHorarioController.selected.horarioId}" required="true" requiredMessage="#{myBundle.EditEmpleadoHorarioRequiredMessage_horarioId}" converter="horarioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{horarioController.items}"
+                                           var="horarioIdItem"
+                                           itemValue="#{horarioIdItem}"
+                                           itemLabel="#{horarioIdItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditEmpleadoHorarioLabel_grupoHorarioId}" for="grupoHorarioId" />
+                        <p:selectOneMenu id="grupoHorarioId" value="#{empleadoHorarioController.selected.grupoHorarioId}"  converter="grupoHorarioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{grupoHorarioController.items}"
+                                           var="grupoHorarioIdItem"
+                                           itemValue="#{grupoHorarioIdItem}"
+                                           itemLabel="#{grupoHorarioIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{empleadoHorarioController.save}" value="#{myBundle.Save}" update="display,:EmpleadoHorarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmpleadoHorarioEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('EmpleadoHorarioEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

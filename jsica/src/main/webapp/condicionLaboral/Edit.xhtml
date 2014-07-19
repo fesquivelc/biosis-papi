@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CondicionLaboralEditDlg" widgetVar="CondicionLaboralEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCondicionLaboralTitle}" closeOnEscape="true">
+
+            <h:form id="CondicionLaboralEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{condicionLaboralController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCondicionLaboralLabel_id}" for="id" />
+                        <h:outputText id="id" value="#{condicionLaboralController.selected.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditCondicionLaboralLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{condicionLaboralController.selected.codigo}" title="#{myBundle.EditCondicionLaboralTitle_codigo}" required="true" requiredMessage="#{myBundle.EditCondicionLaboralRequiredMessage_codigo}"/>
+
+                        <p:outputLabel value="#{myBundle.EditCondicionLaboralLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{condicionLaboralController.selected.nombre}" title="#{myBundle.EditCondicionLaboralTitle_nombre}" required="true" requiredMessage="#{myBundle.EditCondicionLaboralRequiredMessage_nombre}" size="45" maxlength="45"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{condicionLaboralController.save}" value="#{myBundle.Save}" update="display,:CondicionLaboralListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CondicionLaboralEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('CondicionLaboralEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

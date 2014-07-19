@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EmpleadoPermisoListForm">
+
+        <p:panel header="#{myBundle.ListEmpleadoPermisoTitle}">
+            <p:contextMenu id="EmpleadoPermisoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('EmpleadoPermisoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('EmpleadoPermisoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('EmpleadoPermisoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('EmpleadoPermisoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.EmpleadoPermisoMenuItem_empleadoId}" icon="ui-icon-search"  actionListener="#{empleadoPermisoController.prepareEmpleadoId}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty empleadoPermisoController.selected.empleadoId}"/>  
+                <p:menuitem value="#{myBundle.EmpleadoPermisoMenuItem_permisoId}" icon="ui-icon-search"  actionListener="#{empleadoPermisoController.preparePermisoId}" update=":PermisoViewForm" oncomplete="PF('PermisoViewDialog').show()" disabled="#{empty empleadoPermisoController.selected.permisoId}"/>  
+                <p:menuitem value="#{myBundle.EmpleadoPermisoMenuItem_papeletaList}" icon="ui-icon-search"  action="#{empleadoPermisoController.navigatePapeletaList}" disabled="#{empty empleadoPermisoController.selected.papeletaList}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{empleadoPermisoController.items}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{empleadoPermisoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":EmpleadoPermisoListForm:createButton :EmpleadoPermisoListForm:viewButton :EmpleadoPermisoListForm:editButton :EmpleadoPermisoListForm:deleteButton :EmpleadoPermisoListForm:EmpleadoPermisoDataTableContextMenu" listener="#{empleadoPermisoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":EmpleadoPermisoListForm:createButton :EmpleadoPermisoListForm:viewButton :EmpleadoPermisoListForm:editButton :EmpleadoPermisoListForm:deleteButton :EmpleadoPermisoListForm:EmpleadoPermisoDataTableContextMenu" listener="#{empleadoPermisoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EmpleadoPermisoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpleadoPermisoTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpleadoPermisoTitle_empleadoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleadoId.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.permisoId.id}" filterBy="#{item.permisoId.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpleadoPermisoTitle_permisoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.permisoId.id}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{empleadoPermisoController.prepareCreate}" update=":EmpleadoPermisoCreateForm" oncomplete="PF('EmpleadoPermisoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":EmpleadoPermisoViewForm" oncomplete="PF('EmpleadoPermisoViewDialog').show()" disabled="#{empty empleadoPermisoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EmpleadoPermisoEditForm" oncomplete="PF('EmpleadoPermisoEditDialog').show()" disabled="#{empty empleadoPermisoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{empleadoPermisoController.delete}" update=":growl,datalist" disabled="#{empty empleadoPermisoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

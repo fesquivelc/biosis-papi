@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="BiometricoEditDlg" widgetVar="BiometricoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditBiometricoTitle}" closeOnEscape="true">
+
+            <h:form id="BiometricoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{biometricoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditBiometricoLabel_id}" for="id" />
+                        <h:outputText id="id" value="#{biometricoController.selected.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditBiometricoLabel_ipv4}" for="ipv4" />
+                        <p:inputText id="ipv4" value="#{biometricoController.selected.ipv4}" title="#{myBundle.EditBiometricoTitle_ipv4}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditBiometricoLabel_ipv6}" for="ipv6" />
+                        <p:inputText id="ipv6" value="#{biometricoController.selected.ipv6}" title="#{myBundle.EditBiometricoTitle_ipv6}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.EditBiometricoLabel_modelo}" for="modelo" />
+                        <p:inputText id="modelo" value="#{biometricoController.selected.modelo}" title="#{myBundle.EditBiometricoTitle_modelo}" required="true" requiredMessage="#{myBundle.EditBiometricoRequiredMessage_modelo}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditBiometricoLabel_marca}" for="marca" />
+                        <p:inputText id="marca" value="#{biometricoController.selected.marca}" title="#{myBundle.EditBiometricoTitle_marca}" required="true" requiredMessage="#{myBundle.EditBiometricoRequiredMessage_marca}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditBiometricoLabel_sucursalId}" for="sucursalId" />
+                        <p:selectOneMenu id="sucursalId" value="#{biometricoController.selected.sucursalId}" required="true" requiredMessage="#{myBundle.EditBiometricoRequiredMessage_sucursalId}" converter="sucursalConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{sucursalController.items}"
+                                           var="sucursalIdItem"
+                                           itemValue="#{sucursalIdItem}"
+                                           itemLabel="#{sucursalIdItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{biometricoController.save}" value="#{myBundle.Save}" update="display,:BiometricoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('BiometricoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('BiometricoEditDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

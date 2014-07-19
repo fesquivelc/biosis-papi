@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.Jornada;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface JornadaFacadeLocal {
     List<Jornada> findAll();
 
     List<Jornada> findRange(int[] range);
+    
+    List<Jornada> search(String namedQuery);
+    
+    List<Jornada> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<Jornada> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     

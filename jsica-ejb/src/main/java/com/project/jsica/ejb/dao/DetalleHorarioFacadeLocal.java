@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.DetalleHorario;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface DetalleHorarioFacadeLocal {
     List<DetalleHorario> findAll();
 
     List<DetalleHorario> findRange(int[] range);
+    
+    List<DetalleHorario> search(String namedQuery);
+    
+    List<DetalleHorario> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<DetalleHorario> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     

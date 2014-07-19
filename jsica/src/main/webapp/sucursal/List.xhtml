@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="SucursalListForm">
+
+        <p:panel header="#{myBundle.ListSucursalTitle}">
+            <p:contextMenu id="SucursalDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('SucursalListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('SucursalListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('SucursalListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('SucursalListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.SucursalMenuItem_areaList}" icon="ui-icon-search"  action="#{sucursalController.navigateAreaList}" disabled="#{empty sucursalController.selected.areaList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.SucursalMenuItem_sucursalList}" icon="ui-icon-search"  action="#{sucursalController.navigateSucursalList}" disabled="#{empty sucursalController.selected.sucursalList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.SucursalMenuItem_principalId}" icon="ui-icon-search"  actionListener="#{sucursalController.preparePrincipalId}" update=":SucursalViewForm" oncomplete="PF('SucursalViewDialog').show()" disabled="#{empty sucursalController.selected.principalId}"/>  
+                <p:menuitem value="#{myBundle.SucursalMenuItem_biometricoList}" icon="ui-icon-search"  action="#{sucursalController.navigateBiometricoList}" disabled="#{empty sucursalController.selected.biometricoList}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{sucursalController.items}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{sucursalController.selected}">
+
+                <p:ajax event="rowSelect"   update=":SucursalListForm:createButton :SucursalListForm:viewButton :SucursalListForm:editButton :SucursalListForm:deleteButton :SucursalListForm:SucursalDataTableContextMenu" listener="#{sucursalController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":SucursalListForm:createButton :SucursalListForm:viewButton :SucursalListForm:editButton :SucursalListForm:deleteButton :SucursalListForm:SucursalDataTableContextMenu" listener="#{sucursalController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('SucursalListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSucursalTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSucursalTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSucursalTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.principalId.descripcion}" filterBy="#{item.principalId.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSucursalTitle_principalId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.principalId.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{sucursalController.prepareCreate}" update=":SucursalCreateForm" oncomplete="PF('SucursalCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":SucursalViewForm" oncomplete="PF('SucursalViewDialog').show()" disabled="#{empty sucursalController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":SucursalEditForm" oncomplete="PF('SucursalEditDialog').show()" disabled="#{empty sucursalController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{sucursalController.delete}" update=":growl,datalist" disabled="#{empty sucursalController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

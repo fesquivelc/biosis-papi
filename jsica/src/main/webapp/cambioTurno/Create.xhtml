@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CambioTurnoCreateDlg" widgetVar="CambioTurnoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateCambioTurnoTitle}" closeOnEscape="true">
+
+            <h:form id="CambioTurnoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{cambioTurnoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateCambioTurnoLabel_fechaPedido}" for="fechaPedido" />
+                        <p:calendar id="fechaPedido" pattern="MM/dd/yyyy" value="#{cambioTurnoController.selected.fechaPedido}" title="#{myBundle.CreateCambioTurnoTitle_fechaPedido}" required="true" requiredMessage="#{myBundle.CreateCambioTurnoRequiredMessage_fechaPedido}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCambioTurnoLabel_horaPedido}" for="horaPedido" />
+                        <p:calendar id="horaPedido" pattern="HH:mm:ss" value="#{cambioTurnoController.selected.horaPedido}" title="#{myBundle.CreateCambioTurnoTitle_horaPedido}" required="true" requiredMessage="#{myBundle.CreateCambioTurnoRequiredMessage_horaPedido}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCambioTurnoLabel_detalleHorarioOriginal}" for="detalleHorarioOriginal" />
+                        <p:selectOneMenu id="detalleHorarioOriginal" value="#{cambioTurnoController.selected.detalleHorarioOriginal}" required="true" requiredMessage="#{myBundle.CreateCambioTurnoRequiredMessage_detalleHorarioOriginal}" converter="detalleHorarioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{detalleHorarioController.items}"
+                                           var="detalleHorarioOriginalItem"
+                                           itemValue="#{detalleHorarioOriginalItem}"
+                                           itemLabel="#{detalleHorarioOriginalItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateCambioTurnoLabel_detalleHorarioReemplazo}" for="detalleHorarioReemplazo" />
+                        <p:selectOneMenu id="detalleHorarioReemplazo" value="#{cambioTurnoController.selected.detalleHorarioReemplazo}" required="true" requiredMessage="#{myBundle.CreateCambioTurnoRequiredMessage_detalleHorarioReemplazo}" converter="detalleHorarioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{detalleHorarioController.items}"
+                                           var="detalleHorarioReemplazoItem"
+                                           itemValue="#{detalleHorarioReemplazoItem}"
+                                           itemLabel="#{detalleHorarioReemplazoItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateCambioTurnoLabel_jefeInmediatoId}" for="jefeInmediatoId" />
+                        <p:selectOneMenu id="jefeInmediatoId" value="#{cambioTurnoController.selected.jefeInmediatoId}" required="true" requiredMessage="#{myBundle.CreateCambioTurnoRequiredMessage_jefeInmediatoId}" converter="empleadoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoController.items}"
+                                           var="jefeInmediatoIdItem"
+                                           itemValue="#{jefeInmediatoIdItem}"
+                                           itemLabel="#{jefeInmediatoIdItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cambioTurnoController.saveNew}" value="#{myBundle.Save}" update="display,:CambioTurnoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CambioTurnoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('CambioTurnoCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

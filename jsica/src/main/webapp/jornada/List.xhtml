@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="JornadaListForm">
+
+        <p:panel header="#{myBundle.ListJornadaTitle}">
+            <p:contextMenu id="JornadaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('JornadaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('JornadaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('JornadaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('JornadaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.JornadaMenuItem_servicioId}" icon="ui-icon-search"  actionListener="#{jornadaController.prepareServicioId}" update=":ServicioViewForm" oncomplete="PF('ServicioViewDialog').show()" disabled="#{empty jornadaController.selected.servicioId}"/>  
+                <p:menuitem value="#{myBundle.JornadaMenuItem_detalleHorarioList}" icon="ui-icon-search"  action="#{jornadaController.navigateDetalleHorarioList}" disabled="#{empty jornadaController.selected.detalleHorarioList}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{jornadaController.items}"
+                         var="item"
+                         rowKey="#{item.codigo}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{jornadaController.selected}">
+
+                <p:ajax event="rowSelect"   update=":JornadaListForm:createButton :JornadaListForm:viewButton :JornadaListForm:editButton :JornadaListForm:deleteButton :JornadaListForm:JornadaDataTableContextMenu" listener="#{jornadaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":JornadaListForm:createButton :JornadaListForm:viewButton :JornadaListForm:editButton :JornadaListForm:deleteButton :JornadaListForm:JornadaDataTableContextMenu" listener="#{jornadaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('JornadaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.codigo}" filterBy="#{item.codigo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListJornadaTitle_codigo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codigo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListJornadaTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.HEntrada}" filterBy="#{item.HEntrada}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListJornadaTitle_HEntrada}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.HEntrada}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.HSalida}" filterBy="#{item.HSalida}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListJornadaTitle_HSalida}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.HSalida}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.flexible}" filterBy="#{item.flexible}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListJornadaTitle_flexible}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="flexible" value="#{item.flexible}" title="#{myBundle.EditJornadaTitle_flexible}" required="true" requiredMessage="#{myBundle.EditJornadaRequiredMessage_flexible}" disabled="true"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.servicioId.descripcion}" filterBy="#{item.servicioId.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListJornadaTitle_servicioId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.servicioId.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{jornadaController.prepareCreate}" update=":JornadaCreateForm" oncomplete="PF('JornadaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":JornadaViewForm" oncomplete="PF('JornadaViewDialog').show()" disabled="#{empty jornadaController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":JornadaEditForm" oncomplete="PF('JornadaEditDialog').show()" disabled="#{empty jornadaController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{jornadaController.delete}" update=":growl,datalist" disabled="#{empty jornadaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="DetalleHorarioListForm">
+
+        <p:panel header="#{myBundle.ListDetalleHorarioTitle}">
+            <p:contextMenu id="DetalleHorarioDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('DetalleHorarioListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('DetalleHorarioListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('DetalleHorarioListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('DetalleHorarioListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.DetalleHorarioMenuItem_horarioId}" icon="ui-icon-search"  actionListener="#{detalleHorarioController.prepareHorarioId}" update=":HorarioViewForm" oncomplete="PF('HorarioViewDialog').show()" disabled="#{empty detalleHorarioController.selected.horarioId}"/>  
+                <p:menuitem value="#{myBundle.DetalleHorarioMenuItem_jornadaCodigo}" icon="ui-icon-search"  actionListener="#{detalleHorarioController.prepareJornadaCodigo}" update=":JornadaViewForm" oncomplete="PF('JornadaViewDialog').show()" disabled="#{empty detalleHorarioController.selected.jornadaCodigo}"/>  
+                <p:menuitem value="#{myBundle.DetalleHorarioMenuItem_cambioTurnoList}" icon="ui-icon-search"  action="#{detalleHorarioController.navigateCambioTurnoList}" disabled="#{empty detalleHorarioController.selected.cambioTurnoList}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.DetalleHorarioMenuItem_cambioTurnoList1}" icon="ui-icon-search"  action="#{detalleHorarioController.navigateCambioTurnoList1}" disabled="#{empty detalleHorarioController.selected.cambioTurnoList1}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{detalleHorarioController.items}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{detalleHorarioController.selected}">
+
+                <p:ajax event="rowSelect"   update=":DetalleHorarioListForm:createButton :DetalleHorarioListForm:viewButton :DetalleHorarioListForm:editButton :DetalleHorarioListForm:deleteButton :DetalleHorarioListForm:DetalleHorarioDataTableContextMenu" listener="#{detalleHorarioController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":DetalleHorarioListForm:createButton :DetalleHorarioListForm:viewButton :DetalleHorarioListForm:editButton :DetalleHorarioListForm:deleteButton :DetalleHorarioListForm:DetalleHorarioDataTableContextMenu" listener="#{detalleHorarioController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('DetalleHorarioListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleHorarioTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleHorarioTitle_fecha}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.horarioId.descripcion}" filterBy="#{item.horarioId.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleHorarioTitle_horarioId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horarioId.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.jornadaCodigo.codigo}" filterBy="#{item.jornadaCodigo.codigo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetalleHorarioTitle_jornadaCodigo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.jornadaCodigo.codigo}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{detalleHorarioController.prepareCreate}" update=":DetalleHorarioCreateForm" oncomplete="PF('DetalleHorarioCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":DetalleHorarioViewForm" oncomplete="PF('DetalleHorarioViewDialog').show()" disabled="#{empty detalleHorarioController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DetalleHorarioEditForm" oncomplete="PF('DetalleHorarioEditDialog').show()" disabled="#{empty detalleHorarioController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{detalleHorarioController.delete}" update=":growl,datalist" disabled="#{empty detalleHorarioController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

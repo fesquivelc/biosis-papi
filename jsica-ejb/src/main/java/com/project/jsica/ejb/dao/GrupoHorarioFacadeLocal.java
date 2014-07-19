@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.GrupoHorario;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -26,6 +27,12 @@ public interface GrupoHorarioFacadeLocal {
     GrupoHorario find(Object id);
 
     List<GrupoHorario> findAll();
+    
+    List<GrupoHorario> search(String namedQuery);
+    
+    List<GrupoHorario> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<GrupoHorario> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     List<GrupoHorario> findRange(int[] range);
 

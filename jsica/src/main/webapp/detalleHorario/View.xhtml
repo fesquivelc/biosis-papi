@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleHorarioViewDlg" widgetVar="DetalleHorarioViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewDetalleHorarioTitle}" closeOnEscape="true">
+
+            <h:form id="DetalleHorarioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{detalleHorarioController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewDetalleHorarioLabel_id}"/>
+                        <h:outputText value="#{detalleHorarioController.selected.id}" title="#{myBundle.ViewDetalleHorarioTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetalleHorarioLabel_fecha}"/>
+                        <h:outputText value="#{detalleHorarioController.selected.fecha}" title="#{myBundle.ViewDetalleHorarioTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewDetalleHorarioLabel_horarioId}"/>
+                        <h:outputText value="#{detalleHorarioController.selected.horarioId.descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetalleHorarioLabel_jornadaCodigo}"/>
+                        <h:outputText value="#{detalleHorarioController.selected.jornadaCodigo.codigo}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('DetalleHorarioViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
