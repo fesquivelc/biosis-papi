@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.UsuarioFacadeLocal;
 import com.project.jsica.ejb.entidades.Usuario;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "usuarioController")
 @ViewScoped
 public class UsuarioController extends AbstractController<Usuario> {
-
+    @EJB
+    private UsuarioFacadeLocal usuarioFacade;
     @Inject
     private EmpleadoController empleadoIdController;
     @Inject
@@ -52,5 +57,40 @@ public class UsuarioController extends AbstractController<Usuario> {
         if (this.getSelected() != null && rolIdController.getSelected() == null) {
             rolIdController.setSelected(this.getSelected().getRolId());
         }
+    }
+
+    @Override
+    protected void edit(Usuario objeto) {
+        this.usuarioFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(Usuario objeto) {
+        this.usuarioFacade.remove(objeto);
+    }
+
+    @Override
+    public Usuario find(Object id) {
+        return this.usuarioFacade.find(id);
+    }
+
+    @Override
+    public List<Usuario> getItems() {
+        return this.usuarioFacade.findAll();
+    }
+
+    @Override
+    public List<Usuario> search(String namedQuery) {
+        return this.usuarioFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<Usuario> search(String namedQuery, Map<String, Object> parametros) {
+        return this.usuarioFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<Usuario> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.usuarioFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 }

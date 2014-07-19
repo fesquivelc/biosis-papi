@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.VacacionFacadeLocal;
 import com.project.jsica.ejb.entidades.Vacacion;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "vacacionController")
 @ViewScoped
 public class VacacionController extends AbstractController<Vacacion> {
-
+    @EJB
+    private VacacionFacadeLocal vacacionFacade;
     @Inject
     private AnioController anioIdController;
     @Inject
@@ -52,5 +57,40 @@ public class VacacionController extends AbstractController<Vacacion> {
         if (this.getSelected() != null && empleadoIdController.getSelected() == null) {
             empleadoIdController.setSelected(this.getSelected().getEmpleadoId());
         }
+    }
+
+    @Override
+    protected void edit(Vacacion objeto) {
+        this.vacacionFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(Vacacion objeto) {
+        this.vacacionFacade.remove(objeto);
+    }
+
+    @Override
+    public Vacacion find(Object id) {
+        return this.vacacionFacade.find(id);
+    }
+
+    @Override
+    public List<Vacacion> getItems() {
+        return this.vacacionFacade.findAll();
+    }
+
+    @Override
+    public List<Vacacion> search(String namedQuery) {
+        return this.vacacionFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<Vacacion> search(String namedQuery, Map<String, Object> parametros) {
+        return this.vacacionFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<Vacacion> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.vacacionFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 }
