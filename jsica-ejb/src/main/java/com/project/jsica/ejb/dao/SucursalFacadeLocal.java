@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.Sucursal;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface SucursalFacadeLocal {
     List<Sucursal> findAll();
 
     List<Sucursal> findRange(int[] range);
+    
+    List<Sucursal> search(String namedQuery);
+    
+    List<Sucursal> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<Sucursal> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     

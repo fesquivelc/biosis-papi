@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.DetalleContratoFacadeLocal;
 import com.project.jsica.ejb.entidades.DetalleContrato;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,6 +14,8 @@ import javax.inject.Inject;
 @Named(value = "detalleContratoController")
 @ViewScoped
 public class DetalleContratoController extends AbstractController<DetalleContrato> {
+    @EJB
+    private DetalleContratoFacadeLocal detalleContratoFacade;
 
     @Inject
     private AreaController areaIdController;
@@ -68,5 +74,40 @@ public class DetalleContratoController extends AbstractController<DetalleContrat
         if (this.getSelected() != null && empleadoIdController.getSelected() == null) {
             empleadoIdController.setSelected(this.getSelected().getEmpleadoId());
         }
+    }
+
+    @Override
+    protected void edit(DetalleContrato objeto) {
+        this.detalleContratoFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(DetalleContrato objeto) {
+        this.detalleContratoFacade.remove(objeto);
+    }
+
+    @Override
+    public DetalleContrato find(Object id) {
+        return this.detalleContratoFacade.find(id);
+    }
+
+    @Override
+    public List<DetalleContrato> getItems() {
+        return this.detalleContratoFacade.findAll();
+    }
+
+    @Override
+    public List<DetalleContrato> search(String namedQuery) {
+        return this.detalleContratoFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<DetalleContrato> search(String namedQuery, Map<String, Object> parametros) {
+        return this.detalleContratoFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<DetalleContrato> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.detalleContratoFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 }

@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.Suspension;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface SuspensionFacadeLocal {
     List<Suspension> findAll();
 
     List<Suspension> findRange(int[] range);
+    
+    List<Suspension> search(String namedQuery);
+    
+    List<Suspension> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<Suspension> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     

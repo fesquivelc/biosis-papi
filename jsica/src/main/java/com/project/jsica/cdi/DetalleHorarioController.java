@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.DetalleHorarioFacadeLocal;
 import com.project.jsica.ejb.entidades.DetalleHorario;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "detalleHorarioController")
 @ViewScoped
 public class DetalleHorarioController extends AbstractController<DetalleHorario> {
-
+    @EJB
+    private DetalleHorarioFacadeLocal detalleHorarioFacade;
     @Inject
     private HorarioController horarioIdController;
     @Inject
@@ -85,6 +90,41 @@ public class DetalleHorarioController extends AbstractController<DetalleHorario>
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("CambioTurno_items", this.getSelected().getCambioTurnoList1());
         }
         return "/cambioTurno/index";
+    }
+
+    @Override
+    protected void edit(DetalleHorario objeto) {
+        this.detalleHorarioFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(DetalleHorario objeto) {
+        this.detalleHorarioFacade.remove(objeto);
+    }
+
+    @Override
+    public DetalleHorario find(Object id) {
+        return this.detalleHorarioFacade.find(id);
+    }
+
+    @Override
+    public List<DetalleHorario> getItems() {
+        return this.detalleHorarioFacade.findAll();
+    }
+
+    @Override
+    public List<DetalleHorario> search(String namedQuery) {
+        return this.detalleHorarioFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<DetalleHorario> search(String namedQuery, Map<String, Object> parametros) {
+        return this.detalleHorarioFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<DetalleHorario> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.detalleHorarioFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 
 }

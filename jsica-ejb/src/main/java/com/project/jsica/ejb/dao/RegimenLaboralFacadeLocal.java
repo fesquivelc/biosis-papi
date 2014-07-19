@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.RegimenLaboral;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface RegimenLaboralFacadeLocal {
     List<RegimenLaboral> findAll();
 
     List<RegimenLaboral> findRange(int[] range);
+    
+    List<RegimenLaboral> search(String namedQuery);
+    
+    List<RegimenLaboral> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<RegimenLaboral> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     

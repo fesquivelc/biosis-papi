@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.Ubigeo;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface UbigeoFacadeLocal {
     List<Ubigeo> findAll();
 
     List<Ubigeo> findRange(int[] range);
+    
+    List<Ubigeo> search(String namedQuery);
+    
+    List<Ubigeo> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<Ubigeo> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     

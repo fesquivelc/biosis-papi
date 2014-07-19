@@ -1,6 +1,10 @@
 package com.project.jsica.cdi;
 
+import com.project.jsica.ejb.dao.EmpleadoFacadeLocal;
 import com.project.jsica.ejb.entidades.Empleado;
+import java.util.List;
+import java.util.Map;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -10,7 +14,8 @@ import javax.inject.Inject;
 @Named(value = "empleadoController")
 @ViewScoped
 public class EmpleadoController extends AbstractController<Empleado> {
-
+    @EJB
+    private EmpleadoFacadeLocal empleadoFacade;
     @Inject
     private RegistroAsistenciaController registroAsistenciaListController;
     @Inject
@@ -300,6 +305,41 @@ public class EmpleadoController extends AbstractController<Empleado> {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("FichaLaboralEmpleado_items", this.getSelected().getFichaLaboralEmpleadoList());
         }
         return "/fichaLaboralEmpleado/index";
+    }
+
+    @Override
+    protected void edit(Empleado objeto) {
+        this.empleadoFacade.edit(objeto);
+    }
+
+    @Override
+    protected void remove(Empleado objeto) {
+        this.empleadoFacade.remove(objeto);
+    }
+
+    @Override
+    public Empleado find(Object id) {
+        return this.empleadoFacade.find(id);
+    }
+
+    @Override
+    public List<Empleado> getItems() {
+        return this.empleadoFacade.findAll();
+    }
+
+    @Override
+    public List<Empleado> search(String namedQuery) {
+        return this.empleadoFacade.search(namedQuery);
+    }
+
+    @Override
+    public List<Empleado> search(String namedQuery, Map<String, Object> parametros) {
+        return this.empleadoFacade.search(namedQuery, parametros);
+    }
+
+    @Override
+    public List<Empleado> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
+        return this.empleadoFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 
 }

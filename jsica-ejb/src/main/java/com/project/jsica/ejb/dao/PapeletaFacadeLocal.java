@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.Papeleta;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Local;
 
 /**
@@ -28,6 +29,12 @@ public interface PapeletaFacadeLocal {
     List<Papeleta> findAll();
 
     List<Papeleta> findRange(int[] range);
+    
+    List<Papeleta> search(String namedQuery);
+    
+    List<Papeleta> search(String namedQuery, Map<String, Object> parametros);
+    
+    List<Papeleta> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
     
