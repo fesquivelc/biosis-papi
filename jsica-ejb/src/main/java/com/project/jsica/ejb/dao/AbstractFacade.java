@@ -8,9 +8,11 @@ package com.project.jsica.ejb.dao;
 
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 
 /**
  *
@@ -18,6 +20,7 @@ import javax.persistence.Query;
  */
 public abstract class AbstractFacade<T> {
     protected static final String jsica_PU = "jsica-postgresql-PU";
+    //private static final Logger log = Logger.getLogger(AbstractFacade.class.getClass());
     
     private Class<T> entityClass;
 
@@ -28,6 +31,8 @@ public abstract class AbstractFacade<T> {
     protected abstract EntityManager getEntityManager();
 
     public void create(T entity) {
+        //log.info("CREAR FACADE");
+        //Logger.getLogger(entity.getClass()).log(Level.INFO, "hola mundillo");
         getEntityManager().persist(entity);
     }
 

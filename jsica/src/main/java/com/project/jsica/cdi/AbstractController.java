@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.faces.context.FacesContext;
@@ -15,6 +13,7 @@ import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import org.apache.log4j.Logger;
 
 /**
  * Represents an abstract shell of to be used as JSF Controller to be used in
@@ -26,8 +25,13 @@ import javax.validation.ConstraintViolationException;
 public abstract class AbstractController<T> implements Serializable {
 
     protected Class<T> itemClass;
+    private Class controller;
     protected T selected;
     protected Collection<T> items;
+    private boolean esNuevo;
+    
+    
+    
 
     private enum PersistAction {
 
@@ -42,6 +46,12 @@ public abstract class AbstractController<T> implements Serializable {
     public AbstractController(Class<T> itemClass) {
         this.itemClass = itemClass;
     }
+
+    public AbstractController(Class<T> itemClass, Class controller) {
+        this.itemClass = itemClass;
+        this.controller = controller;
+    }
+    
 
     /**
      * Retrieve the currently selected item.
@@ -121,6 +131,7 @@ public abstract class AbstractController<T> implements Serializable {
      */
     public void saveNew(ActionEvent event) {
         String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Created");
+        this.esNuevo = true;
         persist(PersistAction.CREATE, msg);
         if (!isValidationFailed()) {
             items = null; // Invalidate list of items to trigger re-query.
@@ -172,7 +183,14 @@ public abstract class AbstractController<T> implements Serializable {
             this.setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
+                    if(this.esNuevo){
+                        Logger.getLogger(itemClass).info("LO NUEVO NUEVO");
+                    }else{
+                        Logger.getLogger(itemClass).info("ACTUALIZATE");
+                    }
                     this.edit(selected);
+                    this.esNuevo = false;
+                    
                 } else {
                     this.remove(selected);
                 }
@@ -195,7 +213,7 @@ public abstract class AbstractController<T> implements Serializable {
                     }
                 }
             } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(controller).error(ex);
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/MyBundle").getString("PersistenceErrorOccured"));
             }
         }
@@ -217,7 +235,7 @@ public abstract class AbstractController<T> implements Serializable {
             initializeEmbeddableKey();
             return newItem;
         } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(controller).error(ex);
         }
         return null;
     }

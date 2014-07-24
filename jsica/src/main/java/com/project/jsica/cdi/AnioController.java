@@ -10,10 +10,12 @@ import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.apache.log4j.Logger;
 
 @Named(value = "anioController")
 @ViewScoped
 public class AnioController extends AbstractController<Anio> {
+    //private static final Logger log = Logger.getLogger(AnioController.class.getClass());
     
     @EJB
     private AnioFacadeLocal anioFacade;
@@ -27,7 +29,7 @@ public class AnioController extends AbstractController<Anio> {
 
     public AnioController() {
         // Inform the Abstract parent controller of the concrete Anio?cap_first Entity
-        super(Anio.class);
+        super(Anio.class, AnioController.class);
     }
 
     /**
@@ -77,6 +79,7 @@ public class AnioController extends AbstractController<Anio> {
 
     @Override
     protected void edit(Anio objeto) {
+        //log.info("CREADO ANIO");
         this.anioFacade.edit(objeto);
     }
 

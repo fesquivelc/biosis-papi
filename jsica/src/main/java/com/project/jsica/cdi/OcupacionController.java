@@ -5,15 +5,18 @@ import com.project.jsica.ejb.entidades.Ocupacion;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import org.apache.log4j.Logger;
 
 @Named(value = "ocupacionController")
 @ViewScoped
 public class OcupacionController extends AbstractController<Ocupacion> {
+    private static final Logger log = Logger.getLogger(OcupacionController.class.getClass());
+    
     @EJB
     private OcupacionFacadeLocal ocupacionFacade;
     @Inject
@@ -46,6 +49,7 @@ public class OcupacionController extends AbstractController<Ocupacion> {
 
     @Override
     protected void edit(Ocupacion objeto) {
+        log.info("CREAR OCUPACION");
         this.ocupacionFacade.edit(objeto);
     }
 
