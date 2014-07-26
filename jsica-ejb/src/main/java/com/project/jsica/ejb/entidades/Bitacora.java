@@ -7,16 +7,13 @@
 package com.project.jsica.ejb.entidades;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -28,7 +25,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Documentos
  */
 @Entity
-@Table(name = "bitacora")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Bitacora.findAll", query = "SELECT b FROM Bitacora b"),
@@ -46,35 +42,32 @@ public class Bitacora implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)    
+    @Basic(optional = false)
+    private Long id;
     @NotNull
-    @Column(name = "id")
-    private Long id;    
-    @Column(name = "ip_cliente")
+    @Size(min = 1, max = 255)
     private String ipCliente;
-    @Size(max = 255)
-    @Column(name = "usuario")
+    @NotNull
+    @Size(min = 1, max = 255)
     private String usuario;
-    @Size(max = 255)
-    @Column(name = "fecha")
+    @NotNull
+    @Size(min = 1, max = 255)
     private String fecha;
-    @Size(max = 255)
-    @Column(name = "hora")
+    @NotNull
+    @Size(min = 1, max = 255)
     private String hora;
-    @Size(max = 255)
-    @Column(name = "tabla")
+    @NotNull
+    @Size(min = 1, max = 255)
     private String tabla;
-    @Size(max = 255)
-    @Column(name = "columna")
+    @NotNull
+    @Size(min = 1, max = 255)
     private String columna;
-    @Size(max = 255)
-    @Column(name = "accion")
+    @NotNull
+    @Size(min = 1, max = 255)
     private String accion;
-    @Size(max = 255)
-    @Column(name = "valor_ant")
+    @Size(min = 1, max = 255)
     private String valorAnt;
-    @Size(max = 255)
-    @Column(name = "valor_act")
+    @Size(min = 1, max = 255)
     private String valorAct;
 
     public Bitacora() {

@@ -31,7 +31,7 @@ public abstract class AbstractController<T> implements Serializable {
     private Class controller;
     protected T selected;
     protected Collection<T> items;
-    protected boolean esNuevo = false;
+    protected boolean esNuevo;
     
     
     
@@ -234,7 +234,6 @@ public abstract class AbstractController<T> implements Serializable {
      */
     public T prepareCreate(ActionEvent event) {
         T newItem;
-        esNuevo = true;
         try {
             newItem = itemClass.newInstance();
             this.selected = newItem;
