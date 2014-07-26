@@ -17,9 +17,6 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class AnioFacade extends AbstractFacade<Anio> implements AnioFacadeLocal {
-    //Bitacora-------
-       
-    
     @PersistenceContext(unitName = jsica_PU)
     private EntityManager em;
 
