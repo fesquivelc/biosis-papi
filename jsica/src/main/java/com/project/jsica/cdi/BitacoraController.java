@@ -11,31 +11,22 @@ import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import org.apache.log4j.Logger;
 
-/**
- * Represents an abstract shell of to be used as JSF Controller to be used in
- * AJAX-enabled applications. No outcomes will be generated from its methods
- * since handling is designed to be done inside one page.
- *
- * @param <T> the concrete Entity type of the Controller bean to be created
- */
-public abstract class AbstractController<T> implements Serializable {
-
-    protected Class<T> itemClass;
-    private Class controller;
-    protected T selected;
-    protected Collection<T> items;
-    protected boolean esNuevo;
-    
-    
-    
-    
+//@Named(value = "bitacoraController")
+//@ApplicationScoped
+public class BitacoraController(){
+    protected Bitacora selected;
+    protected Collection<Bitacora> items;
+    private boolean esNuevo;
 
     private enum PersistAction {
 
@@ -44,37 +35,31 @@ public abstract class AbstractController<T> implements Serializable {
         UPDATE
     }
 
-    public AbstractController() {
+    public BitacoraController() {
     }
 
-    public AbstractController(Class<T> itemClass) {
-        this.itemClass = itemClass;
-    }
-
-    public AbstractController(Class<T> itemClass, Class controller) {
-        this.itemClass = itemClass;
-        this.controller = controller;
+    public Bitacora getSelected() {
+        return selected;
     }
     
+    public void setSelected(Bitacora selected) {
+        this.selected = selected;
+    }
+    
+    public void setItems(Collection<Bitacora> items) {
+        this.items = items;
+    }
 
     /**
      * Retrieve the currently selected item.
      *
      * @return the currently selected Entity
      */
-    public T getSelected() {
-        return selected;
-    }
-
     /**
      * Pass in the currently selected item.
      *
      * @param selected the Entity that should be set as selected
      */
-    public void setSelected(T selected) {
-        this.selected = selected;
-    }
-
     /**
      * Sets any embeddable key fields if an Entity uses composite keys. If the
      * entity does not have composite keys, this method performs no actions and
@@ -106,16 +91,11 @@ public abstract class AbstractController<T> implements Serializable {
 //        }
 //        return items;
 //    }
-
     /**
      * Pass in collection of items
      *
      * @param items a collection of Entity items
      */
-    public void setItems(Collection<T> items) {
-        this.items = items;
-    }
-
     /**
      * Apply changes to an existing item to the data layer.
      *
@@ -123,8 +103,7 @@ public abstract class AbstractController<T> implements Serializable {
      * data layer
      */
     public void save(ActionEvent event) {
-        String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Updated");
-        persist(PersistAction.UPDATE, msg);
+        persist(PersistAction.UPDATE, "listo");
     }
 
     /**
@@ -134,9 +113,7 @@ public abstract class AbstractController<T> implements Serializable {
      * the data layer
      */
     public void saveNew(ActionEvent event) {
-        String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Created");
-        this.esNuevo = true;
-        persist(PersistAction.CREATE, msg);
+        persist(PersistAction.CREATE, "listo");
         if (!isValidationFailed()) {
             items = null; // Invalidate list of items to trigger re-query.
         }
@@ -149,8 +126,7 @@ public abstract class AbstractController<T> implements Serializable {
      * the data layer
      */
     public void delete(ActionEvent event) {
-        String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Deleted");
-        persist(PersistAction.DELETE, msg);
+        persist(PersistAction.DELETE, "Listo");
         if (!isValidationFailed()) {
             selected = null; // Remove selection
             items = null; // Invalidate list of items to trigger re-query.
@@ -167,35 +143,36 @@ public abstract class AbstractController<T> implements Serializable {
      * @param successMessage a message that should be displayed when persisting
      * the item succeeds
      */
-    
-    protected abstract void edit(T objeto);
-    
-    protected abstract void remove(T objeto);
-    
-    public abstract T find(Object id);
-        
-    public abstract List<T> getItems();
-    
-    public abstract List<T> search(String namedQuery);
-    
-    public abstract List<T> search(String namedQuery, Map<String, Object> parametros);
-    
-    public abstract List<T> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
-    
+    private void edit(Bitacora objeto){
+         getEntityManager().merge(objeto);
+    };
+//
+//    protected abstract void remove(Bitacora objeto);
+
+//    public abstract Bitacora find(Object id);
+
+//    public abstract List<Bitacora> getItems();
+
+//    public abstract List<Bitacora> search(String namedQuery);
+
+//    public abstract List<Bitacora> search(String namedQuery, Map<String, Object> parametros);
+//
+//    public abstract List<Bitacora> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
+
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             this.setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
-                    if(this.esNuevo){
-                        Logger.getLogger(itemClass).info("LO NUEVO NUEVO");
-                    }else{
-                        Logger.getLogger(itemClass).info("ACTUALIZATE");
+                    if (this.esNuevo) {
+                        Logger.getLogger(this.getClass()).info("LO NUEVO NUEVO");
+                    } else {
+                        Logger.getLogger(this.getClass()).info("ACTUALIZATE");
                     }
-                    
+
                     this.edit(selected);
                     this.esNuevo = false;
-                    
+
                 } else {
                     this.remove(selected);
                 }
@@ -218,7 +195,7 @@ public abstract class AbstractController<T> implements Serializable {
                     }
                 }
             } catch (Exception ex) {
-                Logger.getLogger(controller).error(ex.getStackTrace());
+                Logger.getLogger(this.getClass()).error(ex.getStackTrace());
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/MyBundle").getString("PersistenceErrorOccured"));
             }
         }
@@ -232,15 +209,15 @@ public abstract class AbstractController<T> implements Serializable {
      * unmanaged Entity for the data layer
      * @return a new, unmanaged Entity
      */
-    public T prepareCreate(ActionEvent event) {
-        T newItem;
+    public Bitacora prepareCreate(ActionEvent event) {
+        Bitacora newItem = new Bitacora();
         try {
-            newItem = itemClass.newInstance();
+//            newItem = Bitacora.newInstance();
             this.selected = newItem;
             initializeEmbeddableKey();
             return newItem;
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(controller).error(ex);
+        }catch (Exception ex) {
+            Logger.getLogger(this.getClass()).error(ex);
         }
         return null;
     }
@@ -269,12 +246,11 @@ public abstract class AbstractController<T> implements Serializable {
      * Retrieve a collection of Entity items for a specific Controller from
      * another JSF page via Request parameters.
      */
-    @PostConstruct
-    public void initParams() {
-        Object paramItems = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get(itemClass.getSimpleName() + "_items");
-        if (paramItems != null) {
-            this.items = (Collection<T>) paramItems;
-        }
-    }
-
+//    @PostConstruct
+//    public void initParams() {
+//        Object paramItems = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get(Bitacora.getSimpleName() + "_items");
+//        if (paramItems != null) {
+//            this.items = (Collection<Bitacora>) paramItems;
+//        }
+//    }
 }
