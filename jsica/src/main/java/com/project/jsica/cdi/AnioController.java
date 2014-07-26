@@ -1,6 +1,7 @@
 package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.AnioFacadeLocal;
+import com.project.jsica.ejb.dao.BitacoraFacade;
 import com.project.jsica.ejb.entidades.Anio;
 import com.project.jsica.ejb.entidades.Bitacora;
 import java.util.Calendar;
@@ -15,17 +16,17 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
-
 @Named(value = "anioController")
 @ViewScoped
 public class AnioController extends AbstractController<Anio> {
     //private static final Logger log = Logger.getLogger(AnioController.class.getClass());
-    BitacoraController bitacoraC = new BitacoraController();
-    
+
     @EJB
     private AnioFacadeLocal anioFacade;
-    
-    
+
+    @Inject
+    private BitacoraController bitacoraC;
+
     @Inject
     private ContratoController contratoListController;
     @Inject
@@ -86,73 +87,73 @@ public class AnioController extends AbstractController<Anio> {
     @Override
     protected void edit(Anio objeto) {
         if (this.esNuevo) {
-            Bitacora bitacora = bitacoraC.prepareCreate(null);
+            Bitacora bitacora = new Bitacora();
             Logger.getLogger(AnioController.class.getName()).info("es nuevo");
-            if(this.bitacoraC == null){
+            if (this.bitacoraC == null) {
                 Logger.getLogger(AnioController.class.getName()).info("bitacora ejb es null");
-            }else{
+            } else {
                 Logger.getLogger(AnioController.class.getName()).info("bitacora ejb no es null");
             }
             this.anioFacade.edit(objeto);
             //----Bitacora----
             //Fecha y hora
             Calendar fechas = Calendar.getInstance();
-            if(fechas == null){
+            if (fechas == null) {
                 Logger.getLogger(AnioController.class.getName()).info("fechas es null");
             }
-            String fecha = fechas.get(Calendar.YEAR) +"/"+fechas.get(Calendar.MONTH)+"/"+fechas.get(Calendar.DAY_OF_MONTH);
-            String hora = fechas.get(Calendar.HOUR)+":"+fechas.get(Calendar.MINUTE)+":"+fechas.get(Calendar.SECOND);
-            Logger.getLogger(AnioController.class.getName()).info("etas son la fecha y hora"+fecha+hora);
+            String fecha = fechas.get(Calendar.YEAR) + "/" + fechas.get(Calendar.MONTH) + "/" + fechas.get(Calendar.DAY_OF_MONTH);
+            String hora = fechas.get(Calendar.HOUR) + ":" + fechas.get(Calendar.MINUTE) + ":" + fechas.get(Calendar.SECOND);
+            Logger.getLogger(AnioController.class.getName()).info("etas son la fecha y hora" + fecha + hora);
             //Ip Cliente
-            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr(); 
-            Logger.getLogger(AnioController.class.getName()).info("despues de recuperar ip");
+            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+                     
             
+            Logger.getLogger(AnioController.class.getName()).info("despues de recuperar ip");
+
             //Tabla
             Logger.getLogger(AnioController.class.getName()).info("antes de tabla");
-            String tabla = this.itemClass.toString();
-            Logger.getLogger(AnioController.class.getName()).info("despues de tabla");
+//            String tabla = this.itemClass.toString();
+            Logger.getLogger(AnioController.class.getName()).info("tabla es: Año");
             //Campos
             //String id = this.selected.getId().toString();
             String anio = this.selected.getAnio();
             String nombre = this.selected.getNombre();
             String vigente = String.valueOf(this.selected.getVigente());
-            Logger.getLogger(AnioController.class.getName()).info("Datos llenados");
-            
+            Logger.getLogger(AnioController.class.getName()).info("Datos llenados: " + anio + nombre + vigente);
+
 //            Bitacora bitacora = new Bitacora();
-            
 //            if(bitacora == null ){
 //                Logger.getLogger(AnioController.class.getName()).error("el objeto bitacora es nullllll");
 //            }
-            
             bitacora.setUsuario(" ");
             bitacora.setIpCliente(ip_cliente);
-            Logger.getLogger(AnioController.class.getName()).info("la ip es "+ip_cliente);
-            bitacora.setFecha(" ");
-            bitacora.setHora(" ");
-            bitacora.setTabla(tabla);
-            bitacora.setColumna("Año");  
+            Logger.getLogger(AnioController.class.getName()).info("la ip es " + ip_cliente);
+            bitacora.setFecha(fecha);
+            bitacora.setHora(hora);
+            bitacora.setTabla("AÑO");
+            bitacora.setColumna("AÑO");
             bitacora.setAccion("CREAR");
             bitacora.setValorAct(anio);
             bitacora.setValorAnt(null);
             Logger.getLogger(AnioController.class.getName()).info("Antes de guardar");
             bitacoraC.edit(bitacora);
             Logger.getLogger(AnioController.class.getName()).info("campo año agregado");
-            
+
             bitacora.setColumna("Nombre");
             bitacora.setValorAct(nombre);
-            bitacora.setValorAnt("");
-            //bitacoraC.edit(bitacora);
-            
+            Logger.getLogger(AnioController.class.getName()).info("antes de agregar nombre");
+            bitacoraC.edit(bitacora);
+
             bitacora.setColumna("Vigente");
             bitacora.setValorAct(vigente);
-            bitacora.setValorAnt("");
-            //bitacoraC.edit(bitacora);
-            
+            bitacora.setValorAnt(null);
+            bitacoraC.edit(bitacora);
+
         } else {
             this.anioFacade.edit(objeto);
             Logger.getLogger(AnioController.class.getName()).info("No creo, lo actualizo");
         }
-        
+
     }
 
     @Override
