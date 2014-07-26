@@ -20,11 +20,12 @@ import org.apache.log4j.Logger;
 @ViewScoped
 public class AnioController extends AbstractController<Anio> {
     //private static final Logger log = Logger.getLogger(AnioController.class.getClass());
-
+    BitacoraController bitacoraC = new BitacoraController();
+    
     @EJB
     private AnioFacadeLocal anioFacade;
-    @Inject
-    private BitacoraController bitacoraC;
+    
+    
     @Inject
     private ContratoController contratoListController;
     @Inject
@@ -85,7 +86,7 @@ public class AnioController extends AbstractController<Anio> {
     @Override
     protected void edit(Anio objeto) {
         if (this.esNuevo) {
-            bitacoraC.prepareCreate(null);
+            Bitacora bitacora = bitacoraC.prepareCreate(null);
             Logger.getLogger(AnioController.class.getName()).info("es nuevo");
             if(this.bitacoraC == null){
                 Logger.getLogger(AnioController.class.getName()).info("bitacora ejb es null");
@@ -101,7 +102,7 @@ public class AnioController extends AbstractController<Anio> {
             }
             String fecha = fechas.get(Calendar.YEAR) +"/"+fechas.get(Calendar.MONTH)+"/"+fechas.get(Calendar.DAY_OF_MONTH);
             String hora = fechas.get(Calendar.HOUR)+":"+fechas.get(Calendar.MINUTE)+":"+fechas.get(Calendar.SECOND);
-            Logger.getLogger(AnioController.class.getName()).info("antes de recuperar ip");
+            Logger.getLogger(AnioController.class.getName()).info("etas son la fecha y hora"+fecha+hora);
             //Ip Cliente
             String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr(); 
             Logger.getLogger(AnioController.class.getName()).info("despues de recuperar ip");
@@ -117,17 +118,17 @@ public class AnioController extends AbstractController<Anio> {
             String vigente = String.valueOf(this.selected.getVigente());
             Logger.getLogger(AnioController.class.getName()).info("Datos llenados");
             
-            Bitacora bitacora = new Bitacora();
+//            Bitacora bitacora = new Bitacora();
             
 //            if(bitacora == null ){
 //                Logger.getLogger(AnioController.class.getName()).error("el objeto bitacora es nullllll");
 //            }
             
-            bitacora.setUsuario(null);
+            bitacora.setUsuario(" ");
             bitacora.setIpCliente(ip_cliente);
             Logger.getLogger(AnioController.class.getName()).info("la ip es "+ip_cliente);
-            bitacora.setFecha(null);
-            bitacora.setHora(null);
+            bitacora.setFecha(" ");
+            bitacora.setHora(" ");
             bitacora.setTabla(tabla);
             bitacora.setColumna("Año");  
             bitacora.setAccion("CREAR");
@@ -140,15 +141,16 @@ public class AnioController extends AbstractController<Anio> {
             bitacora.setColumna("Nombre");
             bitacora.setValorAct(nombre);
             bitacora.setValorAnt("");
-            bitacoraC.edit(bitacora);
+            //bitacoraC.edit(bitacora);
             
             bitacora.setColumna("Vigente");
             bitacora.setValorAct(vigente);
             bitacora.setValorAnt("");
-            bitacoraC.edit(bitacora);
+            //bitacoraC.edit(bitacora);
             
         } else {
             this.anioFacade.edit(objeto);
+            Logger.getLogger(AnioController.class.getName()).info("No creo, lo actualizo");
         }
         
     }
