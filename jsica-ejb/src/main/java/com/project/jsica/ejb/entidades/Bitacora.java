@@ -7,6 +7,7 @@
 package com.project.jsica.ejb.entidades;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,6 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Bitacora.findById", query = "SELECT b FROM Bitacora b WHERE b.id = :id"),
     @NamedQuery(name = "Bitacora.findByIpCliente", query = "SELECT b FROM Bitacora b WHERE b.ipCliente = :ipCliente"),
     @NamedQuery(name = "Bitacora.findByUsuario", query = "SELECT b FROM Bitacora b WHERE b.usuario = :usuario"),
+    @NamedQuery(name = "Bitacora.findByFecha", query = "SELECT b FROM Bitacora b WHERE b.fecha = :fecha"),
+    @NamedQuery(name = "Bitacora.findByHora", query = "SELECT b FROM Bitacora b WHERE b.hora = :hora"),
     @NamedQuery(name = "Bitacora.findByTabla", query = "SELECT b FROM Bitacora b WHERE b.tabla = :tabla"),
     @NamedQuery(name = "Bitacora.findByColumna", query = "SELECT b FROM Bitacora b WHERE b.columna = :columna"),
     @NamedQuery(name = "Bitacora.findByAccion", query = "SELECT b FROM Bitacora b WHERE b.accion = :accion"),
@@ -44,13 +49,18 @@ public class Bitacora implements Serializable {
     @Basic(optional = false)    
     @NotNull
     @Column(name = "id")
-    private Long id;
-    @Size(max = 15)
+    private Long id;    
     @Column(name = "ip_cliente")
     private String ipCliente;
     @Size(max = 255)
     @Column(name = "usuario")
     private String usuario;
+    @Size(max = 255)
+    @Column(name = "fecha")
+    private String fecha;
+    @Size(max = 255)
+    @Column(name = "hora")
+    private String hora;
     @Size(max = 255)
     @Column(name = "tabla")
     private String tabla;
@@ -98,6 +108,22 @@ public class Bitacora implements Serializable {
         this.usuario = usuario;
     }
 
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }    
+        
     public String getTabla() {
         return tabla;
     }
@@ -152,10 +178,7 @@ public class Bitacora implements Serializable {
             return false;
         }
         Bitacora other = (Bitacora) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override

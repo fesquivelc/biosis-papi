@@ -1,12 +1,15 @@
 package com.project.jsica.cdi;
 
 import com.project.jsica.cdi.util.JsfUtil;
+import com.project.jsica.ejb.dao.BitacoraFacadeLocal;
+import com.project.jsica.ejb.entidades.Bitacora;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -28,7 +31,8 @@ public abstract class AbstractController<T> implements Serializable {
     private Class controller;
     protected T selected;
     protected Collection<T> items;
-    private boolean esNuevo;
+    protected boolean esNuevo = false;
+    
     
     
     
@@ -188,6 +192,7 @@ public abstract class AbstractController<T> implements Serializable {
                     }else{
                         Logger.getLogger(itemClass).info("ACTUALIZATE");
                     }
+                    
                     this.edit(selected);
                     this.esNuevo = false;
                     
@@ -213,7 +218,7 @@ public abstract class AbstractController<T> implements Serializable {
                     }
                 }
             } catch (Exception ex) {
-                Logger.getLogger(controller).error(ex);
+                Logger.getLogger(controller).error(ex.getStackTrace());
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/MyBundle").getString("PersistenceErrorOccured"));
             }
         }
@@ -229,6 +234,7 @@ public abstract class AbstractController<T> implements Serializable {
      */
     public T prepareCreate(ActionEvent event) {
         T newItem;
+        esNuevo = true;
         try {
             newItem = itemClass.newInstance();
             this.selected = newItem;
