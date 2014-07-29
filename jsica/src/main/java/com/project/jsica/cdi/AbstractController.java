@@ -31,7 +31,7 @@ public abstract class AbstractController<T> implements Serializable {
     private Class controller;
     protected T selected;
     protected Collection<T> items;
-    protected boolean esNuevo = false;
+    protected boolean esNuevo;
     
     
     
@@ -185,7 +185,9 @@ public abstract class AbstractController<T> implements Serializable {
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             this.setEmbeddableKeys();
+            
             try {
+                Logger.getLogger(itemClass.getName()).info("selected no es null");
                 if (persistAction != PersistAction.DELETE) {
                     if(this.esNuevo){
                         Logger.getLogger(itemClass).info("LO NUEVO NUEVO");
@@ -213,14 +215,18 @@ public abstract class AbstractController<T> implements Serializable {
                         if (msg.length() > 0) {
                             JsfUtil.addErrorMessage(msg);
                         } else {
-                            JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+//                            JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+                            JsfUtil.addErrorMessage(ex, "error en el try e.e");
                         }
                     }
                 }
             } catch (Exception ex) {
-                Logger.getLogger(controller).error(ex.getStackTrace());
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/MyBundle").getString("PersistenceErrorOccured"));
+                Logger.getLogger(controller).error(this.selected.toString());
+//                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/MyBundle").getString("PersistenceErrorOccured"));
+                JsfUtil.addErrorMessage(ex, "error en el catch :c");
             }
+        }else{
+            Logger.getLogger(this.itemClass).error("selected es null");
         }
     }
 
@@ -234,7 +240,6 @@ public abstract class AbstractController<T> implements Serializable {
      */
     public T prepareCreate(ActionEvent event) {
         T newItem;
-        esNuevo = true;
         try {
             newItem = itemClass.newInstance();
             this.selected = newItem;
