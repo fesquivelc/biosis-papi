@@ -14,16 +14,16 @@
                 <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('AreaListForm:viewButton').click();" icon="ui-icon-search"/>
                 <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('AreaListForm:editButton').click();" icon="ui-icon-pencil"/>
                 <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('AreaListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.AreaMenuItem_detalleContratoList}" icon="ui-icon-search"  action="#{areaController.navigateDetalleContratoList}" disabled="#{empty areaController.selected.detalleContratoList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.AreaMenuItem_sucursalId}" icon="ui-icon-search"  actionListener="#{areaController.prepareSucursalId}" update=":SucursalViewForm" oncomplete="PF('SucursalViewDialog').show()" disabled="#{empty areaController.selected.sucursalId}"/>  
-                <p:menuitem value="#{myBundle.AreaMenuItem_servicioList}" icon="ui-icon-search"  action="#{areaController.navigateServicioList}" disabled="#{empty areaController.selected.servicioList}" ajax="false"/>  
+                <p:separator/>                
+                <p:menuitem value="#{myBundle.AreaMenuItem_sucursalId}" icon="ui-icon-search"  actionListener="#{areaController.prepareSucursalId}" update=":SucursalViewForm" oncomplete="PF('SucursalViewDialog').show()" disabled="#{empty areaController.selected.sucursalId}"/>    
             </p:contextMenu>
+            
             <p:dataTable id="datalist"
                          value="#{areaController.items}"
                          var="item"
                          rowKey="#{item.id}"
                          paginator="true"
+                         paginatorPosition="bottom"
                          rows="10"
                          rowsPerPageTemplate="10,20,30,40,50"
                          selectionMode="single"
@@ -33,19 +33,12 @@
                 <p:ajax event="rowUnselect" update=":AreaListForm:createButton :AreaListForm:viewButton :AreaListForm:editButton :AreaListForm:deleteButton :AreaListForm:AreaDataTableContextMenu" listener="#{areaController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('AreaListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListAreaTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
-
-
+                
                 <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListAreaTitle_nombre}"/>
                     </f:facet>
-                    <h:outputText value="#{item.nombre}"/>
+                    <h:outputText value="#{item.nombre.toUpperCase()}"/>
                 </p:column>
 
 
@@ -53,7 +46,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListAreaTitle_descripcion}"/>
                     </f:facet>
-                    <h:outputText value="#{item.descripcion}"/>
+                    <h:outputText value="#{item.descripcion.toUpperCase()}"/>
                 </p:column>
 
 
@@ -61,7 +54,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListAreaTitle_sucursalId}"/>
                     </f:facet>
-                    <h:outputText value="#{item.sucursalId.descripcion}"/>
+                    <h:outputText value="#{item.sucursalId.descripcion.toUpperCase()}"/>
                 </p:column>
 
 
