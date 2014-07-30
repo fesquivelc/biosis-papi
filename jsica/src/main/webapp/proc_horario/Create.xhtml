@@ -74,16 +74,6 @@
                         <h:outputLabel for="allDay" value="Vacaciones:" />
                         <h:selectBooleanCheckbox id="allDay" value="#{scheduleView.event.allDay}" />
 
-                        <h:outputLabel for="from" value="Entrada" />
-                        <p:inputMask id="from" value="#{scheduleView.event.startDate}" mask="99:99">
-                            <f:convertDateTime pattern="H:mm" />
-                        </p:inputMask>
-
-                        <h:outputLabel for="to" value="Salida:" />
-                        <p:inputMask id="to" value="#{scheduleView.event.endDate}" mask="99:99">
-                            <f:convertDateTime pattern="H:mm" />
-                        </p:inputMask>
-
                         <p:commandButton type="reset" value="Resetear" />
                         <p:commandButton id="addButton" value="Guardar" actionListener="#{scheduleView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
                     </h:panelGrid>
