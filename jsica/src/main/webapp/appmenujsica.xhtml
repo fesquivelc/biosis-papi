@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <h:form>
+            <p:menubar>
+                <p:menuitem value="#{myBundle.Home}" outcome="/index" icon="ui-icon-home"/>
+                <p:submenu label="Asistencia">
+                    <p:menuitem value="Registro de Asistencia Diaria"/>
+                    <p:menuitem value="Resumen de Asistencia"/>
+                    <p:menuitem value="Tardanzas"  />
+                    <p:menuitem value="Registro Consolidado de Asistencia"/>
+                    <p:menuitem value="Permisos"  />
+                    <p:menuitem value="Licencias"/>
+                    <p:menuitem value="Vacaciones y Saldos Vacacionales" />
+                    <p:menuitem value="Suspensiones"/>
+                 </p:submenu>
+                <p:submenu label="Horarios">
+                    <p:menuitem value="Creación" outcome="/proc_horario/index"/>
+                    <p:menuitem value="Creación de Parámetros"/>
+                    <p:menuitem value="Programación"/>
+                </p:submenu>
+                <p:submenu label="Personal">
+                    <p:menuitem value="Registro de Personal"/>
+                    <p:menuitem value="Legajo del Personal"/>
+                    <p:menuitem value="Importar Data"/>
+                </p:submenu>
+                <p:submenu label="Configuración">
+                    <p:menuitem value="Áreas"/>
+                    <p:menuitem value="Nivel"/>
+                    <p:menuitem value="Grupos"/>
+                    <p:menuitem value="Sedes"/>
+                    <p:menuitem value="Equipos Biométricos"/>
+                </p:submenu>
+                <p:submenu label="Usuarios">
+                    <p:menuitem value="Gestión de Grupos"/>
+                    <p:menuitem value="Gestión de Roles"/>
+                    <p:menuitem value="Creación de Usuarios"/>
+                    <p:menuitem value="Cambiar de Password"/>
+                </p:submenu>
+                <p:submenu label="#{myBundle.Maintenance}">
+                    <p:menuitem value="#{myBundle.AnioHeading}..." outcome="/anio/index" />
+                    <p:menuitem value="#{myBundle.AreaHeading}..." outcome="/area/index" />
+                    <p:menuitem value="#{myBundle.BiometricoHeading}..." outcome="/biometrico/index" />
+                    <p:menuitem value="#{myBundle.CambioTurnoHeading}..." outcome="/cambioTurno/index" />
+                    <p:menuitem value="#{myBundle.CondicionLaboralHeading}..." outcome="/condicionLaboral/index" />
+                    <p:menuitem value="#{myBundle.ContratoHeading}..." outcome="/contrato/index" />
+                    <p:menuitem value="#{myBundle.DetalleContratoHeading}..." outcome="/detalleContrato/index" />
+                    <p:menuitem value="#{myBundle.DetalleHorarioHeading}..." outcome="/detalleHorario/index" />
+                    <p:menuitem value="#{myBundle.EmpleadoHeading}..." outcome="/empleado/index" />
+                    <p:menuitem value="#{myBundle.EmpleadoHorarioHeading}..." outcome="/empleadoHorario/index" />
+                    <p:menuitem value="#{myBundle.EmpleadoPermisoHeading}..." outcome="/empleadoPermiso/index" />
+                    <p:menuitem value="#{myBundle.FaltaHeading}..." outcome="/falta/index" />
+                    <p:menuitem value="#{myBundle.FeriadoHeading}..." outcome="/feriado/index" />
+                    <p:menuitem value="#{myBundle.FichaGeneralEmpleadoHeading}..." outcome="/fichaGeneralEmpleado/index" />
+                    <p:menuitem value="#{myBundle.FichaLaboralEmpleadoHeading}..." outcome="/fichaLaboralEmpleado/index" />
+                    <p:menuitem value="#{myBundle.GrupoHorarioHeading}..." outcome="/grupoHorario/index" />
+                    <p:menuitem value="#{myBundle.HorarioHeading}..." outcome="/horario/index" />
+                    <p:menuitem value="#{myBundle.JornadaHeading}..." outcome="/jornada/index" />
+                    <p:menuitem value="#{myBundle.MotivoPermisoHeading}..." outcome="/motivoPermiso/index" />
+                    <p:menuitem value="#{myBundle.NivelEducativoHeading}..." outcome="/nivelEducativo/index" />
+                    <p:menuitem value="#{myBundle.OcupacionHeading}..." outcome="/ocupacion/index" />
+                    <p:menuitem value="#{myBundle.PapeletaHeading}..." outcome="/papeleta/index" />
+                    <p:menuitem value="#{myBundle.PermisoHeading}..." outcome="/permiso/index" />
+                    <p:menuitem value="#{myBundle.RegimenLaboralHeading}..." outcome="/regimenLaboral/index" />
+                    <p:menuitem value="#{myBundle.RegistroAsistenciaHeading}..." outcome="/registroAsistencia/index" />
+                    <p:menuitem value="#{myBundle.RolHeading}..." outcome="/rol/index" />
+                    <p:menuitem value="#{myBundle.ServicioHeading}..." outcome="/servicio/index" />
+                    <p:menuitem value="#{myBundle.SucursalHeading}..." outcome="/sucursal/index" />
+                    <p:menuitem value="#{myBundle.SuspensionHeading}..." outcome="/suspension/index" />
+                    <p:menuitem value="#{myBundle.TipoContratoHeading}..." outcome="/tipoContrato/index" />
+                    <p:menuitem value="#{myBundle.TipoEmpleadoHeading}..." outcome="/tipoEmpleado/index" />
+                    <p:menuitem value="#{myBundle.UsuarioHeading}..." outcome="/usuario/index" />
+                    <p:menuitem value="#{myBundle.VacacionHeading}..." outcome="/vacacion/index" />
+                </p:submenu>
+                <f:facet name="options">                       
+                        <p:commandButton type="button" value="Cerrar Sesión" icon="ui-icon-extlink" />
+                </f:facet>
+            </p:menubar>
+        </h:form>
+    </ui:composition>
+</html>
+
