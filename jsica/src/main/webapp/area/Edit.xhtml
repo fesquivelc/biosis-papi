@@ -14,15 +14,12 @@
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{areaController.selected != null}">
 
-
-                        <h:outputLabel value="#{myBundle.EditAreaLabel_id}" for="id" />
-                        <h:outputText id="id" value="#{areaController.selected.id}" />
-
+                        
                         <p:outputLabel value="#{myBundle.EditAreaLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{areaController.selected.nombre}" title="#{myBundle.EditAreaTitle_nombre}" required="true" requiredMessage="#{myBundle.EditAreaRequiredMessage_nombre}" size="255" maxlength="255"/>
+                        <p:inputText id="nombre" value="#{areaController.selected.nombre}" title="#{myBundle.EditAreaTitle_nombre}" required="true" requiredMessage="#{myBundle.EditAreaRequiredMessage_nombre}" size="45" maxlength="45"/>
 
                         <p:outputLabel value="#{myBundle.EditAreaLabel_descripcion}" for="descripcion" />
-                        <p:inputText id="descripcion" value="#{areaController.selected.descripcion}" title="#{myBundle.EditAreaTitle_descripcion}" size="255" maxlength="255"/>
+                        <p:inputText id="descripcion" value="#{areaController.selected.descripcion}" title="#{myBundle.EditAreaTitle_descripcion}" size="45" maxlength="45"/>
 
                         <p:outputLabel value="#{myBundle.EditAreaLabel_sucursalId}" for="sucursalId" />
                         <p:selectOneMenu id="sucursalId" value="#{areaController.selected.sucursalId}" required="true" requiredMessage="#{myBundle.EditAreaRequiredMessage_sucursalId}" converter="sucursalConverter">
@@ -30,7 +27,7 @@
                             <f:selectItems value="#{sucursalController.items}"
                                            var="sucursalIdItem"
                                            itemValue="#{sucursalIdItem}"
-                                           itemLabel="#{sucursalIdItem.descripcion.toString()}"
+                                           itemLabel="#{sucursalIdItem.descripcion.toString().toUpperCase()}"
                                            />
 
                         </p:selectOneMenu>
