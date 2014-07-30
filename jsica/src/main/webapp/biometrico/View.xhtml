@@ -13,25 +13,22 @@
             <h:form id="BiometricoViewForm">
 
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{biometricoController.selected != null}">
-
-                        <h:outputText value="#{myBundle.ViewBiometricoLabel_id}"/>
-                        <h:outputText value="#{biometricoController.selected.id}" title="#{myBundle.ViewBiometricoTitle_id}"/>
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{biometricoController.selected != null}">                        
 
                         <h:outputText value="#{myBundle.ViewBiometricoLabel_ipv4}"/>
-                        <h:outputText value="#{biometricoController.selected.ipv4}" title="#{myBundle.ViewBiometricoTitle_ipv4}"/>
+                        <h:outputText value="#{biometricoController.selected.ipv4.toUpperCase()}" title="#{myBundle.ViewBiometricoTitle_ipv4}"/>
 
                         <h:outputText value="#{myBundle.ViewBiometricoLabel_ipv6}"/>
-                        <h:outputText value="#{biometricoController.selected.ipv6}" title="#{myBundle.ViewBiometricoTitle_ipv6}"/>
+                        <h:outputText value="#{biometricoController.selected.ipv6.toUpperCase()}" title="#{myBundle.ViewBiometricoTitle_ipv6}"/>
 
                         <h:outputText value="#{myBundle.ViewBiometricoLabel_modelo}"/>
-                        <h:outputText value="#{biometricoController.selected.modelo}" title="#{myBundle.ViewBiometricoTitle_modelo}"/>
+                        <h:outputText value="#{biometricoController.selected.modelo.toUpperCase()}" title="#{myBundle.ViewBiometricoTitle_modelo}"/>
 
                         <h:outputText value="#{myBundle.ViewBiometricoLabel_marca}"/>
-                        <h:outputText value="#{biometricoController.selected.marca}" title="#{myBundle.ViewBiometricoTitle_marca}"/>
+                        <h:outputText value="#{biometricoController.selected.marca.toUpperCase()}" title="#{myBundle.ViewBiometricoTitle_marca}"/>
 
                         <h:outputText value="#{myBundle.ViewBiometricoLabel_sucursalId}"/>
-                        <h:outputText value="#{biometricoController.selected.sucursalId.descripcion}"/>
+                        <h:outputText value="#{biometricoController.selected.sucursalId.descripcion.toUpperCase()}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('BiometricoViewDialog').hide()"/>
                 </h:panelGroup>
