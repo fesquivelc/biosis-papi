@@ -22,10 +22,10 @@
                         <p:inputText id="ipv6" value="#{biometricoController.selected.ipv6}" title="#{myBundle.CreateBiometricoTitle_ipv6}" size="45" maxlength="45"/>
 
                         <p:outputLabel value="#{myBundle.CreateBiometricoLabel_modelo}" for="modelo" />
-                        <p:inputText id="modelo" value="#{biometricoController.selected.modelo}" title="#{myBundle.CreateBiometricoTitle_modelo}" required="true" requiredMessage="#{myBundle.CreateBiometricoRequiredMessage_modelo}" size="255" maxlength="255"/>
+                        <p:inputText id="modelo" value="#{biometricoController.selected.modelo}" title="#{myBundle.CreateBiometricoTitle_modelo}" required="true" requiredMessage="#{myBundle.CreateBiometricoRequiredMessage_modelo}" size="70" maxlength="70"/>
 
                         <p:outputLabel value="#{myBundle.CreateBiometricoLabel_marca}" for="marca" />
-                        <p:inputText id="marca" value="#{biometricoController.selected.marca}" title="#{myBundle.CreateBiometricoTitle_marca}" required="true" requiredMessage="#{myBundle.CreateBiometricoRequiredMessage_marca}" size="255" maxlength="255"/>
+                        <p:inputText id="marca" value="#{biometricoController.selected.marca}" title="#{myBundle.CreateBiometricoTitle_marca}" required="true" requiredMessage="#{myBundle.CreateBiometricoRequiredMessage_marca}" size="70" maxlength="70"/>
 
                         <p:outputLabel value="#{myBundle.CreateBiometricoLabel_sucursalId}" for="sucursalId" />
                         <p:selectOneMenu id="sucursalId" value="#{biometricoController.selected.sucursalId}" required="true" requiredMessage="#{myBundle.CreateBiometricoRequiredMessage_sucursalId}" converter="sucursalConverter">
@@ -33,7 +33,7 @@
                             <f:selectItems value="#{sucursalController.items}"
                                            var="sucursalIdItem"
                                            itemValue="#{sucursalIdItem}"
-                                           itemLabel="#{sucursalIdItem.descripcion.toString()}"
+                                           itemLabel="#{sucursalIdItem.nombre.toString()}"
                                            />
 
                         </p:selectOneMenu>
