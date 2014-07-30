@@ -14,17 +14,15 @@
                 <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('SucursalListForm:viewButton').click();" icon="ui-icon-search"/>
                 <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('SucursalListForm:editButton').click();" icon="ui-icon-pencil"/>
                 <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('SucursalListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.SucursalMenuItem_areaList}" icon="ui-icon-search"  action="#{sucursalController.navigateAreaList}" disabled="#{empty sucursalController.selected.areaList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.SucursalMenuItem_sucursalList}" icon="ui-icon-search"  action="#{sucursalController.navigateSucursalList}" disabled="#{empty sucursalController.selected.sucursalList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.SucursalMenuItem_principalId}" icon="ui-icon-search"  actionListener="#{sucursalController.preparePrincipalId}" update=":SucursalViewForm" oncomplete="PF('SucursalViewDialog').show()" disabled="#{empty sucursalController.selected.principalId}"/>  
-                <p:menuitem value="#{myBundle.SucursalMenuItem_biometricoList}" icon="ui-icon-search"  action="#{sucursalController.navigateBiometricoList}" disabled="#{empty sucursalController.selected.biometricoList}" ajax="false"/>  
+                <p:separator/>                
+                <p:menuitem value="#{myBundle.SucursalMenuItem_principalId}" icon="ui-icon-search"  actionListener="#{sucursalController.preparePrincipalId}" update=":SucursalViewForm" oncomplete="PF('SucursalViewDialog').show()" disabled="#{empty sucursalController.selected.principalId}"/>               
             </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{sucursalController.items}"
                          var="item"
                          rowKey="#{item.id}"
                          paginator="true"
+                         paginatorPosition="bottom"                         
                          rows="10"
                          rowsPerPageTemplate="10,20,30,40,50"
                          selectionMode="single"
@@ -33,15 +31,7 @@
                 <p:ajax event="rowSelect"   update=":SucursalListForm:createButton :SucursalListForm:viewButton :SucursalListForm:editButton :SucursalListForm:deleteButton :SucursalListForm:SucursalDataTableContextMenu" listener="#{sucursalController.resetParents}"/>
                 <p:ajax event="rowUnselect" update=":SucursalListForm:createButton :SucursalListForm:viewButton :SucursalListForm:editButton :SucursalListForm:deleteButton :SucursalListForm:SucursalDataTableContextMenu" listener="#{sucursalController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('SucursalListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListSucursalTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
-
-
+               
                 <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListSucursalTitle_nombre}"/>
