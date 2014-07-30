@@ -32,8 +32,12 @@
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_situacionTrabajador}" for="situacionTrabajador" />
                                 <p:inputText id="situacionTrabajador" value="#{empleadoController.selected.situacionTrabajador}" title="#{myBundle.CreateEmpleadoTitle_situacionTrabajador}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_situacionTrabajador}" size="45" maxlength="45"/>
 
-                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_sexo}" for="sexo" />
-                                <p:inputText id="sexo" value="#{empleadoController.selected.sexo}" title="#{myBundle.CreateEmpleadoTitle_sexo}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_sexo}"/>
+                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_sexo}"  />
+                                <p:selectOneMenu id="idgenero" value="#{empleadoController.selected.sexo}" required="true" >
+                                    <f:selectItem itemLabel="Seleccione Uno" itemValue="" noSelectionOption="true" />                                  
+                                    <f:selectItem itemLabel="Femenino" itemValue="F"  />
+                                    <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                </p:selectOneMenu>                             
 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_foto}" for="foto" />
                                 <p:inputText id="foto" value="#{empleadoController.selected.foto}" title="#{myBundle.CreateEmpleadoTitle_foto}" size="75" maxlength="75"/>

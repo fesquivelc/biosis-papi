@@ -14,9 +14,7 @@
                 <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('EmpleadoListForm:viewButton').click();" icon="ui-icon-search"/>
                 <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('EmpleadoListForm:editButton').click();" icon="ui-icon-pencil"/>
                 <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('EmpleadoListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_registroAsistenciaList}" icon="ui-icon-search"  action="#{empleadoController.navigateRegistroAsistenciaList}" disabled="#{empty empleadoController.selected.registroAsistenciaList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_detalleContratoList}" icon="ui-icon-search"  action="#{empleadoController.navigateDetalleContratoList}" disabled="#{empty empleadoController.selected.detalleContratoList}" ajax="false"/>  
+                <p:separator/>               
                 <p:menuitem value="#{myBundle.EmpleadoMenuItem_grupoHorarioId}" icon="ui-icon-search"  actionListener="#{empleadoController.prepareGrupoHorarioId}" update=":GrupoHorarioViewForm" oncomplete="PF('GrupoHorarioViewDialog').show()" disabled="#{empty empleadoController.selected.grupoHorarioId}"/>  
                 <p:menuitem value="#{myBundle.EmpleadoMenuItem_empleadoList}" icon="ui-icon-search"  action="#{empleadoController.navigateEmpleadoList}" disabled="#{empty empleadoController.selected.empleadoList}" ajax="false"/>  
                 <p:menuitem value="#{myBundle.EmpleadoMenuItem_empleadoId}" icon="ui-icon-search"  actionListener="#{empleadoController.prepareEmpleadoId}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty empleadoController.selected.empleadoId}"/>  
@@ -42,7 +40,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoTitle_nombres}"/>
                     </f:facet>
-                    <h:outputText value="#{item.nombres}"/>
+                    <h:outputText value="#{item.nombres.toUpperCase()}"/>
                 </p:column>
 
 
@@ -50,7 +48,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoTitle_apellidos}"/>
                     </f:facet>
-                    <h:outputText value="#{item.apellidos}"/>
+                    <h:outputText value="#{item.apellidos.toUpperCase()}"/>
                 </p:column>
 
 
@@ -58,7 +56,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoTitle_docIdentidad}"/>
                     </f:facet>
-                    <h:outputText value="#{item.docIdentidad}"/>
+                    <h:outputText value="#{item.docIdentidad.toUpperCase()}"/>
                 </p:column>
 
 
@@ -71,13 +69,14 @@
                     </h:outputText>
                 </p:column>
 
-
-                <p:column sortBy="#{item.situacionTrabajador}" filterBy="#{item.situacionTrabajador}">
+               
+                <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
                     <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListEmpleadoTitle_situacionTrabajador}"/>
+                        <h:outputText value="#{myBundle.ListEmpleadoTitle_empleadoId}"/>
                     </f:facet>
-                    <h:outputText value="#{item.situacionTrabajador}"/>
+                    <h:outputText value="#{item.empleadoId.apellidos.toUpperCase()} #{item.empleadoId.nombres.toUpperCase()}"/>
                 </p:column>
+
 
                 <!--
                                     <p:column sortBy="#{item.sexo}" filterBy="#{item.sexo}">
@@ -103,14 +102,7 @@
                                         <h:outputText value="#{item.grupoHorarioId.id}"/>
                                     </p:column>
                 -->
-                <!--
-                                    <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListEmpleadoTitle_empleadoId}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.empleadoId.id}"/>
-                                    </p:column>
-                -->
+                
                 <!--
                                     <p:column sortBy="#{item.servicioId.descripcion}" filterBy="#{item.servicioId.descripcion}">
                                         <f:facet name="header">
