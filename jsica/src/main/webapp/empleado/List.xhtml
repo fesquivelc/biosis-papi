@@ -21,24 +21,14 @@
                 <p:menuitem value="#{myBundle.EmpleadoMenuItem_empleadoList}" icon="ui-icon-search"  action="#{empleadoController.navigateEmpleadoList}" disabled="#{empty empleadoController.selected.empleadoList}" ajax="false"/>  
                 <p:menuitem value="#{myBundle.EmpleadoMenuItem_empleadoId}" icon="ui-icon-search"  actionListener="#{empleadoController.prepareEmpleadoId}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty empleadoController.selected.empleadoId}"/>  
                 <p:menuitem value="#{myBundle.EmpleadoMenuItem_servicioId}" icon="ui-icon-search"  actionListener="#{empleadoController.prepareServicioId}" update=":ServicioViewForm" oncomplete="PF('ServicioViewDialog').show()" disabled="#{empty empleadoController.selected.servicioId}"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_cambioTurnoList}" icon="ui-icon-search"  action="#{empleadoController.navigateCambioTurnoList}" disabled="#{empty empleadoController.selected.cambioTurnoList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_suspensionList}" icon="ui-icon-search"  action="#{empleadoController.navigateSuspensionList}" disabled="#{empty empleadoController.selected.suspensionList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_empleadoPermisoList}" icon="ui-icon-search"  action="#{empleadoController.navigateEmpleadoPermisoList}" disabled="#{empty empleadoController.selected.empleadoPermisoList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_fichaGeneralEmpleadoList}" icon="ui-icon-search"  action="#{empleadoController.navigateFichaGeneralEmpleadoList}" disabled="#{empty empleadoController.selected.fichaGeneralEmpleadoList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_papeletaList}" icon="ui-icon-search"  action="#{empleadoController.navigatePapeletaList}" disabled="#{empty empleadoController.selected.papeletaList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_papeletaList1}" icon="ui-icon-search"  action="#{empleadoController.navigatePapeletaList1}" disabled="#{empty empleadoController.selected.papeletaList1}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_papeletaList2}" icon="ui-icon-search"  action="#{empleadoController.navigatePapeletaList2}" disabled="#{empty empleadoController.selected.papeletaList2}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_faltaList}" icon="ui-icon-search"  action="#{empleadoController.navigateFaltaList}" disabled="#{empty empleadoController.selected.faltaList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_vacacionList}" icon="ui-icon-search"  action="#{empleadoController.navigateVacacionList}" disabled="#{empty empleadoController.selected.vacacionList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_empleadoHorarioList}" icon="ui-icon-search"  action="#{empleadoController.navigateEmpleadoHorarioList}" disabled="#{empty empleadoController.selected.empleadoHorarioList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_usuarioList}" icon="ui-icon-search"  action="#{empleadoController.navigateUsuarioList}" disabled="#{empty empleadoController.selected.usuarioList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_fichaLaboralEmpleadoList}" icon="ui-icon-search"  action="#{empleadoController.navigateFichaLaboralEmpleadoList}" disabled="#{empty empleadoController.selected.fichaLaboralEmpleadoList}" ajax="false"/>  
+                
             </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{empleadoController.items}"
                          var="item"
                          rowKey="#{item.id}"
                          paginator="true"
+                         paginatorPosition="bottom"
                          rows="10"
                          rowsPerPageTemplate="10,20,30,40,50"
                          selectionMode="single"
@@ -47,15 +37,7 @@
                 <p:ajax event="rowSelect"   update=":EmpleadoListForm:createButton :EmpleadoListForm:viewButton :EmpleadoListForm:editButton :EmpleadoListForm:deleteButton :EmpleadoListForm:EmpleadoDataTableContextMenu" listener="#{empleadoController.resetParents}"/>
                 <p:ajax event="rowUnselect" update=":EmpleadoListForm:createButton :EmpleadoListForm:viewButton :EmpleadoListForm:editButton :EmpleadoListForm:deleteButton :EmpleadoListForm:EmpleadoDataTableContextMenu" listener="#{empleadoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('EmpleadoListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListEmpleadoTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
-
-
+                
                 <p:column sortBy="#{item.nombres}" filterBy="#{item.nombres}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoTitle_nombres}"/>
