@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition> 
+        <h:form id="HorarioCreate">  
+            <p:panel header="Holi">                  
+                <h:panelGrid columns="4" >
+                    <p:outputLabel for="@next" value="Título:"/>
+                    <p:inputText id="idTitulo" value="" label="Título" required="true"/>
+
+                    <p:outputLabel for="@next" value="Sede:"/>
+                    <p:selectOneMenu id="sedes" value="#{sucursalController.selected.id}" required="true"  converter="sucursalConverter">
+                        <f:selectItem itemLabel="Selecciona"/>
+                        <f:selectItems value="#{sucursalController.items}"    
+                                       var="sucursalIdItem"
+                                       itemValue="#{sucursalIdItem}"
+                                       itemLabel="#{sucursalIdItem.nombre.toString()}"/>
+                        <p:ajax listener="#{sucursalController.navigateAreaList()}" update="areas,servicios"/>
+                    </p:selectOneMenu>
+               
+
+                    <p:outputLabel for="@next" value="Descripción:"/>
+                    <p:inputText id="idDescripcion" value="" label="Descripción"/>
+
+                    <p:outputLabel for="@next" value="Area:"/>
+                    <p:selectOneMenu id="areas" value="#{sucursalController.selected.areaList}" required="true" converter="areaConverter">
+                        <f:selectItem itemLabel="Selecciona"/>
+                        <f:selectItems value="#{sucursalController.items}"
+                                       var="areaIdItem"
+                                       itemValue="#{areaIdItem}"
+                                       itemLabel="#{areaIdItem}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="@next" value="Grupo Horario:"/>
+                    <p:selectOneMenu id="grupos" value="#{grupoHorarioController.selected.id}" required="true" converter="grupoHorarioConverter">
+                        <f:selectItem itemLabel="Selecciona" itemValue="0"/>
+                        <f:selectItems value="#{grupoHorarioController.items}"
+                                       var="grupoHorarioIdItem"
+                                       itemValue="#{grupoHorarioIdItem}"
+                                       itemLabel="#{grupoHorarioIdItem.nombre.toString()}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="@next" value="Servicio:"/>
+                    <p:selectOneMenu id="servicios" value="">
+                        <f:selectItem itemLabel="Selecciona"/>
+                        <f:selectItem itemLabel="SERVICIO DE ENFERMERIA UCI" itemValue="2"/>
+                    </p:selectOneMenu>
+
+                </h:panelGrid>
+                <p:separator/>
+                <p:panel style="width: 70%;left: 15%;position: relative;">
+                    <p:growl id="messages" showDetail="true" />
+                    <h3 style="margin-top: 0">Horario Asistencial</h3>
+                    <p:schedule id="schedule" value="#{scheduleView.eventModel}" widgetVar="myschedule" locale="es">
+
+                        <p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                        <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                        <p:ajax event="eventMove" listener="#{scheduleView.onEventMove}" update="messages" />
+                        <p:ajax event="eventResize" listener="#{scheduleView.onEventResize}" update="messages" />
+
+                    </p:schedule>
+                </p:panel>        
+                <p:dialog widgetVar="eventDialog" header="Asignar Jornada" showEffect="clip" hideEffect="clip">
+                    <h:panelGrid id="eventDetails" columns="2">
+                        <h:outputLabel for="title" value="Jornada:" />
+                        <p:selectOneMenu id="jornada" value="">
+                            <f:selectItem itemLabel="Selecciona"/>
+                        </p:selectOneMenu>
+                        <h:outputLabel for="allDay" value="Vacaciones:" />
+                        <h:selectBooleanCheckbox id="allDay" value="#{scheduleView.event.allDay}" />
+
+                        <h:outputLabel for="from" value="Entrada" />
+                        <p:inputMask id="from" value="#{scheduleView.event.startDate}" mask="99:99">
+                            <f:convertDateTime pattern="H:mm" />
+                        </p:inputMask>
+
+                        <h:outputLabel for="to" value="Salida:" />
+                        <p:inputMask id="to" value="#{scheduleView.event.endDate}" mask="99:99">
+                            <f:convertDateTime pattern="H:mm" />
+                        </p:inputMask>
+
+                        <p:commandButton type="reset" value="Resetear" />
+                        <p:commandButton id="addButton" value="Guardar" actionListener="#{scheduleView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                    </h:panelGrid>
+                </p:dialog> 
+                <p:commandButton type="reset" value="Registro Horario"  icon="ui-icon-disk" />
+                <p:commandButton type="reset" value="Corregir Horario" icon="ui-icon-pencil"/>
+                <p:commandButton type="reset" value="Imprimir Listado de Horarios" icon="ui-icon-print"/>
+
+                <script type="text/javascript">
+                    PrimeFaces.locales['es'] = {
+                        closeText: 'cerrar',
+                        prevText: 'atras',
+                        nextText: 'adelante',
+                        currentText: 'hoy dia',
+                        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        monthNamesShort: ['Ener', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                            'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                        dayNamesShort: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'],
+                        weekHeader: 'Hf',
+                        firstDay: 1,
+                        isRTL: false,
+                        showMonthAfterYear: false,
+                        yearSuffix: '',
+                        month: 'Mes',
+                        week: 'Semana',
+                        day: 'Día',
+                        allDayText: 'Todo el Día'
+                    };
+                </script>
+            </p:panel>
+        </h:form>
+    </ui:composition>
+</html>
