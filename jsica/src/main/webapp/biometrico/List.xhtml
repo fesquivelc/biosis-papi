@@ -14,8 +14,7 @@
                 <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('BiometricoListForm:viewButton').click();" icon="ui-icon-search"/>
                 <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('BiometricoListForm:editButton').click();" icon="ui-icon-pencil"/>
                 <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('BiometricoListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.BiometricoMenuItem_registroAsistenciaList}" icon="ui-icon-search"  action="#{biometricoController.navigateRegistroAsistenciaList}" disabled="#{empty biometricoController.selected.registroAsistenciaList}" ajax="false"/>  
+                <p:separator/>              
                 <p:menuitem value="#{myBundle.BiometricoMenuItem_sucursalId}" icon="ui-icon-search"  actionListener="#{biometricoController.prepareSucursalId}" update=":SucursalViewForm" oncomplete="PF('SucursalViewDialog').show()" disabled="#{empty biometricoController.selected.sucursalId}"/>  
             </p:contextMenu>
             <p:dataTable id="datalist"
@@ -23,6 +22,7 @@
                          var="item"
                          rowKey="#{item.id}"
                          paginator="true"
+                         paginatorPosition="bottom"
                          rows="10"
                          rowsPerPageTemplate="10,20,30,40,50"
                          selectionMode="single"
@@ -31,20 +31,12 @@
                 <p:ajax event="rowSelect"   update=":BiometricoListForm:createButton :BiometricoListForm:viewButton :BiometricoListForm:editButton :BiometricoListForm:deleteButton :BiometricoListForm:BiometricoDataTableContextMenu" listener="#{biometricoController.resetParents}"/>
                 <p:ajax event="rowUnselect" update=":BiometricoListForm:createButton :BiometricoListForm:viewButton :BiometricoListForm:editButton :BiometricoListForm:deleteButton :BiometricoListForm:BiometricoDataTableContextMenu" listener="#{biometricoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('BiometricoListForm:viewButton').click();"/>
-
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListBiometricoTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
-
-
+                
                 <p:column sortBy="#{item.ipv4}" filterBy="#{item.ipv4}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListBiometricoTitle_ipv4}"/>
                     </f:facet>
-                    <h:outputText value="#{item.ipv4}"/>
+                    <h:outputText value="#{item.ipv4.toUpperCase()}"/>
                 </p:column>
 
 
@@ -52,7 +44,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListBiometricoTitle_ipv6}"/>
                     </f:facet>
-                    <h:outputText value="#{item.ipv6}"/>
+                    <h:outputText value="#{item.ipv6.toUpperCase()}"/>
                 </p:column>
 
 
@@ -60,7 +52,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListBiometricoTitle_modelo}"/>
                     </f:facet>
-                    <h:outputText value="#{item.modelo}"/>
+                    <h:outputText value="#{item.modelo.toUpperCase()}"/>
                 </p:column>
 
 
@@ -68,7 +60,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListBiometricoTitle_marca}"/>
                     </f:facet>
-                    <h:outputText value="#{item.marca}"/>
+                    <h:outputText value="#{item.marca.toUpperCase()}"/>
                 </p:column>
 
 
@@ -76,7 +68,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListBiometricoTitle_sucursalId}"/>
                     </f:facet>
-                    <h:outputText value="#{item.sucursalId.descripcion}"/>
+                    <h:outputText value="#{item.sucursalId.descripcion.toUpperCase()}"/>
                 </p:column>
 
 
