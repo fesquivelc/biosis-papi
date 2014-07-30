@@ -22,12 +22,12 @@
                         <p:inputText id="descripcion" value="#{sucursalController.selected.descripcion}" title="#{myBundle.CreateSucursalTitle_descripcion}" size="45" maxlength="45"/>
 
                         <p:outputLabel value="#{myBundle.CreateSucursalLabel_principalId}" for="principalId" />
-                        <p:selectOneMenu id="principalId" value="#{sucursalController.selected.principalId}" required="true" requiredMessage="#{myBundle.CreateSucursalRequiredMessage_principalId}" converter="sucursalConverter">
+                        <p:selectOneMenu id="principalId" value="#{sucursalController.selected.principalId}" required="false" requiredMessage="#{myBundle.CreateSucursalRequiredMessage_principalId}" converter="sucursalConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{sucursalController.items}"
                                            var="principalIdItem"
                                            itemValue="#{principalIdItem}"
-                                           itemLabel="#{principalIdItem.descripcion.toString()}"
+                                           itemLabel="#{principalIdItem.nombre.toString()}"
                                            />
 
                         </p:selectOneMenu>
