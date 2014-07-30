@@ -15,17 +15,14 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{sucursalController.selected != null}">
 
-                        <h:outputText value="#{myBundle.ViewSucursalLabel_id}"/>
-                        <h:outputText value="#{sucursalController.selected.id}" title="#{myBundle.ViewSucursalTitle_id}"/>
-
                         <h:outputText value="#{myBundle.ViewSucursalLabel_nombre}"/>
-                        <h:outputText value="#{sucursalController.selected.nombre}" title="#{myBundle.ViewSucursalTitle_nombre}"/>
+                        <h:outputText value="#{sucursalController.selected.nombre.toUpperCase()}" title="#{myBundle.ViewSucursalTitle_nombre}"/>
 
                         <h:outputText value="#{myBundle.ViewSucursalLabel_descripcion}"/>
-                        <h:outputText value="#{sucursalController.selected.descripcion}" title="#{myBundle.ViewSucursalTitle_descripcion}"/>
+                        <h:outputText value="#{sucursalController.selected.descripcion.toUpperCase()}" title="#{myBundle.ViewSucursalTitle_descripcion}"/>
 
                         <h:outputText value="#{myBundle.ViewSucursalLabel_principalId}"/>
-                        <h:outputText value="#{sucursalController.selected.principalId.descripcion}"/>
+                        <h:outputText value="#{sucursalController.selected.principalId.descripcion.toUpperCase()}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('SucursalViewDialog').hide()"/>
                 </h:panelGroup>
