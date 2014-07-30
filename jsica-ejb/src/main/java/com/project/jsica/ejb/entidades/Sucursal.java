@@ -20,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -52,7 +53,8 @@ public class Sucursal implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "principalId")
     private List<Sucursal> sucursalList;
     @JoinColumn(name = "principal_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
+    @Null
     private Sucursal principalId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sucursalId")
     private List<Biometrico> biometricoList;
