@@ -15,17 +15,14 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{areaController.selected != null}">
 
-                        <h:outputText value="#{myBundle.ViewAreaLabel_id}"/>
-                        <h:outputText value="#{areaController.selected.id}" title="#{myBundle.ViewAreaTitle_id}"/>
-
                         <h:outputText value="#{myBundle.ViewAreaLabel_nombre}"/>
-                        <h:outputText value="#{areaController.selected.nombre}" title="#{myBundle.ViewAreaTitle_nombre}"/>
+                        <h:outputText value="#{areaController.selected.nombre.toUpperCase()}" title="#{myBundle.ViewAreaTitle_nombre}"/>
 
                         <h:outputText value="#{myBundle.ViewAreaLabel_descripcion}"/>
-                        <h:outputText value="#{areaController.selected.descripcion}" title="#{myBundle.ViewAreaTitle_descripcion}"/>
+                        <h:outputText value="#{areaController.selected.descripcion.toUpperCase()}" title="#{myBundle.ViewAreaTitle_descripcion}"/>
 
                         <h:outputText value="#{myBundle.ViewAreaLabel_sucursalId}"/>
-                        <h:outputText value="#{areaController.selected.sucursalId.descripcion}"/>
+                        <h:outputText value="#{areaController.selected.sucursalId.descripcion.toUpperCase()}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('AreaViewDialog').hide()"/>
                 </h:panelGroup>
