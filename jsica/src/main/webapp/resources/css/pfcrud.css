@@ -20,3 +20,19 @@
     font-weight: bold;
     background-color: menu;
 }
+/*Index.xhtml*/
+.ui-layout-unit-header-title{
+    font-size: 3em;
+}
+.ui-menubar, .ui-menuitem-link {
+    font-style:  italic;
+width: auto;
+padding: 0.4em 0.3em;
+font-size: 1.2em;
+}
+.ui-menu, .ui-menu-parent, .ui-menu-child {
+width: 20.5em;
+}
+.ui-layout-unit-footer-title{
+    text-align: left;
+}

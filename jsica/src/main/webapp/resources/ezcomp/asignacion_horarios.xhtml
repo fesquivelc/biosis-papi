@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:outputStylesheet library="css" name="title.css"/>    
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <h:form id="asigHorario">
+           
+                <h:panelGrid columns="6" >
+                    
+                    <p:outputLabel for="@next" value="Sede:"/>
+                    <p:selectOneMenu id="sedes" value="">
+                        <f:selectItem itemLabel="CAJAMARCA" itemValue="w"/>
+                        <f:selectItem itemLabel="CAJAMARCA" itemValue="0"/>
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel for="@next" value="Area:"/>
+                    <p:selectOneMenu id="areas" value="">
+                        <f:selectItem itemLabel="Selecciona" itemValue="1"/>
+                        <f:selectItem itemLabel="ENFERMERIA" itemValue="2"/>
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel for="@next" value="Servicio:"/>
+                    <p:selectOneMenu id="idServico" value="">
+                        <f:selectItem itemLabel="Selecciona" itemValue="1"/>
+                        <f:selectItem itemLabel="SERVICIO DE ENFERMERIA UCI" itemValue="2"/>
+                    </p:selectOneMenu>
+                   
+                              
+                </h:panelGrid>
+                <h:panelGrid columns="1">
+                     <p:pickList id="pickList" value="#{pickListView.cities}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" />
+                </h:panelGrid>
+                
+                <p:panelGrid columns="1">
+                        <p:dataTable var="car" value="">
+                            <p:column headerText="Horario">
+                                <h:outputText value="Horario-1" /> <br></br>
+                                <h:outputText value="Horario-2" /> <br></br>
+                                <h:outputText value="Horario-3" />
+                            </p:column>
+
+                            <p:column headerText="Servicio">
+                                <h:outputText value="ENFERMERIA UCI" /> <br></br>
+                                <h:outputText value="ENFERMERIA UCI" /> <br></br>
+                                <h:outputText value="ENFERMERIA UCI" />
+                            </p:column>
+
+                            <p:column headerText="Visualizar?">
+                                <p:button value="Ver Horario"/>
+                                <br></br>
+                                <p:button value="Ver Horario"/>
+                                 <br></br>
+                                <p:button value="Ver Horario"/>
+                            </p:column>
+
+                            <p:column headerText="Seleccionar">
+                                <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" /> <br></br>
+                                <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" /> <br></br>
+                                <p:selectBooleanCheckbox value="#{selectBooleanView.value1}" />
+                            </p:column>
+                        </p:dataTable>
+                </p:panelGrid>
+    <p:dialog widgetVar="eventDialog" header="Asignar Jornada" showEffect="clip" hideEffect="clip">
+        <h:panelGrid id="eventDetails" columns="2">
+            <h:outputLabel for="title" value="Jornada:" />
+            <p:selectOneMenu id="sedes" value="">
+                        <f:selectItem itemLabel="Selecciona" itemValue=""/>
+            </p:selectOneMenu>
+            <h:outputLabel for="allDay" value="Vacaciones:" />
+            <h:selectBooleanCheckbox id="allDay" value="#{scheduleView.event.allDay}" />
+            
+            <h:outputLabel for="from" value="Entrada" />
+            <p:inputMask id="from" value="#{scheduleView.event.startDate}" mask="99:99">
+                <f:convertDateTime pattern="H:mm" />
+            </p:inputMask>
+ 
+            <h:outputLabel for="to" value="Salida:" />
+            <p:inputMask id="to" value="#{scheduleView.event.endDate}" mask="99:99">
+                <f:convertDateTime pattern="H:mm" />
+            </p:inputMask>
+
+            <p:commandButton type="reset" value="Resetear" />
+            <p:commandButton id="addButton" value="Guardar" actionListener="#{scheduleView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+        </h:panelGrid>
+    </p:dialog> 
+            <p:commandButton type="reset" value="Asignar Horario"  icon="ui-icon-disk" />
+            <p:commandButton type="reset" value="Imprimir Listado de Horarios" icon="ui-icon-print"/>
+            
+        </h:form>
+    </cc:implementation>
+</html>

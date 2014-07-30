@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <h:form id="crearHorario">
+           
+                <p:panelGrid columns="9" >
+                    <p:outputLabel for="@next" value="Sede:"/>
+                    <p:selectOneMenu id="sedes" value="">
+                        <f:selectItem itemLabel="CAJAMARCA" itemValue="w"/>
+                        <f:selectItem itemLabel="CAJAMARCA" itemValue="0"/>
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel for="@next" value="Area:"/>
+                    <p:selectOneMenu id="areas" value="">
+                        <f:selectItem itemLabel="Selecciona" itemValue="1"/>
+                        <f:selectItem itemLabel="ENFERMERIA" itemValue="2"/>
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel for="@next" value="Servicio:"/>
+                    <p:selectOneMenu id="idServico" value="">
+                        <f:selectItem itemLabel="Selecciona" itemValue="1"/>
+                        <f:selectItem itemLabel="SERVICIO DE ENFERMERIA UCI" itemValue="2"/>
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel for="@next" value="DNI/Nombre:"/>
+                    <p:inputText id="dato" value="" label="@previous" required="true"/>
+                    
+                    <p:commandButton type="reset" value="Buscar" icon="ui-icon-pencil"/>
+                    
+                </p:panelGrid>
+              
+             <p:commandButton type="reset" value="Registro Horario"  icon="ui-icon-disk" />
+              <p:commandButton type="reset" value="Corregir Horario" icon="ui-icon-pencil"/>
+               <p:commandButton type="reset" value="Imprimir Listado de Horarios" icon="ui-icon-print"/>
+            
+        </h:form>
+    </cc:implementation>
+</html>
