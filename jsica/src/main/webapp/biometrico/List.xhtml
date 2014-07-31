@@ -9,14 +9,6 @@
     <h:form id="BiometricoListForm">
 
         <p:panel header="#{myBundle.ListBiometricoTitle}">
-            <p:contextMenu id="BiometricoDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('BiometricoListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('BiometricoListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('BiometricoListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('BiometricoListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>              
-                <p:menuitem value="#{myBundle.BiometricoMenuItem_sucursalId}" icon="ui-icon-search"  actionListener="#{biometricoController.prepareSucursalId}" update=":SucursalViewForm" oncomplete="PF('SucursalViewDialog').show()" disabled="#{empty biometricoController.selected.sucursalId}"/>  
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{biometricoController.items}"
                          var="item"
@@ -28,8 +20,8 @@
                          selectionMode="single"
                          selection="#{biometricoController.selected}">
 
-                <p:ajax event="rowSelect"   update=":BiometricoListForm:createButton :BiometricoListForm:viewButton :BiometricoListForm:editButton :BiometricoListForm:deleteButton :BiometricoListForm:BiometricoDataTableContextMenu" listener="#{biometricoController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":BiometricoListForm:createButton :BiometricoListForm:viewButton :BiometricoListForm:editButton :BiometricoListForm:deleteButton :BiometricoListForm:BiometricoDataTableContextMenu" listener="#{biometricoController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":BiometricoListForm:createButton :BiometricoListForm:viewButton :BiometricoListForm:editButton :BiometricoListForm:deleteButton" listener="#{biometricoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":BiometricoListForm:createButton :BiometricoListForm:viewButton :BiometricoListForm:editButton :BiometricoListForm:deleteButton" listener="#{biometricoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('BiometricoListForm:viewButton').click();"/>
                 
                 <p:column sortBy="#{item.ipv4}" filterBy="#{item.ipv4}">
@@ -75,9 +67,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{biometricoController.prepareCreate}" update=":BiometricoCreateForm" oncomplete="PF('BiometricoCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":BiometricoViewForm" oncomplete="PF('BiometricoViewDialog').show()" disabled="#{empty biometricoController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":BiometricoEditForm" oncomplete="PF('BiometricoEditDialog').show()" disabled="#{empty biometricoController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{biometricoController.delete}" update=":growl,datalist" disabled="#{empty biometricoController.selected}">
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":BiometricoViewForm" oncomplete="PF('BiometricoViewDialog').show()" disabled="#{empty biometricoController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":BiometricoEditForm" oncomplete="PF('BiometricoEditDialog').show()" disabled="#{empty biometricoController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{biometricoController.delete}" update=":growl,datalist" disabled="#{empty biometricoController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
