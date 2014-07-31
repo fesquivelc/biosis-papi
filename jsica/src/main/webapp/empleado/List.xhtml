@@ -13,13 +13,7 @@
                 <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('EmpleadoListForm:createButton').click();" icon="ui-icon-plus"/>
                 <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('EmpleadoListForm:viewButton').click();" icon="ui-icon-search"/>
                 <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('EmpleadoListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('EmpleadoListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>               
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_grupoHorarioId}" icon="ui-icon-search"  actionListener="#{empleadoController.prepareGrupoHorarioId}" update=":GrupoHorarioViewForm" oncomplete="PF('GrupoHorarioViewDialog').show()" disabled="#{empty empleadoController.selected.grupoHorarioId}"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_empleadoList}" icon="ui-icon-search"  action="#{empleadoController.navigateEmpleadoList}" disabled="#{empty empleadoController.selected.empleadoList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_empleadoId}" icon="ui-icon-search"  actionListener="#{empleadoController.prepareEmpleadoId}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty empleadoController.selected.empleadoId}"/>  
-                <p:menuitem value="#{myBundle.EmpleadoMenuItem_servicioId}" icon="ui-icon-search"  actionListener="#{empleadoController.prepareServicioId}" update=":ServicioViewForm" oncomplete="PF('ServicioViewDialog').show()" disabled="#{empty empleadoController.selected.servicioId}"/>  
-                
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('EmpleadoListForm:deleteButton').click();" icon="ui-icon-trash"/>               
             </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{empleadoController.items}"
@@ -40,7 +34,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoTitle_nombres}"/>
                     </f:facet>
-                    <h:outputText value="#{item.nombres.toUpperCase()}"/>
+                    <h:outputText value="#{item.nombres}"/>
                 </p:column>
 
 
@@ -48,7 +42,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoTitle_apellidos}"/>
                     </f:facet>
-                    <h:outputText value="#{item.apellidos.toUpperCase()}"/>
+                    <h:outputText value="#{item.apellidos}"/>
                 </p:column>
 
 
@@ -56,7 +50,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoTitle_docIdentidad}"/>
                     </f:facet>
-                    <h:outputText value="#{item.docIdentidad.toUpperCase()}"/>
+                    <h:outputText value="#{item.docIdentidad}"/>
                 </p:column>
 
 
@@ -74,7 +68,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoTitle_empleadoId}"/>
                     </f:facet>
-                    <h:outputText value="#{item.empleadoId.apellidos.toUpperCase()} #{item.empleadoId.nombres.toUpperCase()}"/>
+                    <h:outputText value="#{item.empleadoId.apellidos} #{item.empleadoId.nombres}"/>
                 </p:column>
 
 
@@ -115,9 +109,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{empleadoController.prepareCreate}" update=":EmpleadoCreateForm" oncomplete="PF('EmpleadoCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty empleadoController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EmpleadoEditForm" oncomplete="PF('EmpleadoEditDialog').show()" disabled="#{empty empleadoController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{empleadoController.delete}" update=":growl,datalist" disabled="#{empty empleadoController.selected}">
+            <p:commandButton id="viewButton"                               icon="ui-icon-search" value="#{myBundle.View}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" />
+            <p:commandButton id="editButton"                               icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EmpleadoEditForm" oncomplete="PF('EmpleadoEditDialog').show()" />
+            <p:commandButton id="deleteButton"                             icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{empleadoController.delete}" update=":growl,datalist" >
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
