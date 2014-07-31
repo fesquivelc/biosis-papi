@@ -7,6 +7,7 @@
 package com.project.jsica.ejb.entidades;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,11 +52,11 @@ public class Bitacora implements Serializable {
     @Size(min = 1, max = 255)
     private String usuario;
     @NotNull
-    @Size(min = 1, max = 255)
-    private String fecha;
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
     @NotNull
-    @Size(min = 1, max = 255)
-    private String hora;
+    @Temporal(TemporalType.TIME)
+    private Date hora;
     @NotNull
     @Size(min = 1, max = 255)
     private String tabla;
@@ -101,19 +102,19 @@ public class Bitacora implements Serializable {
         this.usuario = usuario;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    public String getHora() {
+    public Date getHora() {
         return hora;
     }
 
-    public void setHora(String hora) {
+    public void setHora(Date hora) {
         this.hora = hora;
     }    
         
