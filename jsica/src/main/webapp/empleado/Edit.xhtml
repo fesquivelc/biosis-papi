@@ -14,17 +14,14 @@
                 <h:panelGroup id="display">
                     <p:tabView id="EmpleadoTabView">
 
-                        <p:tab id="EmpleadoTab1" title="#{myBundle.TabHeaderPrefix} 1">
+                        <p:tab id="EmpleadoTab1" title="Detalle De Empleado">
                             <p:panelGrid  columns="2" columnClasses="column" rendered="#{empleadoController.selected != null}">
 
-                                <h:outputLabel value="#{myBundle.EditEmpleadoLabel_id}" for="id" />
-                                <h:outputText id="id" value="#{empleadoController.selected.id}" />
-
                                 <p:outputLabel value="#{myBundle.EditEmpleadoLabel_nombres}" for="nombres" />
-                                <p:inputText id="nombres" value="#{empleadoController.selected.nombres}" title="#{myBundle.EditEmpleadoTitle_nombres}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_nombres}" size="255" maxlength="255"/>
+                                <p:inputText id="nombres" value="#{empleadoController.selected.nombres}" title="#{myBundle.EditEmpleadoTitle_nombres}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_nombres}" size="75" maxlength="75"/>
 
                                 <p:outputLabel value="#{myBundle.EditEmpleadoLabel_apellidos}" for="apellidos" />
-                                <p:inputText id="apellidos" value="#{empleadoController.selected.apellidos}" title="#{myBundle.EditEmpleadoTitle_apellidos}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_apellidos}" size="255" maxlength="255"/>
+                                <p:inputText id="apellidos" value="#{empleadoController.selected.apellidos}" title="#{myBundle.EditEmpleadoTitle_apellidos}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_apellidos}" size="75" maxlength="75"/>
 
                                 <p:outputLabel value="#{myBundle.EditEmpleadoLabel_docIdentidad}" for="docIdentidad" />
                                 <p:inputText id="docIdentidad" value="#{empleadoController.selected.docIdentidad}" title="#{myBundle.EditEmpleadoTitle_docIdentidad}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_docIdentidad}" size="45" maxlength="45"/>
@@ -35,11 +32,15 @@
                                 <p:outputLabel value="#{myBundle.EditEmpleadoLabel_situacionTrabajador}" for="situacionTrabajador" />
                                 <p:inputText id="situacionTrabajador" value="#{empleadoController.selected.situacionTrabajador}" title="#{myBundle.EditEmpleadoTitle_situacionTrabajador}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_situacionTrabajador}" size="45" maxlength="45"/>
 
-                                <p:outputLabel value="#{myBundle.EditEmpleadoLabel_sexo}" for="sexo" />
-                                <p:inputText id="sexo" value="#{empleadoController.selected.sexo}" title="#{myBundle.EditEmpleadoTitle_sexo}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_sexo}"/>
+                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_sexo}"  />
+                                <p:selectOneMenu id="idgenero" value="#{empleadoController.selected.sexo}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_sexo}" >
+                                    <f:selectItem itemLabel="Seleccione Uno" itemValue="" noSelectionOption="true" />                                  
+                                    <f:selectItem itemLabel="Femenino" itemValue="F"  />
+                                    <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                </p:selectOneMenu>                         
 
                                 <p:outputLabel value="#{myBundle.EditEmpleadoLabel_foto}" for="foto" />
-                                <p:inputText id="foto" value="#{empleadoController.selected.foto}" title="#{myBundle.EditEmpleadoTitle_foto}" size="255" maxlength="255"/>
+                                <p:inputText id="foto" value="#{empleadoController.selected.foto}" title="#{myBundle.EditEmpleadoTitle_foto}" size="75" maxlength="75"/>
 
                                 <p:outputLabel value="#{myBundle.EditEmpleadoLabel_grupoHorarioId}" for="grupoHorarioId" />
                                 <p:selectOneMenu id="grupoHorarioId" value="#{empleadoController.selected.grupoHorarioId}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_grupoHorarioId}" converter="grupoHorarioConverter">
@@ -47,18 +48,18 @@
                                     <f:selectItems value="#{grupoHorarioController.items}"
                                                    var="grupoHorarioIdItem"
                                                    itemValue="#{grupoHorarioIdItem}"
-                                                   itemLabel="#{grupoHorarioIdItem.id.toString()}"
+                                                   itemLabel="#{grupoHorarioIdItem.nombre}"
                                                    />
 
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="#{myBundle.EditEmpleadoLabel_empleadoId}" for="empleadoId" />
-                                <p:selectOneMenu id="empleadoId" value="#{empleadoController.selected.empleadoId}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_empleadoId}" converter="empleadoConverter">
+                                <p:selectOneMenu id="empleadoId" value="#{empleadoController.selected.empleadoId}" required="false" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_empleadoId}" converter="empleadoConverter">
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{empleadoController.items}"
                                                    var="empleadoIdItem"
                                                    itemValue="#{empleadoIdItem}"
-                                                   itemLabel="#{empleadoIdItem.id.toString()}"
+                                                   itemLabel="#{empleadoIdItem.apellidos} #{empleadoIdItem.nombres}"
                                                    />
 
                                 </p:selectOneMenu>
@@ -69,7 +70,7 @@
                                     <f:selectItems value="#{servicioController.items}"
                                                    var="servicioIdItem"
                                                    itemValue="#{servicioIdItem}"
-                                                   itemLabel="#{servicioIdItem.descripcion.toString()}"
+                                                   itemLabel="#{servicioIdItem.nombre}"
                                                    />
 
                                 </p:selectOneMenu>
