@@ -1,17 +1,14 @@
 package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.AnioFacadeLocal;
-import com.project.jsica.ejb.dao.BitacoraFacade;
 import com.project.jsica.ejb.entidades.Anio;
 import com.project.jsica.ejb.entidades.Bitacora;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
