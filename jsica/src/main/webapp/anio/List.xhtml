@@ -9,16 +9,7 @@
     <h:form id="AnioListForm">
 
         <p:panel header="#{myBundle.ListAnioTitle}">
-            <p:contextMenu id="AnioDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('AnioListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('AnioListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('AnioListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('AnioListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.AnioMenuItem_contratoList}" icon="ui-icon-search"  action="#{anioController.navigateContratoList}" disabled="#{empty anioController.selected.contratoList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.AnioMenuItem_feriadoList}" icon="ui-icon-search"  action="#{anioController.navigateFeriadoList}" disabled="#{empty anioController.selected.feriadoList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.AnioMenuItem_vacacionList}" icon="ui-icon-search"  action="#{anioController.navigateVacacionList}" disabled="#{empty anioController.selected.vacacionList}" ajax="false"/>  
-            </p:contextMenu>
+
             <p:dataTable id="datalist"
                          value="#{anioController.items}"
                          var="item"
@@ -29,8 +20,8 @@
                          selectionMode="single"
                          selection="#{anioController.selected}">
 
-                <p:ajax event="rowSelect"   update=":AnioListForm:createButton :AnioListForm:viewButton :AnioListForm:editButton :AnioListForm:deleteButton :AnioListForm:AnioDataTableContextMenu" listener="#{anioController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":AnioListForm:createButton :AnioListForm:viewButton :AnioListForm:editButton :AnioListForm:deleteButton :AnioListForm:AnioDataTableContextMenu" listener="#{anioController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":AnioListForm:createButton :AnioListForm:viewButton :AnioListForm:editButton :AnioListForm:deleteButton " listener="#{anioController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":AnioListForm:createButton :AnioListForm:viewButton :AnioListForm:editButton :AnioListForm:deleteButton " listener="#{anioController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('AnioListForm:viewButton').click();"/>
 
                 <p:column sortBy="#{item.id}" filterBy="#{item.id}">
