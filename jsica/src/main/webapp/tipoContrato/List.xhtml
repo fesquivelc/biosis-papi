@@ -9,14 +9,6 @@
     <h:form id="TipoContratoListForm">
 
         <p:panel header="#{myBundle.ListTipoContratoTitle}">
-            <p:contextMenu id="TipoContratoDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('TipoContratoListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('TipoContratoListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('TipoContratoListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('TipoContratoListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.TipoContratoMenuItem_contratoList}" icon="ui-icon-search"  action="#{tipoContratoController.navigateContratoList}" disabled="#{empty tipoContratoController.selected.contratoList}" ajax="false"/>  
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{tipoContratoController.items}"
                          var="item"
@@ -27,19 +19,13 @@
                          selectionMode="single"
                          selection="#{tipoContratoController.selected}">
 
-                <p:ajax event="rowSelect"   update=":TipoContratoListForm:createButton :TipoContratoListForm:viewButton :TipoContratoListForm:editButton :TipoContratoListForm:deleteButton :TipoContratoListForm:TipoContratoDataTableContextMenu" listener="#{tipoContratoController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":TipoContratoListForm:createButton :TipoContratoListForm:viewButton :TipoContratoListForm:editButton :TipoContratoListForm:deleteButton :TipoContratoListForm:TipoContratoDataTableContextMenu" listener="#{tipoContratoController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":TipoContratoListForm:createButton :TipoContratoListForm:viewButton :TipoContratoListForm:editButton :TipoContratoListForm:deleteButton " listener="#{tipoContratoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":TipoContratoListForm:createButton :TipoContratoListForm:viewButton :TipoContratoListForm:editButton :TipoContratoListForm:deleteButton " listener="#{tipoContratoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('TipoContratoListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListTipoContratoTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListTipoContratoTitle_nombre}"/>
                     </f:facet>
@@ -50,9 +36,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{tipoContratoController.prepareCreate}" update=":TipoContratoCreateForm" oncomplete="PF('TipoContratoCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":TipoContratoViewForm" oncomplete="PF('TipoContratoViewDialog').show()" disabled="#{empty tipoContratoController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TipoContratoEditForm" oncomplete="PF('TipoContratoEditDialog').show()" disabled="#{empty tipoContratoController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tipoContratoController.delete}" update=":growl,datalist" disabled="#{empty tipoContratoController.selected}">
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":TipoContratoViewForm" oncomplete="PF('TipoContratoViewDialog').show()" disabled="#{empty tipoContratoController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TipoContratoEditForm" oncomplete="PF('TipoContratoEditDialog').show()" disabled="#{empty tipoContratoController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tipoContratoController.delete}" update=":growl,datalist" disabled="#{empty tipoContratoController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
