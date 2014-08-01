@@ -9,14 +9,6 @@
     <h:form id="FeriadoListForm">
 
         <p:panel header="#{myBundle.ListFeriadoTitle}">
-            <p:contextMenu id="FeriadoDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('FeriadoListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('FeriadoListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('FeriadoListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('FeriadoListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.FeriadoMenuItem_anioId}" icon="ui-icon-search"  actionListener="#{feriadoController.prepareAnioId}" update=":AnioViewForm" oncomplete="PF('AnioViewDialog').show()" disabled="#{empty feriadoController.selected.anioId}"/>  
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{feriadoController.items}"
                          var="item"
@@ -27,8 +19,8 @@
                          selectionMode="single"
                          selection="#{feriadoController.selected}">
 
-                <p:ajax event="rowSelect"   update=":FeriadoListForm:createButton :FeriadoListForm:viewButton :FeriadoListForm:editButton :FeriadoListForm:deleteButton :FeriadoListForm:FeriadoDataTableContextMenu" listener="#{feriadoController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":FeriadoListForm:createButton :FeriadoListForm:viewButton :FeriadoListForm:editButton :FeriadoListForm:deleteButton :FeriadoListForm:FeriadoDataTableContextMenu" listener="#{feriadoController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":FeriadoListForm:createButton :FeriadoListForm:viewButton :FeriadoListForm:editButton :FeriadoListForm:deleteButton " listener="#{feriadoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":FeriadoListForm:createButton :FeriadoListForm:viewButton :FeriadoListForm:editButton :FeriadoListForm:deleteButton " listener="#{feriadoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('FeriadoListForm:viewButton').click();"/>
 
                 <p:column sortBy="#{item.idferiados}" filterBy="#{item.idferiados}">
@@ -68,9 +60,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{feriadoController.prepareCreate}" update=":FeriadoCreateForm" oncomplete="PF('FeriadoCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":FeriadoViewForm" oncomplete="PF('FeriadoViewDialog').show()" disabled="#{empty feriadoController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":FeriadoEditForm" oncomplete="PF('FeriadoEditDialog').show()" disabled="#{empty feriadoController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{feriadoController.delete}" update=":growl,datalist" disabled="#{empty feriadoController.selected}">
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":FeriadoViewForm" oncomplete="PF('FeriadoViewDialog').show()" disabled="#{empty feriadoController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":FeriadoEditForm" oncomplete="PF('FeriadoEditDialog').show()" disabled="#{empty feriadoController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{feriadoController.delete}" update=":growl,datalist" disabled="#{empty feriadoController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
