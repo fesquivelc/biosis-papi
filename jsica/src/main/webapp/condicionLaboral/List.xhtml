@@ -23,15 +23,9 @@
                 <p:ajax event="rowUnselect" update=":CondicionLaboralListForm:createButton :CondicionLaboralListForm:viewButton :CondicionLaboralListForm:editButton :CondicionLaboralListForm:deleteButton :CondicionLaboralListForm" listener="#{condicionLaboralController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('CondicionLaboralListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListCondicionLaboralTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.codigo}" filterBy="#{item.codigo}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListCondicionLaboralTitle_codigo}"/>
                     </f:facet>
@@ -39,7 +33,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListCondicionLaboralTitle_nombre}"/>
                     </f:facet>
