@@ -9,14 +9,6 @@
     <h:form id="MotivoPermisoListForm">
 
         <p:panel header="#{myBundle.ListMotivoPermisoTitle}">
-            <p:contextMenu id="MotivoPermisoDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('MotivoPermisoListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('MotivoPermisoListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('MotivoPermisoListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('MotivoPermisoListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.MotivoPermisoMenuItem_permisoList}" icon="ui-icon-search"  action="#{motivoPermisoController.navigatePermisoList}" disabled="#{empty motivoPermisoController.selected.permisoList}" ajax="false"/>  
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{motivoPermisoController.items}"
                          var="item"
@@ -27,11 +19,11 @@
                          selectionMode="single"
                          selection="#{motivoPermisoController.selected}">
 
-                <p:ajax event="rowSelect"   update=":MotivoPermisoListForm:createButton :MotivoPermisoListForm:viewButton :MotivoPermisoListForm:editButton :MotivoPermisoListForm:deleteButton :MotivoPermisoListForm:MotivoPermisoDataTableContextMenu" listener="#{motivoPermisoController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":MotivoPermisoListForm:createButton :MotivoPermisoListForm:viewButton :MotivoPermisoListForm:editButton :MotivoPermisoListForm:deleteButton :MotivoPermisoListForm:MotivoPermisoDataTableContextMenu" listener="#{motivoPermisoController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":MotivoPermisoListForm:createButton :MotivoPermisoListForm:viewButton :MotivoPermisoListForm:editButton :MotivoPermisoListForm:deleteButton " listener="#{motivoPermisoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":MotivoPermisoListForm:createButton :MotivoPermisoListForm:viewButton :MotivoPermisoListForm:editButton :MotivoPermisoListForm:deleteButton " listener="#{motivoPermisoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('MotivoPermisoListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.codigo}" filterBy="#{item.codigo}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListMotivoPermisoTitle_codigo}"/>
                     </f:facet>
@@ -39,7 +31,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListMotivoPermisoTitle_nombre}"/>
                     </f:facet>
@@ -47,7 +39,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListMotivoPermisoTitle_descripcion}"/>
                     </f:facet>
@@ -55,7 +47,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.conGoce}" filterBy="#{item.conGoce}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListMotivoPermisoTitle_conGoce}"/>
                     </f:facet>
@@ -66,9 +58,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{motivoPermisoController.prepareCreate}" update=":MotivoPermisoCreateForm" oncomplete="PF('MotivoPermisoCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":MotivoPermisoViewForm" oncomplete="PF('MotivoPermisoViewDialog').show()" disabled="#{empty motivoPermisoController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":MotivoPermisoEditForm" oncomplete="PF('MotivoPermisoEditDialog').show()" disabled="#{empty motivoPermisoController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{motivoPermisoController.delete}" update=":growl,datalist" disabled="#{empty motivoPermisoController.selected}">
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":MotivoPermisoViewForm" oncomplete="PF('MotivoPermisoViewDialog').show()" disabled="#{empty motivoPermisoController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":MotivoPermisoEditForm" oncomplete="PF('MotivoPermisoEditDialog').show()" disabled="#{empty motivoPermisoController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{motivoPermisoController.delete}" update=":growl,datalist" disabled="#{empty motivoPermisoController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
