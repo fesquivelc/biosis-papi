@@ -9,16 +9,6 @@
     <h:form id="ServicioListForm">
 
         <p:panel header="#{myBundle.ListServicioTitle}">
-            <p:contextMenu id="ServicioDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ServicioListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ServicioListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ServicioListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ServicioListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.ServicioMenuItem_jornadaList}" icon="ui-icon-search"  action="#{servicioController.navigateJornadaList}" disabled="#{empty servicioController.selected.jornadaList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.ServicioMenuItem_empleadoList}" icon="ui-icon-search"  action="#{servicioController.navigateEmpleadoList}" disabled="#{empty servicioController.selected.empleadoList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.ServicioMenuItem_areaId}" icon="ui-icon-search"  actionListener="#{servicioController.prepareAreaId}" update=":AreaViewForm" oncomplete="PF('AreaViewDialog').show()" disabled="#{empty servicioController.selected.areaId}"/>  
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{servicioController.items}"
                          var="item"
@@ -29,19 +19,12 @@
                          selectionMode="single"
                          selection="#{servicioController.selected}">
 
-                <p:ajax event="rowSelect"   update=":ServicioListForm:createButton :ServicioListForm:viewButton :ServicioListForm:editButton :ServicioListForm:deleteButton :ServicioListForm:ServicioDataTableContextMenu" listener="#{servicioController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":ServicioListForm:createButton :ServicioListForm:viewButton :ServicioListForm:editButton :ServicioListForm:deleteButton :ServicioListForm:ServicioDataTableContextMenu" listener="#{servicioController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":ServicioListForm:createButton :ServicioListForm:viewButton :ServicioListForm:editButton :ServicioListForm:deleteButton " listener="#{servicioController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":ServicioListForm:createButton :ServicioListForm:viewButton :ServicioListForm:editButton :ServicioListForm:deleteButton " listener="#{servicioController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('ServicioListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListServicioTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
 
-
-                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListServicioTitle_nombre}"/>
                     </f:facet>
@@ -49,7 +32,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListServicioTitle_descripcion}"/>
                     </f:facet>
@@ -57,7 +40,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.areaId.descripcion}" filterBy="#{item.areaId.descripcion}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListServicioTitle_areaId}"/>
                     </f:facet>
@@ -68,9 +51,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{servicioController.prepareCreate}" update=":ServicioCreateForm" oncomplete="PF('ServicioCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":ServicioViewForm" oncomplete="PF('ServicioViewDialog').show()" disabled="#{empty servicioController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ServicioEditForm" oncomplete="PF('ServicioEditDialog').show()" disabled="#{empty servicioController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{servicioController.delete}" update=":growl,datalist" disabled="#{empty servicioController.selected}">
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":ServicioViewForm" oncomplete="PF('ServicioViewDialog').show()" disabled="#{empty servicioController.selected}"/>
+            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ServicioEditForm" oncomplete="PF('ServicioEditDialog').show()" disabled="#{empty servicioController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{servicioController.delete}" update=":growl,datalist" disabled="#{empty servicioController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
