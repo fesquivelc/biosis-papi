@@ -24,7 +24,7 @@
                         </h:outputText>
 
                         <h:outputText value="#{myBundle.ViewFaltaLabel_empleadoId}"/>
-                        <h:outputText value="#{faltaController.selected.empleadoId.id}"/>
+                        <h:outputText value="#{faltaController.selected.empleadoId.apellidos} #{faltaController.selected.empleadoId.nombres} "/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('FaltaViewDialog').hide()"/>
                 </h:panelGroup>
