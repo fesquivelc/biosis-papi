@@ -9,14 +9,6 @@
     <h:form id="RegimenLaboralListForm">
 
         <p:panel header="#{myBundle.ListRegimenLaboralTitle}">
-            <p:contextMenu id="RegimenLaboralDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('RegimenLaboralListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('RegimenLaboralListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('RegimenLaboralListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('RegimenLaboralListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.RegimenLaboralMenuItem_contratoList}" icon="ui-icon-search"  action="#{regimenLaboralController.navigateContratoList}" disabled="#{empty regimenLaboralController.selected.contratoList}" ajax="false"/>  
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{regimenLaboralController.items}"
                          var="item"
@@ -27,19 +19,11 @@
                          selectionMode="single"
                          selection="#{regimenLaboralController.selected}">
 
-                <p:ajax event="rowSelect"   update=":RegimenLaboralListForm:createButton :RegimenLaboralListForm:viewButton :RegimenLaboralListForm:editButton :RegimenLaboralListForm:deleteButton :RegimenLaboralListForm:RegimenLaboralDataTableContextMenu" listener="#{regimenLaboralController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":RegimenLaboralListForm:createButton :RegimenLaboralListForm:viewButton :RegimenLaboralListForm:editButton :RegimenLaboralListForm:deleteButton :RegimenLaboralListForm:RegimenLaboralDataTableContextMenu" listener="#{regimenLaboralController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":RegimenLaboralListForm:createButton :RegimenLaboralListForm:viewButton :RegimenLaboralListForm:editButton :RegimenLaboralListForm:deleteButton" listener="#{regimenLaboralController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":RegimenLaboralListForm:createButton :RegimenLaboralListForm:viewButton :RegimenLaboralListForm:editButton :RegimenLaboralListForm:deleteButton" listener="#{regimenLaboralController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('RegimenLaboralListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListRegimenLaboralTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
-
-
-                <p:column sortBy="#{item.codigo}" filterBy="#{item.codigo}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRegimenLaboralTitle_codigo}"/>
                     </f:facet>
@@ -47,7 +31,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRegimenLaboralTitle_nombre}"/>
                     </f:facet>
@@ -58,9 +42,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{regimenLaboralController.prepareCreate}" update=":RegimenLaboralCreateForm" oncomplete="PF('RegimenLaboralCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":RegimenLaboralViewForm" oncomplete="PF('RegimenLaboralViewDialog').show()" disabled="#{empty regimenLaboralController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RegimenLaboralEditForm" oncomplete="PF('RegimenLaboralEditDialog').show()" disabled="#{empty regimenLaboralController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{regimenLaboralController.delete}" update=":growl,datalist" disabled="#{empty regimenLaboralController.selected}">
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":RegimenLaboralViewForm" oncomplete="PF('RegimenLaboralViewDialog').show()" disabled="#{empty regimenLaboralController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RegimenLaboralEditForm" oncomplete="PF('RegimenLaboralEditDialog').show()" disabled="#{empty regimenLaboralController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{regimenLaboralController.delete}" update=":growl,datalist" disabled="#{empty regimenLaboralController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
