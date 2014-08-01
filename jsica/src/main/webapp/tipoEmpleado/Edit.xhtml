@@ -19,7 +19,7 @@
                         <h:outputText id="id" value="#{tipoEmpleadoController.selected.id}" />
 
                         <p:outputLabel value="#{myBundle.EditTipoEmpleadoLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{tipoEmpleadoController.selected.nombre}" title="#{myBundle.EditTipoEmpleadoTitle_nombre}" required="true" requiredMessage="#{myBundle.EditTipoEmpleadoRequiredMessage_nombre}" size="255" maxlength="255"/>
+                        <p:inputText id="nombre" value="#{tipoEmpleadoController.selected.nombre}" title="#{myBundle.EditTipoEmpleadoTitle_nombre}" required="true" requiredMessage="#{myBundle.EditTipoEmpleadoRequiredMessage_nombre}" size="60" maxlength="255"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{tipoEmpleadoController.save}" value="#{myBundle.Save}" update="display,:TipoEmpleadoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoEmpleadoEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
