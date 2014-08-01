@@ -19,7 +19,7 @@
                         <h:outputText id="id" value="#{nivelEducativoController.selected.id}" />
 
                         <p:outputLabel value="#{myBundle.EditNivelEducativoLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{nivelEducativoController.selected.nombre}" title="#{myBundle.EditNivelEducativoTitle_nombre}" required="true" requiredMessage="#{myBundle.EditNivelEducativoRequiredMessage_nombre}" size="255" maxlength="255"/>
+                        <p:inputText id="nombre" value="#{nivelEducativoController.selected.nombre}" title="#{myBundle.EditNivelEducativoTitle_nombre}" required="true" requiredMessage="#{myBundle.EditNivelEducativoRequiredMessage_nombre}" size="60" maxlength="255"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{nivelEducativoController.save}" value="#{myBundle.Save}" update="display,:NivelEducativoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('NivelEducativoEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
