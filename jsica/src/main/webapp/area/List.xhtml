@@ -26,7 +26,7 @@
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('AreaListForm:viewButton').click();"/>
 
                 
-                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListAreaTitle_nombre}"/>
                     </f:facet>
@@ -34,7 +34,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListAreaTitle_descripcion}"/>
                     </f:facet>
@@ -42,7 +42,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.sucursalId.descripcion}" filterBy="#{item.sucursalId.descripcion}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListAreaTitle_sucursalId}"/>
                     </f:facet>
