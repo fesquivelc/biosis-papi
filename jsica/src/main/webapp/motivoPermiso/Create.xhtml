@@ -19,10 +19,10 @@
                         <p:inputText id="codigo" value="#{motivoPermisoController.selected.codigo}" title="#{myBundle.CreateMotivoPermisoTitle_codigo}" required="true" requiredMessage="#{myBundle.CreateMotivoPermisoRequiredMessage_codigo}" size="4" maxlength="4"/>
 
                         <p:outputLabel value="#{myBundle.CreateMotivoPermisoLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{motivoPermisoController.selected.nombre}" title="#{myBundle.CreateMotivoPermisoTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateMotivoPermisoRequiredMessage_nombre}" size="255" maxlength="255"/>
+                        <p:inputText id="nombre" value="#{motivoPermisoController.selected.nombre}" title="#{myBundle.CreateMotivoPermisoTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateMotivoPermisoRequiredMessage_nombre}" size="60" maxlength="255"/>
 
                         <p:outputLabel value="#{myBundle.CreateMotivoPermisoLabel_descripcion}" for="descripcion" />
-                        <p:inputText id="descripcion" value="#{motivoPermisoController.selected.descripcion}" title="#{myBundle.CreateMotivoPermisoTitle_descripcion}" size="255" maxlength="255"/>
+                        <p:inputText id="descripcion" value="#{motivoPermisoController.selected.descripcion}" title="#{myBundle.CreateMotivoPermisoTitle_descripcion}" size="60" maxlength="255"/>
 
                         <p:outputLabel value="#{myBundle.CreateMotivoPermisoLabel_conGoce}" for="conGoce" />
                         <p:selectBooleanCheckbox id="conGoce" value="#{motivoPermisoController.selected.conGoce}" required="true" requiredMessage="#{myBundle.CreateMotivoPermisoRequiredMessage_conGoce}"/>
