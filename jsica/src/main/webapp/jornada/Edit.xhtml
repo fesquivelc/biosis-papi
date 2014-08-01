@@ -19,7 +19,7 @@
                         <h:outputText id="codigo" value="#{jornadaController.selected.codigo}" />
 
                         <p:outputLabel value="#{myBundle.EditJornadaLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{jornadaController.selected.nombre}" title="#{myBundle.EditJornadaTitle_nombre}" required="true" requiredMessage="#{myBundle.EditJornadaRequiredMessage_nombre}" size="255" maxlength="255"/>
+                        <p:inputText id="nombre" value="#{jornadaController.selected.nombre}" title="#{myBundle.EditJornadaTitle_nombre}" required="true" requiredMessage="#{myBundle.EditJornadaRequiredMessage_nombre}" size="60" maxlength="255"/>
 
                         <p:outputLabel value="#{myBundle.EditJornadaLabel_HEntrada}" for="HEntrada" />
                         <p:calendar id="HEntrada" pattern="HH:mm:ss" value="#{jornadaController.selected.HEntrada}" title="#{myBundle.EditJornadaTitle_HEntrada}"  showOn="button"/>
