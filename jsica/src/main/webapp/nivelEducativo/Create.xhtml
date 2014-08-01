@@ -16,7 +16,7 @@
                     <p:panelGrid columns="2" columnClasses="column">
 
                         <p:outputLabel value="#{myBundle.CreateNivelEducativoLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{nivelEducativoController.selected.nombre}" title="#{myBundle.CreateNivelEducativoTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateNivelEducativoRequiredMessage_nombre}" size="255" maxlength="255"/>
+                        <p:inputText id="nombre" value="#{nivelEducativoController.selected.nombre}" title="#{myBundle.CreateNivelEducativoTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateNivelEducativoRequiredMessage_nombre}" size="60" maxlength="255"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{nivelEducativoController.saveNew}" value="#{myBundle.Save}" update="display,:NivelEducativoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('NivelEducativoCreateDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
