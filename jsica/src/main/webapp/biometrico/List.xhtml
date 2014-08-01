@@ -24,7 +24,7 @@
                 <p:ajax event="rowUnselect" update=":BiometricoListForm:createButton :BiometricoListForm:viewButton :BiometricoListForm:editButton :BiometricoListForm:deleteButton" listener="#{biometricoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('BiometricoListForm:viewButton').click();"/>
                 
-                <p:column sortBy="#{item.ipv4}" filterBy="#{item.ipv4}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListBiometricoTitle_ipv4}"/>
                     </f:facet>
@@ -32,7 +32,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.ipv6}" filterBy="#{item.ipv6}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListBiometricoTitle_ipv6}"/>
                     </f:facet>
@@ -40,7 +40,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.modelo}" filterBy="#{item.modelo}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListBiometricoTitle_modelo}"/>
                     </f:facet>
@@ -48,7 +48,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.marca}" filterBy="#{item.marca}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListBiometricoTitle_marca}"/>
                     </f:facet>
@@ -56,7 +56,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.sucursalId.descripcion}" filterBy="#{item.sucursalId.descripcion}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListBiometricoTitle_sucursalId}"/>
                     </f:facet>
