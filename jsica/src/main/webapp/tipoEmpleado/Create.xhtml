@@ -16,7 +16,7 @@
                     <p:panelGrid columns="2" columnClasses="column">
 
                         <p:outputLabel value="#{myBundle.CreateTipoEmpleadoLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{tipoEmpleadoController.selected.nombre}" title="#{myBundle.CreateTipoEmpleadoTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateTipoEmpleadoRequiredMessage_nombre}" size="255" maxlength="255"/>
+                        <p:inputText id="nombre" value="#{tipoEmpleadoController.selected.nombre}" title="#{myBundle.CreateTipoEmpleadoTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateTipoEmpleadoRequiredMessage_nombre}" size="60" maxlength="255"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{tipoEmpleadoController.saveNew}" value="#{myBundle.Save}" update="display,:TipoEmpleadoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoEmpleadoCreateDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
