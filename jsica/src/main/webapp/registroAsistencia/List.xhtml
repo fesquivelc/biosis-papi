@@ -9,15 +9,6 @@
     <h:form id="RegistroAsistenciaListForm">
 
         <p:panel header="#{myBundle.ListRegistroAsistenciaTitle}">
-            <p:contextMenu id="RegistroAsistenciaDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('RegistroAsistenciaListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('RegistroAsistenciaListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('RegistroAsistenciaListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('RegistroAsistenciaListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.RegistroAsistenciaMenuItem_biometricoId}" icon="ui-icon-search"  actionListener="#{registroAsistenciaController.prepareBiometricoId}" update=":BiometricoViewForm" oncomplete="PF('BiometricoViewDialog').show()" disabled="#{empty registroAsistenciaController.selected.biometricoId}"/>  
-                <p:menuitem value="#{myBundle.RegistroAsistenciaMenuItem_empleadoId}" icon="ui-icon-search"  actionListener="#{registroAsistenciaController.prepareEmpleadoId}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty registroAsistenciaController.selected.empleadoId}"/>  
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{registroAsistenciaController.items}"
                          var="item"
@@ -28,19 +19,12 @@
                          selectionMode="single"
                          selection="#{registroAsistenciaController.selected}">
 
-                <p:ajax event="rowSelect"   update=":RegistroAsistenciaListForm:createButton :RegistroAsistenciaListForm:viewButton :RegistroAsistenciaListForm:editButton :RegistroAsistenciaListForm:deleteButton :RegistroAsistenciaListForm:RegistroAsistenciaDataTableContextMenu" listener="#{registroAsistenciaController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":RegistroAsistenciaListForm:createButton :RegistroAsistenciaListForm:viewButton :RegistroAsistenciaListForm:editButton :RegistroAsistenciaListForm:deleteButton :RegistroAsistenciaListForm:RegistroAsistenciaDataTableContextMenu" listener="#{registroAsistenciaController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":RegistroAsistenciaListForm:createButton :RegistroAsistenciaListForm:viewButton :RegistroAsistenciaListForm:editButton :RegistroAsistenciaListForm:deleteButton " listener="#{registroAsistenciaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":RegistroAsistenciaListForm:createButton :RegistroAsistenciaListForm:viewButton :RegistroAsistenciaListForm:editButton :RegistroAsistenciaListForm:deleteButton " listener="#{registroAsistenciaController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('RegistroAsistenciaListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
 
-
-                <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_fecha}"/>
                     </f:facet>
@@ -50,7 +34,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.hora}" filterBy="#{item.hora}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_hora}"/>
                     </f:facet>
@@ -60,7 +44,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.biometricoId.id}" filterBy="#{item.biometricoId.id}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_biometricoId}"/>
                     </f:facet>
@@ -68,7 +52,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_empleadoId}"/>
                     </f:facet>
@@ -79,9 +63,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{registroAsistenciaController.prepareCreate}" update=":RegistroAsistenciaCreateForm" oncomplete="PF('RegistroAsistenciaCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":RegistroAsistenciaViewForm" oncomplete="PF('RegistroAsistenciaViewDialog').show()" disabled="#{empty registroAsistenciaController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RegistroAsistenciaEditForm" oncomplete="PF('RegistroAsistenciaEditDialog').show()" disabled="#{empty registroAsistenciaController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{registroAsistenciaController.delete}" update=":growl,datalist" disabled="#{empty registroAsistenciaController.selected}">
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":RegistroAsistenciaViewForm" oncomplete="PF('RegistroAsistenciaViewDialog').show()" disabled="#{empty registroAsistenciaController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RegistroAsistenciaEditForm" oncomplete="PF('RegistroAsistenciaEditDialog').show()" disabled="#{empty registroAsistenciaController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{registroAsistenciaController.delete}" update=":growl,datalist" disabled="#{empty registroAsistenciaController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
