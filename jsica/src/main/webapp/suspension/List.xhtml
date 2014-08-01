@@ -9,14 +9,6 @@
     <h:form id="SuspensionListForm">
 
         <p:panel header="#{myBundle.ListSuspensionTitle}">
-            <p:contextMenu id="SuspensionDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('SuspensionListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('SuspensionListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('SuspensionListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('SuspensionListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.SuspensionMenuItem_empleadoIdempleado}" icon="ui-icon-search"  actionListener="#{suspensionController.prepareEmpleadoIdempleado}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty suspensionController.selected.empleadoIdempleado}"/>  
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{suspensionController.items}"
                          var="item"
@@ -27,19 +19,13 @@
                          selectionMode="single"
                          selection="#{suspensionController.selected}">
 
-                <p:ajax event="rowSelect"   update=":SuspensionListForm:createButton :SuspensionListForm:viewButton :SuspensionListForm:editButton :SuspensionListForm:deleteButton :SuspensionListForm:SuspensionDataTableContextMenu" listener="#{suspensionController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":SuspensionListForm:createButton :SuspensionListForm:viewButton :SuspensionListForm:editButton :SuspensionListForm:deleteButton :SuspensionListForm:SuspensionDataTableContextMenu" listener="#{suspensionController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":SuspensionListForm:createButton :SuspensionListForm:viewButton :SuspensionListForm:editButton :SuspensionListForm:deleteButton " listener="#{suspensionController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":SuspensionListForm:createButton :SuspensionListForm:viewButton :SuspensionListForm:editButton :SuspensionListForm:deleteButton " listener="#{suspensionController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('SuspensionListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListSuspensionTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
-
-
-                <p:column sortBy="#{item.motivo}" filterBy="#{item.motivo}">
+         
+                
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListSuspensionTitle_motivo}"/>
                     </f:facet>
@@ -47,7 +33,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.fechaInicio}" filterBy="#{item.fechaInicio}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListSuspensionTitle_fechaInicio}"/>
                     </f:facet>
@@ -57,7 +43,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.fechaFin}" filterBy="#{item.fechaFin}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListSuspensionTitle_fechaFin}"/>
                     </f:facet>
@@ -67,7 +53,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.empleadoIdempleado.id}" filterBy="#{item.empleadoIdempleado.id}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListSuspensionTitle_empleadoIdempleado}"/>
                     </f:facet>
@@ -78,9 +64,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{suspensionController.prepareCreate}" update=":SuspensionCreateForm" oncomplete="PF('SuspensionCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":SuspensionViewForm" oncomplete="PF('SuspensionViewDialog').show()" disabled="#{empty suspensionController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":SuspensionEditForm" oncomplete="PF('SuspensionEditDialog').show()" disabled="#{empty suspensionController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{suspensionController.delete}" update=":growl,datalist" disabled="#{empty suspensionController.selected}">
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":SuspensionViewForm" oncomplete="PF('SuspensionViewDialog').show()" disabled="#{empty suspensionController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":SuspensionEditForm" oncomplete="PF('SuspensionEditDialog').show()" disabled="#{empty suspensionController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{suspensionController.delete}" update=":growl,datalist" disabled="#{empty suspensionController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
