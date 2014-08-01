@@ -19,10 +19,10 @@
                         <h:outputText id="id" value="#{servicioController.selected.id}" />
 
                         <p:outputLabel value="#{myBundle.EditServicioLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{servicioController.selected.nombre}" title="#{myBundle.EditServicioTitle_nombre}" required="true" requiredMessage="#{myBundle.EditServicioRequiredMessage_nombre}" size="255" maxlength="255"/>
+                        <p:inputText id="nombre" value="#{servicioController.selected.nombre}" title="#{myBundle.EditServicioTitle_nombre}" required="true" requiredMessage="#{myBundle.EditServicioRequiredMessage_nombre}" size="70" maxlength="255"/>
 
                         <p:outputLabel value="#{myBundle.EditServicioLabel_descripcion}" for="descripcion" />
-                        <p:inputText id="descripcion" value="#{servicioController.selected.descripcion}" title="#{myBundle.EditServicioTitle_descripcion}" size="255" maxlength="255"/>
+                        <p:inputText id="descripcion" value="#{servicioController.selected.descripcion}" title="#{myBundle.EditServicioTitle_descripcion}" size="80" maxlength="255"/>
 
                         <p:outputLabel value="#{myBundle.EditServicioLabel_areaId}" for="areaId" />
                         <p:selectOneMenu id="areaId" value="#{servicioController.selected.areaId}" required="true" requiredMessage="#{myBundle.EditServicioRequiredMessage_areaId}" converter="areaConverter">
