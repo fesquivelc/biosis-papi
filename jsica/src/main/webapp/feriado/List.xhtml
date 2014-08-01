@@ -23,15 +23,9 @@
                 <p:ajax event="rowUnselect" update=":FeriadoListForm:createButton :FeriadoListForm:viewButton :FeriadoListForm:editButton :FeriadoListForm:deleteButton " listener="#{feriadoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('FeriadoListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.idferiados}" filterBy="#{item.idferiados}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListFeriadoTitle_idferiados}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.idferiados}"/>
-                </p:column>
+       
 
-
-                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListFeriadoTitle_nombre}"/>
                     </f:facet>
@@ -39,7 +33,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListFeriadoTitle_fecha}"/>
                     </f:facet>
@@ -49,7 +43,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.anioId.id}" filterBy="#{item.anioId.id}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListFeriadoTitle_anioId}"/>
                     </f:facet>
