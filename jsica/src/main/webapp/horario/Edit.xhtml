@@ -19,10 +19,10 @@
                         <h:outputText id="id" value="#{horarioController.selected.id}" />
 
                         <p:outputLabel value="#{myBundle.EditHorarioLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{horarioController.selected.nombre}" title="#{myBundle.EditHorarioTitle_nombre}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_nombre}" size="255" maxlength="255"/>
+                        <p:inputText id="nombre" value="#{horarioController.selected.nombre}" title="#{myBundle.EditHorarioTitle_nombre}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_nombre}" size="70" maxlength="255"/>
 
                         <p:outputLabel value="#{myBundle.EditHorarioLabel_descripcion}" for="descripcion" />
-                        <p:inputText id="descripcion" value="#{horarioController.selected.descripcion}" title="#{myBundle.EditHorarioTitle_descripcion}" size="255" maxlength="255"/>
+                        <p:inputText id="descripcion" value="#{horarioController.selected.descripcion}" title="#{myBundle.EditHorarioTitle_descripcion}" size="90" maxlength="255"/>
 
                         <p:outputLabel value="#{myBundle.EditHorarioLabel_lunes}" for="lunes" />
                         <p:selectBooleanCheckbox id="lunes" value="#{horarioController.selected.lunes}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_lunes}"/>
