@@ -23,15 +23,8 @@
                 <p:ajax event="rowUnselect" update=":CambioTurnoListForm:createButton :CambioTurnoListForm:viewButton :CambioTurnoListForm:editButton :CambioTurnoListForm:deleteButton" listener="#{cambioTurnoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('CambioTurnoListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListCambioTurnoTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
 
-
-                <p:column sortBy="#{item.fechaPedido}" filterBy="#{item.fechaPedido}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListCambioTurnoTitle_fechaPedido}"/>
                     </f:facet>
@@ -41,7 +34,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.horaPedido}" filterBy="#{item.horaPedido}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListCambioTurnoTitle_horaPedido}"/>
                     </f:facet>
@@ -51,7 +44,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.detalleHorarioOriginal.id}" filterBy="#{item.detalleHorarioOriginal.id}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListCambioTurnoTitle_detalleHorarioOriginal}"/>
                     </f:facet>
@@ -59,7 +52,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.detalleHorarioReemplazo.id}" filterBy="#{item.detalleHorarioReemplazo.id}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListCambioTurnoTitle_detalleHorarioReemplazo}"/>
                     </f:facet>
@@ -67,7 +60,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.jefeInmediatoId.id}" filterBy="#{item.jefeInmediatoId.id}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListCambioTurnoTitle_jefeInmediatoId}"/>
                     </f:facet>
