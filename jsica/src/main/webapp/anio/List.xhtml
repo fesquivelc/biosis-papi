@@ -24,15 +24,10 @@
                 <p:ajax event="rowUnselect" update=":AnioListForm:createButton :AnioListForm:viewButton :AnioListForm:editButton :AnioListForm:deleteButton " listener="#{anioController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('AnioListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListAnioTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.anio}" filterBy="#{item.anio}">
+
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListAnioTitle_anio}"/>
                     </f:facet>
@@ -40,7 +35,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListAnioTitle_nombre}"/>
                     </f:facet>
@@ -48,7 +43,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.vigente}" filterBy="#{item.vigente}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListAnioTitle_vigente}"/>
                     </f:facet>
