@@ -23,15 +23,9 @@
                 <p:ajax event="rowUnselect" update=":EmpleadoPermisoListForm:createButton :EmpleadoPermisoListForm:viewButton :EmpleadoPermisoListForm:editButton :EmpleadoPermisoListForm:deleteButton " listener="#{empleadoPermisoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('EmpleadoPermisoListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListEmpleadoPermisoTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
 
 
-                <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoPermisoTitle_empleadoId}"/>
                     </f:facet>
@@ -39,7 +33,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.permisoId.id}" filterBy="#{item.permisoId.id}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoPermisoTitle_permisoId}"/>
                     </f:facet>
