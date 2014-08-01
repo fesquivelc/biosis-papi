@@ -19,7 +19,7 @@
                         <p:inputText id="username" value="#{usuarioController.selected.username}" title="#{myBundle.CreateUsuarioTitle_username}" required="true" requiredMessage="#{myBundle.CreateUsuarioRequiredMessage_username}" size="50" maxlength="50"/>
 
                         <p:outputLabel value="#{myBundle.CreateUsuarioLabel_password}" for="password" />
-                        <p:inputText id="password" value="#{usuarioController.selected.password}" title="#{myBundle.CreateUsuarioTitle_password}" required="true" requiredMessage="#{myBundle.CreateUsuarioRequiredMessage_password}" size="255" maxlength="255"/>
+                        <p:inputText id="password" value="#{usuarioController.selected.password}" title="#{myBundle.CreateUsuarioTitle_password}" required="true" requiredMessage="#{myBundle.CreateUsuarioRequiredMessage_password}" size="40" maxlength="255"/>
 
                         <p:outputLabel value="#{myBundle.CreateUsuarioLabel_empleadoId}" for="empleadoId" />
                         <p:selectOneMenu id="empleadoId" value="#{usuarioController.selected.empleadoId}" required="true" requiredMessage="#{myBundle.CreateUsuarioRequiredMessage_empleadoId}" converter="empleadoConverter">
