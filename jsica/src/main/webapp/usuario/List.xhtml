@@ -9,15 +9,6 @@
     <h:form id="UsuarioListForm">
 
         <p:panel header="#{myBundle.ListUsuarioTitle}">
-            <p:contextMenu id="UsuarioDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('UsuarioListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('UsuarioListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('UsuarioListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('UsuarioListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.UsuarioMenuItem_empleadoId}" icon="ui-icon-search"  actionListener="#{usuarioController.prepareEmpleadoId}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty usuarioController.selected.empleadoId}"/>  
-                <p:menuitem value="#{myBundle.UsuarioMenuItem_rolId}" icon="ui-icon-search"  actionListener="#{usuarioController.prepareRolId}" update=":RolViewForm" oncomplete="PF('RolViewDialog').show()" disabled="#{empty usuarioController.selected.rolId}"/>  
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{usuarioController.items}"
                          var="item"
@@ -28,16 +19,10 @@
                          selectionMode="single"
                          selection="#{usuarioController.selected}">
 
-                <p:ajax event="rowSelect"   update=":UsuarioListForm:createButton :UsuarioListForm:viewButton :UsuarioListForm:editButton :UsuarioListForm:deleteButton :UsuarioListForm:UsuarioDataTableContextMenu" listener="#{usuarioController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":UsuarioListForm:createButton :UsuarioListForm:viewButton :UsuarioListForm:editButton :UsuarioListForm:deleteButton :UsuarioListForm:UsuarioDataTableContextMenu" listener="#{usuarioController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":UsuarioListForm:createButton :UsuarioListForm:viewButton :UsuarioListForm:editButton :UsuarioListForm:deleteButton " listener="#{usuarioController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":UsuarioListForm:createButton :UsuarioListForm:viewButton :UsuarioListForm:editButton :UsuarioListForm:deleteButton " listener="#{usuarioController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('UsuarioListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListUsuarioTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
 
 
                 <p:column sortBy="#{item.username}" filterBy="#{item.username}">
@@ -48,12 +33,6 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.password}" filterBy="#{item.password}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListUsuarioTitle_password}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.password}"/>
-                </p:column>
 
 
                 <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
@@ -75,9 +54,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{usuarioController.prepareCreate}" update=":UsuarioCreateForm" oncomplete="PF('UsuarioCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":UsuarioViewForm" oncomplete="PF('UsuarioViewDialog').show()" disabled="#{empty usuarioController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":UsuarioEditForm" oncomplete="PF('UsuarioEditDialog').show()" disabled="#{empty usuarioController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{usuarioController.delete}" update=":growl,datalist" disabled="#{empty usuarioController.selected}">
+            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":UsuarioViewForm" oncomplete="PF('UsuarioViewDialog').show()" disabled="#{empty usuarioController.selected}"/>
+            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":UsuarioEditForm" oncomplete="PF('UsuarioEditDialog').show()" disabled="#{empty usuarioController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{usuarioController.delete}" update=":growl,datalist" disabled="#{empty usuarioController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
