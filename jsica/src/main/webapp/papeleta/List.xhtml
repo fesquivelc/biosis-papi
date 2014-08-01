@@ -9,17 +9,7 @@
     <h:form id="PapeletaListForm">
 
         <p:panel header="#{myBundle.ListPapeletaTitle}">
-            <p:contextMenu id="PapeletaDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('PapeletaListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('PapeletaListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('PapeletaListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('PapeletaListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.PapeletaMenuItem_empleadoIdempleado}" icon="ui-icon-search"  actionListener="#{papeletaController.prepareEmpleadoIdempleado}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty papeletaController.selected.empleadoIdempleado}"/>  
-                <p:menuitem value="#{myBundle.PapeletaMenuItem_empleadoIdjefeInmediato}" icon="ui-icon-search"  actionListener="#{papeletaController.prepareEmpleadoIdjefeInmediato}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty papeletaController.selected.empleadoIdjefeInmediato}"/>  
-                <p:menuitem value="#{myBundle.PapeletaMenuItem_empleadoIdjefePersonal}" icon="ui-icon-search"  actionListener="#{papeletaController.prepareEmpleadoIdjefePersonal}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty papeletaController.selected.empleadoIdjefePersonal}"/>  
-                <p:menuitem value="#{myBundle.PapeletaMenuItem_empleadoPermisoId}" icon="ui-icon-search"  actionListener="#{papeletaController.prepareEmpleadoPermisoId}" update=":EmpleadoPermisoViewForm" oncomplete="PF('EmpleadoPermisoViewDialog').show()" disabled="#{empty papeletaController.selected.empleadoPermisoId}"/>  
-            </p:contextMenu>
+
             <p:dataTable id="datalist"
                          value="#{papeletaController.items}"
                          var="item"
@@ -30,19 +20,11 @@
                          selectionMode="single"
                          selection="#{papeletaController.selected}">
 
-                <p:ajax event="rowSelect"   update=":PapeletaListForm:createButton :PapeletaListForm:viewButton :PapeletaListForm:editButton :PapeletaListForm:deleteButton :PapeletaListForm:PapeletaDataTableContextMenu" listener="#{papeletaController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":PapeletaListForm:createButton :PapeletaListForm:viewButton :PapeletaListForm:editButton :PapeletaListForm:deleteButton :PapeletaListForm:PapeletaDataTableContextMenu" listener="#{papeletaController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":PapeletaListForm:createButton :PapeletaListForm:viewButton :PapeletaListForm:editButton :PapeletaListForm:deleteButton " listener="#{papeletaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":PapeletaListForm:createButton :PapeletaListForm:viewButton :PapeletaListForm:editButton :PapeletaListForm:deleteButton " listener="#{papeletaController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('PapeletaListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListPapeletaTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
-
-
-                <p:column sortBy="#{item.codigo}" filterBy="#{item.codigo}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPapeletaTitle_codigo}"/>
                     </f:facet>
@@ -50,7 +32,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.empleadoIdempleado.id}" filterBy="#{item.empleadoIdempleado.id}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPapeletaTitle_empleadoIdempleado}"/>
                     </f:facet>
@@ -58,7 +40,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.empleadoIdjefeInmediato.id}" filterBy="#{item.empleadoIdjefeInmediato.id}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPapeletaTitle_empleadoIdjefeInmediato}"/>
                     </f:facet>
@@ -66,7 +48,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.empleadoIdjefePersonal.id}" filterBy="#{item.empleadoIdjefePersonal.id}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPapeletaTitle_empleadoIdjefePersonal}"/>
                     </f:facet>
@@ -74,7 +56,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.empleadoPermisoId.id}" filterBy="#{item.empleadoPermisoId.id}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPapeletaTitle_empleadoPermisoId}"/>
                     </f:facet>
@@ -85,9 +67,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{papeletaController.prepareCreate}" update=":PapeletaCreateForm" oncomplete="PF('PapeletaCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":PapeletaViewForm" oncomplete="PF('PapeletaViewDialog').show()" disabled="#{empty papeletaController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PapeletaEditForm" oncomplete="PF('PapeletaEditDialog').show()" disabled="#{empty papeletaController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{papeletaController.delete}" update=":growl,datalist" disabled="#{empty papeletaController.selected}">
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":PapeletaViewForm" oncomplete="PF('PapeletaViewDialog').show()" disabled="#{empty papeletaController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PapeletaEditForm" oncomplete="PF('PapeletaEditDialog').show()" disabled="#{empty papeletaController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{papeletaController.delete}" update=":growl,datalist" disabled="#{empty papeletaController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
