@@ -9,15 +9,6 @@
     <h:form id="PermisoListForm">
 
         <p:panel header="#{myBundle.ListPermisoTitle}">
-            <p:contextMenu id="PermisoDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('PermisoListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('PermisoListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('PermisoListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('PermisoListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.PermisoMenuItem_motivoPermisoCodigo}" icon="ui-icon-search"  actionListener="#{permisoController.prepareMotivoPermisoCodigo}" update=":MotivoPermisoViewForm" oncomplete="PF('MotivoPermisoViewDialog').show()" disabled="#{empty permisoController.selected.motivoPermisoCodigo}"/>  
-                <p:menuitem value="#{myBundle.PermisoMenuItem_empleadoPermisoList}" icon="ui-icon-search"  action="#{permisoController.navigateEmpleadoPermisoList}" disabled="#{empty permisoController.selected.empleadoPermisoList}" ajax="false"/>  
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{permisoController.items}"
                          var="item"
@@ -28,19 +19,11 @@
                          selectionMode="single"
                          selection="#{permisoController.selected}">
 
-                <p:ajax event="rowSelect"   update=":PermisoListForm:createButton :PermisoListForm:viewButton :PermisoListForm:editButton :PermisoListForm:deleteButton :PermisoListForm:PermisoDataTableContextMenu" listener="#{permisoController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":PermisoListForm:createButton :PermisoListForm:viewButton :PermisoListForm:editButton :PermisoListForm:deleteButton :PermisoListForm:PermisoDataTableContextMenu" listener="#{permisoController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":PermisoListForm:createButton :PermisoListForm:viewButton :PermisoListForm:editButton :PermisoListForm:deleteButton " listener="#{permisoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":PermisoListForm:createButton :PermisoListForm:viewButton :PermisoListForm:editButton :PermisoListForm:deleteButton " listener="#{permisoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('PermisoListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListPermisoTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
-
-
-                <p:column sortBy="#{item.horaInicio}" filterBy="#{item.horaInicio}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPermisoTitle_horaInicio}"/>
                     </f:facet>
@@ -50,7 +33,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.horaFin}" filterBy="#{item.horaFin}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPermisoTitle_horaFin}"/>
                     </f:facet>
@@ -60,7 +43,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.fechaInicio}" filterBy="#{item.fechaInicio}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPermisoTitle_fechaInicio}"/>
                     </f:facet>
@@ -70,7 +53,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.fechaFin}" filterBy="#{item.fechaFin}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPermisoTitle_fechaFin}"/>
                     </f:facet>
@@ -80,36 +63,35 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.tipo}" filterBy="#{item.tipo}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPermisoTitle_tipo}"/>
                     </f:facet>
                     <h:outputText value="#{item.tipo}"/>
                 </p:column>
 
-                <!--
-                                    <p:column sortBy="#{item.porFecha}" filterBy="#{item.porFecha}">
+            
+                                    <p:column >
                                         <f:facet name="header">
                                             <h:outputText value="#{myBundle.ListPermisoTitle_porFecha}"/>
                                         </f:facet>
                                         <h:selectBooleanCheckbox id="porFecha" value="#{item.porFecha}" title="#{myBundle.EditPermisoTitle_porFecha}" required="true" requiredMessage="#{myBundle.EditPermisoRequiredMessage_porFecha}" disabled="true"/>
                                     </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.motivoPermisoCodigo.descripcion}" filterBy="#{item.motivoPermisoCodigo.descripcion}">
+          
+                                    <p:column >
                                         <f:facet name="header">
                                             <h:outputText value="#{myBundle.ListPermisoTitle_motivoPermisoCodigo}"/>
                                         </f:facet>
                                         <h:outputText value="#{item.motivoPermisoCodigo.descripcion}"/>
                                     </p:column>
-                -->
+      
 
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{permisoController.prepareCreate}" update=":PermisoCreateForm" oncomplete="PF('PermisoCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":PermisoViewForm" oncomplete="PF('PermisoViewDialog').show()" disabled="#{empty permisoController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PermisoEditForm" oncomplete="PF('PermisoEditDialog').show()" disabled="#{empty permisoController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{permisoController.delete}" update=":growl,datalist" disabled="#{empty permisoController.selected}">
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":PermisoViewForm" oncomplete="PF('PermisoViewDialog').show()" disabled="#{empty permisoController.selected}"/>
+            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PermisoEditForm" oncomplete="PF('PermisoEditDialog').show()" disabled="#{empty permisoController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{permisoController.delete}" update=":growl,datalist" disabled="#{empty permisoController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
