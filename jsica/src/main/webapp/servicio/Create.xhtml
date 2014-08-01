@@ -16,10 +16,10 @@
                     <p:panelGrid columns="2" columnClasses="column">
 
                         <p:outputLabel value="#{myBundle.CreateServicioLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{servicioController.selected.nombre}" title="#{myBundle.CreateServicioTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateServicioRequiredMessage_nombre}" size="255" maxlength="255"/>
+                        <p:inputText id="nombre" value="#{servicioController.selected.nombre}" title="#{myBundle.CreateServicioTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateServicioRequiredMessage_nombre}" size="70" maxlength="255"/>
 
                         <p:outputLabel value="#{myBundle.CreateServicioLabel_descripcion}" for="descripcion" />
-                        <p:inputText id="descripcion" value="#{servicioController.selected.descripcion}" title="#{myBundle.CreateServicioTitle_descripcion}" size="255" maxlength="255"/>
+                        <p:inputText id="descripcion" value="#{servicioController.selected.descripcion}" title="#{myBundle.CreateServicioTitle_descripcion}" size="80" maxlength="255"/>
 
                         <p:outputLabel value="#{myBundle.CreateServicioLabel_areaId}" for="areaId" />
                         <p:selectOneMenu id="areaId" value="#{servicioController.selected.areaId}" required="true" requiredMessage="#{myBundle.CreateServicioRequiredMessage_areaId}" converter="areaConverter">
