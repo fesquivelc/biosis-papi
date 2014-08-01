@@ -9,14 +9,6 @@
     <h:form id="RolListForm">
 
         <p:panel header="#{myBundle.ListRolTitle}">
-            <p:contextMenu id="RolDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('RolListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('RolListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('RolListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('RolListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.RolMenuItem_usuarioList}" icon="ui-icon-search"  action="#{rolController.navigateUsuarioList}" disabled="#{empty rolController.selected.usuarioList}" ajax="false"/>  
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{rolController.items}"
                          var="item"
@@ -27,19 +19,11 @@
                          selectionMode="single"
                          selection="#{rolController.selected}">
 
-                <p:ajax event="rowSelect"   update=":RolListForm:createButton :RolListForm:viewButton :RolListForm:editButton :RolListForm:deleteButton :RolListForm:RolDataTableContextMenu" listener="#{rolController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":RolListForm:createButton :RolListForm:viewButton :RolListForm:editButton :RolListForm:deleteButton :RolListForm:RolDataTableContextMenu" listener="#{rolController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":RolListForm:createButton :RolListForm:viewButton :RolListForm:editButton :RolListForm:deleteButton " listener="#{rolController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":RolListForm:createButton :RolListForm:viewButton :RolListForm:editButton :RolListForm:deleteButton " listener="#{rolController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('RolListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListRolTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
-
-
-                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRolTitle_nombre}"/>
                     </f:facet>
@@ -47,7 +31,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRolTitle_descripcion}"/>
                     </f:facet>
@@ -58,9 +42,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{rolController.prepareCreate}" update=":RolCreateForm" oncomplete="PF('RolCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":RolViewForm" oncomplete="PF('RolViewDialog').show()" disabled="#{empty rolController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RolEditForm" oncomplete="PF('RolEditDialog').show()" disabled="#{empty rolController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{rolController.delete}" update=":growl,datalist" disabled="#{empty rolController.selected}">
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":RolViewForm" oncomplete="PF('RolViewDialog').show()" disabled="#{empty rolController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RolEditForm" oncomplete="PF('RolEditDialog').show()" disabled="#{empty rolController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{rolController.delete}" update=":growl,datalist" disabled="#{empty rolController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
