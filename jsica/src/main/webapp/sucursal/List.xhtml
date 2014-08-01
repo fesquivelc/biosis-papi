@@ -9,14 +9,6 @@
     <h:form id="SucursalListForm">
 
         <p:panel header="#{myBundle.ListSucursalTitle}">
-            <p:contextMenu id="SucursalDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('SucursalListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('SucursalListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('SucursalListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('SucursalListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>                
-                <p:menuitem value="#{myBundle.SucursalMenuItem_principalId}" icon="ui-icon-search"  actionListener="#{sucursalController.preparePrincipalId}" update=":SucursalViewForm" oncomplete="PF('SucursalViewDialog').show()" disabled="#{empty sucursalController.selected.principalId}"/>               
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{sucursalController.items}"
                          var="item"
@@ -28,11 +20,11 @@
                          selectionMode="single"
                          selection="#{sucursalController.selected}">
 
-                <p:ajax event="rowSelect"   update=":SucursalListForm:createButton :SucursalListForm:viewButton :SucursalListForm:editButton :SucursalListForm:deleteButton :SucursalListForm:SucursalDataTableContextMenu" listener="#{sucursalController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":SucursalListForm:createButton :SucursalListForm:viewButton :SucursalListForm:editButton :SucursalListForm:deleteButton :SucursalListForm:SucursalDataTableContextMenu" listener="#{sucursalController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":SucursalListForm:createButton :SucursalListForm:viewButton :SucursalListForm:editButton :SucursalListForm:deleteButton " listener="#{sucursalController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":SucursalListForm:createButton :SucursalListForm:viewButton :SucursalListForm:editButton :SucursalListForm:deleteButton " listener="#{sucursalController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('SucursalListForm:viewButton').click();"/>
                
-                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListSucursalTitle_nombre}"/>
                     </f:facet>
@@ -40,7 +32,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListSucursalTitle_descripcion}"/>
                     </f:facet>
@@ -48,7 +40,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.principalId.descripcion}" filterBy="#{item.principalId.descripcion}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListSucursalTitle_principalId}"/>
                     </f:facet>
@@ -59,9 +51,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{sucursalController.prepareCreate}" update=":SucursalCreateForm" oncomplete="PF('SucursalCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":SucursalViewForm" oncomplete="PF('SucursalViewDialog').show()" disabled="#{empty sucursalController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":SucursalEditForm" oncomplete="PF('SucursalEditDialog').show()" disabled="#{empty sucursalController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{sucursalController.delete}" update=":growl,datalist" disabled="#{empty sucursalController.selected}">
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":SucursalViewForm" oncomplete="PF('SucursalViewDialog').show()" disabled="#{empty sucursalController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":SucursalEditForm" oncomplete="PF('SucursalEditDialog').show()" disabled="#{empty sucursalController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{sucursalController.delete}" update=":growl,datalist" disabled="#{empty sucursalController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
