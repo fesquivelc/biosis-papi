@@ -19,7 +19,7 @@
                         <h:outputText id="id" value="#{tipoContratoController.selected.id}" />
 
                         <p:outputLabel value="#{myBundle.EditTipoContratoLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{tipoContratoController.selected.nombre}" title="#{myBundle.EditTipoContratoTitle_nombre}" required="true" requiredMessage="#{myBundle.EditTipoContratoRequiredMessage_nombre}" size="255" maxlength="255"/>
+                        <p:inputText id="nombre" value="#{tipoContratoController.selected.nombre}" title="#{myBundle.EditTipoContratoTitle_nombre}" required="true" requiredMessage="#{myBundle.EditTipoContratoRequiredMessage_nombre}" size="60" maxlength="255"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{tipoContratoController.save}" value="#{myBundle.Save}" update="display,:TipoContratoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TipoContratoEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
