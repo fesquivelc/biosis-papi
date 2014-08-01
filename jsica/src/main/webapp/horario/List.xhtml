@@ -9,15 +9,6 @@
     <h:form id="HorarioListForm">
 
         <p:panel header="#{myBundle.ListHorarioTitle}">
-            <p:contextMenu id="HorarioDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('HorarioListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('HorarioListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('HorarioListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('HorarioListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.HorarioMenuItem_detalleHorarioList}" icon="ui-icon-search"  action="#{horarioController.navigateDetalleHorarioList}" disabled="#{empty horarioController.selected.detalleHorarioList}" ajax="false"/>  
-                <p:menuitem value="#{myBundle.HorarioMenuItem_empleadoHorarioList}" icon="ui-icon-search"  action="#{horarioController.navigateEmpleadoHorarioList}" disabled="#{empty horarioController.selected.empleadoHorarioList}" ajax="false"/>  
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{horarioController.items}"
                          var="item"
@@ -28,19 +19,11 @@
                          selectionMode="single"
                          selection="#{horarioController.selected}">
 
-                <p:ajax event="rowSelect"   update=":HorarioListForm:createButton :HorarioListForm:viewButton :HorarioListForm:editButton :HorarioListForm:deleteButton :HorarioListForm:HorarioDataTableContextMenu" listener="#{horarioController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":HorarioListForm:createButton :HorarioListForm:viewButton :HorarioListForm:editButton :HorarioListForm:deleteButton :HorarioListForm:HorarioDataTableContextMenu" listener="#{horarioController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":HorarioListForm:createButton :HorarioListForm:viewButton :HorarioListForm:editButton :HorarioListForm:deleteButton " listener="#{horarioController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":HorarioListForm:createButton :HorarioListForm:viewButton :HorarioListForm:editButton :HorarioListForm:deleteButton " listener="#{horarioController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('HorarioListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListHorarioTitle_id}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.id}"/>
-                </p:column>
-
-
-                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListHorarioTitle_nombre}"/>
                     </f:facet>
@@ -48,7 +31,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListHorarioTitle_descripcion}"/>
                     </f:facet>
@@ -56,7 +39,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.lunes}" filterBy="#{item.lunes}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListHorarioTitle_lunes}"/>
                     </f:facet>
@@ -64,7 +47,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.martes}" filterBy="#{item.martes}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListHorarioTitle_martes}"/>
                     </f:facet>
@@ -72,47 +55,42 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.miercoles}" filterBy="#{item.miercoles}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListHorarioTitle_miercoles}"/>
                     </f:facet>
                     <h:selectBooleanCheckbox id="miercoles" value="#{item.miercoles}" title="#{myBundle.EditHorarioTitle_miercoles}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_miercoles}" disabled="true"/>
                 </p:column>
 
-                <!--
-                                    <p:column sortBy="#{item.jueves}" filterBy="#{item.jueves}">
+                                    <p:column>
                                         <f:facet name="header">
                                             <h:outputText value="#{myBundle.ListHorarioTitle_jueves}"/>
                                         </f:facet>
                                         <h:selectBooleanCheckbox id="jueves" value="#{item.jueves}" title="#{myBundle.EditHorarioTitle_jueves}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_jueves}" disabled="true"/>
                                     </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.viernes}" filterBy="#{item.viernes}">
+        
+                                    <p:column >
                                         <f:facet name="header">
                                             <h:outputText value="#{myBundle.ListHorarioTitle_viernes}"/>
                                         </f:facet>
                                         <h:selectBooleanCheckbox id="viernes" value="#{item.viernes}" title="#{myBundle.EditHorarioTitle_viernes}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_viernes}" disabled="true"/>
                                     </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.sabado}" filterBy="#{item.sabado}">
+            
+                                    <p:column >
                                         <f:facet name="header">
                                             <h:outputText value="#{myBundle.ListHorarioTitle_sabado}"/>
                                         </f:facet>
                                         <h:selectBooleanCheckbox id="sabado" value="#{item.sabado}" title="#{myBundle.EditHorarioTitle_sabado}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_sabado}" disabled="true"/>
                                     </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.domingo}" filterBy="#{item.domingo}">
+           
+                                    <p:column >
                                         <f:facet name="header">
                                             <h:outputText value="#{myBundle.ListHorarioTitle_domingo}"/>
                                         </f:facet>
                                         <h:selectBooleanCheckbox id="domingo" value="#{item.domingo}" title="#{myBundle.EditHorarioTitle_domingo}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_domingo}" disabled="true"/>
                                     </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}">
+         
+                                    <p:column >
                                         <f:facet name="header">
                                             <h:outputText value="#{myBundle.ListHorarioTitle_fecha}"/>
                                         </f:facet>
@@ -120,22 +98,21 @@
                                             <f:convertDateTime pattern="MM/dd/yyyy" />
                                         </h:outputText>
                                     </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.porFecha}" filterBy="#{item.porFecha}">
+
+                                    <p:column >
                                         <f:facet name="header">
                                             <h:outputText value="#{myBundle.ListHorarioTitle_porFecha}"/>
                                         </f:facet>
                                         <h:selectBooleanCheckbox id="porFecha" value="#{item.porFecha}" title="#{myBundle.EditHorarioTitle_porFecha}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_porFecha}" disabled="true"/>
                                     </p:column>
-                -->
+                
 
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{horarioController.prepareCreate}" update=":HorarioCreateForm" oncomplete="PF('HorarioCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":HorarioViewForm" oncomplete="PF('HorarioViewDialog').show()" disabled="#{empty horarioController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":HorarioEditForm" oncomplete="PF('HorarioEditDialog').show()" disabled="#{empty horarioController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{horarioController.delete}" update=":growl,datalist" disabled="#{empty horarioController.selected}">
+            <p:commandButton id="viewButton"  icon="ui-icon-search" value="#{myBundle.View}" update=":HorarioViewForm" oncomplete="PF('HorarioViewDialog').show()" disabled="#{empty horarioController.selected}"/>
+            <p:commandButton id="editButton"  icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":HorarioEditForm" oncomplete="PF('HorarioEditDialog').show()" disabled="#{empty horarioController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{horarioController.delete}" update=":growl,datalist" disabled="#{empty horarioController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
