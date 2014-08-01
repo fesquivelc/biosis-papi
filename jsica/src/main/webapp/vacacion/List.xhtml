@@ -9,15 +9,6 @@
     <h:form id="VacacionListForm">
 
         <p:panel header="#{myBundle.ListVacacionTitle}">
-            <p:contextMenu id="VacacionDataTableContextMenu" for="datalist">  
-                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('VacacionListForm:createButton').click();" icon="ui-icon-plus"/>
-                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('VacacionListForm:viewButton').click();" icon="ui-icon-search"/>
-                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('VacacionListForm:editButton').click();" icon="ui-icon-pencil"/>
-                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('VacacionListForm:deleteButton').click();" icon="ui-icon-trash"/>
-                <p:separator/>
-                <p:menuitem value="#{myBundle.VacacionMenuItem_anioId}" icon="ui-icon-search"  actionListener="#{vacacionController.prepareAnioId}" update=":AnioViewForm" oncomplete="PF('AnioViewDialog').show()" disabled="#{empty vacacionController.selected.anioId}"/>  
-                <p:menuitem value="#{myBundle.VacacionMenuItem_empleadoId}" icon="ui-icon-search"  actionListener="#{vacacionController.prepareEmpleadoId}" update=":EmpleadoViewForm" oncomplete="PF('EmpleadoViewDialog').show()" disabled="#{empty vacacionController.selected.empleadoId}"/>  
-            </p:contextMenu>
             <p:dataTable id="datalist"
                          value="#{vacacionController.items}"
                          var="item"
@@ -28,19 +19,13 @@
                          selectionMode="single"
                          selection="#{vacacionController.selected}">
 
-                <p:ajax event="rowSelect"   update=":VacacionListForm:createButton :VacacionListForm:viewButton :VacacionListForm:editButton :VacacionListForm:deleteButton :VacacionListForm:VacacionDataTableContextMenu" listener="#{vacacionController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":VacacionListForm:createButton :VacacionListForm:viewButton :VacacionListForm:editButton :VacacionListForm:deleteButton :VacacionListForm:VacacionDataTableContextMenu" listener="#{vacacionController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":VacacionListForm:createButton :VacacionListForm:viewButton :VacacionListForm:editButton :VacacionListForm:deleteButton " listener="#{vacacionController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":VacacionListForm:createButton :VacacionListForm:viewButton :VacacionListForm:editButton :VacacionListForm:deleteButton " listener="#{vacacionController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('VacacionListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.idvacaciones}" filterBy="#{item.idvacaciones}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListVacacionTitle_idvacaciones}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.idvacaciones}"/>
-                </p:column>
 
-
-                <p:column sortBy="#{item.diasRestantes}" filterBy="#{item.diasRestantes}">
+                
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListVacacionTitle_diasRestantes}"/>
                     </f:facet>
@@ -48,7 +33,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.anioId.id}" filterBy="#{item.anioId.id}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListVacacionTitle_anioId}"/>
                     </f:facet>
@@ -56,7 +41,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListVacacionTitle_empleadoId}"/>
                     </f:facet>
@@ -67,9 +52,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{vacacionController.prepareCreate}" update=":VacacionCreateForm" oncomplete="PF('VacacionCreateDialog').show()"/>
-            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":VacacionViewForm" oncomplete="PF('VacacionViewDialog').show()" disabled="#{empty vacacionController.selected}"/>
-            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":VacacionEditForm" oncomplete="PF('VacacionEditDialog').show()" disabled="#{empty vacacionController.selected}"/>
-            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{vacacionController.delete}" update=":growl,datalist" disabled="#{empty vacacionController.selected}">
+            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":VacacionViewForm" oncomplete="PF('VacacionViewDialog').show()" disabled="#{empty vacacionController.selected}"/>
+            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":VacacionEditForm" oncomplete="PF('VacacionEditDialog').show()" disabled="#{empty vacacionController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{vacacionController.delete}" update=":growl,datalist" disabled="#{empty vacacionController.selected}">
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
