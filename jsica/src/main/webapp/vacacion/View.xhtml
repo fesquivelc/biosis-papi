@@ -22,10 +22,10 @@
                         <h:outputText value="#{vacacionController.selected.diasRestantes}" title="#{myBundle.ViewVacacionTitle_diasRestantes}"/>
 
                         <h:outputText value="#{myBundle.ViewVacacionLabel_anioId}"/>
-                        <h:outputText value="#{vacacionController.selected.anioId.id}"/>
+                        <h:outputText value="#{vacacionController.selected.anioId.anio}"/>
 
                         <h:outputText value="#{myBundle.ViewVacacionLabel_empleadoId}"/>
-                        <h:outputText value="#{vacacionController.selected.empleadoId.id}"/>
+                        <h:outputText value="#{vacacionController.selected.empleadoId.apellidos} #{vacacionController.selected.empleadoId.nombres}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('VacacionViewDialog').hide()"/>
                 </h:panelGroup>
