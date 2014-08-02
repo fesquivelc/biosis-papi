@@ -35,19 +35,19 @@
                         <h:outputText value="#{contratoController.selected.sueldoBasico}" title="#{myBundle.ViewContratoTitle_sueldoBasico}"/>
 
                         <h:outputText value="#{myBundle.ViewContratoLabel_condicionLaboralId}"/>
-                        <h:outputText value="#{contratoController.selected.condicionLaboralId.id}"/>
+                        <h:outputText value="#{contratoController.selected.condicionLaboralId.nombre}"/>
 
                         <h:outputText value="#{myBundle.ViewContratoLabel_regimenLaboralId}"/>
-                        <h:outputText value="#{contratoController.selected.regimenLaboralId.id}"/>
+                        <h:outputText value="#{contratoController.selected.regimenLaboralId.nombre}"/>
 
                         <h:outputText value="#{myBundle.ViewContratoLabel_anioId}"/>
-                        <h:outputText value="#{contratoController.selected.anioId.id}"/>
+                        <h:outputText value="#{contratoController.selected.anioId.anio}"/>
 
                         <h:outputText value="#{myBundle.ViewContratoLabel_tipoContratoId}"/>
-                        <h:outputText value="#{contratoController.selected.tipoContratoId.id}"/>
+                        <h:outputText value="#{contratoController.selected.tipoContratoId.nombre}"/>
 
                         <h:outputText value="#{myBundle.ViewContratoLabel_ocupacionId}"/>
-                        <h:outputText value="#{contratoController.selected.ocupacionId.descripcion}"/>
+                        <h:outputText value="#{contratoController.selected.ocupacionId.nombre}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('ContratoViewDialog').hide()"/>
                 </h:panelGroup>
