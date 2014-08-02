@@ -25,7 +25,7 @@
 
 
 
-                <p:column sortBy="#{item.username}" filterBy="#{item.username}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListUsuarioTitle_username}"/>
                     </f:facet>
@@ -35,15 +35,15 @@
 
 
 
-                <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListUsuarioTitle_empleadoId}"/>
                     </f:facet>
-                    <h:outputText value="#{item.empleadoId.id}"/>
+                    <h:outputText value="#{item.empleadoId.apellidos} #{item.empleadoId.nombres}"/>
                 </p:column>
 
 
-                <p:column sortBy="#{item.rolId.descripcion}" filterBy="#{item.rolId.descripcion}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListUsuarioTitle_rolId}"/>
                     </f:facet>
