@@ -24,7 +24,7 @@
                             <f:selectItems value="#{anioController.items}"
                                            var="anioIdItem"
                                            itemValue="#{anioIdItem}"
-                                           itemLabel="#{anioIdItem.id.toString()}"
+                                           itemLabel="#{anioIdItem.anio}"
                                            />
 
                         </p:selectOneMenu>
@@ -35,7 +35,7 @@
                             <f:selectItems value="#{empleadoController.items}"
                                            var="empleadoIdItem"
                                            itemValue="#{empleadoIdItem}"
-                                           itemLabel="#{empleadoIdItem.id.toString()}"
+                                           itemLabel="#{empleadoIdItem.apellidos} #{empleadoIdItem.nombres}"
                                            />
 
                         </p:selectOneMenu>
