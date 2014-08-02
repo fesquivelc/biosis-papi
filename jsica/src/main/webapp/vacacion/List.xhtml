@@ -37,7 +37,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListVacacionTitle_anioId}"/>
                     </f:facet>
-                    <h:outputText value="#{item.anioId.id}"/>
+                    <h:outputText value="#{item.anioId.anio}"/>
                 </p:column>
 
 
@@ -45,7 +45,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListVacacionTitle_empleadoId}"/>
                     </f:facet>
-                    <h:outputText value="#{item.empleadoId.id}"/>
+                    <h:outputText value="#{item.empleadoId.apellidos} #{item.empleadoId.nombres}"/>
                 </p:column>
 
 
