@@ -25,10 +25,10 @@
                         <h:outputText value="#{usuarioController.selected.password}" title="#{myBundle.ViewUsuarioTitle_password}"/>
 
                         <h:outputText value="#{myBundle.ViewUsuarioLabel_empleadoId}"/>
-                        <h:outputText value="#{usuarioController.selected.empleadoId.id}"/>
+                        <h:outputText value="#{usuarioController.selected.empleadoId.apellidos} #{usuarioController.selected.empleadoId.nombres}"/>
 
                         <h:outputText value="#{myBundle.ViewUsuarioLabel_rolId}"/>
-                        <h:outputText value="#{usuarioController.selected.rolId.descripcion}"/>
+                        <h:outputText value="#{usuarioController.selected.rolId.nombre}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('UsuarioViewDialog').hide()"/>
                 </h:panelGroup>
