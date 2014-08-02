@@ -32,7 +32,7 @@
                         </h:outputText>
 
                         <h:outputText value="#{myBundle.ViewSuspensionLabel_empleadoIdempleado}"/>
-                        <h:outputText value="#{suspensionController.selected.empleadoIdempleado.id}"/>
+                        <h:outputText value="#{suspensionController.selected.empleadoIdempleado.apellidos} #{suspensionController.selected.empleadoIdempleado.nombres}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('SuspensionViewDialog').hide()"/>
                 </h:panelGroup>
