@@ -27,7 +27,7 @@
                             <f:selectItems value="#{empleadoController.items}"
                                            var="empleadoIdItem"
                                            itemValue="#{empleadoIdItem}"
-                                           itemLabel="#{empleadoIdItem.id.toString()}"
+                                           itemLabel="#{empleadoIdItem.apellidos} #{empleadoIdItem.nombres}"
                                            />
 
                         </p:selectOneMenu>
@@ -38,7 +38,7 @@
                             <f:selectItems value="#{rolController.items}"
                                            var="rolIdItem"
                                            itemValue="#{rolIdItem}"
-                                           itemLabel="#{rolIdItem.descripcion.toString()}"
+                                           itemLabel="#{rolIdItem.nombre}"
                                            />
 
                         </p:selectOneMenu>
