@@ -33,7 +33,7 @@
                             <f:selectItems value="#{condicionLaboralController.items}"
                                            var="condicionLaboralIdItem"
                                            itemValue="#{condicionLaboralIdItem}"
-                                           itemLabel="#{condicionLaboralIdItem.id.toString()}"
+                                           itemLabel="#{condicionLaboralIdItem.nombre}"
                                            />
 
                         </p:selectOneMenu>
@@ -44,7 +44,7 @@
                             <f:selectItems value="#{regimenLaboralController.items}"
                                            var="regimenLaboralIdItem"
                                            itemValue="#{regimenLaboralIdItem}"
-                                           itemLabel="#{regimenLaboralIdItem.id.toString()}"
+                                           itemLabel="#{regimenLaboralIdItem.nombre}"
                                            />
 
                         </p:selectOneMenu>
@@ -55,7 +55,7 @@
                             <f:selectItems value="#{anioController.items}"
                                            var="anioIdItem"
                                            itemValue="#{anioIdItem}"
-                                           itemLabel="#{anioIdItem.id.toString()}"
+                                           itemLabel="#{anioIdItem.anio}"
                                            />
 
                         </p:selectOneMenu>
@@ -66,7 +66,7 @@
                             <f:selectItems value="#{tipoContratoController.items}"
                                            var="tipoContratoIdItem"
                                            itemValue="#{tipoContratoIdItem}"
-                                           itemLabel="#{tipoContratoIdItem.id.toString()}"
+                                           itemLabel="#{tipoContratoIdItem.nombre}"
                                            />
 
                         </p:selectOneMenu>
@@ -77,7 +77,7 @@
                             <f:selectItems value="#{ocupacionController.items}"
                                            var="ocupacionIdItem"
                                            itemValue="#{ocupacionIdItem}"
-                                           itemLabel="#{ocupacionIdItem.descripcion.toString()}"
+                                           itemLabel="#{ocupacionIdItem.nombre}"
                                            />
 
                         </p:selectOneMenu>
