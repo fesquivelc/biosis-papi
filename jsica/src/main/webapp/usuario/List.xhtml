@@ -14,6 +14,7 @@
                          var="item"
                          rowKey="#{item.id}"
                          paginator="true"
+                         paginatorPosition="bottom"
                          rows="10"
                          rowsPerPageTemplate="10,20,30,40,50"
                          selectionMode="single"
@@ -47,7 +48,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListUsuarioTitle_rolId}"/>
                     </f:facet>
-                    <h:outputText value="#{item.rolId.descripcion}"/>
+                    <h:outputText value="#{item.rolId.nombre}"/>
                 </p:column>
 
 
