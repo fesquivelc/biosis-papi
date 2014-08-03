@@ -29,13 +29,13 @@
                         </h:outputText>
 
                         <h:outputText value="#{myBundle.ViewDetalleContratoLabel_areaId}"/>
-                        <h:outputText value="#{detalleContratoController.selected.areaId.descripcion}"/>
+                        <h:outputText value="#{detalleContratoController.selected.areaId.nombre}"/>
 
                         <h:outputText value="#{myBundle.ViewDetalleContratoLabel_contratoId}"/>
-                        <h:outputText value="#{detalleContratoController.selected.contratoId.id}"/>
+                        <h:outputText value="#{detalleContratoController.selected.contratoId.codigo}"/>
 
                         <h:outputText value="#{myBundle.ViewDetalleContratoLabel_empleadoId}"/>
-                        <h:outputText value="#{detalleContratoController.selected.empleadoId.id}"/>
+                        <h:outputText value="#{detalleContratoController.selected.empleadoId.apellidos} #{detalleContratoController.selected.empleadoId.nombres}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('DetalleContratoViewDialog').hide()"/>
                 </h:panelGroup>
