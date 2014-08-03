@@ -27,7 +27,7 @@
                             <f:selectItems value="#{areaController.items}"
                                            var="areaIdItem"
                                            itemValue="#{areaIdItem}"
-                                           itemLabel="#{areaIdItem.descripcion.toString()}"
+                                           itemLabel="#{areaIdItem.nombre}"
                                            />
 
                         </p:selectOneMenu>
@@ -38,7 +38,7 @@
                             <f:selectItems value="#{contratoController.items}"
                                            var="contratoIdItem"
                                            itemValue="#{contratoIdItem}"
-                                           itemLabel="#{contratoIdItem.id.toString()}"
+                                           itemLabel="#{contratoIdItem.codigo}"
                                            />
 
                         </p:selectOneMenu>
@@ -49,7 +49,7 @@
                             <f:selectItems value="#{empleadoController.items}"
                                            var="empleadoIdItem"
                                            itemValue="#{empleadoIdItem}"
-                                           itemLabel="#{empleadoIdItem.id.toString()}"
+                                           itemLabel="#{empleadoIdItem.apellidos} #{empleadoIdItem.nombres}"
                                            />
 
                         </p:selectOneMenu>
