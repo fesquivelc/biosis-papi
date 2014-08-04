@@ -19,7 +19,7 @@
                         <p:inputText id="nombre" value="#{areaController.selected.nombre}" title="#{myBundle.CreateAreaTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateAreaRequiredMessage_nombre}" size="60" maxlength="255"/>
 
                         <p:outputLabel value="#{myBundle.CreateAreaLabel_descripcion}" for="descripcion" />
-                        <p:inputText id="descripcion" value="#{areaController.selected.descripcion}" title="#{myBundle.CreateAreaTitle_descripcion}" size="255" maxlength="255"/>
+                        <p:inputText id="descripcion" value="#{areaController.selected.descripcion}" title="#{myBundle.CreateAreaTitle_descripcion}" size="70" maxlength="255"/>
 
                         <p:outputLabel value="#{myBundle.CreateAreaLabel_sucursalId}" for="sucursalId" />
                         <p:selectOneMenu id="sucursalId" value="#{areaController.selected.sucursalId}" required="true" requiredMessage="#{myBundle.CreateAreaRequiredMessage_sucursalId}" converter="sucursalConverter">
