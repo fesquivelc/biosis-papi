@@ -15,9 +15,6 @@
                 <h:panelGroup id="display" rendered="#{tipoContratoController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="#{myBundle.CreateTipoContratoLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{tipoContratoController.selected.id}" title="#{myBundle.CreateTipoContratoTitle_id}" required="true" requiredMessage="#{myBundle.CreateTipoContratoRequiredMessage_id}"/>
-
                         <p:outputLabel value="#{myBundle.CreateTipoContratoLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{tipoContratoController.selected.nombre}" title="#{myBundle.CreateTipoContratoTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateTipoContratoRequiredMessage_nombre}" size="60" maxlength="255"/>
                     </p:panelGrid>
