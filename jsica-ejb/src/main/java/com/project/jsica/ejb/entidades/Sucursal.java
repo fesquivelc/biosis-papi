@@ -54,7 +54,6 @@ public class Sucursal implements Serializable {
     private List<Sucursal> sucursalList;
     @JoinColumn(name = "principal_id", referencedColumnName = "id")
     @ManyToOne(optional = true)
-    @Null
     private Sucursal principalId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sucursalId")
     private List<Biometrico> biometricoList;
