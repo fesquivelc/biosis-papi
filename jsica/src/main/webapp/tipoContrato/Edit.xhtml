@@ -15,8 +15,6 @@
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{tipoContratoController.selected != null}">
 
 
-                        <h:outputLabel value="#{myBundle.EditTipoContratoLabel_id}" for="id" />
-                        <h:outputText id="id" value="#{tipoContratoController.selected.id}" />
 
                         <p:outputLabel value="#{myBundle.EditTipoContratoLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{tipoContratoController.selected.nombre}" title="#{myBundle.EditTipoContratoTitle_nombre}" required="true" requiredMessage="#{myBundle.EditTipoContratoRequiredMessage_nombre}" size="60" maxlength="255"/>
