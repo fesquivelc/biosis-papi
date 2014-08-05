@@ -15,9 +15,6 @@
                 <h:panelGroup id="display" rendered="#{papeletaController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="#{myBundle.CreatePapeletaLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{papeletaController.selected.id}" title="#{myBundle.CreatePapeletaTitle_id}" required="true" requiredMessage="#{myBundle.CreatePapeletaRequiredMessage_id}"/>
-
                         <p:outputLabel value="#{myBundle.CreatePapeletaLabel_codigo}" for="codigo" />
                         <p:inputText id="codigo" value="#{papeletaController.selected.codigo}" title="#{myBundle.CreatePapeletaTitle_codigo}" size="45" maxlength="45"/>
 
