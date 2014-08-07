@@ -144,19 +144,19 @@ public class Empleado implements Serializable {
     }
 
     public String getNombres() {
-        return nombres;
+        return nombres.toUpperCase();
     }
 
     public void setNombres(String nombres) {
-        this.nombres = nombres;
+        this.nombres = nombres.toUpperCase();
     }
 
     public String getApellidos() {
-        return apellidos;
+        return apellidos.toUpperCase();
     }
 
     public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+        this.apellidos = apellidos.toUpperCase();
     }
 
     public String getDocIdentidad() {
@@ -176,11 +176,11 @@ public class Empleado implements Serializable {
     }
 
     public String getSituacionTrabajador() {
-        return situacionTrabajador;
+        return situacionTrabajador.toUpperCase();
     }
 
     public void setSituacionTrabajador(String situacionTrabajador) {
-        this.situacionTrabajador = situacionTrabajador;
+        this.situacionTrabajador = situacionTrabajador.toUpperCase();
     }
 
     public Character getSexo() {
