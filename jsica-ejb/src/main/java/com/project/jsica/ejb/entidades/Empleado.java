@@ -144,7 +144,7 @@ public class Empleado implements Serializable {
     }
 
     public String getNombres() {
-        return nombres.toUpperCase();
+        return nombres;
     }
 
     public void setNombres(String nombres) {
@@ -152,7 +152,7 @@ public class Empleado implements Serializable {
     }
 
     public String getApellidos() {
-        return apellidos.toUpperCase();
+        return apellidos;
     }
 
     public void setApellidos(String apellidos) {
@@ -176,7 +176,7 @@ public class Empleado implements Serializable {
     }
 
     public String getSituacionTrabajador() {
-        return situacionTrabajador.toUpperCase();
+        return situacionTrabajador;
     }
 
     public void setSituacionTrabajador(String situacionTrabajador) {
