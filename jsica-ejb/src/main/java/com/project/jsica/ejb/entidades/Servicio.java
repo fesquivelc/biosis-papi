@@ -76,19 +76,19 @@ public class Servicio implements Serializable {
     }
 
     public String getNombre() {
-        return nombre.toUpperCase();
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre.toUpperCase();
+        this.nombre = nombre;
     }
 
     public String getDescripcion() {
-        return descripcion.toUpperCase();
+        return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion.toUpperCase();
+        this.descripcion = descripcion;
     }
 
     @XmlTransient
