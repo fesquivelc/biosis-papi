@@ -62,11 +62,11 @@ public class GrupoHorario implements Serializable {
     }
 
     public String getNombre() {
-        return nombre.toUpperCase();
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre.toUpperCase();
+        this.nombre = nombre;
     }
 
     @XmlTransient
