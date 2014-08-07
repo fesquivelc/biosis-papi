@@ -11,10 +11,10 @@
         <p:dialog id="EmpleadoCreateDlg" widgetVar="EmpleadoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateEmpleadoTitle}" closeOnEscape="true">
 
             <h:form id="EmpleadoCreateForm">
- 
+
                 <h:panelGroup id="display" rendered="#{empleadoController.selected != null}">
 
-                    <p:wizard>
+                    <p:tabView>
 
                         <p:tab id="EmpleadoTab1" title="Datos Empleado">
                             <p:panelGrid columns="2" columnClasses="column">
@@ -27,31 +27,19 @@
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_docIdentidad}" for="docIdentidad" />
                                 <p:inputText id="docIdentidad" value="#{empleadoController.selected.docIdentidad}" title="#{myBundle.CreateEmpleadoTitle_docIdentidad}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_docIdentidad}" size="45" maxlength="45"/>
 
-                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_fechaNacimiento}" for="fechaNacimiento" />
-                                <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{empleadoController.selected.fechaNacimiento}" title="#{myBundle.CreateEmpleadoTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_fechaNacimiento}" showOn="button"/>
-
-                                <p:outputLabel value="Estado Civil"  />
-                                <p:selectOneMenu id="idestadocivil" value="#{nivelEducativoController.selected.nombre}" required="false" >
-                                    <f:selectItem itemLabel="Seleccione Uno" itemValue="" noSelectionOption="true" />                                  
-                                    <f:selectItem itemLabel="Casado" itemValue="CA"  />
-                                    <f:selectItem itemLabel="Soltero" itemValue="SO" />
-                                    <f:selectItem itemLabel="Viudo" itemValue="VI" />
-                                    <f:selectItem itemLabel="Divorciado" itemValue="DI" />
-                                </p:selectOneMenu> 
-                                 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_situacionTrabajador}" for="situacionTrabajador" />
                                 <p:inputText id="situacionTrabajador" value="#{empleadoController.selected.situacionTrabajador}" title="#{myBundle.CreateEmpleadoTitle_situacionTrabajador}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_situacionTrabajador}" size="45" maxlength="45"/>
-
+                                
+                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_fechaNacimiento}" for="fechaNacimiento" />
+                                <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{empleadoController.selected.fechaNacimiento}" title="#{myBundle.CreateEmpleadoTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_fechaNacimiento}" showOn="button"/>
+                                
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_sexo}"  />
                                 <p:selectOneMenu id="idgenero" value="#{empleadoController.selected.sexo}" required="true" >
                                     <f:selectItem itemLabel="Seleccione Uno" itemValue="" noSelectionOption="true" />                                  
-                                    <f:selectItem itemLabel="Femenino" itemValue="F"  />
-                                    <f:selectItem itemLabel="Masculino" itemValue="M" />
-                                </p:selectOneMenu>                             
-
-                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_foto}" for="foto" />
-                                <p:inputText id="foto" value="#{empleadoController.selected.foto}" title="#{myBundle.CreateEmpleadoTitle_foto}" size="75" maxlength="75"/>
-
+                                    <f:selectItem itemLabel="FEMENINO" itemValue="F"  />
+                                    <f:selectItem itemLabel="MASCULINO" itemValue="M" />
+                                </p:selectOneMenu> 
+                                
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_grupoHorarioId}" for="grupoHorarioId" />
                                 <p:selectOneMenu id="grupoHorarioId" value="#{empleadoController.selected.grupoHorarioId}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_grupoHorarioId}" converter="grupoHorarioConverter">
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
@@ -60,7 +48,6 @@
                                                    itemValue="#{grupoHorarioIdItem}"
                                                    itemLabel="#{grupoHorarioIdItem.nombre}"
                                                    />
-
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoId}" for="empleadoId" />
@@ -71,7 +58,6 @@
                                                    itemValue="#{empleadoIdItem}"
                                                    itemLabel="#{empleadoIdItem.apellidos} #{empleadoIdItem.nombres} "
                                                    />
-
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_servicioId}" for="servicioId" />
@@ -82,26 +68,21 @@
                                                    itemValue="#{servicioIdItem}"
                                                    itemLabel="#{servicioIdItem.nombre}"
                                                    />
-
                                 </p:selectOneMenu>
                             </p:panelGrid>
-                        </p:tab>                        
-
+                        </p:tab>  
 
                         <p:tab id="EmpleadoTab2" title="Datos Contactar">
-                            
+                            <p:panelGrid columns="2" columnClasses="column">                                
 
+
+                            </p:panelGrid>
                         </p:tab>
 
-                        <p:tab id="EmpleadoTab3" title="Datos Laborales">
 
-                        </p:tab>
 
-                        <p:tab id="EmpleadoTab4" title="Confirmacion">
+                    </p:tabView>
 
-                        </p:tab>
-
-                    </p:wizard>
 
                     <p:commandButton actionListener="#{empleadoController.saveNew}" value="#{myBundle.Save}" update="display,:EmpleadoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmpleadoCreateDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
