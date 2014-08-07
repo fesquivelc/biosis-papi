@@ -30,7 +30,7 @@
                 <p:ajax event="rowUnselect" update=":EmpleadoListForm:createButton :EmpleadoListForm:viewButton :EmpleadoListForm:editButton :EmpleadoListForm:deleteButton :EmpleadoListForm:EmpleadoDataTableContextMenu" listener="#{empleadoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('EmpleadoListForm:viewButton').click();"/>
                 
-                <p:column sortBy="#{item.nombres}" filterBy="#{item.nombres}">
+                <p:column sortBy="#{item.nombres}" filterBy="#{item.nombres}" >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoTitle_nombres}"/>
                     </f:facet>
@@ -38,7 +38,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.apellidos}" filterBy="#{item.apellidos}">
+                <p:column sortBy="#{item.apellidos}" filterBy="#{item.apellidos}" >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoTitle_apellidos}"/>
                     </f:facet>
@@ -46,25 +46,15 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.docIdentidad}" filterBy="#{item.docIdentidad}">
+                <p:column sortBy="#{item.docIdentidad}" >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoTitle_docIdentidad}"/>
                     </f:facet>
                     <h:outputText value="#{item.docIdentidad}"/>
-                </p:column>
-
-
-                <p:column sortBy="#{item.fechaNacimiento}" filterBy="#{item.fechaNacimiento}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListEmpleadoTitle_fechaNacimiento}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.fechaNacimiento}">
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:outputText>
-                </p:column>
+                </p:column>               
 
                
-                <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
+                <p:column sortBy="#{item.empleadoId.id}" >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoTitle_empleadoId}"/>
                     </f:facet>
@@ -88,23 +78,21 @@
                                         <h:outputText value="#{item.foto}"/>
                                     </p:column>
                 -->
-                <!--
-                                    <p:column sortBy="#{item.grupoHorarioId.id}" filterBy="#{item.grupoHorarioId.id}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListEmpleadoTitle_grupoHorarioId}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.grupoHorarioId.id}"/>
-                                    </p:column>
-                -->
                 
-                <!--
-                                    <p:column sortBy="#{item.servicioId.descripcion}" filterBy="#{item.servicioId.descripcion}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListEmpleadoTitle_servicioId}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.servicioId.descripcion}"/>
-                                    </p:column>
-                -->
+                <p:column sortBy="#{item.grupoHorarioId.id}" >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpleadoTitle_grupoHorarioId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.grupoHorarioId.nombre}"/>
+                </p:column>               
+
+                <p:column sortBy="#{item.servicioId.descripcion}" >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListEmpleadoTitle_servicioId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.servicioId.descripcion}"/>
+                </p:column>
+                
 
             </p:dataTable>
 
