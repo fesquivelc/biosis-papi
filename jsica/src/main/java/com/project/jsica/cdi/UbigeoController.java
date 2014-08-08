@@ -2,14 +2,15 @@ package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.UbigeoFacadeLocal;
 import com.project.jsica.ejb.entidades.Ubigeo;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named(value = "ubigeoController")
 @ViewScoped
@@ -18,6 +19,16 @@ public class UbigeoController extends AbstractController<Ubigeo> {
     private UbigeoFacadeLocal ubigeoFacade;
     @Inject
     private FichaGeneralEmpleadoController fichaGeneralEmpleadoListController;
+    
+    private Ubigeo seleccionado;
+    
+    public Ubigeo getSeleccionado() {
+        return seleccionado;
+    }
+
+    public void setSeleccionado(Ubigeo seleccionado) {
+        this.seleccionado = seleccionado;
+    }
 
     public UbigeoController() {
         // Inform the Abstract parent controller of the concrete Ubigeo?cap_first Entity
@@ -77,6 +88,15 @@ public class UbigeoController extends AbstractController<Ubigeo> {
     @Override
     public List<Ubigeo> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
         return this.ubigeoFacade.search(namedQuery, parametros, inicio, tamanio);
+    }
+    
+    public List<Ubigeo> metodo(String parametro)
+    {
+        String query = "SELECT u FROM Ubigeo u WHERE CONCAT(u.departamento,u.provincia,u.distrito) LIKE CONCAT('%',:parametro,'%')";
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("parametro", parametro);
+        
+        return this.getEjbFacade().search(query, parametros);
     }
 
 }
