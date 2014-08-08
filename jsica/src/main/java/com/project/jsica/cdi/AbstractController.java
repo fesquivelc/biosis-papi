@@ -1,6 +1,7 @@
 package com.project.jsica.cdi;
 
 import com.project.jsica.cdi.util.JsfUtil;
+import com.project.jsica.ejb.dao.AbstractFacade;
 import com.project.jsica.ejb.dao.BitacoraFacadeLocal;
 import com.project.jsica.ejb.entidades.Bitacora;
 import java.io.Serializable;
@@ -32,6 +33,12 @@ public abstract class AbstractController<T> implements Serializable {
     protected T selected;
     protected Collection<T> items;
     protected boolean esNuevo;
+    private AbstractFacade<T> ejbFacade;
+    
+     public AbstractFacade<T> getEjbFacade() {
+        return ejbFacade;
+    }
+    
     
     
     
