@@ -110,6 +110,10 @@ public class Ubigeo implements Serializable {
     public void setPais(String pais) {
         this.pais = pais;
     }
+    
+    public String getUbigeo(){
+        return this.departamento + " / " + this.provincia + " / " + this.distrito;
+    }
 
     @XmlTransient
     public List<FichaGeneralEmpleado> getFichaGeneralEmpleadoList() {
