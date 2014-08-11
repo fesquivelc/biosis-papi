@@ -5,6 +5,7 @@ import com.project.jsica.ejb.entidades.Ubigeo;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -93,9 +94,9 @@ public class UbigeoController extends AbstractController<Ubigeo> {
     {
         String query = "SELECT u FROM Ubigeo u WHERE CONCAT(u.departamento,u.provincia,u.distrito) LIKE CONCAT('%',:parametro,'%')";
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("parametro", parametro);
-        
-        return this.getEjbFacade().search(query, parametros);
+        parametros.put("parametro", parametro.toUpperCase());        
+        return this.ubigeoFacade.search(query, parametros);
     }
+    
 
 }
