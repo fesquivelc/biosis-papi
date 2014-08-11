@@ -32,16 +32,7 @@ public abstract class AbstractController<T> implements Serializable {
     private Class controller;
     protected T selected;
     protected Collection<T> items;
-    protected boolean esNuevo;
-    private AbstractFacade<T> ejbFacade;
-    
-     public AbstractFacade<T> getEjbFacade() {
-        return ejbFacade;
-    }
-    
-    
-    
-    
+    protected boolean esNuevo;   
     
 
     private enum PersistAction {
