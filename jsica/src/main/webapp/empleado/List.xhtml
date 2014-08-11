@@ -46,7 +46,7 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.docIdentidad}" >
+                <p:column sortBy="#{item.docIdentidad}" filterBy="#{item.docIdentidad}" >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListEmpleadoTitle_docIdentidad}"/>
                     </f:facet>
@@ -101,8 +101,8 @@
             <p:commandButton id="editButton"                               icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EmpleadoEditForm" oncomplete="PF('EmpleadoEditDialog').show()" />
             <p:commandButton id="deleteButton"                             icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{empleadoController.delete}" update=":growl,datalist" >
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
-
+            </p:commandButton>          
+            
         </p:panel>
         <ui:include src="/confirmation.xhtml"/>
     </h:form>
