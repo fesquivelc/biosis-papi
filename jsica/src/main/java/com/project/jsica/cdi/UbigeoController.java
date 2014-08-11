@@ -15,12 +15,11 @@ import javax.inject.Named;
 @Named(value = "ubigeoController")
 @ViewScoped
 public class UbigeoController extends AbstractController<Ubigeo> {
+    private Ubigeo seleccionado;
     @EJB
     private UbigeoFacadeLocal ubigeoFacade;
     @Inject
-    private FichaGeneralEmpleadoController fichaGeneralEmpleadoListController;
-    
-    private Ubigeo seleccionado;
+    private FichaGeneralEmpleadoController fichaGeneralEmpleadoListController;    
     
     public Ubigeo getSeleccionado() {
         return seleccionado;
