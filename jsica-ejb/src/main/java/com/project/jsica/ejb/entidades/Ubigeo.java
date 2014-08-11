@@ -38,7 +38,7 @@ public class Ubigeo implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 6)
+    @Size(min = 1, max = 255)
     private String codigo;
     @Basic(optional = false)
     @NotNull
