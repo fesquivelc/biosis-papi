@@ -24,6 +24,7 @@
                          var="item"
                          rowKey="#{item.id}"
                          paginator="true"
+                         paginatorPosition="bottom"
                          rows="10"
                          rowsPerPageTemplate="10,20,30,40,50"
                          selectionMode="single"
@@ -33,14 +34,14 @@
                 <p:ajax event="rowUnselect" update=":FichaGeneralEmpleadoListForm:createButton :FichaGeneralEmpleadoListForm:viewButton :FichaGeneralEmpleadoListForm:editButton :FichaGeneralEmpleadoListForm:deleteButton :FichaGeneralEmpleadoListForm:FichaGeneralEmpleadoDataTableContextMenu" listener="#{fichaGeneralEmpleadoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('FichaGeneralEmpleadoListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
                     <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_id}"/>
+                        <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_empleadoId}"/>
                     </f:facet>
-                    <h:outputText value="#{item.id}"/>
+                    <h:outputText value="#{item.empleadoId.apellidos} #{item.empleadoId.nombres}"/>
                 </p:column>
-
-
+                
+                
                 <p:column sortBy="#{item.telefonoFijo}" filterBy="#{item.telefonoFijo}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_telefonoFijo}"/>
@@ -64,21 +65,23 @@
                     <h:outputText value="#{item.direccion}"/>
                 </p:column>
 
-
+                <!--
                 <p:column sortBy="#{item.direccionTipoZona}" filterBy="#{item.direccionTipoZona}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_direccionTipoZona}"/>
                     </f:facet>
                     <h:outputText value="#{item.direccionTipoZona}"/>
                 </p:column>
+                -->
 
-
+                <!--
                 <p:column sortBy="#{item.direccionTipoVia}" filterBy="#{item.direccionTipoVia}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_direccionTipoVia}"/>
                     </f:facet>
                     <h:outputText value="#{item.direccionTipoVia}"/>
                 </p:column>
+                -->
 
                 <!--
                                     <p:column sortBy="#{item.estadoCivil}" filterBy="#{item.estadoCivil}">
@@ -88,38 +91,30 @@
                                         <h:outputText value="#{item.estadoCivil}"/>
                                     </p:column>
                 -->
-                <!--
+                
                                     <p:column sortBy="#{item.email}" filterBy="#{item.email}">
                                         <f:facet name="header">
                                             <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_email}"/>
                                         </f:facet>
                                         <h:outputText value="#{item.email}"/>
-                                    </p:column>
-                -->
-                <!--
-                                    <p:column sortBy="#{item.empleadoId.id}" filterBy="#{item.empleadoId.id}">
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_empleadoId}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.empleadoId.id}"/>
-                                    </p:column>
-                -->
-                <!--
+                                    </p:column>                                               
+                
+                
                                     <p:column sortBy="#{item.ubigeoCodigo.codigo}" filterBy="#{item.ubigeoCodigo.codigo}">
                                         <f:facet name="header">
                                             <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_ubigeoCodigo}"/>
                                         </f:facet>
                                         <h:outputText value="#{item.ubigeoCodigo.codigo}"/>
                                     </p:column>
-                -->
-                <!--
+                
+               
                                     <p:column sortBy="#{item.nivelEducativoId.id}" filterBy="#{item.nivelEducativoId.id}">
                                         <f:facet name="header">
                                             <h:outputText value="#{myBundle.ListFichaGeneralEmpleadoTitle_nivelEducativoId}"/>
                                         </f:facet>
                                         <h:outputText value="#{item.nivelEducativoId.id}"/>
                                     </p:column>
-                -->
+                
 
             </p:dataTable>
 
