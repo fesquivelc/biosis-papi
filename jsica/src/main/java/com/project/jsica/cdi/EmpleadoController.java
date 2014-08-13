@@ -355,7 +355,7 @@ public class EmpleadoController extends AbstractController<Empleado> {
     public List<Empleado> metodo(String parametro){
         String query = "SELECT e FROM Empleado e WHERE CONCAT(e.nombres,e.apellidos) LIKE CONCAT('%',:parametro,'%')";
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("parametro", parametro.toUpperCase());        
+        parametros.put("parametro", parametro);        
         return this.empleadoFacade.search(query, parametros);
     }
 
