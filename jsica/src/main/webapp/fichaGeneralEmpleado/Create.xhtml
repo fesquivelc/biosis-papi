@@ -16,15 +16,11 @@
                     <p:panelGrid columns="2" columnClasses="column">
                         
                         <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_empleadoId}" for="empleadoId" />
-                        <p:selectOneMenu id="empleadoId" value="#{fichaGeneralEmpleadoController.selected.empleadoId}" required="true" requiredMessage="#{myBundle.CreateFichaGeneralEmpleadoRequiredMessage_empleadoId}" converter="empleadoConverter">
-                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{empleadoController.items}"
-                                           var="empleadoIdItem"
-                                           itemValue="#{empleadoIdItem}"
-                                           itemLabel="#{empleadoIdItem.apellidos} #{empleadoIdItem.nombres}"
-                                           />
-
-                        </p:selectOneMenu>    
+                        <p:autoComplete id="empleadoId" value="#{fichaGeneralEmpleadoController.selected.empleadoId}" completeMethod="#{empleadoController.metodo}"
+                                        var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="70" required="true"/>                    
+                        
+                        <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{fichaGeneralEmpleadoController.selected.email}" title="#{myBundle.CreateFichaGeneralEmpleadoTitle_email}" size="70" maxlength="70"/>
                         
                         <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_direccion}" for="direccion" />
                         <p:inputText id="direccion" value="#{fichaGeneralEmpleadoController.selected.direccion}" title="#{myBundle.CreateFichaGeneralEmpleadoTitle_direccion}" size="70" maxlength="70"/>
@@ -47,7 +43,7 @@
                         
                         
                         <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_direccionTipoVia}" for="direccionTipoVia" />                       
-                        <p:selectOneMenu id="direccionTipoVia" value="#{fichaGeneralEmpleadoController.selected.direccionTipoVia}"  >
+                        <p:selectOneMenu id="direccionTipoVia" value="#{fichaGeneralEmpleadoController.selected.direccionTipoVia}" >
                             <f:selectItem itemLabel="Seleccione Uno" itemValue="" noSelectionOption="true" />                                  
                             <f:selectItem itemLabel="AV. AVENIDA" itemValue="AV"  />
                             <f:selectItem itemLabel="AL. ALAMEDA" itemValue="AL"  />
@@ -68,13 +64,10 @@
 
                         <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_telefonoCelular}" for="telefonoCelular" />
                         <p:inputText id="telefonoCelular" value="#{fichaGeneralEmpleadoController.selected.telefonoCelular}" title="#{myBundle.CreateFichaGeneralEmpleadoTitle_telefonoCelular}" size="10" maxlength="10"/>
-
-                        <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_email}" for="email" />
-                        <p:inputText id="email" value="#{fichaGeneralEmpleadoController.selected.email}" title="#{myBundle.CreateFichaGeneralEmpleadoTitle_email}" size="70" maxlength="70"/>
-                        
+                                               
                         <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_ubigeoCodigo}" for="ubigeoCodigo"  />
                         <p:autoComplete id="ubigeoCodigo" value="#{fichaGeneralEmpleadoController.selected.ubigeoCodigo}" completeMethod="#{ubigeoController.metodo}"
-                                        var="ubigeo" itemLabel="#{ubigeo.ubigeo}" itemValue="#{ubigeo}" converter="ubigeoConverter" size="40" required="true"/>
+                                        var="ubigeo" itemLabel="#{ubigeo.ubigeo}" itemValue="#{ubigeo}" converter="ubigeoConverter" size="70" required="true"/>
                         
                         <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_estadoCivil}" />                       
                         <p:selectOneMenu id="idgenero" value="#{fichaGeneralEmpleadoController.selected.estadoCivil}" >
