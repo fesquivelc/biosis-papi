@@ -198,6 +198,10 @@ public class Empleado implements Serializable {
     public void setFoto(String foto) {
         this.foto = foto;
     }
+    
+    public String getEmpleado(){
+         return this.apellidos + " " + this.apellidos + " - DNI:" + this.docIdentidad;
+    }
 
     @XmlTransient
     public List<RegistroAsistencia> getRegistroAsistenciaList() {
