@@ -2,18 +2,20 @@ package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.EmpleadoFacadeLocal;
 import com.project.jsica.ejb.entidades.Empleado;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named(value = "empleadoController")
 @ViewScoped
 public class EmpleadoController extends AbstractController<Empleado> {
+    private Empleado seleccionado;
     @EJB
     private EmpleadoFacadeLocal empleadoFacade;
     @Inject
@@ -57,6 +59,14 @@ public class EmpleadoController extends AbstractController<Empleado> {
         // Inform the Abstract parent controller of the concrete Empleado?cap_first Entity
         super(Empleado.class);
     }
+
+    public Empleado getSeleccionado() {
+        return seleccionado;
+    }
+
+    public void setSeleccionado(Empleado seleccionado) {
+        this.seleccionado = seleccionado;
+    }  
 
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
@@ -340,6 +350,13 @@ public class EmpleadoController extends AbstractController<Empleado> {
     @Override
     public List<Empleado> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
         return this.empleadoFacade.search(namedQuery, parametros, inicio, tamanio);
+    }
+    
+    public List<Empleado> metodo(String parametro){
+        String query = "SELECT e FROM Empleado e WHERE CONCAT(e.nombres,e.apellidos) LIKE CONCAT('%',:parametro,'%')";
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("parametro", parametro.toUpperCase());        
+        return this.empleadoFacade.search(query, parametros);
     }
 
 }
