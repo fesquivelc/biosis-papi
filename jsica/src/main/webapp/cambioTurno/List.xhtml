@@ -30,7 +30,7 @@
                         <h:outputText value="#{myBundle.ListCambioTurnoTitle_fechaPedido}"/>
                     </f:facet>
                     <h:outputText value="#{item.fechaPedido}">
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:outputText>
                 </p:column>
 
@@ -65,7 +65,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListCambioTurnoTitle_jefeInmediatoId}"/>
                     </f:facet>
-                    <h:outputText value="#{item.jefeInmediatoId.id}"/>
+                    <h:outputText value="#{item.jefeInmediatoId.apellidos} #{item.jefeInmediatoId.nombres}"/>
                 </p:column>
 
 
