@@ -2,6 +2,8 @@ package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.EmpleadoFacadeLocal;
 import com.project.jsica.ejb.entidades.Empleado;
+import com.project.jsica.ejb.entidades.FichaGeneralEmpleado;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,7 @@ import javax.inject.Named;
 @ViewScoped
 public class EmpleadoController extends AbstractController<Empleado> {
     private Empleado seleccionado;
+    private FichaGeneralEmpleado fichaSeleccionada;
     @EJB
     private EmpleadoFacadeLocal empleadoFacade;
     @Inject
@@ -67,6 +70,16 @@ public class EmpleadoController extends AbstractController<Empleado> {
     public void setSeleccionado(Empleado seleccionado) {
         this.seleccionado = seleccionado;
     }  
+
+    public FichaGeneralEmpleado getFichaSeleccionada() {
+        return fichaSeleccionada;
+    }
+
+    public void setFichaSeleccionada(FichaGeneralEmpleado fichaSeleccionada) {
+        this.fichaSeleccionada = fichaSeleccionada;
+    }
+    
+    
 
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
@@ -357,6 +370,17 @@ public class EmpleadoController extends AbstractController<Empleado> {
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("parametro", parametro);        
         return this.empleadoFacade.search(query, parametros);
+    }
+    
+    @Override
+    public Empleado prepareCreate(ActionEvent event) {
+        Empleado empleado = new Empleado();
+        empleado.setFichaGeneralEmpleadoList(new ArrayList<FichaGeneralEmpleado>());             
+        fichaSeleccionada = new FichaGeneralEmpleado();
+        empleado.getFichaGeneralEmpleadoList().add(fichaSeleccionada);
+        fichaSeleccionada.setEmpleadoId(empleado);
+        this.setSelected(empleado);
+        return empleado;       
     }
 
 }
