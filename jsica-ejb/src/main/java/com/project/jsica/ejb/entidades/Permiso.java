@@ -56,10 +56,10 @@ public class Permiso implements Serializable {
     @Temporal(TemporalType.TIME)
     private Date horaFin;
     @Column(name = "fecha_inicio")
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.DATE)
     private Date fechaInicio;
     @Column(name = "fecha_fin")
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.DATE)
     private Date fechaFin;
     @Basic(optional = false)
     @NotNull
