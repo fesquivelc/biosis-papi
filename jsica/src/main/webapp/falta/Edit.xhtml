@@ -15,11 +15,10 @@
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{faltaController.selected != null}">
 
 
-                        <h:outputLabel value="#{myBundle.EditFaltaLabel_id}" for="id" />
-                        <h:outputText id="id" value="#{faltaController.selected.id}" />
-
                         <p:outputLabel value="#{myBundle.EditFaltaLabel_fecha}" for="fecha" />
-                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{faltaController.selected.fecha}" title="#{myBundle.EditFaltaTitle_fecha}" required="true" requiredMessage="#{myBundle.EditFaltaRequiredMessage_fecha}" showOn="button"/>
+                        <p:inputMask id="fecha" value="#{faltaController.selected.fecha}" mask="99/99/9999" title="#{myBundle.CreateFaltaTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateFaltaRequiredMessage_fecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:inputMask>
 
                         <p:outputLabel value="#{myBundle.EditFaltaLabel_empleadoId}" for="empleadoId" />
                         <p:selectOneMenu id="empleadoId" value="#{faltaController.selected.empleadoId}" required="true" requiredMessage="#{myBundle.EditFaltaRequiredMessage_empleadoId}" converter="empleadoConverter">
