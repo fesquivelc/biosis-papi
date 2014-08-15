@@ -202,6 +202,14 @@ public class Empleado implements Serializable {
     public String getEmpleado(){
          return this.apellidos + " " + this.apellidos + " - DNI:" + this.docIdentidad;
     }
+    
+     public FichaGeneralEmpleado getFicha(){
+        return this.fichaGeneralEmpleadoList.get(0);
+    }
+    
+    public void setFicha(FichaGeneralEmpleado ficha){
+        this.fichaGeneralEmpleadoList.set(0, ficha);       
+    }
 
     @XmlTransient
     public List<RegistroAsistencia> getRegistroAsistenciaList() {
