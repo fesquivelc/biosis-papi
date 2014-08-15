@@ -14,22 +14,26 @@
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{permisoController.selected != null}">
 
-
-                        <h:outputLabel value="#{myBundle.EditPermisoLabel_id}" for="id" />
-                        <h:outputText id="id" value="#{permisoController.selected.id}" />
-
                         <p:outputLabel value="#{myBundle.EditPermisoLabel_horaInicio}" for="horaInicio" />
-                        <p:calendar id="horaInicio" pattern="HH:mm:ss" value="#{permisoController.selected.horaInicio}" title="#{myBundle.EditPermisoTitle_horaInicio}"  showOn="button"/>
-
+                        <p:inputMask id="horaInicio" value="#{permisoController.selected.horaInicio}" mask="99:99" title="#{myBundle.EditPermisoTitle_horaInicio}">
+                            <f:convertDateTime pattern="HH:mm"/>
+                        </p:inputMask>
+                        
                         <p:outputLabel value="#{myBundle.EditPermisoLabel_horaFin}" for="horaFin" />
-                        <p:calendar id="horaFin" pattern="HH:mm:ss" value="#{permisoController.selected.horaFin}" title="#{myBundle.EditPermisoTitle_horaFin}"  showOn="button"/>
-
+                        <p:inputMask id="horaFin" value="#{permisoController.selected.horaFin}" mask="99:99" title="#{myBundle.EditPermisoTitle_horaFin}">
+                            <f:convertDateTime pattern="HH:mm"/>
+                        </p:inputMask>
+                        
                         <p:outputLabel value="#{myBundle.EditPermisoLabel_fechaInicio}" for="fechaInicio" />
-                        <p:calendar id="fechaInicio" pattern="HH:mm:ss" value="#{permisoController.selected.fechaInicio}" title="#{myBundle.EditPermisoTitle_fechaInicio}"  showOn="button"/>
-
+                        <p:inputMask id="fechaInicio" value="#{permisoController.selected.fechaInicio}" mask="99/99/9999" title="#{myBundle.EditPermisoTitle_fechaInicio}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:inputMask>
+                        
                         <p:outputLabel value="#{myBundle.EditPermisoLabel_fechaFin}" for="fechaFin" />
-                        <p:calendar id="fechaFin" pattern="HH:mm:ss" value="#{permisoController.selected.fechaFin}" title="#{myBundle.EditPermisoTitle_fechaFin}"  showOn="button"/>
-
+                        <p:inputMask id="fechaFin" value="#{permisoController.selected.fechaFin}" mask="99/99/9999" title="#{myBundle.EditPermisoTitle_fechaFin}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:inputMask>
+                        
                         <p:outputLabel value="#{myBundle.EditPermisoLabel_tipo}" for="tipo" />
                         <p:inputText id="tipo" value="#{permisoController.selected.tipo}" title="#{myBundle.EditPermisoTitle_tipo}" required="true" requiredMessage="#{myBundle.EditPermisoRequiredMessage_tipo}" size="2" maxlength="2"/>
 
