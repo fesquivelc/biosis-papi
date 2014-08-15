@@ -15,20 +15,17 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{suspensionController.selected != null}">
 
-                        <h:outputText value="#{myBundle.ViewSuspensionLabel_id}"/>
-                        <h:outputText value="#{suspensionController.selected.id}" title="#{myBundle.ViewSuspensionTitle_id}"/>
-
                         <h:outputText value="#{myBundle.ViewSuspensionLabel_motivo}"/>
                         <h:outputText value="#{suspensionController.selected.motivo}" title="#{myBundle.ViewSuspensionTitle_motivo}"/>
 
                         <h:outputText value="#{myBundle.ViewSuspensionLabel_fechaInicio}"/>
                         <h:outputText value="#{suspensionController.selected.fechaInicio}" title="#{myBundle.ViewSuspensionTitle_fechaInicio}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
 
                         <h:outputText value="#{myBundle.ViewSuspensionLabel_fechaFin}"/>
                         <h:outputText value="#{suspensionController.selected.fechaFin}" title="#{myBundle.ViewSuspensionTitle_fechaFin}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
 
                         <h:outputText value="#{myBundle.ViewSuspensionLabel_empleadoIdempleado}"/>
