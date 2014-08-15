@@ -15,9 +15,6 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{empleadoPermisoController.selected != null}">
 
-                        <h:outputText value="#{myBundle.ViewEmpleadoPermisoLabel_id}"/>
-                        <h:outputText value="#{empleadoPermisoController.selected.id}" title="#{myBundle.ViewEmpleadoPermisoTitle_id}"/>
-
                         <h:outputText value="#{myBundle.ViewEmpleadoPermisoLabel_empleadoId}"/>
                         <h:outputText value="#{empleadoPermisoController.selected.empleadoId.apellidos} #{empleadoPermisoController.selected.empleadoId.nombres}"/>
 
