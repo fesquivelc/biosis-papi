@@ -15,9 +15,6 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{faltaController.selected != null}">
 
-                        <h:outputText value="#{myBundle.ViewFaltaLabel_id}"/>
-                        <h:outputText value="#{faltaController.selected.id}" title="#{myBundle.ViewFaltaTitle_id}"/>
-
                         <h:outputText value="#{myBundle.ViewFaltaLabel_fecha}"/>
                         <h:outputText value="#{faltaController.selected.fecha}" title="#{myBundle.ViewFaltaTitle_fecha}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
