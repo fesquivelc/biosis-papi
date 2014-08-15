@@ -15,9 +15,6 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{permisoController.selected != null}">
 
-                        <h:outputText value="#{myBundle.ViewPermisoLabel_id}"/>
-                        <h:outputText value="#{permisoController.selected.id}" title="#{myBundle.ViewPermisoTitle_id}"/>
-
                         <h:outputText value="#{myBundle.ViewPermisoLabel_horaInicio}"/>
                         <h:outputText value="#{permisoController.selected.horaInicio}" title="#{myBundle.ViewPermisoTitle_horaInicio}">
                             <f:convertDateTime pattern="HH:mm:ss" />
@@ -30,12 +27,12 @@
 
                         <h:outputText value="#{myBundle.ViewPermisoLabel_fechaInicio}"/>
                         <h:outputText value="#{permisoController.selected.fechaInicio}" title="#{myBundle.ViewPermisoTitle_fechaInicio}">
-                            <f:convertDateTime pattern="HH:mm:ss" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
 
                         <h:outputText value="#{myBundle.ViewPermisoLabel_fechaFin}"/>
                         <h:outputText value="#{permisoController.selected.fechaFin}" title="#{myBundle.ViewPermisoTitle_fechaFin}">
-                            <f:convertDateTime pattern="HH:mm:ss" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
 
                         <h:outputText value="#{myBundle.ViewPermisoLabel_tipo}"/>
