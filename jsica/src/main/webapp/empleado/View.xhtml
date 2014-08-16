@@ -50,6 +50,16 @@
                                 <h:outputText value="#{empleadoController.selected.servicioId.descripcion}"/>
                             </p:panelGrid>
                         </p:tab>
+                        
+                        <p:tab title="Datos FichaGeneral">
+                            <p:panelGrid columns="2" columnClasses="column" rendered="#{empleadoController.selected != null}">
+                                <h:outputText value="#{myBundle.CreateFichaGeneralEmpleadoLabel_email}"/>
+                                <h:outputText value="#{empleadoController.selected.ficha.email}"/>
+
+                            </p:panelGrid>
+                        </p:tab>
+                        
+                        
                     </p:tabView>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('EmpleadoViewDialog').hide()"/>
                 </h:panelGroup>
