@@ -53,8 +53,15 @@
                         
                         <p:tab title="Datos FichaGeneral">
                             <p:panelGrid columns="2" columnClasses="column" rendered="#{empleadoController.selected != null}">
-                                <h:outputText value="#{myBundle.CreateFichaGeneralEmpleadoLabel_email}"/>
-                                <h:outputText value="#{empleadoController.selected.ficha.email}"/>
+                                
+                                <h:outputText value="#{myBundle.CreateFichaGeneralEmpleadoLabel_email}" />
+                                <p:outputLabel value="#{empleadoController.selected.ficha.email}"  />
+                               
+                                
+                                <h:outputText value="#{myBundle.CreateFichaGeneralEmpleadoLabel_direccion}" />
+                                <h:outputText value="#{empleadoController.selected.ficha.direccion}" />
+                                
+                                
 
                             </p:panelGrid>
                         </p:tab>
