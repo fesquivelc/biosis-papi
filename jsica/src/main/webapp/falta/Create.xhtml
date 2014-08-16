@@ -15,16 +15,18 @@
                 <h:panelGroup id="display" rendered="#{faltaController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="#{myBundle.CreateFaltaLabel_fecha}" for="fecha" />
-                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{faltaController.selected.fecha}" title="#{myBundle.CreateFaltaTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateFaltaRequiredMessage_fecha}" showOn="button"/>
-
+                        <p:outputLabel value="#{myBundle.CreateFaltaLabel_fecha}" for="fecha" />                      
+                        <p:inputMask id="fecha" value="#{faltaController.selected.fecha}" mask="99/99/9999" title="#{myBundle.CreateFaltaTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateFaltaRequiredMessage_fecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:inputMask>
+                           
                         <p:outputLabel value="#{myBundle.CreateFaltaLabel_empleadoId}" for="empleadoId" />
                         <p:selectOneMenu id="empleadoId" value="#{faltaController.selected.empleadoId}" required="true" requiredMessage="#{myBundle.CreateFaltaRequiredMessage_empleadoId}" converter="empleadoConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{empleadoController.items}"
                                            var="empleadoIdItem"
                                            itemValue="#{empleadoIdItem}"
-                                           itemLabel="#{empleadoIdItem.id.toString()}"
+                                           itemLabel="#{empleadoIdItem.apellidos} #{empleadoIdItem.nombres}"
                                            />
 
                         </p:selectOneMenu>

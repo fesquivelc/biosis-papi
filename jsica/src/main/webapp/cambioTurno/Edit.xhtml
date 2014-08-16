@@ -15,15 +15,16 @@
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{cambioTurnoController.selected != null}">
 
 
-                        <h:outputLabel value="#{myBundle.EditCambioTurnoLabel_id}" for="id" />
-                        <h:outputText id="id" value="#{cambioTurnoController.selected.id}" />
-
                         <p:outputLabel value="#{myBundle.EditCambioTurnoLabel_fechaPedido}" for="fechaPedido" />
-                        <p:calendar id="fechaPedido" pattern="MM/dd/yyyy" value="#{cambioTurnoController.selected.fechaPedido}" title="#{myBundle.EditCambioTurnoTitle_fechaPedido}" required="true" requiredMessage="#{myBundle.EditCambioTurnoRequiredMessage_fechaPedido}" showOn="button"/>
-
+                        <p:inputMask id="fechaPedido" value="#{cambioTurnoController.selected.fechaPedido}" mask="99/99/9999" title="#{myBundle.EditCambioTurnoTitle_fechaPedido}" required="true" requiredMessage="#{myBundle.EditCambioTurnoRequiredMessage_fechaPedido}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:inputMask>
+                        
                         <p:outputLabel value="#{myBundle.EditCambioTurnoLabel_horaPedido}" for="horaPedido" />
-                        <p:calendar id="horaPedido" pattern="HH:mm:ss" value="#{cambioTurnoController.selected.horaPedido}" title="#{myBundle.EditCambioTurnoTitle_horaPedido}" required="true" requiredMessage="#{myBundle.EditCambioTurnoRequiredMessage_horaPedido}" showOn="button"/>
-
+                        <p:inputMask id="horaPedido" value="#{cambioTurnoController.selected.horaPedido}" mask="99:99" title="#{myBundle.EditCambioTurnoTitle_horaPedido}" required="true" requiredMessage="#{myBundle.EditCambioTurnoRequiredMessage_horaPedido}">
+                            <f:convertDateTime pattern="HH:mm"/>
+                        </p:inputMask>
+                        
                         <p:outputLabel value="#{myBundle.EditCambioTurnoLabel_detalleHorarioOriginal}" for="detalleHorarioOriginal" />
                         <p:selectOneMenu id="detalleHorarioOriginal" value="#{cambioTurnoController.selected.detalleHorarioOriginal}" required="true" requiredMessage="#{myBundle.EditCambioTurnoRequiredMessage_detalleHorarioOriginal}" converter="detalleHorarioConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
@@ -52,7 +53,7 @@
                             <f:selectItems value="#{empleadoController.items}"
                                            var="jefeInmediatoIdItem"
                                            itemValue="#{jefeInmediatoIdItem}"
-                                           itemLabel="#{jefeInmediatoIdItem.id.toString()}"
+                                           itemLabel="#{jefeInmediatoIdItem.apellidos} #{jefeInmediatoIdItem.nombres}"
                                            />
 
                         </p:selectOneMenu>

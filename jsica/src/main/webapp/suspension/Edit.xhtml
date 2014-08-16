@@ -15,18 +15,19 @@
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{suspensionController.selected != null}">
 
 
-                        <h:outputLabel value="#{myBundle.EditSuspensionLabel_id}" for="id" />
-                        <h:outputText id="id" value="#{suspensionController.selected.id}" />
-
                         <p:outputLabel value="#{myBundle.EditSuspensionLabel_motivo}" for="motivo" />
                         <p:inputText id="motivo" value="#{suspensionController.selected.motivo}" title="#{myBundle.EditSuspensionTitle_motivo}" size="45" maxlength="45"/>
 
                         <p:outputLabel value="#{myBundle.EditSuspensionLabel_fechaInicio}" for="fechaInicio" />
-                        <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{suspensionController.selected.fechaInicio}" title="#{myBundle.EditSuspensionTitle_fechaInicio}" required="true" requiredMessage="#{myBundle.EditSuspensionRequiredMessage_fechaInicio}" showOn="button"/>
-
+                        <p:inputMask id="fechaInicio" value="#{suspensionController.selected.fechaInicio}" mask="99/99/9999" title="#{myBundle.EditSuspensionTitle_fechaInicio}" required="true" requiredMessage="#{myBundle.EditSuspensionRequiredMessage_fechaInicio}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:inputMask>
+                        
                         <p:outputLabel value="#{myBundle.EditSuspensionLabel_fechaFin}" for="fechaFin" />
-                        <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{suspensionController.selected.fechaFin}" title="#{myBundle.EditSuspensionTitle_fechaFin}" required="true" requiredMessage="#{myBundle.EditSuspensionRequiredMessage_fechaFin}" showOn="button"/>
-
+                        <p:inputMask id="fechaFin" value="#{suspensionController.selected.fechaFin}" mask="99/99/9999" title="#{myBundle.EditSuspensionTitle_fechaFin}" required="true" requiredMessage="#{myBundle.EditSuspensionRequiredMessage_fechaFin}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:inputMask>
+                        
                         <p:outputLabel value="#{myBundle.EditSuspensionLabel_empleadoIdempleado}" for="empleadoIdempleado" />
                         <p:selectOneMenu id="empleadoIdempleado" value="#{suspensionController.selected.empleadoIdempleado}" required="true" requiredMessage="#{myBundle.EditSuspensionRequiredMessage_empleadoIdempleado}" converter="empleadoConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>

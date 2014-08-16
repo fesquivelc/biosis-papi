@@ -19,10 +19,14 @@
                         <p:inputText id="motivo" value="#{suspensionController.selected.motivo}" title="#{myBundle.CreateSuspensionTitle_motivo}" size="45" maxlength="45"/>
 
                         <p:outputLabel value="#{myBundle.CreateSuspensionLabel_fechaInicio}" for="fechaInicio" />
-                        <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{suspensionController.selected.fechaInicio}" title="#{myBundle.CreateSuspensionTitle_fechaInicio}" required="true" requiredMessage="#{myBundle.CreateSuspensionRequiredMessage_fechaInicio}" showOn="button"/>
-
+                        <p:inputMask id="fechaInicio" value="#{suspensionController.selected.fechaInicio}" mask="99/99/9999" title="#{myBundle.CreateSuspensionTitle_fechaInicio}" required="true" requiredMessage="#{myBundle.CreateSuspensionRequiredMessage_fechaInicio}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:inputMask>
+                        
                         <p:outputLabel value="#{myBundle.CreateSuspensionLabel_fechaFin}" for="fechaFin" />
-                        <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{suspensionController.selected.fechaFin}" title="#{myBundle.CreateSuspensionTitle_fechaFin}" required="true" requiredMessage="#{myBundle.CreateSuspensionRequiredMessage_fechaFin}" showOn="button"/>
+                        <p:inputMask id="fechaFin" value="#{suspensionController.selected.fechaFin}" mask="99/99/9999" title="#{myBundle.CreateSuspensionTitle_fechaFin}" required="true" requiredMessage="#{myBundle.CreateSuspensionRequiredMessage_fechaFin}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:inputMask>    
 
                         <p:outputLabel value="#{myBundle.CreateSuspensionLabel_empleadoIdempleado}" for="empleadoIdempleado" />
                         <p:selectOneMenu id="empleadoIdempleado" value="#{suspensionController.selected.empleadoIdempleado}" required="true" requiredMessage="#{myBundle.CreateSuspensionRequiredMessage_empleadoIdempleado}" converter="empleadoConverter">

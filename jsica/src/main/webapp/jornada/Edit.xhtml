@@ -22,11 +22,15 @@
                         <p:inputText id="nombre" value="#{jornadaController.selected.nombre}" title="#{myBundle.EditJornadaTitle_nombre}" required="true" requiredMessage="#{myBundle.EditJornadaRequiredMessage_nombre}" size="60" maxlength="255"/>
 
                         <p:outputLabel value="#{myBundle.EditJornadaLabel_HEntrada}" for="HEntrada" />
-                        <p:calendar id="HEntrada" pattern="HH:mm:ss" value="#{jornadaController.selected.HEntrada}" title="#{myBundle.EditJornadaTitle_HEntrada}"  showOn="button"/>
-
+                        <p:inputMask id="HEntrada" value="#{jornadaController.selected.HEntrada}" mask="99:99" title="#{myBundle.EditJornadaTitle_HEntrada}">
+                            <f:convertDateTime pattern="HH:mm"/>
+                        </p:inputMask>
+                        
                         <p:outputLabel value="#{myBundle.EditJornadaLabel_HSalida}" for="HSalida" />
-                        <p:calendar id="HSalida" pattern="HH:mm:ss" value="#{jornadaController.selected.HSalida}" title="#{myBundle.EditJornadaTitle_HSalida}"  showOn="button"/>
-
+                        <p:inputMask id="HSalida" value="#{jornadaController.selected.HSalida}" mask="99:99" title="#{myBundle.EditJornadaTitle_HSalida}">
+                            <f:convertDateTime pattern="HH:mm"/>
+                        </p:inputMask>
+                        
                         <p:outputLabel value="#{myBundle.EditJornadaLabel_flexible}" for="flexible" />
                         <p:selectBooleanCheckbox id="flexible" value="#{jornadaController.selected.flexible}" required="true" requiredMessage="#{myBundle.EditJornadaRequiredMessage_flexible}"/>
 
@@ -36,7 +40,7 @@
                             <f:selectItems value="#{servicioController.items}"
                                            var="servicioIdItem"
                                            itemValue="#{servicioIdItem}"
-                                           itemLabel="#{servicioIdItem.descripcion.toString()}"
+                                           itemLabel="#{servicioIdItem.nombre}"
                                            />
 
                         </p:selectOneMenu>

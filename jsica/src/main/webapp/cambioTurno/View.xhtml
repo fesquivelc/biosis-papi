@@ -15,12 +15,9 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{cambioTurnoController.selected != null}">
 
-                        <h:outputText value="#{myBundle.ViewCambioTurnoLabel_id}"/>
-                        <h:outputText value="#{cambioTurnoController.selected.id}" title="#{myBundle.ViewCambioTurnoTitle_id}"/>
-
                         <h:outputText value="#{myBundle.ViewCambioTurnoLabel_fechaPedido}"/>
                         <h:outputText value="#{cambioTurnoController.selected.fechaPedido}" title="#{myBundle.ViewCambioTurnoTitle_fechaPedido}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
 
                         <h:outputText value="#{myBundle.ViewCambioTurnoLabel_horaPedido}"/>

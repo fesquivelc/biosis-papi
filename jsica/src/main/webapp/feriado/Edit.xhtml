@@ -15,15 +15,14 @@
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{feriadoController.selected != null}">
 
 
-                        <h:outputLabel value="#{myBundle.EditFeriadoLabel_idferiados}" for="idferiados" />
-                        <h:outputText id="idferiados" value="#{feriadoController.selected.idferiados}" />
-
                         <p:outputLabel value="#{myBundle.EditFeriadoLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{feriadoController.selected.nombre}" title="#{myBundle.EditFeriadoTitle_nombre}" size="45" maxlength="45"/>
 
                         <p:outputLabel value="#{myBundle.EditFeriadoLabel_fecha}" for="fecha" />
-                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{feriadoController.selected.fecha}" title="#{myBundle.EditFeriadoTitle_fecha}" required="true" requiredMessage="#{myBundle.EditFeriadoRequiredMessage_fecha}" showOn="button"/>
-
+                        <p:inputMask id="fecha" value="#{feriadoController.selected.fecha}" mask="99/99/9999" title="#{myBundle.CreateFeriadoTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateFeriadoRequiredMessage_fecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:inputMask> 
+                        
                         <p:outputLabel value="#{myBundle.EditFeriadoLabel_anioId}" for="anioId" />
                         <p:selectOneMenu id="anioId" value="#{feriadoController.selected.anioId}" required="true" requiredMessage="#{myBundle.EditFeriadoRequiredMessage_anioId}" converter="anioConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
