@@ -59,6 +59,17 @@
                                                    itemLabel="#{empleadoIdItem.apellidos} #{empleadoIdItem.nombres} "
                                                    />
                                 </p:selectOneMenu>
+                                
+                                <p:outputLabel value="#{myBundle.CreateFichaLaboralEmpleadoLabel_tipoEmpleadoId}" for="tipoEmpleadoId" />
+                                <p:selectOneMenu id="tipoEmpleadoId" value="#{empleadoController.selected.fichaLaboral.tipoEmpleadoId}" required="true" requiredMessage="#{myBundle.CreateFichaLaboralEmpleadoRequiredMessage_tipoEmpleadoId}" converter="tipoEmpleadoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tipoEmpleadoController.items}"
+                                                   var="tipoEmpleadoIdItem"
+                                                   itemValue="#{tipoEmpleadoIdItem}"
+                                                   itemLabel="#{tipoEmpleadoIdItem.nombre}"
+                                                   />
+
+                                </p:selectOneMenu>
 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_servicioId}" for="servicioId" />
                                 <p:selectOneMenu id="servicioId" value="#{empleadoController.selected.servicioId}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_servicioId}" converter="servicioConverter">
@@ -74,6 +85,9 @@
 
                         <p:tab id="EmpleadoTab2" title="Datos Ficha General">
                             <p:panelGrid columns="2" columnClasses="column">  
+                                
+                                <p:outputLabel value="#{myBundle.CreateFichaLaboralEmpleadoLabel_codigoTrabajador}" for="codigoTrabajador" />
+                                <p:inputText id="codigoTrabajador" value="#{empleadoController.selected.fichaLaboral.codigoTrabajador}" title="#{myBundle.CreateFichaLaboralEmpleadoTitle_codigoTrabajador}" size="70" maxlength="70"/>
 
                                 <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_email}" for="txtemail" />
                                 <p:inputText id="txtemail" value="#{empleadoController.selected.ficha.email}" title="#{myBundle.CreateFichaGeneralEmpleadoTitle_email}" size="70" maxlength="70"/>
@@ -139,13 +153,9 @@
                                                    itemValue="#{nivelEducativoIdItem}"
                                                    itemLabel="#{nivelEducativoIdItem.nombre}"
                                                    />
-                                </p:selectOneMenu>                         
-                              
+                                </p:selectOneMenu>                            
                             </p:panelGrid>
                         </p:tab>
-
-
-
                     </p:tabView>
 
 
