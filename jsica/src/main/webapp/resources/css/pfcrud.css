@@ -12,6 +12,11 @@
     text-align: center;
     text-transform: uppercase;
 }
+
+.ui-inputtext{
+    text-transform: uppercase;
+}
+
 .ui-datatable .ui-datatable-footer .footer-section {
     text-align: left;
 }
