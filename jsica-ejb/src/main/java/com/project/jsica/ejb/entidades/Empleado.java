@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -60,6 +61,7 @@ public class Empleado implements Serializable {
     private String apellidos;
     @Basic(optional = false)
     @NotNull
+    @Pattern(regexp="(\\d{1,8})", message="Formato de DNI Invalido")
     @Size(min = 1, max = 45)
     @Column(name = "doc_identidad")
     private String docIdentidad;
