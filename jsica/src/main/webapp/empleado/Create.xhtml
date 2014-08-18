@@ -28,8 +28,14 @@
                                 <p:inputText id="docIdentidad" value="#{empleadoController.selected.docIdentidad}" title="#{myBundle.CreateEmpleadoTitle_docIdentidad}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_docIdentidad}" size="45" maxlength="8" />
 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_situacionTrabajador}" for="situacionTrabajador" />
-                                <p:inputText id="situacionTrabajador" value="#{empleadoController.selected.situacionTrabajador}" title="#{myBundle.CreateEmpleadoTitle_situacionTrabajador}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_situacionTrabajador}" size="45" maxlength="45"/>
-                                
+                                <p:selectOneMenu id="situacionTrabajador" value="#{empleadoController.selected.situacionTrabajador}"  >
+                                    <f:selectItem itemLabel="Seleccione Uno" /> 
+                                    <f:selectItem itemLabel="ACTIVO O SUBSIDIO" itemValue="ACTIVO O SUBSIDIO"  />
+                                    <f:selectItem itemLabel="BAJA" itemValue="BAJA"  />
+                                    <f:selectItem itemLabel="LICENCIA SIN GOCE DE HABER" itemValue="LICENCIA SIN GOCE DE HABER" />
+                                    <f:selectItem itemLabel="SIN VÍNCULO LABORAL CON CONCEPTOS PENDIENTES" itemValue="SIN VÍNCULO LABORAL CON CONCEPTOS PENDIENTES" />                                   
+                                </p:selectOneMenu> 
+                                                               
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_fechaNacimiento}" for="fechaNacimiento" />
                                 <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{empleadoController.selected.fechaNacimiento}" title="#{myBundle.CreateEmpleadoTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_fechaNacimiento}" showOn="button"/>
                                 
