@@ -203,14 +203,22 @@ public class Empleado implements Serializable {
          return this.apellidos + " " + this.apellidos + " - DNI:" + this.docIdentidad;
     }
     
-     public FichaGeneralEmpleado getFicha(){
+    public FichaGeneralEmpleado getFicha(){
         return this.fichaGeneralEmpleadoList.get(0);
     }
     
     public void setFicha(FichaGeneralEmpleado ficha){
         this.fichaGeneralEmpleadoList.set(0, ficha);       
     }
-
+    
+     public FichaLaboralEmpleado getFichaLaboral(){
+        return this.fichaLaboralEmpleadoList.get(0);
+    }
+    
+    public void setFichaLaboral(FichaLaboralEmpleado fichaLaboral){
+        this.fichaLaboralEmpleadoList.set(0, fichaLaboral);       
+    }   
+    
     @XmlTransient
     public List<RegistroAsistencia> getRegistroAsistenciaList() {
         return registroAsistenciaList;
