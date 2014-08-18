@@ -60,7 +60,7 @@ public class Jornada implements Serializable {
     @NotNull
     private boolean flexible;
     @JoinColumn(name = "servicio_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private Servicio servicioId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "jornadaCodigo")
     private List<DetalleHorario> detalleHorarioList;
