@@ -26,21 +26,18 @@
                                 <p:outputLabel value="#{myBundle.EditEmpleadoLabel_docIdentidad}" for="docIdentidad" />
                                 <p:inputText id="docIdentidad" value="#{empleadoController.selected.docIdentidad}" title="#{myBundle.EditEmpleadoTitle_docIdentidad}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_docIdentidad}" size="45" maxlength="45"/>
 
+                                 <p:outputLabel value="#{myBundle.EditEmpleadoLabel_situacionTrabajador}" for="situacionTrabajador" />
+                                <p:inputText id="situacionTrabajador" value="#{empleadoController.selected.situacionTrabajador}" title="#{myBundle.EditEmpleadoTitle_situacionTrabajador}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_situacionTrabajador}" size="45" maxlength="45"/>
+                                
                                 <p:outputLabel value="#{myBundle.EditEmpleadoLabel_fechaNacimiento}" for="fechaNacimiento" />
                                 <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{empleadoController.selected.fechaNacimiento}" title="#{myBundle.EditEmpleadoTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_fechaNacimiento}" showOn="button"/>
-
-                                <p:outputLabel value="#{myBundle.EditEmpleadoLabel_situacionTrabajador}" for="situacionTrabajador" />
-                                <p:inputText id="situacionTrabajador" value="#{empleadoController.selected.situacionTrabajador}" title="#{myBundle.EditEmpleadoTitle_situacionTrabajador}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_situacionTrabajador}" size="45" maxlength="45"/>
-
-                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_sexo}"  />
-                                <p:selectOneMenu id="idgenero" value="#{empleadoController.selected.sexo}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_sexo}" >
+                              
+                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_sexo}" for="idgeneros" />
+                                <p:selectOneMenu id="idgeneros" value="#{empleadoController.selected.sexo}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_sexo}" >
                                     <f:selectItem itemLabel="Seleccione Uno" itemValue="" noSelectionOption="true" />                                  
                                     <f:selectItem itemLabel="Femenino" itemValue="F"  />
                                     <f:selectItem itemLabel="Masculino" itemValue="M" />
-                                </p:selectOneMenu>                         
-
-                                <p:outputLabel value="#{myBundle.EditEmpleadoLabel_foto}" for="foto" />
-                                <p:inputText id="foto" value="#{empleadoController.selected.foto}" title="#{myBundle.EditEmpleadoTitle_foto}" size="75" maxlength="75"/>
+                                </p:selectOneMenu>                             
 
                                 <p:outputLabel value="#{myBundle.EditEmpleadoLabel_grupoHorarioId}" for="grupoHorarioId" />
                                 <p:selectOneMenu id="grupoHorarioId" value="#{empleadoController.selected.grupoHorarioId}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_grupoHorarioId}" converter="grupoHorarioConverter">
@@ -63,6 +60,17 @@
                                                    />
 
                                 </p:selectOneMenu>
+                                
+                                <p:outputLabel value="#{myBundle.CreateFichaLaboralEmpleadoLabel_tipoEmpleadoId}" for="tipoEmpleadoId" />
+                                <p:selectOneMenu id="tipoEmpleadoId" value="#{empleadoController.selected.fichaLaboral.tipoEmpleadoId}" required="true" requiredMessage="#{myBundle.CreateFichaLaboralEmpleadoRequiredMessage_tipoEmpleadoId}" converter="tipoEmpleadoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{tipoEmpleadoController.items}"
+                                                   var="tipoEmpleadoIdItem"
+                                                   itemValue="#{tipoEmpleadoIdItem}"
+                                                   itemLabel="#{tipoEmpleadoIdItem.nombre}"
+                                                   />
+
+                                </p:selectOneMenu>
 
                                 <p:outputLabel value="#{myBundle.EditEmpleadoLabel_servicioId}" for="servicioId" />
                                 <p:selectOneMenu id="servicioId" value="#{empleadoController.selected.servicioId}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_servicioId}" converter="servicioConverter">
@@ -74,6 +82,80 @@
                                                    />
 
                                 </p:selectOneMenu>
+                            </p:panelGrid>
+                        </p:tab>
+                        
+                        <p:tab id="EmpleadoTab2" title="Datos Ficha General">
+                            <p:panelGrid columns="2" columnClasses="column">  
+                                
+                                <p:outputLabel value="#{myBundle.CreateFichaLaboralEmpleadoLabel_codigoTrabajador}" for="codigoTrabajador" />
+                                <p:inputText id="codigoTrabajador" value="#{empleadoController.selected.fichaLaboral.codigoTrabajador}" title="#{myBundle.CreateFichaLaboralEmpleadoTitle_codigoTrabajador}" size="70" maxlength="70"/>
+
+                                <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_email}" for="txtemail" />
+                                <p:inputText id="txtemail" value="#{empleadoController.selected.ficha.email}" title="#{myBundle.CreateFichaGeneralEmpleadoTitle_email}" size="70" maxlength="70"/>
+                                
+                                <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_direccion}" for="direccion" />
+                                <p:inputText id="direccion" value="#{empleadoController.selected.ficha.direccion}" title="#{myBundle.CreateFichaGeneralEmpleadoTitle_direccion}" size="70" maxlength="70"/>
+                                
+                                <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_direccionTipoZona}" for="direccionTipoZona" />                        
+                                <p:selectOneMenu id="direccionTipoZona" value="#{empleadoController.selected.ficha.direccionTipoZona}"  >
+                                    <f:selectItem itemLabel="Seleccione Uno" /> 
+                                    <f:selectItem itemLabel="U.R. URBANIZACIÓN" itemValue="U.R."  />
+                                    <f:selectItem itemLabel="A.H. ASENTAMIENTO HU" itemValue="A.H."  />
+                                    <f:selectItem itemLabel="C.H. CONJUNTO HABITA" itemValue="C.H." />
+                                    <f:selectItem itemLabel="CAS. CASERÍO" itemValue="CAS." />
+                                    <f:selectItem itemLabel="COO. COOPERATIVA" itemValue="COO." />
+                                    <f:selectItem itemLabel="FND. FUNDO" itemValue="FND." />
+                                    <f:selectItem itemLabel="GRU. GRUPO" itemValue="GRU." />
+                                    <f:selectItem itemLabel="P.J. PUEBLO JOVEN" itemValue="P.J." />
+                                    <f:selectItem itemLabel="RES. RESIDENCIAL" itemValue="RES." />
+                                    <f:selectItem itemLabel="U.V. UNIDAD VECINAL" itemValue="U.V." />
+                                    <f:selectItem itemLabel="Z.I. ZONA INDUSTRIAL" itemValue="Z.I." />
+                                </p:selectOneMenu> 
+                                
+                                <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_direccionTipoVia}" for="direccionTipoVia" />                       
+                                <p:selectOneMenu id="direccionTipoVia" value="#{empleadoController.selected.ficha.direccionTipoVia}" >
+                                    <f:selectItem itemLabel="Seleccione Uno" />                                  
+                                    <f:selectItem itemLabel="AV. AVENIDA" itemValue="AV"  />
+                                    <f:selectItem itemLabel="AL. ALAMEDA" itemValue="AL"  />
+                                    <f:selectItem itemLabel="BL. BLOCK" itemValue="BL"  />
+                                    <f:selectItem itemLabel="CAL. CALLE" itemValue="CAL" />
+                                    <f:selectItem itemLabel="CAR. CARRETERA" itemValue="CAR" />
+                                    <f:selectItem itemLabel="JR. JIRON" itemValue="JR" />
+                                    <f:selectItem itemLabel="MLC. MALECÓN" itemValue="MLC" />
+                                    <f:selectItem itemLabel="OVL. OVALO" itemValue="OVL" />
+                                    <f:selectItem itemLabel="PJ. PASAJE" itemValue="PJ" />
+                                    <f:selectItem itemLabel="PQ. PARQUE" itemValue="PQ" />
+                                    <f:selectItem itemLabel="PZA. PLAZA" itemValue="PZA" />
+                                </p:selectOneMenu>   
+                                
+                                <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_telefonoFijo}" for="telefonoFijo" />
+                                <p:inputText id="telefonoFijo" value="#{empleadoController.selected.ficha.telefonoFijo}" title="#{myBundle.CreateFichaGeneralEmpleadoTitle_telefonoFijo}" size="10" maxlength="10"/>
+                                
+                                <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_telefonoCelular}" for="telefonoCelular" />
+                                <p:inputText id="telefonoCelular" value="#{empleadoController.selected.ficha.telefonoCelular}" title="#{myBundle.CreateFichaGeneralEmpleadoTitle_telefonoCelular}" size="10" maxlength="10"/>
+                                
+                                <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_ubigeoCodigo}" for="ubigeoCodigo"  />
+                                <p:autoComplete id="ubigeoCodigo" value="#{empleadoController.selected.ficha.ubigeoCodigo}" completeMethod="#{ubigeoController.metodo}"
+                                                var="ubigeo" itemLabel="#{ubigeo.ubigeo}" itemValue="#{ubigeo}" converter="ubigeoConverter" size="70" required="true"/>
+                                
+                                <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_estadoCivil}" />                       
+                                <p:selectOneMenu id="idgenero" value="#{empleadoController.selected.ficha.estadoCivil}" >
+                                    <f:selectItem itemLabel="Seleccione Uno" />                                  
+                                    <f:selectItem itemLabel="SOLTERO(A)" itemValue="SO"  />
+                                    <f:selectItem itemLabel="CASADO(A)" itemValue="CA" />
+                                    <f:selectItem itemLabel="VIUDO(A)" itemValue="VI" />
+                                </p:selectOneMenu>                    
+
+                                <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_nivelEducativoId}" for="nivelEducativoId" />
+                                <p:selectOneMenu id="nivelEducativoId" value="#{empleadoController.selected.ficha.nivelEducativoId}" required="true" requiredMessage="#{myBundle.CreateFichaGeneralEmpleadoRequiredMessage_nivelEducativoId}" converter="nivelEducativoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{nivelEducativoController.items}"
+                                                   var="nivelEducativoIdItem"
+                                                   itemValue="#{nivelEducativoIdItem}"
+                                                   itemLabel="#{nivelEducativoIdItem.nombre}"
+                                                   />
+                                </p:selectOneMenu>                            
                             </p:panelGrid>
                         </p:tab>
                     </p:tabView>
