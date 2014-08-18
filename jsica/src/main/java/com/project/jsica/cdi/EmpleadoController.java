@@ -3,6 +3,7 @@ package com.project.jsica.cdi;
 import com.project.jsica.ejb.dao.EmpleadoFacadeLocal;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.FichaGeneralEmpleado;
+import com.project.jsica.ejb.entidades.FichaLaboralEmpleado;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +19,8 @@ import javax.inject.Named;
 @ViewScoped
 public class EmpleadoController extends AbstractController<Empleado> {
     private Empleado seleccionado;
-    private FichaGeneralEmpleado fichaSeleccionada;
+    private FichaGeneralEmpleado fichaGeneralSeleccionada;
+    private FichaLaboralEmpleado fichaLaboralSeleccionada;
     @EJB
     private EmpleadoFacadeLocal empleadoFacade;
     @Inject
@@ -72,15 +74,21 @@ public class EmpleadoController extends AbstractController<Empleado> {
     }  
 
     public FichaGeneralEmpleado getFichaSeleccionada() {
-        return fichaSeleccionada;
+        return fichaGeneralSeleccionada;
     }
 
     public void setFichaSeleccionada(FichaGeneralEmpleado fichaSeleccionada) {
-        this.fichaSeleccionada = fichaSeleccionada;
+        this.fichaGeneralSeleccionada = fichaSeleccionada;
     }
-    
-    
 
+    public FichaLaboralEmpleado getFichaLaboralSeleccionada() {
+        return fichaLaboralSeleccionada;
+    }
+
+    public void setFichaLaboralSeleccionada(FichaLaboralEmpleado fichaLaboralSeleccionada) {
+        this.fichaLaboralSeleccionada = fichaLaboralSeleccionada;
+    }
+       
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
@@ -375,10 +383,19 @@ public class EmpleadoController extends AbstractController<Empleado> {
     @Override
     public Empleado prepareCreate(ActionEvent event) {
         Empleado empleado = new Empleado();
-        empleado.setFichaGeneralEmpleadoList(new ArrayList<FichaGeneralEmpleado>());             
-        fichaSeleccionada = new FichaGeneralEmpleado();
-        empleado.getFichaGeneralEmpleadoList().add(fichaSeleccionada);
-        fichaSeleccionada.setEmpleadoId(empleado);
+        
+        empleado.setFichaGeneralEmpleadoList(new ArrayList<FichaGeneralEmpleado>());    
+        empleado.setFichaLaboralEmpleadoList(new ArrayList<FichaLaboralEmpleado>());
+        
+        fichaGeneralSeleccionada = new FichaGeneralEmpleado();
+        fichaLaboralSeleccionada = new FichaLaboralEmpleado();
+        
+        empleado.getFichaGeneralEmpleadoList().add(fichaGeneralSeleccionada);
+        empleado.getFichaLaboralEmpleadoList().add(fichaLaboralSeleccionada);
+        
+        fichaGeneralSeleccionada.setEmpleadoId(empleado);
+        fichaLaboralSeleccionada.setEmpleadoId(empleado);
+        
         this.setSelected(empleado);
         return empleado;       
     }
