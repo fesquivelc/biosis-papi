@@ -17,28 +17,22 @@
 
                         <p:tab id="EmpleadoTab1" title="Detalle De Empleado">
                             <p:panelGrid columns="2" columnClasses="column" rendered="#{empleadoController.selected != null}">
-                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_nombres}" />
-                                <h:outputText value="#{empleadoController.selected.nombres}" title="#{myBundle.ViewEmpleadoTitle_nombres}"  />
-
-                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_apellidos}"/>
-                                <h:outputText value="#{empleadoController.selected.apellidos}" title="#{myBundle.ViewEmpleadoTitle_apellidos}"/>
-
+                                <h:outputText value="Nombres y Apellidos:" />
+                                <h:outputText value="#{empleadoController.selected.apellidos} #{empleadoController.selected.nombres}" title="#{myBundle.ViewEmpleadoTitle_nombres}"  />
+                              
                                 <h:outputText value="#{myBundle.ViewEmpleadoLabel_docIdentidad}"/>
                                 <h:outputText value="#{empleadoController.selected.docIdentidad}" title="#{myBundle.ViewEmpleadoTitle_docIdentidad}"/>
+                                
+                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_situacionTrabajador}"/>
+                                <h:outputText value="#{empleadoController.selected.situacionTrabajador}" title="#{myBundle.CreateEmpleadoTitle_situacionTrabajador}" />
 
                                 <h:outputText value="#{myBundle.ViewEmpleadoLabel_fechaNacimiento}"/>
                                 <h:outputText value="#{empleadoController.selected.fechaNacimiento}" title="#{myBundle.ViewEmpleadoTitle_fechaNacimiento}">
                                     <f:convertDateTime pattern="MM/dd/yyyy" />
-                                </h:outputText>
-
-                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_situacionTrabajador}"/>
-                                <h:outputText value="#{empleadoController.selected.situacionTrabajador}" title="#{myBundle.ViewEmpleadoTitle_situacionTrabajador}"/>
+                                </h:outputText>                                                                
 
                                 <h:outputText value="#{myBundle.ViewEmpleadoLabel_sexo}"/>
-                                <h:outputText value="#{empleadoController.selected.sexo}" title="#{myBundle.ViewEmpleadoTitle_sexo}"/>
-
-                                <h:outputText value="#{myBundle.ViewEmpleadoLabel_foto}"/>
-                                <h:outputText value="#{empleadoController.selected.foto}" title="#{myBundle.ViewEmpleadoTitle_foto}"/>
+                                <h:outputText value="#{empleadoController.selected.sexo}" title="#{myBundle.ViewEmpleadoTitle_sexo}"/>                             
 
                                 <h:outputText value="#{myBundle.ViewEmpleadoLabel_grupoHorarioId}"/>
                                 <h:outputText value="#{empleadoController.selected.grupoHorarioId.nombre}"/>
@@ -46,6 +40,9 @@
                                 <h:outputText value="#{myBundle.ViewEmpleadoLabel_empleadoId}"/>
                                 <h:outputText value="#{empleadoController.selected.empleadoId.apellidos} #{empleadoController.selected.empleadoId.nombres} "/>
 
+                                <p:outputLabel value="#{myBundle.CreateFichaLaboralEmpleadoLabel_tipoEmpleadoId}" />
+                                <h:outputText value="#{empleadoController.selected.fichaLaboral.tipoEmpleadoId.nombre}"/>
+                                
                                 <h:outputText value="#{myBundle.ViewEmpleadoLabel_servicioId}"/>
                                 <h:outputText value="#{empleadoController.selected.servicioId.descripcion}"/>
                             </p:panelGrid>
@@ -54,19 +51,38 @@
                         <p:tab title="Datos FichaGeneral">
                             <p:panelGrid columns="2" columnClasses="column" rendered="#{empleadoController.selected != null}">
                                 
-                                <h:outputText value="#{myBundle.CreateFichaGeneralEmpleadoLabel_email}" />
-                                <p:outputLabel value="#{empleadoController.selected.ficha.email}"  />
-                               
+                                <h:outputText value="#{myBundle.ViewFichaLaboralEmpleadoLabel_codigoTrabajador}"/>
+                                <h:outputText value="#{empleadoController.selected.fichaLaboral.codigoTrabajador}" title="#{myBundle.ViewFichaLaboralEmpleadoTitle_codigoTrabajador}"/>
                                 
+                                <h:outputText value="#{myBundle.CreateFichaGeneralEmpleadoLabel_email}" />
+                                <h:outputText value="#{empleadoController.selected.ficha.email}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_email}"/>
+                                                               
                                 <h:outputText value="#{myBundle.CreateFichaGeneralEmpleadoLabel_direccion}" />
                                 <h:outputText value="#{empleadoController.selected.ficha.direccion}" />
                                 
-                                
+                                <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_direccionTipoZona}"/>
+                                <h:outputText value="#{empleadoController.selected.ficha.direccionTipoZona}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_direccionTipoZona}"/>
+                                 
+                                <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_direccionTipoVia}"/>
+                                <h:outputText value="#{empleadoController.selected.ficha.direccionTipoVia}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_direccionTipoVia}"/>
 
+                                <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_telefonoFijo}"/>
+                                <h:outputText value="#{empleadoController.selected.ficha.telefonoFijo}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_telefonoFijo}"/>
+
+                                <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_telefonoCelular}"/>
+                                <h:outputText value="#{empleadoController.selected.ficha.telefonoCelular}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_telefonoCelular}"/>
+
+                                <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_ubigeoCodigo}"/>
+                                <h:outputText value="#{empleadoController.selected.ficha.ubigeoCodigo.ubigeo}"/>
+                                
+                                <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_estadoCivil}"/>
+                                <h:outputText value="#{empleadoController.selected.ficha.estadoCivil}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_estadoCivil}"/>
+                                
+                                <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_nivelEducativoId}"/>
+                                <h:outputText value="#{empleadoController.selected.ficha.nivelEducativoId.nombre}"/>
+                            
                             </p:panelGrid>
-                        </p:tab>
-                        
-                        
+                        </p:tab>                       
                     </p:tabView>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('EmpleadoViewDialog').hide()"/>
                 </h:panelGroup>
