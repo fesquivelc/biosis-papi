@@ -14,10 +14,7 @@
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{tipoContratoController.selected != null}">
-
-                        <h:outputText value="#{myBundle.ViewTipoContratoLabel_id}"/>
-                        <h:outputText value="#{tipoContratoController.selected.id}" title="#{myBundle.ViewTipoContratoTitle_id}"/>
-
+                        
                         <h:outputText value="#{myBundle.ViewTipoContratoLabel_nombre}"/>
                         <h:outputText value="#{tipoContratoController.selected.nombre}" title="#{myBundle.ViewTipoContratoTitle_nombre}"/>
                     </p:panelGrid>
