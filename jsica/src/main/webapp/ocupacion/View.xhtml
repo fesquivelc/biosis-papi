@@ -14,10 +14,7 @@
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{ocupacionController.selected != null}">
-
-                        <h:outputText value="#{myBundle.ViewOcupacionLabel_id}"/>
-                        <h:outputText value="#{ocupacionController.selected.id}" title="#{myBundle.ViewOcupacionTitle_id}"/>
-
+                        
                         <h:outputText value="#{myBundle.ViewOcupacionLabel_nombre}"/>
                         <h:outputText value="#{ocupacionController.selected.nombre}" title="#{myBundle.ViewOcupacionTitle_nombre}"/>
 
