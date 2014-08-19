@@ -14,10 +14,7 @@
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{condicionLaboralController.selected != null}">
-
-                        <h:outputText value="#{myBundle.ViewCondicionLaboralLabel_id}"/>
-                        <h:outputText value="#{condicionLaboralController.selected.id}" title="#{myBundle.ViewCondicionLaboralTitle_id}"/>
-
+                        
                         <h:outputText value="#{myBundle.ViewCondicionLaboralLabel_codigo}"/>
                         <h:outputText value="#{condicionLaboralController.selected.codigo}" title="#{myBundle.ViewCondicionLaboralTitle_codigo}"/>
 
