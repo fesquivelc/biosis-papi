@@ -71,7 +71,7 @@ public class Papeleta implements Serializable {
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.codigo = codigo.toUpperCase();
     }
 
     public Empleado getEmpleadoIdempleado() {

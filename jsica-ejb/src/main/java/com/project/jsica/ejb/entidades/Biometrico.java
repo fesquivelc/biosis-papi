@@ -103,7 +103,7 @@ public class Biometrico implements Serializable {
     }
 
     public void setModelo(String modelo) {
-        this.modelo = modelo;
+        this.modelo = modelo.toUpperCase();
     }
 
     public String getMarca() {
@@ -111,7 +111,7 @@ public class Biometrico implements Serializable {
     }
 
     public void setMarca(String marca) {
-        this.marca = marca;
+        this.marca = marca.toUpperCase();
     }
 
     @XmlTransient

@@ -73,7 +73,7 @@ public class MotivoPermiso implements Serializable {
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.codigo = codigo.toUpperCase();
     }
 
     public String getNombre() {
@@ -81,7 +81,7 @@ public class MotivoPermiso implements Serializable {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.toUpperCase();
     }
 
     public String getDescripcion() {
@@ -89,7 +89,7 @@ public class MotivoPermiso implements Serializable {
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this.descripcion = descripcion.toUpperCase();
     }
 
     public boolean getConGoce() {

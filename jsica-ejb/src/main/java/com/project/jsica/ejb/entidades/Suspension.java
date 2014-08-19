@@ -84,7 +84,7 @@ public class Suspension implements Serializable {
     }
 
     public void setMotivo(String motivo) {
-        this.motivo = motivo;
+        this.motivo = motivo.toUpperCase();
     }
 
     public Date getFechaInicio() {

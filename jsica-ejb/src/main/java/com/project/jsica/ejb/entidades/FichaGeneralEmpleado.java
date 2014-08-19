@@ -95,7 +95,7 @@ public class FichaGeneralEmpleado implements Serializable {
     }
 
     public void setTelefonoFijo(String telefonoFijo) {
-        this.telefonoFijo = telefonoFijo;
+        this.telefonoFijo = telefonoFijo.toUpperCase();
     }
 
     public String getTelefonoCelular() {
@@ -103,7 +103,7 @@ public class FichaGeneralEmpleado implements Serializable {
     }
 
     public void setTelefonoCelular(String telefonoCelular) {
-        this.telefonoCelular = telefonoCelular;
+        this.telefonoCelular = telefonoCelular.toUpperCase();
     }
 
     public String getDireccion() {
@@ -111,7 +111,7 @@ public class FichaGeneralEmpleado implements Serializable {
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        this.direccion = direccion.toUpperCase();
     }
 
     public String getDireccionTipoZona() {
@@ -119,7 +119,7 @@ public class FichaGeneralEmpleado implements Serializable {
     }
 
     public void setDireccionTipoZona(String direccionTipoZona) {
-        this.direccionTipoZona = direccionTipoZona;
+        this.direccionTipoZona = direccionTipoZona.toUpperCase();
     }
 
     public String getDireccionTipoVia() {
@@ -127,7 +127,7 @@ public class FichaGeneralEmpleado implements Serializable {
     }
 
     public void setDireccionTipoVia(String direccionTipoVia) {
-        this.direccionTipoVia = direccionTipoVia;
+        this.direccionTipoVia = direccionTipoVia.toUpperCase();
     }
 
     public String getEstadoCivil() {
@@ -135,7 +135,7 @@ public class FichaGeneralEmpleado implements Serializable {
     }
 
     public void setEstadoCivil(String estadoCivil) {
-        this.estadoCivil = estadoCivil;
+        this.estadoCivil = estadoCivil.toUpperCase();
     }
 
     public String getEmail() {
@@ -143,7 +143,7 @@ public class FichaGeneralEmpleado implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.toUpperCase();
     }
 
     public Empleado getEmpleadoId() {

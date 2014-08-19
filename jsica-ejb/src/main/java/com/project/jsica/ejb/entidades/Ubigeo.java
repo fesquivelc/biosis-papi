@@ -76,7 +76,7 @@ public class Ubigeo implements Serializable {
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.codigo = codigo.toUpperCase();
     }
 
     public String getProvincia() {
@@ -84,7 +84,7 @@ public class Ubigeo implements Serializable {
     }
 
     public void setProvincia(String provincia) {
-        this.provincia = provincia;
+        this.provincia = provincia.toUpperCase();
     }
 
     public String getDepartamento() {
@@ -92,7 +92,7 @@ public class Ubigeo implements Serializable {
     }
 
     public void setDepartamento(String departamento) {
-        this.departamento = departamento;
+        this.departamento = departamento.toUpperCase();
     }
 
     public String getDistrito() {
@@ -100,7 +100,7 @@ public class Ubigeo implements Serializable {
     }
 
     public void setDistrito(String distrito) {
-        this.distrito = distrito;
+        this.distrito = distrito.toUpperCase();
     }
 
     public String getPais() {
@@ -108,7 +108,7 @@ public class Ubigeo implements Serializable {
     }
 
     public void setPais(String pais) {
-        this.pais = pais;
+        this.pais = pais.toUpperCase();
     }
     
     public String getUbigeo(){

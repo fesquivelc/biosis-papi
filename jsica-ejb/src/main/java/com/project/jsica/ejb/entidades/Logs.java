@@ -101,7 +101,7 @@ public class Logs implements Serializable {
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.userId = userId.toUpperCase();
     }
 
     public Date getDated() {
@@ -125,7 +125,7 @@ public class Logs implements Serializable {
     }
 
     public void setLogger(String logger) {
-        this.logger = logger;
+        this.logger = logger.toUpperCase();
     }
 
     public String getLevel() {
@@ -133,7 +133,7 @@ public class Logs implements Serializable {
     }
 
     public void setLevel(String level) {
-        this.level = level;
+        this.level = level.toUpperCase();
     }
 
     public String getMessage() {
@@ -141,7 +141,7 @@ public class Logs implements Serializable {
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        this.message = message.toUpperCase();
     }
 
     @Override

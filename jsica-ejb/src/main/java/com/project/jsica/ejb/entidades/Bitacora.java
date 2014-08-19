@@ -99,7 +99,7 @@ public class Bitacora implements Serializable {
     }
 
     public void setUsuario(String usuario) {
-        this.usuario = usuario;
+        this.usuario = usuario.toUpperCase();
     }
 
     public Date getFecha() {
@@ -123,7 +123,7 @@ public class Bitacora implements Serializable {
     }
 
     public void setTabla(String tabla) {
-        this.tabla = tabla;
+        this.tabla = tabla.toUpperCase();
     }
 
     public String getColumna() {
@@ -131,7 +131,7 @@ public class Bitacora implements Serializable {
     }
 
     public void setColumna(String columna) {
-        this.columna = columna;
+        this.columna = columna.toUpperCase();
     }
 
     public String getAccion() {
@@ -139,7 +139,7 @@ public class Bitacora implements Serializable {
     }
 
     public void setAccion(String accion) {
-        this.accion = accion;
+        this.accion = accion.toUpperCase();
     }
 
     public String getValorAnt() {
@@ -147,7 +147,7 @@ public class Bitacora implements Serializable {
     }
 
     public void setValorAnt(String valorAnt) {
-        this.valorAnt = valorAnt;
+        this.valorAnt = valorAnt.toUpperCase();
     }
 
     public String getValorAct() {
@@ -155,7 +155,7 @@ public class Bitacora implements Serializable {
     }
 
     public void setValorAct(String valorAct) {
-        this.valorAct = valorAct;
+        this.valorAct = valorAct.toUpperCase();
     }
 
     @Override

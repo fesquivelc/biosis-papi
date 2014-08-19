@@ -133,7 +133,7 @@ public class Permiso implements Serializable {
     }
 
     public void setTipo(String tipo) {
-        this.tipo = tipo;
+        this.tipo = tipo.toUpperCase();
     }
 
     public boolean getPorFecha() {

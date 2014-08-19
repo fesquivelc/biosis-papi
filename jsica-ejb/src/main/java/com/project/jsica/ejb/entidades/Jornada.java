@@ -86,7 +86,7 @@ public class Jornada implements Serializable {
     }
 
     public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        this.codigo = codigo.toUpperCase();
     }
 
     public String getNombre() {
@@ -94,7 +94,7 @@ public class Jornada implements Serializable {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.toUpperCase();
     }
 
     public Date getHEntrada() {

@@ -68,7 +68,7 @@ public class FichaLaboralEmpleado implements Serializable {
     }
 
     public void setCodigoTrabajador(String codigoTrabajador) {
-        this.codigoTrabajador = codigoTrabajador;
+        this.codigoTrabajador = codigoTrabajador.toUpperCase();
     }
 
     public Empleado getEmpleadoId() {

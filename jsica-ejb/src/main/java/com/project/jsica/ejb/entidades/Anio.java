@@ -85,7 +85,7 @@ public class Anio implements Serializable {
     }
 
     public void setAnio(String anio) {
-        this.anio = anio;
+        this.anio = anio.toUpperCase();
     }
 
     public String getNombre() {
@@ -93,7 +93,7 @@ public class Anio implements Serializable {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.toUpperCase();
     }
 
     public boolean getVigente() {

@@ -78,7 +78,7 @@ public class Usuario implements Serializable {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username.toUpperCase();
     }
 
     public String getPassword() {
@@ -86,7 +86,7 @@ public class Usuario implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password.toUpperCase();
     }
 
     public Empleado getEmpleadoId() {
