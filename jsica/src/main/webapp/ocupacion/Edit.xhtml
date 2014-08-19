@@ -13,11 +13,7 @@
 
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{ocupacionController.selected != null}">
-
-
-                        <h:outputLabel value="#{myBundle.EditOcupacionLabel_id}" for="id" />
-                        <h:outputText id="id" value="#{ocupacionController.selected.id}" />
-
+                        
                         <p:outputLabel value="#{myBundle.EditOcupacionLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{ocupacionController.selected.nombre}" title="#{myBundle.EditOcupacionTitle_nombre}" required="true" requiredMessage="#{myBundle.EditOcupacionRequiredMessage_nombre}" size="45" maxlength="45"/>
 
