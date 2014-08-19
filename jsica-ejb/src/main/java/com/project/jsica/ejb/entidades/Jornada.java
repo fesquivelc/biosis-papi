@@ -59,6 +59,9 @@ public class Jornada implements Serializable {
     @Basic(optional = false)
     @NotNull
     private boolean flexible;
+    @Basic(optional = false)
+    @NotNull
+    private boolean asistencial;
     @JoinColumn(name = "servicio_id", referencedColumnName = "id")
     @ManyToOne(optional = true)
     private Servicio servicioId;
@@ -117,7 +120,15 @@ public class Jornada implements Serializable {
     public void setFlexible(boolean flexible) {
         this.flexible = flexible;
     }
+    
+    public boolean isAsistencial() {
+        return asistencial;
+    }
 
+    public void setAsistencial(boolean asistencial) {
+        this.asistencial = asistencial;
+    }
+    
     public Servicio getServicioId() {
         return servicioId;
     }
