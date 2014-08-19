@@ -13,11 +13,7 @@
 
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{condicionLaboralController.selected != null}">
-
-
-                        <h:outputLabel value="#{myBundle.EditCondicionLaboralLabel_id}" for="id" />
-                        <h:outputText id="id" value="#{condicionLaboralController.selected.id}" />
-
+                        
                         <p:outputLabel value="#{myBundle.EditCondicionLaboralLabel_codigo}" for="codigo" />
                         <p:inputText id="codigo" value="#{condicionLaboralController.selected.codigo}" title="#{myBundle.EditCondicionLaboralTitle_codigo}" required="true" requiredMessage="#{myBundle.EditCondicionLaboralRequiredMessage_codigo}"/>
 
