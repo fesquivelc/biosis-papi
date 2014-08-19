@@ -13,11 +13,7 @@
 
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" columnClasses="column" rendered="#{anioController.selected != null}">
-
-
-                        <h:outputLabel value="#{myBundle.EditAnioLabel_id}" for="id" />
-                        <h:outputText id="id" value="#{anioController.selected.id}" />
-
+                        
                         <p:outputLabel value="#{myBundle.EditAnioLabel_anio}" for="anio" />
                         <p:inputText id="anio" value="#{anioController.selected.anio}" title="#{myBundle.EditAnioTitle_anio}" required="true" requiredMessage="#{myBundle.EditAnioRequiredMessage_anio}" size="4" maxlength="4"/>
 
