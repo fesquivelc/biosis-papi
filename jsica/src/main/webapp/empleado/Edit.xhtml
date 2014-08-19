@@ -14,51 +14,54 @@
                 <h:panelGroup id="display">
                     <p:tabView id="EmpleadoTabView">
 
-                        <p:tab id="EmpleadoTab1" title="Detalle De Empleado">
-                            <p:panelGrid  columns="2" columnClasses="column" rendered="#{empleadoController.selected != null}">
+                        <p:tab id="EmpleadoTab1" title="Datos Empleado">
+                            <p:panelGrid columns="2" columnClasses="column">
+                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_nombres}" for="nombres" />
+                                <p:inputText id="nombres" value="#{empleadoController.selected.nombres}" title="#{myBundle.CreateEmpleadoTitle_nombres}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_nombres}" size="70" maxlength="70"/>
 
-                                <p:outputLabel value="#{myBundle.EditEmpleadoLabel_nombres}" for="nombres" />
-                                <p:inputText id="nombres" value="#{empleadoController.selected.nombres}" title="#{myBundle.EditEmpleadoTitle_nombres}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_nombres}" size="75" maxlength="75"/>
+                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_apellidos}" for="apellidos" />
+                                <p:inputText id="apellidos" value="#{empleadoController.selected.apellidos}" title="#{myBundle.CreateEmpleadoTitle_apellidos}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_apellidos}" size="70" maxlength="70"/>
 
-                                <p:outputLabel value="#{myBundle.EditEmpleadoLabel_apellidos}" for="apellidos" />
-                                <p:inputText id="apellidos" value="#{empleadoController.selected.apellidos}" title="#{myBundle.EditEmpleadoTitle_apellidos}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_apellidos}" size="75" maxlength="75"/>
+                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_docIdentidad}" for="docIdentidad" />
+                                <p:inputText id="docIdentidad" value="#{empleadoController.selected.docIdentidad}" title="#{myBundle.CreateEmpleadoTitle_docIdentidad}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_docIdentidad}" size="45" maxlength="8" />
 
-                                <p:outputLabel value="#{myBundle.EditEmpleadoLabel_docIdentidad}" for="docIdentidad" />
-                                <p:inputText id="docIdentidad" value="#{empleadoController.selected.docIdentidad}" title="#{myBundle.EditEmpleadoTitle_docIdentidad}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_docIdentidad}" size="45" maxlength="45"/>
-
-                                 <p:outputLabel value="#{myBundle.EditEmpleadoLabel_situacionTrabajador}" for="situacionTrabajador" />
-                                <p:inputText id="situacionTrabajador" value="#{empleadoController.selected.situacionTrabajador}" title="#{myBundle.EditEmpleadoTitle_situacionTrabajador}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_situacionTrabajador}" size="45" maxlength="45"/>
+                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_situacionTrabajador}" for="situacionTrabajador" />
+                                <p:selectOneMenu id="situacionTrabajador" value="#{empleadoController.selected.situacionTrabajador}"  >
+                                    <f:selectItem itemLabel="Seleccione Uno" /> 
+                                    <f:selectItem itemLabel="ACTIVO O SUBSIDIO" itemValue="ACTIVO O SUBSIDIO"  />
+                                    <f:selectItem itemLabel="BAJA" itemValue="BAJA"  />
+                                    <f:selectItem itemLabel="LICENCIA SIN GOCE DE HABER" itemValue="LICENCIA SIN GOCE DE HABER" />
+                                    <f:selectItem itemLabel="SIN VÍNCULO LABORAL CON CONCEPTOS PENDIENTES" itemValue="SIN VÍNCULO LABORAL CON CONCEPTOS PENDIENTES" />                                   
+                                </p:selectOneMenu> 
+                                                               
+                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_fechaNacimiento}" for="fechaNacimiento" />
+                                <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{empleadoController.selected.fechaNacimiento}" title="#{myBundle.CreateEmpleadoTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_fechaNacimiento}" showOn="button"/>
                                 
-                                <p:outputLabel value="#{myBundle.EditEmpleadoLabel_fechaNacimiento}" for="fechaNacimiento" />
-                                <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{empleadoController.selected.fechaNacimiento}" title="#{myBundle.EditEmpleadoTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_fechaNacimiento}" showOn="button"/>
-                              
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_sexo}" for="idgeneros" />
-                                <p:selectOneMenu id="idgeneros" value="#{empleadoController.selected.sexo}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_sexo}" >
+                                <p:selectOneMenu id="idgeneros" value="#{empleadoController.selected.sexo}" required="true" >
                                     <f:selectItem itemLabel="Seleccione Uno" itemValue="" noSelectionOption="true" />                                  
-                                    <f:selectItem itemLabel="Femenino" itemValue="F"  />
-                                    <f:selectItem itemLabel="Masculino" itemValue="M" />
-                                </p:selectOneMenu>                             
-
-                                <p:outputLabel value="#{myBundle.EditEmpleadoLabel_grupoHorarioId}" for="grupoHorarioId" />
-                                <p:selectOneMenu id="grupoHorarioId" value="#{empleadoController.selected.grupoHorarioId}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_grupoHorarioId}" converter="grupoHorarioConverter">
+                                    <f:selectItem itemLabel="FEMENINO" itemValue="F"  />
+                                    <f:selectItem itemLabel="MASCULINO" itemValue="M" />
+                                </p:selectOneMenu> 
+                                
+                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_grupoHorarioId}" for="grupoHorarioId" />
+                                <p:selectOneMenu id="grupoHorarioId" value="#{empleadoController.selected.grupoHorarioId}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_grupoHorarioId}" converter="grupoHorarioConverter">
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{grupoHorarioController.items}"
                                                    var="grupoHorarioIdItem"
                                                    itemValue="#{grupoHorarioIdItem}"
                                                    itemLabel="#{grupoHorarioIdItem.nombre}"
                                                    />
-
                                 </p:selectOneMenu>
 
-                                <p:outputLabel value="#{myBundle.EditEmpleadoLabel_empleadoId}" for="empleadoId" />
-                                <p:selectOneMenu id="empleadoId" value="#{empleadoController.selected.empleadoId}" required="false" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_empleadoId}" converter="empleadoConverter">
+                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoId}" for="empleadoId" />
+                                <p:selectOneMenu id="empleadoId" value="#{empleadoController.selected.empleadoId}" required="false" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_empleadoId}" converter="empleadoConverter">
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{empleadoController.items}"
                                                    var="empleadoIdItem"
                                                    itemValue="#{empleadoIdItem}"
-                                                   itemLabel="#{empleadoIdItem.apellidos} #{empleadoIdItem.nombres}"
+                                                   itemLabel="#{empleadoIdItem.apellidos} #{empleadoIdItem.nombres} "
                                                    />
-
                                 </p:selectOneMenu>
                                 
                                 <p:outputLabel value="#{myBundle.CreateFichaLaboralEmpleadoLabel_tipoEmpleadoId}" for="tipoEmpleadoId" />
@@ -72,18 +75,18 @@
 
                                 </p:selectOneMenu>
 
-                                <p:outputLabel value="#{myBundle.EditEmpleadoLabel_servicioId}" for="servicioId" />
-                                <p:selectOneMenu id="servicioId" value="#{empleadoController.selected.servicioId}" required="true" requiredMessage="#{myBundle.EditEmpleadoRequiredMessage_servicioId}" converter="servicioConverter">
+                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_servicioId}" for="servicioId" />
+                                <p:selectOneMenu id="servicioId" value="#{empleadoController.selected.servicioId}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_servicioId}" converter="servicioConverter">
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{servicioController.items}"
                                                    var="servicioIdItem"
                                                    itemValue="#{servicioIdItem}"
                                                    itemLabel="#{servicioIdItem.nombre}"
                                                    />
-
                                 </p:selectOneMenu>
                             </p:panelGrid>
-                        </p:tab>
+                        </p:tab>  
+
                         
                         <p:tab id="EmpleadoTab2" title="Datos Ficha General">
                             <p:panelGrid columns="2" columnClasses="column">  
@@ -157,7 +160,7 @@
                                                    />
                                 </p:selectOneMenu>                            
                             </p:panelGrid>
-                        </p:tab>
+                        </p:tab>                        
                     </p:tabView>
                     <p:commandButton actionListener="#{empleadoController.save}" value="#{myBundle.Save}" update="display,:EmpleadoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmpleadoEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
