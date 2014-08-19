@@ -14,10 +14,7 @@
 
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{anioController.selected != null}">
-
-                        <h:outputText value="#{myBundle.ViewAnioLabel_id}"/>
-                        <h:outputText value="#{anioController.selected.id}" title="#{myBundle.ViewAnioTitle_id}"/>
-
+                        
                         <h:outputText value="#{myBundle.ViewAnioLabel_anio}"/>
                         <h:outputText value="#{anioController.selected.anio}" title="#{myBundle.ViewAnioTitle_anio}"/>
 
