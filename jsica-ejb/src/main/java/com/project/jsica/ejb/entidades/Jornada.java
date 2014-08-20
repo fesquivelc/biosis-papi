@@ -56,6 +56,12 @@ public class Jornada implements Serializable {
     @Column(name = "h_salida")
     @Temporal(TemporalType.TIME)
     private Date hSalida;
+    @Column(name = "f_inicio")
+    @Temporal(TemporalType.DATE)
+    private Date fInicio;
+    @Column(name = "f_fin")
+    @Temporal(TemporalType.DATE)
+    private Date fFin;
     @Basic(optional = false)
     @NotNull
     private boolean flexible;
@@ -79,6 +85,22 @@ public class Jornada implements Serializable {
         this.codigo = codigo;
         this.nombre = nombre;
         this.flexible = flexible;
+    }
+
+    public Date getfInicio() {
+        return fInicio;
+    }
+
+    public void setfInicio(Date fInicio) {
+        this.fInicio = fInicio;
+    }
+
+    public Date getfFin() {
+        return fFin;
+    }
+
+    public void setfFin(Date fFin) {
+        this.fFin = fFin;
     }
 
     public String getCodigo() {
