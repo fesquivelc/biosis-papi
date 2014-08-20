@@ -2,18 +2,22 @@ package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.ContratoFacadeLocal;
 import com.project.jsica.ejb.entidades.Contrato;
+import com.project.jsica.ejb.entidades.DetalleContrato;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named(value = "contratoController")
 @ViewScoped
 public class ContratoController extends AbstractController<Contrato> {
+    private DetalleContrato detallecontratoseleccionado;
+
     @EJB
     private ContratoFacadeLocal contratoFacade;
 
@@ -34,6 +38,15 @@ public class ContratoController extends AbstractController<Contrato> {
         // Inform the Abstract parent controller of the concrete Contrato?cap_first Entity
         super(Contrato.class);
     }
+    
+    public DetalleContrato getDetallecontratoseleccionado() {
+        return detallecontratoseleccionado;
+    }
+
+    public void setDetallecontratoseleccionado(DetalleContrato detallecontratoseleccionado) {
+        this.detallecontratoseleccionado = detallecontratoseleccionado;
+    }
+
 
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
@@ -158,4 +171,17 @@ public class ContratoController extends AbstractController<Contrato> {
     public List<Contrato> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
         return this.contratoFacade.search(namedQuery, parametros, inicio, tamanio);
     }
+    
+    @Override
+    public Contrato prepareCreate(ActionEvent event) {
+        Contrato contrato = new Contrato();
+
+        contrato.setDetalleContratoList(new ArrayList<DetalleContrato>());
+        detallecontratoseleccionado = new DetalleContrato();
+        contrato.getDetalleContratoList().add(detallecontratoseleccionado);
+        detallecontratoseleccionado.setContratoId(contrato);
+        this.setSelected(contrato);
+        return contrato;
+    }
+
 }
