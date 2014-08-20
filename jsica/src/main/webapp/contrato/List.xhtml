@@ -26,6 +26,13 @@
 
 
 
+               <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.CreateDetalleContratoLabel_empleadoId}"/>
+                    </f:facet>
+                   <h:outputText value="#{contratoController.selected.detalleContrato.empleadoId.apellidos}" />               
+                </p:column>
+                
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListContratoTitle_fechaInicio}"/>
@@ -45,22 +52,23 @@
                     </h:outputText>
                 </p:column>
 
-
+                <!--
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListContratoTitle_codigo}"/>
                     </f:facet>
                     <h:outputText value="#{item.codigo}"/>
                 </p:column>
+                -->
 
-
+                <!--
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListContratoTitle_sueldoBasico}"/>
                     </f:facet>
                     <h:outputText value="#{item.sueldoBasico}"/>
                 </p:column>
-
+                -->
 
                 <p:column >
                     <f:facet name="header">
