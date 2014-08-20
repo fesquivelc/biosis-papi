@@ -204,6 +204,10 @@ public class Empleado implements Serializable {
     public String getEmpleado(){
          return this.apellidos + " " + this.apellidos + " - DNI:" + this.docIdentidad;
     }
+    /*Para papeleta*/
+    public String getEmpleadoForPapeleta(){
+         return this.apellidos + " " + this.nombres + " - DNI:" + this.docIdentidad;
+    }
     
     public FichaGeneralEmpleado getFicha(){
         return this.fichaGeneralEmpleadoList.get(0);
