@@ -121,6 +121,14 @@ public class Contrato implements Serializable {
     public void setSueldoBasico(Double sueldoBasico) {
         this.sueldoBasico = sueldoBasico;
     }
+    
+    public DetalleContrato getDetalleContrato(){
+        return this.detalleContratoList.get(0);
+    }
+    
+    public void setDetalleContrato(DetalleContrato detalleContrato){
+        this.detalleContratoList.set(0, detalleContrato);       
+    }   
 
     @XmlTransient
     public List<DetalleContrato> getDetalleContratoList() {
