@@ -26,11 +26,11 @@
 
 
 
-               <p:column >
+                <p:column sortBy="#{item.empleado.empleado}" filterBy="#{item.empleado.empleado}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.CreateDetalleContratoLabel_empleadoId}"/>
                     </f:facet>
-                   <h:outputText value="#{contratoController.selected.detalleContrato.empleadoId.apellidos}" />               
+                   <h:outputText value="#{item.empleado.empleado}" />               
                 </p:column>
                 
                 <p:column >
@@ -78,34 +78,35 @@
                 </p:column>
 
        
-                                    <p:column >
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListContratoTitle_regimenLaboralId}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.regimenLaboralId.nombre}"/>
-                                    </p:column>
-          
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListContratoTitle_anioId}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.anioId.anio}"/>
-                                    </p:column>
-               
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListContratoTitle_tipoContratoId}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.tipoContratoId.nombre}"/>
-                                    </p:column>
-           
-                                    <p:column >
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListContratoTitle_ocupacionId}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.ocupacionId.nombre}"/>
-                                    </p:column>
-          
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListContratoTitle_regimenLaboralId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.regimenLaboralId.nombre}"/>
+                </p:column>
+                <!--
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListContratoTitle_anioId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.anioId.anio}"/>
+                </p:column>
+                -->
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListContratoTitle_tipoContratoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipoContratoId.nombre}"/>
+                </p:column>
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListContratoTitle_ocupacionId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ocupacionId.nombre}"/>
+                </p:column>
+
 
             </p:dataTable>
 
