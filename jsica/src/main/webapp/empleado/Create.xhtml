@@ -164,6 +164,35 @@
                                 </p:selectOneMenu>                            
                             </p:panelGrid>
                         </p:tab>
+                        
+                        <p:tab id="EmpleadoTab3" title="Datos Empleado">
+                            <p:panelGrid columns="2" columnClasses="column">
+                                
+                                <p:outputLabel value="#{myBundle.CreateAreaLabel_sucursalId}" for="sucursalId" />
+                                <p:selectOneMenu id="sucursalId" value="#{areaController.selected.sucursalId}" required="true" requiredMessage="#{myBundle.CreateAreaRequiredMessage_sucursalId}" converter="sucursalConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{sucursalController.items}"
+                                                   var="sucursalIdItem"
+                                                   itemValue="#{sucursalIdItem}"
+                                                   itemLabel="#{sucursalIdItem.nombre.toString().toUpperCase()}"
+                                                   />
+
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="#{myBundle.CreateServicioLabel_areaId}" for="areaId" />
+                                <p:selectOneMenu id="areaId" value="#{servicioController.selected.areaId}" required="true" requiredMessage="#{myBundle.CreateServicioRequiredMessage_areaId}" converter="areaConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{areaController.items}"
+                                                   var="areaIdItem"
+                                                   itemValue="#{areaIdItem}"
+                                                   itemLabel="#{areaIdItem.nombre}"
+                                                   />
+
+                                </p:selectOneMenu>
+
+                            </p:panelGrid>
+                        </p:tab> 
+                        
                     </p:tabView>
 
 
