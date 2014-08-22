@@ -202,7 +202,7 @@ public class Empleado implements Serializable {
     }
     
     public String getEmpleado(){
-         return this.apellidos + " " + this.apellidos + " - DNI:" + this.docIdentidad;
+         return this.apellidos + " " + this.nombres + " - DNI:" + this.docIdentidad;
     }
     /*Para papeleta*/
     public String getEmpleadoForPapeleta(){
