@@ -128,7 +128,12 @@ public class Contrato implements Serializable {
     
     public void setDetalleContrato(DetalleContrato detalleContrato){
         this.detalleContratoList.set(0, detalleContrato);       
-    }   
+    } 
+    
+    public Empleado getEmpleado(){
+        Empleado empleado = this.detalleContratoList.get(0).getEmpleadoId();
+        return empleado;
+    }
 
     @XmlTransient
     public List<DetalleContrato> getDetalleContratoList() {
