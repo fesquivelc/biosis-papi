@@ -16,13 +16,13 @@
                     <p:panelGrid columns="2" columnClasses="column" rendered="#{areaController.selected != null}">
 
                         <h:outputText value="#{myBundle.ViewAreaLabel_nombre}"/>
-                        <h:outputText value="#{areaController.selected.nombre.toUpperCase()}" title="#{myBundle.ViewAreaTitle_nombre}"/>
+                        <h:outputText value="#{areaController.selected.nombre}" title="#{myBundle.ViewAreaTitle_nombre}"/>
 
                         <h:outputText value="#{myBundle.ViewAreaLabel_descripcion}"/>
                         <h:outputText value="#{areaController.selected.descripcion.toUpperCase()}" title="#{myBundle.ViewAreaTitle_descripcion}"/>
 
                         <h:outputText value="#{myBundle.ViewAreaLabel_sucursalId}"/>
-                        <h:outputText value="#{areaController.selected.sucursalId.descripcion.toUpperCase()}"/>
+                        <h:outputText value="#{areaController.selected.sucursalId.nombre}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('AreaViewDialog').hide()"/>
                 </h:panelGroup>
