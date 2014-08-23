@@ -1,26 +1,37 @@
 package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.EmpleadoFacadeLocal;
+import com.project.jsica.ejb.entidades.Area;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.FichaGeneralEmpleado;
 import com.project.jsica.ejb.entidades.FichaLaboralEmpleado;
+import com.project.jsica.ejb.entidades.Sucursal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import static org.postgresql.jdbc2.EscapedFunctions.LOG;
 
 @Named(value = "empleadoController")
 @ViewScoped
 public class EmpleadoController extends AbstractController<Empleado> {
     private Empleado seleccionado;
     private FichaGeneralEmpleado fichaGeneralSeleccionada;
-    private FichaLaboralEmpleado fichaLaboralSeleccionada;
+    private FichaLaboralEmpleado fichaLaboralSeleccionada;  
+    
+    private Sucursal sucursalSeleccionado;
+    private boolean isSucursalSeleccionado;    
+    private Area areaSeleccionado;
+    private boolean isAreaSeleccionado;
+    
     @EJB
     private EmpleadoFacadeLocal empleadoFacade;
     @Inject
@@ -88,6 +99,40 @@ public class EmpleadoController extends AbstractController<Empleado> {
     public void setFichaLaboralSeleccionada(FichaLaboralEmpleado fichaLaboralSeleccionada) {
         this.fichaLaboralSeleccionada = fichaLaboralSeleccionada;
     }
+
+    public Sucursal getSucursalSeleccionado() {
+        return sucursalSeleccionado;
+    }
+
+    public void setSucursalSeleccionado(Sucursal sucursalSeleccionado) {
+        this.sucursalSeleccionado = sucursalSeleccionado;
+    }
+
+    public boolean isIsSucursalSeleccionado() {
+        return isSucursalSeleccionado;
+    }
+
+    public void setIsSucursalSeleccionado(boolean isSucursalSeleccionado) {
+        this.isSucursalSeleccionado = isSucursalSeleccionado;
+    }
+
+    public Area getAreaSeleccionado() {
+        return areaSeleccionado;
+    }
+
+    public void setAreaSeleccionado(Area areaSeleccionado) {
+        this.areaSeleccionado = areaSeleccionado;
+    }
+
+    public boolean isIsAreaSeleccionado() {
+        return isAreaSeleccionado;
+    }
+
+    public void setIsAreaSeleccionado(boolean isAreaSeleccionado) {
+        this.isAreaSeleccionado = isAreaSeleccionado;
+    }
+    
+    
        
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
@@ -398,6 +443,26 @@ public class EmpleadoController extends AbstractController<Empleado> {
         
         this.setSelected(empleado);
         return empleado;       
+    }
+    
+    private static final Logger LOG = Logger.getLogger(DetalleHorarioController.class.getName());
+    public void onSucursalSeleccionado(){
+        if(this.sucursalSeleccionado!= null){
+            LOG.log(Level.INFO, "ID DEL DEPARTAMENTO: {0}", this.sucursalSeleccionado.getId());
+            if(this.sucursalSeleccionado.getId()!=0){
+                this.isSucursalSeleccionado = true;
+                return;
+            }
+        }
+        this.isSucursalSeleccionado= false;       
+    }
+    
+    public List<Area> getAreas(){
+        if(this.isSucursalSeleccionado){
+            return this.sucursalSeleccionado.getAreaList();
+        }else{
+            return null;
+        }
     }
 
 }
