@@ -170,21 +170,25 @@
                                 
                                 <p:outputLabel value="#{myBundle.CreateAreaLabel_sucursalId}" for="sucursalId" />
                                 <p:selectOneMenu id="sucursalId" value="#{empleadoController.sucursalSeleccionado}"  converter="sucursalConverter">
-                                    <p:ajax listener="#{empleadoController.onSucursalSeleccionado()}" update="areaId"/>
-                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{sucursalController.items}"  var="sucursalIdItem" itemValue="#{sucursalIdItem}" itemLabel="#{sucursalIdItem.nombre.toString()}"
+                                    <p:ajax listener="#{empleadoController.onSucursalSeleccionado}" update="areaId"/>
+                                    
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}" />
+                                    <f:selectItems value="#{sucursalController.items}"  
+                                                   var="sucursal" 
+                                                   itemValue="#{sucursal}" 
+                                                   itemLabel="#{sucursal.nombre}"
                                                    />                                 
 
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="#{myBundle.CreateServicioLabel_areaId}" for="areaId" />
-                                <p:selectOneMenu id="areaId" value="#{empleadoController.areaSeleccionado}" required="true" requiredMessage="#{myBundle.CreateServicioRequiredMessage_areaId}" converter="areaConverter">
+                                <p:selectOneMenu id="areaId" value="#{empleadoController.areaSeleccionado}" required="true"  converter="areaConverter">
                                     
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                    <f:selectItems value="#{areaController.items}"
-                                                   var="areaIdItem"
-                                                   itemValue="#{areaIdItem}"
-                                                   itemLabel="#{areaIdItem.nombre}"
+                                    <f:selectItems value="#{empleadoController.areas}"
+                                                   var="area"
+                                                   itemValue="#{area}"
+                                                   itemLabel="#{area.nombre}"
                                                    />
 
                                 </p:selectOneMenu>
