@@ -20,11 +20,7 @@ public class SexoConverter implements Converter{
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
-        if(string.equalsIgnoreCase("MASCULINO")){
-            return "M";
-        }else{
-            return "F";
-        }
+        return string;
     }
 
     @Override
