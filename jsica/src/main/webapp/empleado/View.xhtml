@@ -32,7 +32,7 @@
                                 </h:outputText>                                                                
 
                                 <h:outputText value="#{myBundle.ViewEmpleadoLabel_sexo}"/>
-                                <h:outputText value="#{empleadoController.selected.sexo}" title="#{myBundle.ViewEmpleadoTitle_sexo}"/>                             
+                                <h:outputText value="#{empleadoController.selected.sexo}" title="#{myBundle.ViewEmpleadoTitle_sexo}" converter="sexoConverter"/>                             
 
                                 <h:outputText value="#{myBundle.ViewEmpleadoLabel_grupoHorarioId}"/>
                                 <h:outputText value="#{empleadoController.selected.grupoHorarioId.nombre}"/>
@@ -61,10 +61,10 @@
                                 <h:outputText value="#{empleadoController.selected.ficha.direccion}" />
                                 
                                 <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_direccionTipoZona}"/>
-                                <h:outputText value="#{empleadoController.selected.ficha.direccionTipoZona}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_direccionTipoZona}"/>
+                                <h:outputText value="#{empleadoController.selected.ficha.direccionTipoZona}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_direccionTipoZona}" converter="tipoZonaConverter"/>
                                  
                                 <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_direccionTipoVia}"/>
-                                <h:outputText value="#{empleadoController.selected.ficha.direccionTipoVia}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_direccionTipoVia}"/>
+                                <h:outputText value="#{empleadoController.selected.ficha.direccionTipoVia}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_direccionTipoVia}" converter="tipoViaConverter"/>
 
                                 <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_telefonoFijo}"/>
                                 <h:outputText value="#{empleadoController.selected.ficha.telefonoFijo}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_telefonoFijo}"/>

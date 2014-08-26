@@ -480,7 +480,7 @@ public class EmpleadoController extends AbstractController<Empleado> {
         this.isAreaSeleccionado= false;       
     }
     
-    public List<Area> getAreas(){
+    public List<Area> getAreas(){        
         if(this.isSucursalSeleccionado){
             return this.sucursalSeleccionado.getAreaList();
         }else{

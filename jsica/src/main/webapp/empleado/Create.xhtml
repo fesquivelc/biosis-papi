@@ -93,7 +93,7 @@
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="#{myBundle.CreateServicioLabel_areaId}" for="areaId" />
-                                <p:selectOneMenu id="areaId" value="#{empleadoController.areaSeleccionado}"  converter="areaConverter">
+                                <p:selectOneMenu id="areaId" value="#{empleadoController.areaSeleccionado}"  converter="areaConverter" >
                                     <p:ajax listener="#{empleadoController.onAreaSeleccionado()}" update="servicioId"/>
                                     
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
