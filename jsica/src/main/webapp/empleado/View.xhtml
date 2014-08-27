@@ -76,7 +76,7 @@
                                 <h:outputText value="#{empleadoController.selected.ficha.ubigeoCodigo.ubigeo}"/>
                                 
                                 <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_estadoCivil}"/>
-                                <h:outputText value="#{empleadoController.selected.ficha.estadoCivil}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_estadoCivil}"/>
+                                <h:outputText value="#{empleadoController.selected.ficha.estadoCivil}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_estadoCivil}" converter="estadoCivilConverter"/>
                                 
                                 <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_nivelEducativoId}"/>
                                 <h:outputText value="#{empleadoController.selected.ficha.nivelEducativoId.nombre}"/>
