@@ -13,39 +13,58 @@
             <h:form id="ContratoViewForm">
 
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="column" rendered="#{contratoController.selected != null}">
+                    <p:tabView>
+                        <p:tab id="EmpleadoTab1" title="Datos de Empleado">
+                            <p:panelGrid columns="2" columnClasses="column" rendered="#{contratoController.selected != null}">
+
+                                <p:outputLabel value="#{myBundle.CreateDetalleContratoLabel_empleadoId}" for="empleadoId" />
+                                <h:outputText id="empleadoId" value="#{contratoController.selected.detalleContrato.empleadoId.empleado}"  />
+
+                                <p:outputLabel value="#{myBundle.CreateContratoLabel_codigo}" for="codigo" />
+                                <h:outputText id="codigo" value="#{contratoController.selected.codigo}" title="#{myBundle.CreateContratoTitle_codigo}" />
+
+                                <p:outputLabel value="#{myBundle.CreateContratoLabel_fechaInicio}" for="fechaInicio" />
+                                <h:outputText id="fechaInicio" value="#{contratoController.selected.fechaInicio}" title="#{myBundle.CreateContratoTitle_fechaInicio}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>                        
+
+                                <p:outputLabel value="#{myBundle.CreateContratoLabel_ocupacionId}" for="ocupacionId" />
+                                <h:outputText id="ocupacionId" value="#{contratoController.selected.ocupacionId.nombre}" title="#{myBundle.ViewOcupacionTitle_nombre}"/>                                
+                                
+                                <p:outputLabel value="#{myBundle.CreateDetalleContratoLabel_areaId}" for="areaId" />
+                                <h:outputText id="areaId" value="#{contratoController.selected.detalleContrato.areaId.nombre}" title="#{myBundle.ViewAreaTitle_nombre}"/>
+                                                                                                                                 
+                            </p:panelGrid>
+                        </p:tab>
                         
-                        <h:outputText value="#{myBundle.ViewContratoLabel_fechaInicio}"/>
-                        <h:outputText value="#{contratoController.selected.fechaInicio}" title="#{myBundle.ViewContratoTitle_fechaInicio}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
+                        <p:tab id="EmpleadoTab2" title="Datos del Contrato">
+                            <p:panelGrid columns="2" columnClasses="column">
 
-                        <h:outputText value="#{myBundle.ViewContratoLabel_fechaFin}"/>
-                        <h:outputText value="#{contratoController.selected.fechaFin}" title="#{myBundle.ViewContratoTitle_fechaFin}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
+                                <p:outputLabel value="#{myBundle.CreateContratoLabel_fechaFin}" for="fechaFin" />
+                                <h:outputText id="fechaFin" value="#{contratoController.selected.fechaFin}" title="#{myBundle.CreateContratoTitle_fechaFin}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>                                 
 
-                        <h:outputText value="#{myBundle.ViewContratoLabel_codigo}"/>
-                        <h:outputText value="#{contratoController.selected.codigo}" title="#{myBundle.ViewContratoTitle_codigo}"/>
+                                <p:outputLabel value="#{myBundle.CreateContratoLabel_sueldoBasico}" for="sueldoBasico" />
+                                <h:outputText id="sueldoBasico" value="#{contratoController.selected.sueldoBasico}" title="#{myBundle.CreateContratoTitle_sueldoBasico}" />
 
-                        <h:outputText value="#{myBundle.ViewContratoLabel_sueldoBasico}"/>
-                        <h:outputText value="#{contratoController.selected.sueldoBasico}" title="#{myBundle.ViewContratoTitle_sueldoBasico}"/>
+                                <p:outputLabel value="#{myBundle.CreateContratoLabel_anioId}" for="anioId" />
+                                <h:outputText id="anioId" value="#{contratoController.selected.anioId.anio}" title="#{myBundle.ViewAnioTitle_anio}"/>                                
+                                
+                                <p:outputLabel value="#{myBundle.CreateContratoLabel_condicionLaboralId}" for="condicionLaboralId" />
+                                <h:outputText id="condicionLaboralId" value="#{contratoController.selected.condicionLaboralId.nombre}" title="#{myBundle.ViewCondicionLaboralTitle_nombre}"/>
 
-                        <h:outputText value="#{myBundle.ViewContratoLabel_condicionLaboralId}"/>
-                        <h:outputText value="#{contratoController.selected.condicionLaboralId.nombre}"/>
+                                <p:outputLabel value="#{myBundle.CreateContratoLabel_regimenLaboralId}" for="regimenLaboralId" />
+                                <h:outputText id="regimenLaboralId" value="#{contratoController.selected.regimenLaboralId.nombre}" title="#{myBundle.ViewRegimenLaboralTitle_nombre}"/>
 
-                        <h:outputText value="#{myBundle.ViewContratoLabel_regimenLaboralId}"/>
-                        <h:outputText value="#{contratoController.selected.regimenLaboralId.nombre}"/>
-
-                        <h:outputText value="#{myBundle.ViewContratoLabel_anioId}"/>
-                        <h:outputText value="#{contratoController.selected.anioId.anio}"/>
-
-                        <h:outputText value="#{myBundle.ViewContratoLabel_tipoContratoId}"/>
-                        <h:outputText value="#{contratoController.selected.tipoContratoId.nombre}"/>
-
-                        <h:outputText value="#{myBundle.ViewContratoLabel_ocupacionId}"/>
-                        <h:outputText value="#{contratoController.selected.ocupacionId.nombre}"/>
-                    </p:panelGrid>
+                                <p:outputLabel value="#{myBundle.CreateContratoLabel_tipoContratoId}" for="tipoContratoId" />
+                                <h:outputText id="tipoContratoId" value="#{contratoController.selected.tipoContratoId.nombre}" title="#{myBundle.ViewTipoContratoTitle_nombre}"/>
+                                                                  
+                            </p:panelGrid>
+                        </p:tab>                        
+                        
+                    </p:tabView>
+                   
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('ContratoViewDialog').hide()"/>
                 </h:panelGroup>
 

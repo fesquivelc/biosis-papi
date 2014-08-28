@@ -28,10 +28,10 @@
                         <h:outputText value="#{fichaGeneralEmpleadoController.selected.direccion}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_direccion}"/>
 
                         <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_direccionTipoZona}"/>
-                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.direccionTipoZona}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_direccionTipoZona}"/>
+                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.direccionTipoZona}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_direccionTipoZona}" converter="tipoZonaConverter"/>
 
                         <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_direccionTipoVia}"/>
-                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.direccionTipoVia}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_direccionTipoVia}"/>
+                        <h:outputText value="#{fichaGeneralEmpleadoController.selected.direccionTipoVia}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_direccionTipoVia}" converter="tipoViaConverter"/>
 
                         <h:outputText value="#{myBundle.ViewFichaGeneralEmpleadoLabel_estadoCivil}"/>
                         <h:outputText value="#{fichaGeneralEmpleadoController.selected.estadoCivil}" title="#{myBundle.ViewFichaGeneralEmpleadoTitle_estadoCivil}"/>

@@ -35,6 +35,16 @@
                                     <f:selectItem itemLabel="LICENCIA SIN GOCE DE HABER" itemValue="LICENCIA SIN GOCE DE HABER" />
                                     <f:selectItem itemLabel="SIN VÍNCULO LABORAL CON CONCEPTOS PENDIENTES" itemValue="SIN VÍNCULO LABORAL CON CONCEPTOS PENDIENTES" />                                   
                                 </p:selectOneMenu> 
+                                
+                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoId}" for="empleadoId" />
+                                <p:selectOneMenu id="empleadoId" value="#{empleadoController.selected.empleadoId}" required="false" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_empleadoId}" converter="empleadoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{empleadoController.items}"
+                                                   var="empleadoIdItem"
+                                                   itemValue="#{empleadoIdItem}"
+                                                   itemLabel="#{empleadoIdItem.apellidos} #{empleadoIdItem.nombres} "
+                                                   />
+                                </p:selectOneMenu>
                                                                
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_fechaNacimiento}" for="fechaNacimiento" />
                                 <p:inputMask id="fechaNacimiento" value="#{empleadoController.selected.fechaNacimiento}" mask="99/99/9999" title="#{myBundle.CreateEmpleadoTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_fechaNacimiento}">
@@ -57,17 +67,7 @@
                                                    itemLabel="#{grupoHorarioIdItem.nombre}"
                                                    />
                                 </p:selectOneMenu>
-
-                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoId}" for="empleadoId" />
-                                <p:selectOneMenu id="empleadoId" value="#{empleadoController.selected.empleadoId}" required="false" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_empleadoId}" converter="empleadoConverter">
-                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                    <f:selectItems value="#{empleadoController.items}"
-                                                   var="empleadoIdItem"
-                                                   itemValue="#{empleadoIdItem}"
-                                                   itemLabel="#{empleadoIdItem.apellidos} #{empleadoIdItem.nombres} "
-                                                   />
-                                </p:selectOneMenu>
-                                
+                                                                
                                 <p:outputLabel value="#{myBundle.CreateFichaLaboralEmpleadoLabel_tipoEmpleadoId}" for="tipoEmpleadoId" />
                                 <p:selectOneMenu id="tipoEmpleadoId" value="#{empleadoController.selected.fichaLaboral.tipoEmpleadoId}" required="true" requiredMessage="#{myBundle.CreateFichaLaboralEmpleadoRequiredMessage_tipoEmpleadoId}" converter="tipoEmpleadoConverter">
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
@@ -79,15 +79,43 @@
 
                                 </p:selectOneMenu>
 
+                                <p:outputLabel value="#{myBundle.CreateAreaLabel_sucursalId}" for="sucursalId" />
+                                <p:selectOneMenu id="sucursalId" value="#{empleadoController.sucursalSeleccionado}"  converter="sucursalConverter">
+                                    <p:ajax listener="#{empleadoController.onSucursalSeleccionado}" update="areaId"/>
+                                    
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}" />
+                                    <f:selectItems value="#{sucursalController.items}"  
+                                                   var="sucursal" 
+                                                   itemValue="#{sucursal}" 
+                                                   itemLabel="#{sucursal.nombre}"
+                                                   />                                 
+
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="#{myBundle.CreateServicioLabel_areaId}" for="areaId" />
+                                <p:selectOneMenu id="areaId" value="#{empleadoController.areaSeleccionado}"  converter="areaConverter" >
+                                    <p:ajax listener="#{empleadoController.onAreaSeleccionado()}" update="servicioId"/>
+                                    
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{empleadoController.areas}"
+                                                   var="area"
+                                                   itemValue="#{area}"
+                                                   itemLabel="#{area.nombre}"
+                                                   />
+
+                                </p:selectOneMenu>
+                                
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_servicioId}" for="servicioId" />
                                 <p:selectOneMenu id="servicioId" value="#{empleadoController.selected.servicioId}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_servicioId}" converter="servicioConverter">
+                                   
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                    <f:selectItems value="#{servicioController.items}"
-                                                   var="servicioIdItem"
-                                                   itemValue="#{servicioIdItem}"
-                                                   itemLabel="#{servicioIdItem.nombre}"
+                                    <f:selectItems value="#{empleadoController.servicios}"
+                                                   var="servicio"
+                                                   itemValue="#{servicio}"
+                                                   itemLabel="#{servicio.nombre}"
                                                    />
                                 </p:selectOneMenu>
+                                
                             </p:panelGrid>
                         </p:tab>  
 
@@ -165,36 +193,7 @@
                             </p:panelGrid>
                         </p:tab>
                         
-                        <p:tab id="EmpleadoTab3" title="Datos Empleado">
-                            <p:panelGrid columns="2" columnClasses="column">
-                                
-                                <p:outputLabel value="#{myBundle.CreateAreaLabel_sucursalId}" for="sucursalId" />
-                                <p:selectOneMenu id="sucursalId" value="#{empleadoController.sucursalSeleccionado}"  converter="sucursalConverter">
-                                    <p:ajax listener="#{empleadoController.onSucursalSeleccionado}" update="areaId"/>
-                                    
-                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}" />
-                                    <f:selectItems value="#{sucursalController.items}"  
-                                                   var="sucursal" 
-                                                   itemValue="#{sucursal}" 
-                                                   itemLabel="#{sucursal.nombre}"
-                                                   />                                 
-
-                                </p:selectOneMenu>
-
-                                <p:outputLabel value="#{myBundle.CreateServicioLabel_areaId}" for="areaId" />
-                                <p:selectOneMenu id="areaId" value="#{empleadoController.areaSeleccionado}" required="true"  converter="areaConverter">
-                                    
-                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                    <f:selectItems value="#{empleadoController.areas}"
-                                                   var="area"
-                                                   itemValue="#{area}"
-                                                   itemLabel="#{area.nombre}"
-                                                   />
-
-                                </p:selectOneMenu>
-
-                            </p:panelGrid>
-                        </p:tab> 
+                        
                         
                     </p:tabView>
 

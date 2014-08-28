@@ -5,6 +5,7 @@ import com.project.jsica.ejb.entidades.Area;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.FichaGeneralEmpleado;
 import com.project.jsica.ejb.entidades.FichaLaboralEmpleado;
+import com.project.jsica.ejb.entidades.Servicio;
 import com.project.jsica.ejb.entidades.Sucursal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +32,8 @@ public class EmpleadoController extends AbstractController<Empleado> {
     private boolean isSucursalSeleccionado;    
     private Area areaSeleccionado;
     private boolean isAreaSeleccionado;
+    private Servicio servicioSeleccionado;
+    private boolean isServicioSeleccionado;
     
     @EJB
     private EmpleadoFacadeLocal empleadoFacade;
@@ -131,6 +134,16 @@ public class EmpleadoController extends AbstractController<Empleado> {
     public void setIsAreaSeleccionado(boolean isAreaSeleccionado) {
         this.isAreaSeleccionado = isAreaSeleccionado;
     }
+
+    public Servicio getServicioSeleccionado() {
+        return servicioSeleccionado;
+    }
+
+    public void setServicioSeleccionado(Servicio servicioSeleccionado) {
+        this.servicioSeleccionado = servicioSeleccionado;
+    }
+    
+    
     
     
        
@@ -449,7 +462,7 @@ public class EmpleadoController extends AbstractController<Empleado> {
     public void onSucursalSeleccionado(){
         if(this.sucursalSeleccionado!= null){
             LOG.log(Level.INFO, "ID DEL DEPARTAMENTO: {0}", this.sucursalSeleccionado.getId());
-            if(this.sucursalSeleccionado.getId()!=0){
+            if(this.sucursalSeleccionado.getId() !=0){
                 this.isSucursalSeleccionado = true;
                 return;
             }
@@ -457,9 +470,27 @@ public class EmpleadoController extends AbstractController<Empleado> {
         this.isSucursalSeleccionado= false;       
     }
     
-    public List<Area> getAreas(){
+    public void onAreaSeleccionado(){
+        if(this.areaSeleccionado!= null){            
+            if(this.areaSeleccionado.getId() !=0){
+                this.isAreaSeleccionado = true;
+                return;
+            }
+        }
+        this.isAreaSeleccionado= false;       
+    }
+    
+    public List<Area> getAreas(){        
         if(this.isSucursalSeleccionado){
             return this.sucursalSeleccionado.getAreaList();
+        }else{
+            return null;
+        }
+    }
+    
+    public List<Servicio> getServicios(){
+        if(this.isAreaSeleccionado){
+            return this.areaSeleccionado.getServicioList();
         }else{
             return null;
         }
