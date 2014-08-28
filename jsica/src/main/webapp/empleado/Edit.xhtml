@@ -35,7 +35,9 @@
                                 </p:selectOneMenu> 
                                                                
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_fechaNacimiento}" for="fechaNacimiento" />
-                                <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{empleadoController.selected.fechaNacimiento}" title="#{myBundle.CreateEmpleadoTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_fechaNacimiento}" showOn="button"/>
+                                <p:inputMask id="fechaNacimiento" value="#{empleadoController.selected.fechaNacimiento}" mask="99/99/9999" title="#{myBundle.CreateEmpleadoTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_fechaNacimiento}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:inputMask>
                                 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_sexo}" for="idgeneros" />
                                 <p:selectOneMenu id="idgeneros" value="#{empleadoController.selected.sexo}" required="true" >
