@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Feriado.findAll", query = "SELECT f FROM Feriado f"),
     @NamedQuery(name = "Feriado.findByIdferiados", query = "SELECT f FROM Feriado f WHERE f.idferiados = :idferiados"),
     @NamedQuery(name = "Feriado.findByNombre", query = "SELECT f FROM Feriado f WHERE f.nombre = :nombre"),
-    @NamedQuery(name = "Feriado.findByFecha", query = "SELECT f FROM Feriado f WHERE f.fecha = :fecha")})
+    @NamedQuery(name = "Feriado.findByFechaInicio", query = "SELECT f FROM Feriado f WHERE f.fechaInicio = :fechaInicio"),
+    @NamedQuery(name = "Feriado.findByFechaFin",query = "SELECT f FROM Feriado f WHERE f.fechaFin = :fechaFin")})
 public class Feriado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,7 +48,11 @@ public class Feriado implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Temporal(TemporalType.DATE)
-    private Date fecha;
+    private Date fechaInicio;
+    @Basic(optional = false)
+    @NotNull
+    @Temporal(TemporalType.DATE)
+    private Date fechaFin;
     @JoinColumn(name = "anio_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Anio anioId;
@@ -59,9 +64,10 @@ public class Feriado implements Serializable {
         this.idferiados = idferiados;
     }
 
-    public Feriado(Long idferiados, Date fecha) {
+    public Feriado(Long idferiados, Date fechaInicio, Date fechaFin) {
         this.idferiados = idferiados;
-        this.fecha = fecha;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
     }
 
     public Long getIdferiados() {
@@ -80,12 +86,20 @@ public class Feriado implements Serializable {
         this.nombre = nombre.toUpperCase();
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Date getFechaInicio() {
+        return fechaInicio;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
     public Anio getAnioId() {
