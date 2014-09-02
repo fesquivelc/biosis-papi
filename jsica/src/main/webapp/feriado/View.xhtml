@@ -19,10 +19,15 @@
                         <h:outputText value="#{feriadoController.selected.nombre}" title="#{myBundle.ViewFeriadoTitle_nombre}"/>
 
                         <h:outputText value="#{myBundle.ViewFeriadoLabel_fecha}"/>
-                        <h:outputText value="#{feriadoController.selected.fecha}" title="#{myBundle.ViewFeriadoTitle_fecha}">
+                        <h:outputText value="#{feriadoController.selected.fechaInicio}Inicio" title="#{myBundle.ViewFeriadoTitle_fecha}">
                             <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
 
+                        <h:outputText value="#{myBundle.ViewFeriadoLabel_fecha}"/>
+                        <h:outputText value="#{feriadoController.selected.fechaFin}Fin" title="#{myBundle.ViewFeriadoTitle_fecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                        
                         <h:outputText value="#{myBundle.ViewFeriadoLabel_anioId}"/>
                         <h:outputText value="#{feriadoController.selected.anioId.anio}"/>
                     </p:panelGrid>
