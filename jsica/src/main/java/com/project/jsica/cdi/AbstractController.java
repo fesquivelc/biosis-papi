@@ -32,8 +32,7 @@ public abstract class AbstractController<T> implements Serializable {
     private Class controller;
     protected T selected;
     protected Collection<T> items;
-    protected boolean esNuevo;   
-    
+    protected boolean esNuevo;
 
     private enum PersistAction {
 
@@ -53,7 +52,6 @@ public abstract class AbstractController<T> implements Serializable {
         this.itemClass = itemClass;
         this.controller = controller;
     }
-    
 
     /**
      * Retrieve the currently selected item.
@@ -104,7 +102,6 @@ public abstract class AbstractController<T> implements Serializable {
 //        }
 //        return items;
 //    }
-
     /**
      * Pass in collection of items
      *
@@ -133,6 +130,7 @@ public abstract class AbstractController<T> implements Serializable {
      */
     public void saveNew(ActionEvent event) {
         String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Created");
+
         this.esNuevo = true;
         persist(PersistAction.CREATE, msg);
         if (!isValidationFailed()) {
@@ -165,37 +163,31 @@ public abstract class AbstractController<T> implements Serializable {
      * @param successMessage a message that should be displayed when persisting
      * the item succeeds
      */
-    
     protected abstract void edit(T objeto);
-    
+
     protected abstract void remove(T objeto);
-    
+
     public abstract T find(Object id);
-        
+
     public abstract List<T> getItems();
-    
+
     public abstract List<T> search(String namedQuery);
-    
+
     public abstract List<T> search(String namedQuery, Map<String, Object> parametros);
-    
+
     public abstract List<T> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
-    
+
     private void persist(PersistAction persistAction, String successMessage) {
+
         if (selected != null) {
             this.setEmbeddableKeys();
-            
+
             try {
-                Logger.getLogger(itemClass.getName()).info("selected no es null");
                 if (persistAction != PersistAction.DELETE) {
-                    if(this.esNuevo){
-                        Logger.getLogger(itemClass).info("LO NUEVO NUEVO");
-                    }else{
-                        Logger.getLogger(itemClass).info("ACTUALIZATE");
-                    }
-                    
+
                     this.edit(selected);
                     this.esNuevo = false;
-                    
+
                 } else {
                     this.remove(selected);
                 }
@@ -219,11 +211,12 @@ public abstract class AbstractController<T> implements Serializable {
                     }
                 }
             } catch (Exception ex) {
+//                System.out.println("SELECTED: "+selected);
                 Logger.getLogger(controller).error(this.selected.toString());
-//                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/MyBundle").getString("PersistenceErrorOccured"));
-                JsfUtil.addErrorMessage(ex, "error en el catch :c");
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/MyBundle").getString("PersistenceErrorOccured"));
+//                JsfUtil.addErrorMessage(ex, "error en el catch :c");
             }
-        }else{
+        } else {
             Logger.getLogger(this.itemClass).error("selected es null");
         }
     }
@@ -242,6 +235,10 @@ public abstract class AbstractController<T> implements Serializable {
             newItem = itemClass.newInstance();
             this.selected = newItem;
             initializeEmbeddableKey();
+            if (selected == null) {
+
+                System.out.println("SELECTED: " + selected);
+            }
             return newItem;
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(controller).error(ex);

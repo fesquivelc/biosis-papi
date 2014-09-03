@@ -39,7 +39,7 @@
                                 </p:selectOneMenu>
                                 
                                 <p:outputLabel value="#{myBundle.CreateAreaLabel_sucursalId}" for="sucursalId" />
-                                <p:selectOneMenu id="sucursalId" value="#{contratoController.selected.}" required="true" converter="sucursalConverter">
+                                <p:selectOneMenu id="sucursalId" value="#{contratoController.selected}" required="true" converter="sucursalConverter">
                                                                        
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}" />
                                     <f:selectItems value="#{sucursalController.items}"  
