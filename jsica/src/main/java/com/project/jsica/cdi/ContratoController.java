@@ -1,11 +1,15 @@
 package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.ContratoFacadeLocal;
+import com.project.jsica.ejb.entidades.Area;
 import com.project.jsica.ejb.entidades.Contrato;
 import com.project.jsica.ejb.entidades.DetalleContrato;
+import com.project.jsica.ejb.entidades.Sucursal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -17,6 +21,11 @@ import javax.inject.Named;
 @ViewScoped
 public class ContratoController extends AbstractController<Contrato> {
     private DetalleContrato detallecontratoseleccionado;
+    
+    private Sucursal sucursalSeleccionado;
+    private boolean isSucursalSeleccionado;    
+    private Area areaSeleccionado;
+    private boolean isAreaSeleccionado;
 
     @EJB
     private ContratoFacadeLocal contratoFacade;
@@ -46,6 +55,42 @@ public class ContratoController extends AbstractController<Contrato> {
     public void setDetallecontratoseleccionado(DetalleContrato detallecontratoseleccionado) {
         this.detallecontratoseleccionado = detallecontratoseleccionado;
     }
+
+    public Sucursal getSucursalSeleccionado() {
+        return sucursalSeleccionado;
+    }
+
+    public void setSucursalSeleccionado(Sucursal sucursalSeleccionado) {
+        this.sucursalSeleccionado = sucursalSeleccionado;
+    }
+
+    public Area getAreaSeleccionado() {
+        return areaSeleccionado;
+    }
+
+    public void setAreaSeleccionado(Area areaSeleccionado) {
+        this.areaSeleccionado = areaSeleccionado;
+    }
+
+    public boolean isIsSucursalSeleccionado() {
+        return isSucursalSeleccionado;
+    }
+
+    public void setIsSucursalSeleccionado(boolean isSucursalSeleccionado) {
+        this.isSucursalSeleccionado = isSucursalSeleccionado;
+    }
+
+    public boolean isIsAreaSeleccionado() {
+        return isAreaSeleccionado;
+    }
+
+    public void setIsAreaSeleccionado(boolean isAreaSeleccionado) {
+        this.isAreaSeleccionado = isAreaSeleccionado;
+    }
+    
+    
+    
+    
 
 
     /**
@@ -182,6 +227,35 @@ public class ContratoController extends AbstractController<Contrato> {
         detallecontratoseleccionado.setContratoId(contrato);
         this.setSelected(contrato);
         return contrato;
+    }
+    
+     
+    public void onSucursalSeleccionado(){
+        if(this.sucursalSeleccionado!= null){           
+            if(this.sucursalSeleccionado.getId() !=0){
+                this.isSucursalSeleccionado = true;
+                return;
+            }
+        }
+        this.isSucursalSeleccionado= false;       
+    }  
+    
+    public void onAreaSeleccionado(){
+        if(this.areaSeleccionado!= null){            
+            if(this.areaSeleccionado.getId() !=0){
+                this.isAreaSeleccionado = true;
+                return;
+            }
+        }
+        this.isAreaSeleccionado= false;       
+    }
+        
+    public List<Area> getAreas(){        
+        if(this.isSucursalSeleccionado){
+            return this.sucursalSeleccionado.getAreaList();
+        }else{
+            return null;
+        }
     }
 
 }
