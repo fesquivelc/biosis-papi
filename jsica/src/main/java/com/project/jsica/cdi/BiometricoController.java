@@ -72,75 +72,50 @@ public class BiometricoController extends AbstractController<Biometrico> {
 
     @Override
     protected void edit(Biometrico objeto) {
+        this.biometricoFacade.edit(objeto);
 
         if (this.esNuevo) {
             Bitacora bitacora = new Bitacora();
-            Logger.getLogger(BiometricoController.class.getName()).info("es nuevo");
-            if (this.bitacoraC == null) {
-                Logger.getLogger(BiometricoController.class.getName()).info("bitacora ejb es null");
-            } else {
-                Logger.getLogger(BiometricoController.class.getName()).info("bitacora ejb no es null");
-            }
-            this.biometricoFacade.edit(objeto);
-            //----Bitacora----
-            //Fecha y hora//          
             Date fechas = new Date();
-            SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
-//            System.out.println("fecha: "+dt.format(fechas));
 //           
             //Ip Cliente
             String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-            Logger.getLogger(BiometricoController.class.getName()).info("despues de recuperar ip");
-
-            //Tabla
-            Logger.getLogger(BiometricoController.class.getName()).info("tabla es: Biometrico");
-            //Campos
 
             String ipv4 = this.selected.getIpv4();
             String ipv6 = this.selected.getIpv6();
-            String modelo = this.selected.getSucursalId().getNombre();
+            String modelo = this.selected.getModelo();
             String marca = this.selected.getMarca();
             String sucursal = this.selected.getSucursalId().getNombre();
 
-            Logger.getLogger(AnioController.class.getName()).info("Datos llenados: " + ipv4 + " " + ipv6 + " " + modelo + " " + marca + " " + sucursal);
-
-            //Datos
-            bitacora.setUsuario(" ");
+            bitacora.setUsuario("JC");
             bitacora.setIpCliente(ip_cliente);
-            Logger.getLogger(AnioController.class.getName()).info("la ip es " + ip_cliente);
             bitacora.setFecha(fechas);
             bitacora.setHora(fechas);
             bitacora.setTabla("BIOMETRICO");
             bitacora.setColumna("IPV4");
             bitacora.setAccion("CREAR");
             bitacora.setValorAct(ipv4);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(BiometricoController.class.getName()).info("campo 1");
+            bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
-            Logger.getLogger(BiometricoController.class.getName()).info("campo año agregado");
 
             bitacora.setColumna("IPV6");
             bitacora.setValorAct(ipv6);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(BiometricoController.class.getName()).info("campo 2");
+            bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
 
             bitacora.setColumna("MODELO");
             bitacora.setValorAct(modelo);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(BiometricoController.class.getName()).info("campo 3");
+            bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
 
             bitacora.setColumna("MARCA");
             bitacora.setValorAct(marca);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(BiometricoController.class.getName()).info("campo 4");
+            bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
 
             bitacora.setColumna("SUCURSAL");
             bitacora.setValorAct(sucursal);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(BiometricoController.class.getName()).info("campo 5");
+            bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
 
         } else {
@@ -148,17 +123,14 @@ public class BiometricoController extends AbstractController<Biometrico> {
             Biometrico antes = this.find(this.selected.getId());
             String ipv41 = antes.getIpv4();
             String ipv61 = antes.getIpv6();
-            String modelo1 = antes.getSucursalId().getNombre();
+            String modelo1 = antes.getModelo();
             String marca1 = antes.getMarca();
             String sucursal1 = antes.getSucursalId().getNombre();
-
-            this.biometricoFacade.edit(objeto);
-            Logger.getLogger(BiometricoController.class.getName()).info("No creó, lo actualizo");
 
             //Datos despues de modificar
             String ipv42 = this.selected.getIpv4();
             String ipv62 = this.selected.getIpv6();
-            String modelo2 = this.selected.getSucursalId().getNombre();
+            String modelo2 = this.selected.getModelo();
             String marca2 = this.selected.getMarca();
             String sucursal2 = this.selected.getSucursalId().getNombre();
 
@@ -166,22 +138,13 @@ public class BiometricoController extends AbstractController<Biometrico> {
             Bitacora bitacora = new Bitacora();
             //Fecha y hora//          
             Date fechas = new Date();
-            SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
-//            System.out.println("fecha: "+dt.format(fechas));
 //           
             //Ip Cliente
             String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-            Logger.getLogger(BiometricoController.class.getName()).info("despues de recuperar ip");
 
-            //Tabla
-            Logger.getLogger(BiometricoController.class.getName()).info("tabla es: BITACORA");
-            //Campos
-
-//            Logger.getLogger(AnioController.class.getName()).info("Datos llenados: " + anio + nombre + vigente);
             //Datos
-            bitacora.setUsuario(" ");
+            bitacora.setUsuario("JC");
             bitacora.setIpCliente(ip_cliente);
-            Logger.getLogger(BiometricoController.class.getName()).info("la ip es " + ip_cliente);
             bitacora.setFecha(fechas);
             bitacora.setHora(fechas);
             bitacora.setTabla("BIOMETRICO");
@@ -189,27 +152,22 @@ public class BiometricoController extends AbstractController<Biometrico> {
             bitacora.setAccion("MODIFICAR");
             bitacora.setValorAnt(ipv41);
             bitacora.setValorAct(ipv42);
-            Logger.getLogger(BiometricoController.class.getName()).info("campo 1");
 
             if (!ipv41.equals(ipv42)) {
                 bitacoraC.edit(bitacora);
-                Logger.getLogger(BiometricoController.class.getName()).info("campo ipv4 agregado");
             }
 
             bitacora.setColumna("IPV6");
             bitacora.setValorAnt(ipv61);
             bitacora.setValorAct(ipv62);
-            Logger.getLogger(BiometricoController.class.getName()).info("campo 2");
 
             if (!ipv61.equals(ipv62)) {
                 bitacoraC.edit(bitacora);
             }
 
-//            System.out.println(anio1+" "+nombre1+" "+vigente1);
             bitacora.setColumna("MODELO");
             bitacora.setValorAnt(modelo1);
             bitacora.setValorAct(modelo2);
-            Logger.getLogger(BiometricoController.class.getName()).info("campo 3");
 
             if (!modelo1.equals(modelo2)) {
                 bitacoraC.edit(bitacora);
@@ -218,7 +176,6 @@ public class BiometricoController extends AbstractController<Biometrico> {
             bitacora.setColumna("MARCA");
             bitacora.setValorAnt(marca1);
             bitacora.setValorAct(marca2);
-            Logger.getLogger(BiometricoController.class.getName()).info("campo 4");
 
             if (!marca1.equals(marca2)) {
                 bitacoraC.edit(bitacora);
@@ -227,14 +184,12 @@ public class BiometricoController extends AbstractController<Biometrico> {
             bitacora.setColumna("SUCURSAL");
             bitacora.setValorAnt(sucursal1);
             bitacora.setValorAct(sucursal2);
-            Logger.getLogger(BiometricoController.class.getName()).info("campo 5");
 
             if (!sucursal1.equals(sucursal2)) {
                 bitacoraC.edit(bitacora);
             }
 
         }
-
     }
 
     @Override
@@ -242,67 +197,50 @@ public class BiometricoController extends AbstractController<Biometrico> {
         Biometrico antes = this.find(this.selected.getId());
         String ipv41 = antes.getIpv4();
         String ipv61 = antes.getIpv6();
-        String modelo1 = antes.getSucursalId().getNombre();
+        String modelo1 = antes.getModelo();
         String marca1 = antes.getMarca();
         String sucursal1 = antes.getSucursalId().getNombre();
-
-        this.biometricoFacade.remove(objeto);
 
         Bitacora bitacora = new Bitacora();
         //----Bitacora----
         //Fecha y hora//          
         Date fechas = new Date();
-        SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
-//            System.out.println("fecha: "+dt.format(fechas));
-//           
         //Ip Cliente
         String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-        Logger.getLogger(BiometricoController.class.getName()).info("despues de recuperar ip");
-
-        //Tabla
-        Logger.getLogger(BiometricoController.class.getName()).info("tabla es: Biometrico");
-            //Campos
-
-        Logger.getLogger(AnioController.class.getName()).info("Datos llenados: " + ipv41 + " " + ipv61 + " " + modelo1 + " " + marca1 + " " + sucursal1);
 
         //Datos
-        bitacora.setUsuario(" ");
+        bitacora.setUsuario("JC");
         bitacora.setIpCliente(ip_cliente);
-        Logger.getLogger(AnioController.class.getName()).info("la ip es " + ip_cliente);
         bitacora.setFecha(fechas);
         bitacora.setHora(fechas);
         bitacora.setTabla("BIOMETRICO");
         bitacora.setColumna("IPV4");
         bitacora.setAccion("ELIMINAR");
-        bitacora.setValorAct(ipv41);
-        bitacora.setValorAnt(null);
-        Logger.getLogger(BiometricoController.class.getName()).info("campo 1");
+        bitacora.setValorAnt(ipv41);
+        bitacora.setValorAct(" ");
         bitacoraC.edit(bitacora);
-        Logger.getLogger(BiometricoController.class.getName()).info("campo año agregado");
 
         bitacora.setColumna("IPV6");
-        bitacora.setValorAct(ipv61);
-        bitacora.setValorAnt(null);
-        Logger.getLogger(BiometricoController.class.getName()).info("campo 2");
+        bitacora.setValorAnt(ipv61);
+        bitacora.setValorAct(" ");
         bitacoraC.edit(bitacora);
 
         bitacora.setColumna("MODELO");
-        bitacora.setValorAct(modelo1);
-        bitacora.setValorAnt(null);
-        Logger.getLogger(BiometricoController.class.getName()).info("campo 3");
+        bitacora.setValorAnt(modelo1);
+        bitacora.setValorAct(" ");
         bitacoraC.edit(bitacora);
 
         bitacora.setColumna("MARCA");
-        bitacora.setValorAct(marca1);
-        bitacora.setValorAnt(null);
-        Logger.getLogger(BiometricoController.class.getName()).info("campo 4");
+        bitacora.setValorAnt(marca1);
+        bitacora.setValorAct(" ");
         bitacoraC.edit(bitacora);
 
         bitacora.setColumna("SUCURSAL");
-        bitacora.setValorAct(sucursal1);
-        bitacora.setValorAnt(null);
-        Logger.getLogger(BiometricoController.class.getName()).info("campo 4");
+        bitacora.setValorAnt(sucursal1);
+        bitacora.setValorAct(" ");
         bitacoraC.edit(bitacora);
+
+        this.biometricoFacade.remove(objeto);
     }
 
     @Override

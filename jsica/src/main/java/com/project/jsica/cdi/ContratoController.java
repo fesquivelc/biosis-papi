@@ -2,10 +2,12 @@ package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.ContratoFacadeLocal;
 import com.project.jsica.ejb.entidades.Area;
+import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.Contrato;
 import com.project.jsica.ejb.entidades.DetalleContrato;
 import com.project.jsica.ejb.entidades.Sucursal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -16,6 +18,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 @Named(value = "contratoController")
 @ViewScoped
@@ -29,11 +32,14 @@ public class ContratoController extends AbstractController<Contrato> {
 
     @EJB
     private ContratoFacadeLocal contratoFacade;
+    
+    @Inject
+    private BitacoraController bitacoraC;
 
     @Inject
     private DetalleContratoController detalleContratoListController;
     @Inject
-    private CondicionLaboralController condicionLaboralIdController;
+    private ContratoController condicionLaboralIdController;
     @Inject
     private RegimenLaboralController regimenLaboralIdController;
     @Inject
@@ -119,15 +125,15 @@ public class ContratoController extends AbstractController<Contrato> {
     }
 
     /**
-     * Sets the "selected" attribute of the CondicionLaboral controller in order
+     * Sets the "selected" attribute of the Contrato controller in order
      * to display its data in a dialog. This is reusing existing the existing
      * View dialog.
      *
      * @param event Event object for the widget that triggered an action
      */
-    public void prepareCondicionLaboralId(ActionEvent event) {
+    public void prepareContratoId(ActionEvent event) {
         if (this.getSelected() != null && condicionLaboralIdController.getSelected() == null) {
-            condicionLaboralIdController.setSelected(this.getSelected().getCondicionLaboralId());
+            condicionLaboralIdController.setSelected(this.getSelected());
         }
     }
 
@@ -185,6 +191,170 @@ public class ContratoController extends AbstractController<Contrato> {
     @Override
     protected void edit(Contrato objeto) {
         this.contratoFacade.edit(objeto);
+        if (this.esNuevo) {
+            Bitacora bitacora = new Bitacora();
+            //----Bitacora----
+            //Fecha y hora//          
+            Date fechas = new Date();//           
+            //Ip Cliente
+            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+            
+            String fechaInicio = this.selected.getFechaInicio().toString();
+            String fechaFin = this.selected.getFechaFin().toString();
+            String codigo = this.selected.getCodigo();
+            String sueldoBasico = this.selected.getSueldoBasico().toString();
+            String condicionLaboral = this.selected.getCondicionLaboralId().getNombre();
+            String regimenLaboral = this.selected.getRegimenLaboralId().getNombre();
+            String anio = this.selected.getAnioId().getNombre();
+            String tipoContrato = this.selected.getTipoContratoId().getNombre();
+
+            bitacora.setUsuario("JC");
+            bitacora.setIpCliente(ip_cliente);
+            bitacora.setFecha(fechas);
+            bitacora.setHora(fechas);
+            bitacora.setTabla("CONTRATO");
+            bitacora.setColumna("FECHA_INICIO");
+            bitacora.setAccion("CREAR");
+            bitacora.setValorAct(fechaInicio);
+            bitacora.setValorAnt(" ");
+            bitacoraC.edit(bitacora);
+
+            bitacora.setColumna("FECHA_FIN");
+            bitacora.setValorAct(fechaFin);
+            bitacora.setValorAnt(" ");
+            bitacoraC.edit(bitacora);
+            
+            bitacora.setColumna("CODIGO");
+            bitacora.setValorAct(codigo);
+            bitacora.setValorAnt(" ");
+            bitacoraC.edit(bitacora);
+            
+            bitacora.setColumna("SUELDO_BASICO");
+            bitacora.setValorAct(sueldoBasico);
+            bitacora.setValorAnt(" ");
+            bitacoraC.edit(bitacora);
+            
+            bitacora.setColumna("CONDICION_LABORAL");
+            bitacora.setValorAct(condicionLaboral);
+            bitacora.setValorAnt(" ");
+            bitacoraC.edit(bitacora);
+            
+            bitacora.setColumna("REGIMEN_LABORAL");
+            bitacora.setValorAct(regimenLaboral);
+            bitacora.setValorAnt(" ");
+            bitacoraC.edit(bitacora);
+            
+            bitacora.setColumna("AÑO");
+            bitacora.setValorAct(anio);
+            bitacora.setValorAnt(" ");
+            bitacoraC.edit(bitacora);
+            
+            bitacora.setColumna("TIPO_CONTRATO");
+            bitacora.setValorAct(tipoContrato);
+            bitacora.setValorAnt(" ");
+            bitacoraC.edit(bitacora);
+
+        } else {
+            //Datos antes de modificar
+            Contrato antes = this.find(this.selected.getId());
+            String fechaInicio1 = antes.getFechaInicio().toString();
+            String fechaFin1 = antes.getFechaFin().toString();
+            String codigo1 = antes.getCodigo();
+            String sueldoBasico1 = antes.getSueldoBasico().toString();
+            String condicionLaboral1 = antes.getCondicionLaboralId().getNombre();
+            String regimenLaboral1 = antes.getRegimenLaboralId().getNombre();
+            String anio1 = antes.getAnioId().getNombre();
+            String tipoContrato1 = antes.getTipoContratoId().getNombre();
+            
+            //Datos despues de modificar
+            String fechaInicio2 = this.selected.getFechaInicio().toString();
+            String fechaFin2 = this.selected.getFechaFin().toString();
+            String codigo2 = this.selected.getCodigo();
+            String sueldoBasico2 = this.selected.getSueldoBasico().toString();
+            String condicionLaboral2 = this.selected.getCondicionLaboralId().getNombre();
+            String regimenLaboral2 = this.selected.getRegimenLaboralId().getNombre();
+            String anio2 = this.selected.getAnioId().getNombre();
+            String tipoContrato2 = this.selected.getTipoContratoId().getNombre();
+            
+            //----Bitacora----
+            Bitacora bitacora = new Bitacora();
+            //Fecha y hora//          
+            Date fechas = new Date();
+//           
+            //Ip Cliente
+            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+            
+            //Datos
+            bitacora.setUsuario("JC");
+            bitacora.setIpCliente(ip_cliente);
+            bitacora.setFecha(fechas);
+            bitacora.setHora(fechas);
+            bitacora.setTabla("CONTRATO");
+            bitacora.setColumna("FECHA_INICIO");
+            bitacora.setAccion("MODIFICAR");
+            bitacora.setValorAct(fechaInicio2);
+            bitacora.setValorAnt(fechaInicio1);
+
+            if (!fechaInicio1.equals(fechaInicio2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("FECHA_FIN");
+            bitacora.setValorAct(fechaFin2);
+            bitacora.setValorAnt(fechaFin1);
+
+            if (!fechaFin1.equals(fechaFin2)) {
+                bitacoraC.edit(bitacora);
+            }
+            
+            bitacora.setColumna("CODIGO");
+            bitacora.setValorAct(codigo2);
+            bitacora.setValorAnt(codigo1);
+            
+            if (!codigo1.equals(codigo2)) {
+                bitacoraC.edit(bitacora);
+            }
+            
+            bitacora.setColumna("SUELDO_BASICO");
+            bitacora.setValorAct(sueldoBasico2);
+            bitacora.setValorAnt(sueldoBasico1);
+            
+            if (!sueldoBasico1.equals(sueldoBasico2)) {
+                bitacoraC.edit(bitacora);
+            }
+            
+            bitacora.setColumna("CONDICION_LABORAL");
+            bitacora.setValorAct(condicionLaboral2);
+            bitacora.setValorAnt(condicionLaboral1);
+            
+            if(!condicionLaboral1.equals(condicionLaboral2)) {
+                bitacoraC.edit(bitacora);
+            }
+            
+            bitacora.setColumna("REGIMEN_LABORAL");
+            bitacora.setValorAct(regimenLaboral2);
+            bitacora.setValorAnt(regimenLaboral1);
+            
+            if(!regimenLaboral1.equals(regimenLaboral2)) {
+                bitacoraC.edit(bitacora);
+            }
+            
+            bitacora.setColumna("AÑO");
+            bitacora.setValorAct(anio2);
+            bitacora.setValorAnt(anio1);
+            
+            if(!anio1.equals(anio2)) {
+                bitacoraC.edit(bitacora);
+            }
+            
+            bitacora.setColumna("TIPO_CONTRATO");
+            bitacora.setValorAct(tipoContrato2);
+            bitacora.setValorAnt(tipoContrato1);
+            
+            if(!tipoContrato1.equals(tipoContrato2)) {
+                bitacoraC.edit(bitacora);
+            }
+        }
     }
 
     @Override

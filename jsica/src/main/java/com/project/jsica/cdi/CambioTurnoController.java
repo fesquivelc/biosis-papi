@@ -88,73 +88,53 @@ public class CambioTurnoController extends AbstractController<CambioTurno> {
 
     @Override
     protected void edit(CambioTurno objeto) {
+
+        this.cambioTurnoFacade.edit(objeto);
         if (this.esNuevo) {
             Bitacora bitacora = new Bitacora();
-            Logger.getLogger(CambioTurnoController.class.getName()).info("es nuevo");
-            if (this.bitacoraC == null) {
-                Logger.getLogger(CambioTurnoController.class.getName()).info("bitacora ejb es null");
-            } else {
-                Logger.getLogger(CambioTurnoController.class.getName()).info("bitacora ejb no es null");
-            }
-            this.cambioTurnoFacade.edit(objeto);
             //----Bitacora----
             //Fecha y hora//          
             Date fechas = new Date();
-            SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
 //            System.out.println("fecha: "+dt.format(fechas));
 //           
             //Ip Cliente
             String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-            Logger.getLogger(CambioTurnoController.class.getName()).info("despues de recuperar ip");
-
-            //Tabla
-            Logger.getLogger(CambioTurnoController.class.getName()).info("tabla es: CambioTurno");
-            //Campos
-
+            
             String detalle_horario_original = this.selected.getDetalleHorarioOriginal().toString();
             String detalle_horario_reemplazo = this.selected.getDetalleHorarioReemplazo().toString();
             String fecha_pedido = this.selected.getFechaPedido().toString();
             String hora_pedido = this.selected.getHoraPedido().toString();
             String jefe_inmediato_id = this.selected.getJefeInmediatoId().getApellidos() + ", " + this.selected.getJefeInmediatoId().getNombres();
 
-//            Logger.getLogger(AnioController.class.getName()).info("Datos llenados: " + ipv4 + " " + ipv6 + " " + modelo + " " + marca + " " + sucursal);
-            //Datos
-            bitacora.setUsuario(" ");
+            bitacora.setUsuario("JC");
             bitacora.setIpCliente(ip_cliente);
-            Logger.getLogger(AnioController.class.getName()).info("la ip es " + ip_cliente);
             bitacora.setFecha(fechas);
             bitacora.setHora(fechas);
             bitacora.setTabla("CAMBIO_TURNO");
             bitacora.setColumna("DETALLE_HORARIO_ORIGINAL");
             bitacora.setAccion("CREAR");
             bitacora.setValorAct(detalle_horario_original);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 1");
+            bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo año agregado");
 
             bitacora.setColumna("DETALLE_HORARIO_REEMPLAZO");
             bitacora.setValorAct(detalle_horario_reemplazo);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 2");
+            bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
 
             bitacora.setColumna("FECHA_PEDIDO");
             bitacora.setValorAct(fecha_pedido);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 3");
+            bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
 
             bitacora.setColumna("HORA_PEDIDO");
             bitacora.setValorAct(hora_pedido);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 4");
+            bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
 
             bitacora.setColumna("JEFE_INMEDIATO");
             bitacora.setValorAct(jefe_inmediato_id);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 5");
+            bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
 
         } else {
@@ -166,10 +146,6 @@ public class CambioTurnoController extends AbstractController<CambioTurno> {
             String hora_pedido1 = antes.getHoraPedido().toString();
             String jefe_inmediato_id1 = antes.getJefeInmediatoId().getApellidos() + ", " + this.selected.getJefeInmediatoId().getNombres();
 
-
-            this.cambioTurnoFacade.edit(objeto);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("No creó, lo actualizo");
-
             //Datos despues de modificar
             String detalle_horario_original2 = this.selected.getDetalleHorarioOriginal().toString();
             String detalle_horario_reemplazo2 = this.selected.getDetalleHorarioReemplazo().toString();
@@ -177,27 +153,17 @@ public class CambioTurnoController extends AbstractController<CambioTurno> {
             String hora_pedido2 = this.selected.getHoraPedido().toString();
             String jefe_inmediato_id2 = this.selected.getJefeInmediatoId().getApellidos() + ", " + this.selected.getJefeInmediatoId().getNombres();
 
-
             //----Bitacora----
             Bitacora bitacora = new Bitacora();
             //Fecha y hora//          
             Date fechas = new Date();
-            SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
-//            System.out.println("fecha: "+dt.format(fechas));
-//           
+            
             //Ip Cliente
             String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-            Logger.getLogger(CambioTurnoController.class.getName()).info("despues de recuperar ip");
-
-            //Tabla
-            Logger.getLogger(CambioTurnoController.class.getName()).info("tabla es: BITACORA");
-            //Campos
-
-//            Logger.getLogger(AnioController.class.getName()).info("Datos llenados: " + anio + nombre + vigente);
+            
             //Datos
-            bitacora.setUsuario(" ");
+            bitacora.setUsuario("JC");
             bitacora.setIpCliente(ip_cliente);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("la ip es " + ip_cliente);
             bitacora.setFecha(fechas);
             bitacora.setHora(fechas);
             bitacora.setTabla("BIOMETRICO");
@@ -205,17 +171,14 @@ public class CambioTurnoController extends AbstractController<CambioTurno> {
             bitacora.setAccion("MODIFICAR");
             bitacora.setValorAnt(detalle_horario_original1);
             bitacora.setValorAct(detalle_horario_original2);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 1");
 
             if (!detalle_horario_original1.equals(detalle_horario_original2)) {
                 bitacoraC.edit(bitacora);
-                Logger.getLogger(CambioTurnoController.class.getName()).info("campo ipv4 agregado");
             }
 
             bitacora.setColumna("DETALLE_HORARIO_REEMPLAZO");
             bitacora.setValorAnt(detalle_horario_reemplazo1);
             bitacora.setValorAct(detalle_horario_reemplazo2);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 2");
 
             if (!detalle_horario_reemplazo1.equals(detalle_horario_reemplazo2)) {
                 bitacoraC.edit(bitacora);
@@ -225,7 +188,6 @@ public class CambioTurnoController extends AbstractController<CambioTurno> {
             bitacora.setColumna("FECHA_PEDIDO");
             bitacora.setValorAnt(fecha_pedido1);
             bitacora.setValorAct(fecha_pedido2);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 3");
 
             if (!fecha_pedido1.equals(fecha_pedido2)) {
                 bitacoraC.edit(bitacora);
@@ -234,7 +196,6 @@ public class CambioTurnoController extends AbstractController<CambioTurno> {
             bitacora.setColumna("HORA_PEDIDO");
             bitacora.setValorAnt(hora_pedido1);
             bitacora.setValorAct(hora_pedido2);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 4");
 
             if (!hora_pedido1.equals(hora_pedido2)) {
                 bitacoraC.edit(bitacora);
@@ -243,7 +204,6 @@ public class CambioTurnoController extends AbstractController<CambioTurno> {
             bitacora.setColumna("JEFE_INMEDIATO");
             bitacora.setValorAnt(jefe_inmediato_id1);
             bitacora.setValorAct(jefe_inmediato_id2);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 5");
 
             if (!jefe_inmediato_id1.equals(jefe_inmediato_id2)) {
                 bitacoraC.edit(bitacora);
@@ -256,65 +216,51 @@ public class CambioTurnoController extends AbstractController<CambioTurno> {
     protected void remove(CambioTurno objeto) {
         Bitacora bitacora = new Bitacora();
         //----Bitacora----
-            //Fecha y hora//          
-            Date fechas = new Date();
-            SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
-//            System.out.println("fecha: "+dt.format(fechas));
-//           
-            //Ip Cliente
-            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-            Logger.getLogger(CambioTurnoController.class.getName()).info("despues de recuperar ip");
-
-            //Tabla
-            Logger.getLogger(CambioTurnoController.class.getName()).info("tabla es: CambioTurno");
-            //Campos
-
-            String detalle_horario_original1 = this.selected.getDetalleHorarioOriginal().toString();
-            String detalle_horario_reemplazo1 = this.selected.getDetalleHorarioReemplazo().toString();
-            String fecha_pedido1 = this.selected.getFechaPedido().toString();
-            String hora_pedido1 = this.selected.getHoraPedido().toString();
-            String jefe_inmediato_id1 = this.selected.getJefeInmediatoId().getApellidos() + ", " + this.selected.getJefeInmediatoId().getNombres();
-
-//            Logger.getLogger(AnioController.class.getName()).info("Datos llenados: " + ipv4 + " " + ipv6 + " " + modelo + " " + marca + " " + sucursal);
-            //Datos
-            bitacora.setUsuario(" ");
-            bitacora.setIpCliente(ip_cliente);
-            Logger.getLogger(AnioController.class.getName()).info("la ip es " + ip_cliente);
-            bitacora.setFecha(fechas);
-            bitacora.setHora(fechas);
-            bitacora.setTabla("CAMBIO_TURNO");
-            bitacora.setColumna("DETALLE_HORARIO_ORIGINAL");
-            bitacora.setAccion("CREAR");
-            bitacora.setValorAct(detalle_horario_original1);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 1");
-            bitacoraC.edit(bitacora);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo año agregado");
-
-            bitacora.setColumna("DETALLE_HORARIO_REEMPLAZO");
-            bitacora.setValorAct(detalle_horario_reemplazo1);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 2");
-            bitacoraC.edit(bitacora);
-
-            bitacora.setColumna("FECHA_PEDIDO");
-            bitacora.setValorAct(fecha_pedido1);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 3");
-            bitacoraC.edit(bitacora);
-
-            bitacora.setColumna("HORA_PEDIDO");
-            bitacora.setValorAct(hora_pedido1);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 4");
-            bitacoraC.edit(bitacora);
-
-            bitacora.setColumna("JEFE_INMEDIATO");
-            bitacora.setValorAct(jefe_inmediato_id1);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(CambioTurnoController.class.getName()).info("campo 5");
-            bitacoraC.edit(bitacora);
+        //Fecha y hora//          
+        Date fechas = new Date();
         
+        //Ip Cliente
+        String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+        
+        //Campos
+        String detalle_horario_original1 = this.selected.getDetalleHorarioOriginal().toString();
+        String detalle_horario_reemplazo1 = this.selected.getDetalleHorarioReemplazo().toString();
+        String fecha_pedido1 = this.selected.getFechaPedido().toString();
+        String hora_pedido1 = this.selected.getHoraPedido().toString();
+        String jefe_inmediato_id1 = this.selected.getJefeInmediatoId().getApellidos() + ", " + this.selected.getJefeInmediatoId().getNombres();
+
+        bitacora.setUsuario(" ");
+        bitacora.setIpCliente(ip_cliente);
+        Logger.getLogger(AnioController.class.getName()).info("la ip es " + ip_cliente);
+        bitacora.setFecha(fechas);
+        bitacora.setHora(fechas);
+        bitacora.setTabla("CAMBIO_TURNO");
+        bitacora.setColumna("DETALLE_HORARIO_ORIGINAL");
+        bitacora.setAccion("CREAR");
+        bitacora.setValorAnt(detalle_horario_original1);
+        bitacora.setValorAct(" ");
+        bitacoraC.edit(bitacora);
+
+        bitacora.setColumna("DETALLE_HORARIO_REEMPLAZO");
+        bitacora.setValorAnt(detalle_horario_reemplazo1);
+        bitacora.setValorAct(" ");
+        bitacoraC.edit(bitacora);
+
+        bitacora.setColumna("FECHA_PEDIDO");
+        bitacora.setValorAnt(fecha_pedido1);
+        bitacora.setValorAct(" ");
+        bitacoraC.edit(bitacora);
+
+        bitacora.setColumna("HORA_PEDIDO");
+        bitacora.setValorAnt(hora_pedido1);
+        bitacora.setValorAct(" ");
+        bitacoraC.edit(bitacora);
+
+        bitacora.setColumna("JEFE_INMEDIATO");
+        bitacora.setValorAnt(jefe_inmediato_id1);
+        bitacora.setValorAct(" ");
+        bitacoraC.edit(bitacora);
+
         this.cambioTurnoFacade.remove(objeto);
     }
 

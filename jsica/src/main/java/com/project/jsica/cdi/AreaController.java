@@ -89,58 +89,40 @@ public class AreaController extends AbstractController<Area> {
     protected void edit(Area objeto) {
         if (this.esNuevo) {
             Bitacora bitacora = new Bitacora();
-            Logger.getLogger(AreaController.class.getName()).info("es nuevo");
-            if (this.bitacoraC == null) {
-                Logger.getLogger(AreaController.class.getName()).info("bitacora ejb es null");
-            } else {
-                Logger.getLogger(AreaController.class.getName()).info("bitacora ejb no es null");
-            }
-            this.areaFacade.edit(objeto);
+            
             //----Bitacora----
             //Fecha y hora//          
             Date fechas = new Date();
-            SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
-//            System.out.println("fecha: "+dt.format(fechas));
 //           
             //Ip Cliente
             String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-            Logger.getLogger(AreaController.class.getName()).info("despues de recuperar ip");
-
-            //Tabla
-            Logger.getLogger(AreaController.class.getName()).info("tabla es: Area");
-            //Campos
+            
 
             String nombre = this.selected.getNombre();
             String descripcion = this.selected.getDescripcion();
             String sucursal = this.selected.getSucursalId().getNombre();
 
-            Logger.getLogger(AnioController.class.getName()).info("Datos llenados: " + nombre + descripcion + sucursal);
 
             //Datos
-            bitacora.setUsuario(" ");
+            bitacora.setUsuario("JC");
             bitacora.setIpCliente(ip_cliente);
-            Logger.getLogger(AnioController.class.getName()).info("la ip es " + ip_cliente);
             bitacora.setFecha(fechas);
             bitacora.setHora(fechas);
             bitacora.setTabla("AREA");
             bitacora.setColumna("NOMBRE");
             bitacora.setAccion("CREAR");
             bitacora.setValorAct(nombre);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(AreaController.class.getName()).info("campo 1");
+            bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
-            Logger.getLogger(AreaController.class.getName()).info("campo año agregado");
 
             bitacora.setColumna("DESCRIPCION");
             bitacora.setValorAct(descripcion);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(AreaController.class.getName()).info("campo 2");
+            bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
 
             bitacora.setColumna("SUCURSAL");
             bitacora.setValorAct(sucursal);
-            bitacora.setValorAnt(null);
-            Logger.getLogger(AreaController.class.getName()).info("campo 3");
+            bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
 
         } else {
@@ -149,9 +131,6 @@ public class AreaController extends AbstractController<Area> {
             String nombre1 = antes.getNombre();
             String descripcion1 = antes.getDescripcion();
             String sucursal1 = antes.getSucursalId().getNombre();
-
-            this.areaFacade.edit(objeto);
-            Logger.getLogger(AreaController.class.getName()).info("No creó, lo actualizo");
 
             //Datos despues de modificar
             String nombre2 = this.selected.getNombre();
@@ -162,22 +141,13 @@ public class AreaController extends AbstractController<Area> {
             Bitacora bitacora = new Bitacora();
             //Fecha y hora//          
             Date fechas = new Date();
-            SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
-//            System.out.println("fecha: "+dt.format(fechas));
 //           
             //Ip Cliente
             String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-            Logger.getLogger(AreaController.class.getName()).info("despues de recuperar ip");
-
-            //Tabla
-            Logger.getLogger(AreaController.class.getName()).info("tabla es: AREA");
-            //Campos
-
-//            Logger.getLogger(AnioController.class.getName()).info("Datos llenados: " + anio + nombre + vigente);
+            
             //Datos
-            bitacora.setUsuario(" ");
+            bitacora.setUsuario("JC");
             bitacora.setIpCliente(ip_cliente);
-            Logger.getLogger(AreaController.class.getName()).info("la ip es " + ip_cliente);
             bitacora.setFecha(fechas);
             bitacora.setHora(fechas);
             bitacora.setTabla("AREA");
@@ -185,89 +155,69 @@ public class AreaController extends AbstractController<Area> {
             bitacora.setAccion("MODIFICAR");
             bitacora.setValorAnt(nombre1);
             bitacora.setValorAct(nombre2);
-            Logger.getLogger(AreaController.class.getName()).info("campo 1");
 
             if (!nombre1.equals(nombre2)) {
                 bitacoraC.edit(bitacora);
-                Logger.getLogger(AreaController.class.getName()).info("campo año agregado");
             }
 
             bitacora.setColumna("DESCRIPCION");
-            bitacora.setValorAnt(nombre1);
-            bitacora.setValorAct(nombre2);
-            Logger.getLogger(AreaController.class.getName()).info("campo 2");
+            bitacora.setValorAnt(descripcion1);
+            bitacora.setValorAct(descripcion2);
 
             if (!descripcion1.equals(descripcion2)) {
                 bitacoraC.edit(bitacora);
             }
 
-//            System.out.println(anio1+" "+nombre1+" "+vigente1);
             bitacora.setColumna("SUCURSAL");
             bitacora.setValorAnt(sucursal1);
             bitacora.setValorAct(sucursal2);
-            Logger.getLogger(AreaController.class.getName()).info("campo 3");
 
             if (!sucursal1.equals(sucursal2)) {
                 bitacoraC.edit(bitacora);
             }
 
         }
+        this.areaFacade.edit(objeto);
     }
 
     @Override
     protected void remove(Area objeto) {
         //Datos antes de borrar
+        Bitacora bitacora = new Bitacora();
         Area antes = this.find(this.selected.getId());
         String nombre1 = antes.getNombre();
         String descripcion1 = antes.getDescripcion();
         String sucursal1 = antes.getSucursalId().getNombre();
-
-        this.areaFacade.remove(objeto);
-        
-        Bitacora bitacora = new Bitacora();
-        //----Bitacora----
+               
         //Fecha y hora//          
         Date fechas = new Date();
-        SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
-//            System.out.println("fecha: "+dt.format(fechas));
 //           
         //Ip Cliente
         String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-        Logger.getLogger(AreaController.class.getName()).info("despues de recuperar ip");
-
-        //Tabla
-        Logger.getLogger(AreaController.class.getName()).info("tabla es: Area");
-            //Campos
-
-
-        Logger.getLogger(AnioController.class.getName()).info("Datos llenados: " + nombre1 + descripcion1 + sucursal1);
-
+        
         //Datos
-        bitacora.setUsuario(" ");
+        bitacora.setUsuario("JC");
         bitacora.setIpCliente(ip_cliente);
-        Logger.getLogger(AnioController.class.getName()).info("la ip es " + ip_cliente);
         bitacora.setFecha(fechas);
         bitacora.setHora(fechas);
         bitacora.setTabla("AREA");
         bitacora.setColumna("NOMBRE");
         bitacora.setAccion("ELIMINAR");
-        bitacora.setValorAct(nombre1);
-        bitacora.setValorAnt(null);
-        Logger.getLogger(AreaController.class.getName()).info("campo 1");
+        bitacora.setValorAnt(nombre1);
+        bitacora.setValorAct(" ");
         bitacoraC.edit(bitacora);
-        Logger.getLogger(AreaController.class.getName()).info("campo año agregado");
 
         bitacora.setColumna("DESCRIPCION");
-        bitacora.setValorAct(descripcion1);
-        bitacora.setValorAnt(null);
-        Logger.getLogger(AreaController.class.getName()).info("campo 2");
+        bitacora.setValorAnt(descripcion1);
+        bitacora.setValorAct(" ");
         bitacoraC.edit(bitacora);
 
         bitacora.setColumna("SUCURSAL");
-        bitacora.setValorAct(sucursal1);
-        bitacora.setValorAnt(null);
-        Logger.getLogger(AreaController.class.getName()).info("campo 3");
+        bitacora.setValorAnt(sucursal1);
+        bitacora.setValorAct(" ");
         bitacoraC.edit(bitacora);
+        
+        this.areaFacade.remove(objeto);
     }
 
     @Override
