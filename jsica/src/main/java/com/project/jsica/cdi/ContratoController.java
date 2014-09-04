@@ -240,19 +240,27 @@ public class ContratoController extends AbstractController<Contrato> {
         this.isSucursalSeleccionado= false;       
     }  
     
-    public void onAreaSeleccionado(){
-        if(this.areaSeleccionado!= null){            
-            if(this.areaSeleccionado.getId() !=0){
-                this.isAreaSeleccionado = true;
+    public void onSucursalSeleccionado2(){
+        if(this.detallecontratoseleccionado.getAreaId().getSucursalId()!= null){           
+            if(this.detallecontratoseleccionado.getAreaId().getSucursalId().getId() !=0){
+                this.isSucursalSeleccionado = true;
                 return;
             }
         }
-        this.isAreaSeleccionado= false;       
-    }
+        this.isSucursalSeleccionado= false;       
+    }  
         
     public List<Area> getAreas(){        
         if(this.isSucursalSeleccionado){
             return this.sucursalSeleccionado.getAreaList();
+        }else{
+            return null;
+        }
+    }
+    
+     public List<Area> getAreas2(){        
+        if(this.isSucursalSeleccionado){
+            return this.detallecontratoseleccionado.ge this.sucursalSeleccionado.getAreaList();
         }else{
             return null;
         }
