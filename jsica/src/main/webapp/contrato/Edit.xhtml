@@ -40,7 +40,7 @@
                                 
                                 <p:outputLabel value="#{myBundle.CreateAreaLabel_sucursalId}" for="sucursalId" />
                                 <p:selectOneMenu id="sucursalId" value="#{contratoController.selected.detalleContrato.areaId.sucursalId}" required="true" converter="sucursalConverter">
-                                    <p:ajax listener="#{contratoController.onSucursalSeleccionado2()}" update="areaId"/>
+                                  
                                     
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}" />
                                     <f:selectItems value="#{sucursalController.items}"  
@@ -54,7 +54,7 @@
                                 <p:outputLabel value="#{myBundle.CreateDetalleContratoLabel_areaId}" for="areaId" />
                                 <p:selectOneMenu id="areaId" value="#{contratoController.selected.detalleContrato.areaId}" required="true" requiredMessage="#{myBundle.CreateDetalleContratoRequiredMessage_areaId}" converter="areaConverter">
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                    <f:selectItems value="#{contratoController.areas2}"
+                                    <f:selectItems value="#{areaController.items}"
                                                    var="areaIdItem"
                                                    itemValue="#{areaIdItem}"
                                                    itemLabel="#{areaIdItem.nombre}"
