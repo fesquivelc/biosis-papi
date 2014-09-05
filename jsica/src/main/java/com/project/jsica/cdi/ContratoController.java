@@ -428,12 +428,12 @@ public class ContratoController extends AbstractController<Contrato> {
         }
     }
     
-     public List<Area> getAreas2(){        
-        if(this.isSucursalSeleccionado){
-            return this.detallecontratoseleccionado.ge this.sucursalSeleccionado.getAreaList();
-        }else{
-            return null;
-        }
-    }
+//     public List<Area> getAreas2(){        
+//        if(this.isSucursalSeleccionado){
+//            return this.detallecontratoseleccionado.ge this.sucursalSeleccionado.getAreaList();
+//        }else{
+//            return null;
+//        }
+//    }
 
 }
