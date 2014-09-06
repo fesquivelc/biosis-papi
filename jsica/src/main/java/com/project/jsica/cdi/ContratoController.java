@@ -23,16 +23,17 @@ import javax.servlet.http.HttpServletRequest;
 @Named(value = "contratoController")
 @ViewScoped
 public class ContratoController extends AbstractController<Contrato> {
+
     private DetalleContrato detallecontratoseleccionado;
-    
+
     private Sucursal sucursalSeleccionado;
-    private boolean isSucursalSeleccionado;    
+    private boolean isSucursalSeleccionado;
     private Area areaSeleccionado;
     private boolean isAreaSeleccionado;
 
     @EJB
     private ContratoFacadeLocal contratoFacade;
-    
+
     @Inject
     private BitacoraController bitacoraC;
 
@@ -53,7 +54,7 @@ public class ContratoController extends AbstractController<Contrato> {
         // Inform the Abstract parent controller of the concrete Contrato?cap_first Entity
         super(Contrato.class);
     }
-    
+
     public DetalleContrato getDetallecontratoseleccionado() {
         return detallecontratoseleccionado;
     }
@@ -93,11 +94,6 @@ public class ContratoController extends AbstractController<Contrato> {
     public void setIsAreaSeleccionado(boolean isAreaSeleccionado) {
         this.isAreaSeleccionado = isAreaSeleccionado;
     }
-    
-    
-    
-    
-
 
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
@@ -125,9 +121,9 @@ public class ContratoController extends AbstractController<Contrato> {
     }
 
     /**
-     * Sets the "selected" attribute of the Contrato controller in order
-     * to display its data in a dialog. This is reusing existing the existing
-     * View dialog.
+     * Sets the "selected" attribute of the Contrato controller in order to
+     * display its data in a dialog. This is reusing existing the existing View
+     * dialog.
      *
      * @param event Event object for the widget that triggered an action
      */
@@ -198,7 +194,7 @@ public class ContratoController extends AbstractController<Contrato> {
             Date fechas = new Date();//           
             //Ip Cliente
             String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-            
+
             String fechaInicio = this.selected.getFechaInicio().toString();
             String fechaFin = this.selected.getFechaFin().toString();
             String codigo = this.selected.getCodigo();
@@ -223,32 +219,32 @@ public class ContratoController extends AbstractController<Contrato> {
             bitacora.setValorAct(fechaFin);
             bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
-            
+
             bitacora.setColumna("CODIGO");
             bitacora.setValorAct(codigo);
             bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
-            
+
             bitacora.setColumna("SUELDO_BASICO");
             bitacora.setValorAct(sueldoBasico);
             bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
-            
+
             bitacora.setColumna("CONDICION_LABORAL");
             bitacora.setValorAct(condicionLaboral);
             bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
-            
+
             bitacora.setColumna("REGIMEN_LABORAL");
             bitacora.setValorAct(regimenLaboral);
             bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
-            
+
             bitacora.setColumna("AÑO");
             bitacora.setValorAct(anio);
             bitacora.setValorAnt(" ");
             bitacoraC.edit(bitacora);
-            
+
             bitacora.setColumna("TIPO_CONTRATO");
             bitacora.setValorAct(tipoContrato);
             bitacora.setValorAnt(" ");
@@ -265,7 +261,7 @@ public class ContratoController extends AbstractController<Contrato> {
             String regimenLaboral1 = antes.getRegimenLaboralId().getNombre();
             String anio1 = antes.getAnioId().getNombre();
             String tipoContrato1 = antes.getTipoContratoId().getNombre();
-            
+
             //Datos despues de modificar
             String fechaInicio2 = this.selected.getFechaInicio().toString();
             String fechaFin2 = this.selected.getFechaFin().toString();
@@ -275,7 +271,7 @@ public class ContratoController extends AbstractController<Contrato> {
             String regimenLaboral2 = this.selected.getRegimenLaboralId().getNombre();
             String anio2 = this.selected.getAnioId().getNombre();
             String tipoContrato2 = this.selected.getTipoContratoId().getNombre();
-            
+
             //----Bitacora----
             Bitacora bitacora = new Bitacora();
             //Fecha y hora//          
@@ -283,7 +279,7 @@ public class ContratoController extends AbstractController<Contrato> {
 //           
             //Ip Cliente
             String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-            
+
             //Datos
             bitacora.setUsuario("JC");
             bitacora.setIpCliente(ip_cliente);
@@ -306,52 +302,52 @@ public class ContratoController extends AbstractController<Contrato> {
             if (!fechaFin1.equals(fechaFin2)) {
                 bitacoraC.edit(bitacora);
             }
-            
+
             bitacora.setColumna("CODIGO");
             bitacora.setValorAct(codigo2);
             bitacora.setValorAnt(codigo1);
-            
+
             if (!codigo1.equals(codigo2)) {
                 bitacoraC.edit(bitacora);
             }
-            
+
             bitacora.setColumna("SUELDO_BASICO");
             bitacora.setValorAct(sueldoBasico2);
             bitacora.setValorAnt(sueldoBasico1);
-            
+
             if (!sueldoBasico1.equals(sueldoBasico2)) {
                 bitacoraC.edit(bitacora);
             }
-            
+
             bitacora.setColumna("CONDICION_LABORAL");
             bitacora.setValorAct(condicionLaboral2);
             bitacora.setValorAnt(condicionLaboral1);
-            
-            if(!condicionLaboral1.equals(condicionLaboral2)) {
+
+            if (!condicionLaboral1.equals(condicionLaboral2)) {
                 bitacoraC.edit(bitacora);
             }
-            
+
             bitacora.setColumna("REGIMEN_LABORAL");
             bitacora.setValorAct(regimenLaboral2);
             bitacora.setValorAnt(regimenLaboral1);
-            
-            if(!regimenLaboral1.equals(regimenLaboral2)) {
+
+            if (!regimenLaboral1.equals(regimenLaboral2)) {
                 bitacoraC.edit(bitacora);
             }
-            
+
             bitacora.setColumna("AÑO");
             bitacora.setValorAct(anio2);
             bitacora.setValorAnt(anio1);
-            
-            if(!anio1.equals(anio2)) {
+
+            if (!anio1.equals(anio2)) {
                 bitacoraC.edit(bitacora);
             }
-            
+
             bitacora.setColumna("TIPO_CONTRATO");
             bitacora.setValorAct(tipoContrato2);
             bitacora.setValorAnt(tipoContrato1);
-            
-            if(!tipoContrato1.equals(tipoContrato2)) {
+
+            if (!tipoContrato1.equals(tipoContrato2)) {
                 bitacoraC.edit(bitacora);
             }
         }
@@ -359,6 +355,70 @@ public class ContratoController extends AbstractController<Contrato> {
 
     @Override
     protected void remove(Contrato objeto) {
+        Contrato antes = this.find(this.selected.getId());
+        String fechaInicio1 = antes.getFechaInicio().toString();
+        String fechaFin1 = antes.getFechaFin().toString();
+        String codigo1 = antes.getCodigo();
+        String sueldoBasico1 = antes.getSueldoBasico().toString();
+        String condicionLaboral1 = antes.getCondicionLaboralId().getNombre();
+        String regimenLaboral1 = antes.getRegimenLaboralId().getNombre();
+        String anio1 = antes.getAnioId().getNombre();
+        String tipoContrato1 = antes.getTipoContratoId().getNombre();
+
+        //Fecha y hora//          
+        Date fechas = new Date();
+//           
+        //Ip Cliente
+        String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+
+        Bitacora bitacora = new Bitacora();
+
+        bitacora.setUsuario("JC");
+        bitacora.setIpCliente(ip_cliente);
+        bitacora.setFecha(fechas);
+        bitacora.setHora(fechas);
+        bitacora.setTabla("CONTRATO");
+        bitacora.setColumna("FECHA_INICIO");
+        bitacora.setAccion("ELIMINAR");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(fechaInicio1);
+        bitacoraC.edit(bitacora);
+
+        bitacora.setColumna("FECHA_FIN");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(fechaFin1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("CODIGO");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(codigo1);
+        bitacoraC.edit(bitacora);
+
+        bitacora.setColumna("SUELDO_BASICO");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(sueldoBasico1);
+        bitacoraC.edit(bitacora);        
+
+        bitacora.setColumna("CONDICION_LABORAL");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(condicionLaboral1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("REGIMEN_LABORAL");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(regimenLaboral1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("AÑO");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(anio1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("TIPO_CONTRATO");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(tipoContrato1);
+        bitacoraC.edit(bitacora);
+
         this.contratoFacade.remove(objeto);
     }
 
@@ -386,7 +446,7 @@ public class ContratoController extends AbstractController<Contrato> {
     public List<Contrato> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
         return this.contratoFacade.search(namedQuery, parametros, inicio, tamanio);
     }
-    
+
     @Override
     public Contrato prepareCreate(ActionEvent event) {
         Contrato contrato = new Contrato();
@@ -398,36 +458,35 @@ public class ContratoController extends AbstractController<Contrato> {
         this.setSelected(contrato);
         return contrato;
     }
-    
-     
-    public void onSucursalSeleccionado(){
-        if(this.sucursalSeleccionado!= null){           
-            if(this.sucursalSeleccionado.getId() !=0){
+
+    public void onSucursalSeleccionado() {
+        if (this.sucursalSeleccionado != null) {
+            if (this.sucursalSeleccionado.getId() != 0) {
                 this.isSucursalSeleccionado = true;
                 return;
             }
         }
-        this.isSucursalSeleccionado= false;       
-    }  
-    
-    public void onSucursalSeleccionado2(){
-        if(this.detallecontratoseleccionado.getAreaId().getSucursalId()!= null){           
-            if(this.detallecontratoseleccionado.getAreaId().getSucursalId().getId() !=0){
+        this.isSucursalSeleccionado = false;
+    }
+
+    public void onSucursalSeleccionado2() {
+        if (this.detallecontratoseleccionado.getAreaId().getSucursalId() != null) {
+            if (this.detallecontratoseleccionado.getAreaId().getSucursalId().getId() != 0) {
                 this.isSucursalSeleccionado = true;
                 return;
             }
         }
-        this.isSucursalSeleccionado= false;       
-    }  
-        
-    public List<Area> getAreas(){        
-        if(this.isSucursalSeleccionado){
+        this.isSucursalSeleccionado = false;
+    }
+
+    public List<Area> getAreas() {
+        if (this.isSucursalSeleccionado) {
             return this.sucursalSeleccionado.getAreaList();
-        }else{
+        } else {
             return null;
         }
     }
-    
+
 //     public List<Area> getAreas2(){        
 //        if(this.isSucursalSeleccionado){
 //            return this.detallecontratoseleccionado.ge this.sucursalSeleccionado.getAreaList();
@@ -435,5 +494,4 @@ public class ContratoController extends AbstractController<Contrato> {
 //            return null;
 //        }
 //    }
-
 }
