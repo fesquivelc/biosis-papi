@@ -43,6 +43,12 @@
                                 <p:outputLabel value="#{myBundle.CreateFichaLaboralEmpleadoLabel_tipoEmpleadoId}" />
                                 <h:outputText value="#{empleadoController.selected.fichaLaboral.tipoEmpleadoId.nombre}"/>
                                 
+                                <h:outputText value="#{myBundle.ViewAreaLabel_sucursalId}"/>
+                                <h:outputText value="#{empleadoController.selected.sucursal.nombre}"/>
+                                
+                                <h:outputText value="#{myBundle.ViewDetalleContratoLabel_areaId}"/>
+                                <h:outputText value="#{empleadoController.selected.area.nombre}"/>
+                                
                                 <h:outputText value="#{myBundle.ViewEmpleadoLabel_servicioId}"/>
                                 <h:outputText value="#{empleadoController.selected.servicioId.nombre}"/>
                             </p:panelGrid>
