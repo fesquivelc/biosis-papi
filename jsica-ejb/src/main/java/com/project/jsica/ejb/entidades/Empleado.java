@@ -209,6 +209,16 @@ public class Empleado implements Serializable {
          return this.apellidos + " " + this.nombres + " - DNI:" + this.docIdentidad;
     }
     
+    public Sucursal getSucursal(){
+        Sucursal sucursal = this.detalleContratoList.get(0).getAreaId().getSucursalId();
+        return sucursal;
+    }
+    
+    public Area getArea(){
+        Area area = this.detalleContratoList.get(0).getAreaId();
+        return area;
+    }
+    
     public FichaGeneralEmpleado getFicha(){
         return this.fichaGeneralEmpleadoList.get(0);
     }
