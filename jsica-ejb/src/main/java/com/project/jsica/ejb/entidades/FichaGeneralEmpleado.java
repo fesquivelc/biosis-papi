@@ -143,7 +143,7 @@ public class FichaGeneralEmpleado implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email.toUpperCase();
+        this.email = email;
     }
 
     public Empleado getEmpleadoId() {
