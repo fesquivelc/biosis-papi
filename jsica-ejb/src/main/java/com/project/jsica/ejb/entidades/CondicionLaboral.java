@@ -43,7 +43,8 @@ public class CondicionLaboral implements Serializable {
     private Long id;
     @Basic(optional = false)
     @NotNull
-    private int codigo;
+    @Size(min = 1, max = 45)
+    private String codigo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -58,7 +59,7 @@ public class CondicionLaboral implements Serializable {
         this.id = id;
     }
 
-    public CondicionLaboral(Long id, int codigo, String nombre) {
+    public CondicionLaboral(Long id, String codigo, String nombre) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
@@ -72,11 +73,11 @@ public class CondicionLaboral implements Serializable {
         this.id = id;
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
