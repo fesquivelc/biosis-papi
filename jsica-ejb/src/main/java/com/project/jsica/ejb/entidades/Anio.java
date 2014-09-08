@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -43,6 +44,7 @@ public class Anio implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 4)
+    @Column(unique = true)
     private String anio;
     @Basic(optional = false)
     @NotNull
