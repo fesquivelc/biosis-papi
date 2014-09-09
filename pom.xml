@@ -30,7 +30,7 @@
     <module>jsica-ear</module>
     <module>jsica</module>
     <module>jsica-ejb</module>
-  </modules>
+    </modules>
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
