@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -21,7 +22,8 @@ import javax.persistence.Query;
 public abstract class AbstractFacade<T> {
     protected static final String jsica_PU = "jsica-postgresql-PU";
     //private static final Logger log = Logger.getLogger(AbstractFacade.class.getClass());
-    
+    @EJB
+    private UtilitarioAsistenciaLocal utilitarioAsistencia;
     private Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
@@ -34,10 +36,11 @@ public abstract class AbstractFacade<T> {
         //log.info("CREAR FACADE");
         //Logger.getLogger(entity.getClass()).log(Level.INFO, "hola mundillo");
         getEntityManager().persist(entity);
+        
     }
 
     public void edit(T entity) {
-        getEntityManager().merge(entity);        
+        getEntityManager().merge(entity);          
         
     }
     private static final java.util.logging.Logger LOG = java.util.logging.Logger.getLogger(AbstractFacade.class.getName());
