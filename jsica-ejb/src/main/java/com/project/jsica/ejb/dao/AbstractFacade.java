@@ -6,13 +6,14 @@
 
 package com.project.jsica.ejb.dao;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 
 /**
  *
@@ -21,7 +22,8 @@ import org.apache.log4j.Priority;
 public abstract class AbstractFacade<T> {
     protected static final String jsica_PU = "jsica-postgresql-PU";
     //private static final Logger log = Logger.getLogger(AbstractFacade.class.getClass());
-    
+    @EJB
+    private UtilitarioAsistenciaLocal utilitarioAsistencia;
     private Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
@@ -34,11 +36,14 @@ public abstract class AbstractFacade<T> {
         //log.info("CREAR FACADE");
         //Logger.getLogger(entity.getClass()).log(Level.INFO, "hola mundillo");
         getEntityManager().persist(entity);
+        
     }
 
     public void edit(T entity) {
-        getEntityManager().merge(entity);
+        getEntityManager().merge(entity);          
+        
     }
+    private static final java.util.logging.Logger LOG = java.util.logging.Logger.getLogger(AbstractFacade.class.getName());
 
     public void remove(T entity) {
         getEntityManager().remove(getEntityManager().merge(entity));
@@ -51,6 +56,18 @@ public abstract class AbstractFacade<T> {
     public List<T> findAll() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
+        
+        File file = new File("hola.properties");
+        String ruta = "";
+        try {
+            file.createNewFile();
+            ruta = file.getAbsolutePath();
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(AbstractFacade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        LOG.log(Level.INFO, ruta);
+        
+        
         return getEntityManager().createQuery(cq).getResultList();
     }
 

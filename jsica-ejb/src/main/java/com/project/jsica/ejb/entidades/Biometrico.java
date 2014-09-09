@@ -46,6 +46,7 @@ public class Biometrico implements Serializable {
     @Size(max = 45)
     private String ipv4;
     @Size(max = 45)
+    @Basic(optional = true)
     private String ipv6;
     @Basic(optional = false)
     @NotNull

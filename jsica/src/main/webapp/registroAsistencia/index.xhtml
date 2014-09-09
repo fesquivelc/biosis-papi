@@ -11,14 +11,49 @@
     </ui:define>
 
     <ui:define name="body">
+        
+        <p:tabView id="tabOpciones">
+            <p:tab title="Lista de Asistencias">
+                            <ui:include src="/registroAsistencia/List.xhtml"/>
 
-        <ui:include src="/registroAsistencia/List.xhtml"/>
+            </p:tab>
+            <p:tab title="BUSQUEDA">
+                <h:form id="frmAsignacionEmpleado">
+                    <p:panel header="Búsqueda de Asistencias">
+                        <p:panelGrid columnClasses="column" columns="2">
+                           <p:outputLabel value="Empleado:" for="empleadoBuscado"/>                           
+                            <p:autoComplete id="empleadoBuscado" value="#{registroAsistenciaController.selected.empleadoId}" completeMethod="#{empleadoController.metodo}"
+                                                var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="70" required="true"/>
+                             
+                            
+                            <p:outputLabel value="De:" for="fechaInicio"/>
+                            <p:inputMask id="fechaInicio" value="#{registroAsistenciaController.selected.fecha}" mask="99/99/9999" title="#{myBundle.CreatePermisoTitle_fechaInicio}">  
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:inputMask>
+                            
+                            <p:outputLabel value="Hasta:" for="fechaFin"/>
+                            <p:inputMask id="fechaFin" value="#{registroAsistenciaController.selected.fecha}" mask="99/99/9999" title="#{myBundle.CreatePermisoTitle_fechaFin}">  
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:inputMask>
+
+                            
+                        </p:panelGrid>
+                        
+                        
+                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{registroAsistenciaController.prepareCreate}"  update=":RegistroAsistenciaCreateForm" oncomplete="PF('RegistroAsistenciaCreateDialog').show()"/>
+                        
+                    </p:panel>
+                </h:form>
+            </p:tab>
+        </p:tabView>
+        
+       
         <ui:include src="/registroAsistencia/View.xhtml"/>
         <ui:include src="/registroAsistencia/Edit.xhtml"/>
         <ui:include src="/registroAsistencia/Create.xhtml"/>
         <ui:include src="/empleado/View.xhtml"/>
         <ui:include src="/biometrico/View.xhtml"/>
-
+      
     </ui:define>
-
+ 
 </ui:composition>
