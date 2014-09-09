@@ -6,6 +6,7 @@
 
 package com.project.jsica.ejb.dao;
 
+import java.util.Date;
 import javax.ejb.Local;
 
 /**
@@ -16,5 +17,13 @@ import javax.ejb.Local;
 public interface UtilitarioAsistenciaLocal {
 
     void crearEspejo();
+
+    Date getFechaPartida();
+
+    Date getFechaLlegada();
+
+    Date getHoraPartida();
+
+    Date getHoraLlegada();
     
 }
