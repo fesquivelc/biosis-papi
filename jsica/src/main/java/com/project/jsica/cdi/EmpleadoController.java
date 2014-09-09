@@ -481,7 +481,7 @@ public class EmpleadoController extends AbstractController<Empleado> {
         } else {
             //Datos antes de modificar
             Empleado antes = this.find(this.selected.getId());
-            
+
             String nombres1 = antes.getNombres();
             String apellidos1 = antes.getApellidos();
             String doc1 = antes.getDocIdentidad();
@@ -492,7 +492,7 @@ public class EmpleadoController extends AbstractController<Empleado> {
             String foto1 = antes.getFoto();
             String jefe1 = antes.getEmpleadoId().getNombres() + antes.getEmpleadoId().getApellidos();
             String servicio1 = antes.getServicioId().getNombre();
-            
+
             //Datos despues de modificar
             String nombres2 = this.selected.getNombres();
             String apellidos2 = this.selected.getApellidos();
@@ -583,7 +583,7 @@ public class EmpleadoController extends AbstractController<Empleado> {
             if (!foto1.equals(foto2)) {
                 bitacoraC.edit(bitacora);
             }
-            
+
             bitacora.setColumna("EMPLEADO_ID");
             bitacora.setValorAct(jefe2);
             bitacora.setValorAnt(jefe1);
@@ -591,7 +591,7 @@ public class EmpleadoController extends AbstractController<Empleado> {
             if (!jefe1.equals(jefe2)) {
                 bitacoraC.edit(bitacora);
             }
-            
+
             bitacora.setColumna("SERVICIO_ID");
             bitacora.setValorAct(servicio2);
             bitacora.setValorAnt(servicio1);
@@ -605,6 +605,83 @@ public class EmpleadoController extends AbstractController<Empleado> {
     @Override
     protected void remove(Empleado objeto) {
         this.empleadoFacade.remove(objeto);
+
+        Empleado antes = this.find(this.selected.getId());
+
+        String nombres1 = antes.getNombres();
+        String apellidos1 = antes.getApellidos();
+        String doc1 = antes.getDocIdentidad();
+        String fechaNacimiento1 = antes.getFechaNacimiento().toString();
+        String situacionTrabajador1 = antes.getSituacionTrabajador();
+        String sexo1 = antes.getSexo().toString();
+        String grupoHorario1 = antes.getGrupoHorarioId().getNombre();
+        String foto1 = antes.getFoto();
+        String jefe1 = antes.getEmpleadoId().getNombres() + antes.getEmpleadoId().getApellidos();
+        String servicio1 = antes.getServicioId().getNombre();
+
+        Bitacora bitacora = new Bitacora();
+        //Fecha y hora//          
+        Date fechas = new Date();
+//           
+        //Ip Cliente
+        String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+
+        bitacora.setUsuario("JC");
+        bitacora.setIpCliente(ip_cliente);
+        bitacora.setFecha(fechas);
+        bitacora.setHora(fechas);
+        bitacora.setTabla("EMPLEADO");
+        bitacora.setColumna("NOMBRES");
+        bitacora.setAccion("ELIMINAR");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(nombres1);
+        bitacoraC.edit(bitacora);
+
+        bitacora.setColumna("APELLIDOS");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(apellidos1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("DOC_IDENTIDAD");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(doc1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("FECHA_NACIMIENTO");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(fechaNacimiento1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("SITUACION_TRABAJADOR");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(situacionTrabajador1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("SEXO");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(sexo1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("GRUPO_HORARIO_ID");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(grupoHorario1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("FOTO");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(foto1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("EMPLEADO_ID");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(jefe1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("SERVICIO_ID");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(servicio1);
+        bitacoraC.edit(bitacora);
+        
     }
 
     @Override
