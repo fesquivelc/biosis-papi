@@ -140,8 +140,8 @@ public class Jornada implements Serializable {
     public void setAsistencial(boolean asistencial) {
         this.asistencial = asistencial;
     }
-    
-    public Servicio getServicioId() {
+
+     public Servicio getServicioId() {
         return servicioId;
     }
 
