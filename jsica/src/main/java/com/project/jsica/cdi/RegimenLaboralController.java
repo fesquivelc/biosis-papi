@@ -16,6 +16,10 @@ import javax.inject.Inject;
 public class RegimenLaboralController extends AbstractController<RegimenLaboral> {
     @EJB
     private RegimenLaboralFacadeLocal regimenLaboralFacade;
+    
+    @Inject
+    private BitacoraController bitacoraC;
+    
     @Inject
     private ContratoController contratoListController;
 
@@ -47,6 +51,8 @@ public class RegimenLaboralController extends AbstractController<RegimenLaboral>
     @Override
     protected void edit(RegimenLaboral objeto) {
         this.regimenLaboralFacade.edit(objeto);
+        
+        
     }
 
     @Override

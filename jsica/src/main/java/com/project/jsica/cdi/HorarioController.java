@@ -267,6 +267,16 @@ public class HorarioController extends AbstractController<Horario> {
 
             //Datos despues de modificar
             String nombre2 = this.selected.getNombre();
+            String descripcion2 = this.selected.getDescripcion();
+            String porFecha2 = String.valueOf(this.selected.getPorFecha());
+            String fecha2 = this.selected.getFecha().toString();
+            String lunes2 = String.valueOf(this.selected.getLunes());
+            String martes2 = String.valueOf(this.selected.getMartes());
+            String miercoles2 = String.valueOf(this.selected.getMiercoles());
+            String jueves2 = String.valueOf(this.selected.getJueves());
+            String viernes2 = String.valueOf(this.selected.getViernes());
+            String sabado2 = String.valueOf(this.selected.getSabado());
+            String domingo2 = String.valueOf(this.selected.getDomingo());
 
             //----Bitacora----
             Bitacora bitacora = new Bitacora();
@@ -290,12 +300,177 @@ public class HorarioController extends AbstractController<Horario> {
             if (!nombre1.equals(nombre2)) {
                 bitacoraC.edit(bitacora);
             }
+
+            bitacora.setColumna("DESCRIPCION");
+            bitacora.setValorAct(descripcion2);
+            bitacora.setValorAnt(descripcion1);
+
+            if (!descripcion1.equals(descripcion2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("POR_FECHA");
+            bitacora.setValorAct(porFecha2);
+            bitacora.setValorAnt(porFecha1);
+
+            if (!porFecha1.equals(porFecha2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("FECHA");
+            bitacora.setValorAct(fecha2);
+            bitacora.setValorAnt(fecha1);
+
+            if (!fecha1.equals(fecha2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("LUNES");
+            bitacora.setValorAct(lunes2);
+            bitacora.setValorAnt(lunes1);
+
+            if (!lunes1.equals(lunes2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("MARTES");
+            bitacora.setValorAct(martes2);
+            bitacora.setValorAnt(martes1);
+
+            if (!martes1.equals(martes2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("MIERCOLES");
+            bitacora.setValorAct(miercoles2);
+            bitacora.setValorAnt(miercoles1);
+
+            if (!miercoles1.equals(miercoles2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("JUEVES");
+            bitacora.setValorAct(jueves2);
+            bitacora.setValorAnt(jueves1);
+
+            if (!jueves1.equals(jueves2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("VIERNES");
+            bitacora.setValorAct(viernes2);
+            bitacora.setValorAnt(viernes1);
+
+            if (!viernes1.equals(viernes2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("SABADO");
+            bitacora.setValorAct(sabado2);
+            bitacora.setValorAnt(sabado1);
+
+            if (!sabado1.equals(sabado2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("DOMINGO");
+            bitacora.setValorAct(domingo2);
+            bitacora.setValorAnt(domingo1);
+
+            if (!domingo1.equals(domingo2)) {
+                bitacoraC.edit(bitacora);
+            }
         }
     }
 
     @Override
     protected void remove(Horario objeto) {
         this.horarioFacade.remove(objeto);
+
+        //Datos antes de modificar
+        Horario antes = this.find(this.selected.getId());
+
+        String nombre1 = antes.getNombre();
+        String descripcion1 = antes.getDescripcion();
+        String porFecha1 = String.valueOf(antes.getPorFecha());
+        String fecha1 = antes.getFecha().toString();
+        String lunes1 = String.valueOf(antes.getLunes());
+        String martes1 = String.valueOf(antes.getMartes());
+        String miercoles1 = String.valueOf(antes.getMiercoles());
+        String jueves1 = String.valueOf(antes.getJueves());
+        String viernes1 = String.valueOf(antes.getViernes());
+        String sabado1 = String.valueOf(antes.getSabado());
+        String domingo1 = String.valueOf(antes.getDomingo());
+
+        //----Bitacora----
+        Bitacora bitacora = new Bitacora();
+        //Fecha y hora//          
+        Date fechas = new Date();
+//           
+        //Ip Cliente
+        String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+
+        //Datos
+        bitacora.setUsuario("JC");
+        bitacora.setIpCliente(ip_cliente);
+        bitacora.setFecha(fechas);
+        bitacora.setHora(fechas);
+        bitacora.setTabla("HORARIO");
+        bitacora.setColumna("NOMBRE");
+        bitacora.setAccion("ELIMINAR");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(nombre1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("DESCRIPCION");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(descripcion1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("POR_FECHA");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(porFecha1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("FECHA");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(fecha1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("LUNES");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(lunes1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("MARTES");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(martes1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("MIERCOLES");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(miercoles1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("JUEVES");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(jueves1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("VIERNES");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(viernes1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("SABADO");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(sabado1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("DOMINGO");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(domingo1);
+        bitacoraC.edit(bitacora);        
     }
 
     @Override

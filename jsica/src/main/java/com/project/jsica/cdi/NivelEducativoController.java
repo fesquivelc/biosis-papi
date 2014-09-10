@@ -1,21 +1,29 @@
 package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.NivelEducativoFacadeLocal;
+import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.NivelEducativo;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 @Named(value = "nivelEducativoController")
 @ViewScoped
 public class NivelEducativoController extends AbstractController<NivelEducativo> {
+
     @EJB
     private NivelEducativoFacadeLocal nivelEducativoFacade;
+
+    @Inject
+    private BitacoraController bitacoraC;
+
     @Inject
     private FichaGeneralEmpleadoController fichaGeneralEmpleadoListController;
 
@@ -47,11 +55,89 @@ public class NivelEducativoController extends AbstractController<NivelEducativo>
     @Override
     protected void edit(NivelEducativo objeto) {
         this.nivelEducativoFacade.edit(objeto);
+
+        if (this.esNuevo) {
+            Bitacora bitacora = new Bitacora();
+            //----Bitacora----
+            //Fecha y hora//          
+            Date fechas = new Date();//           
+            //Ip Cliente
+            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+
+            String nombre = this.selected.getNombre();
+
+            bitacora.setUsuario("JC");
+            bitacora.setIpCliente(ip_cliente);
+            bitacora.setFecha(fechas);
+            bitacora.setHora(fechas);
+            bitacora.setTabla("NIVEL_EDUCATIVO");
+            bitacora.setColumna("NOMBRE");
+            bitacora.setAccion("CREAR");
+            bitacora.setValorAct(nombre);
+            bitacora.setValorAnt(" ");
+            bitacoraC.edit(bitacora);
+        } else {
+            //Datos antes de modificar
+            NivelEducativo antes = this.find(this.selected.getId());
+
+            String nombre1 = antes.getNombre();
+
+            //Datos despues de modificar
+            String nombre2 = this.selected.getNombre();
+
+            //----Bitacora----
+            Bitacora bitacora = new Bitacora();
+            //Fecha y hora//          
+            Date fechas = new Date();
+//           
+            //Ip Cliente
+            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+
+            //Datos
+            bitacora.setUsuario("JC");
+            bitacora.setIpCliente(ip_cliente);
+            bitacora.setFecha(fechas);
+            bitacora.setHora(fechas);
+            bitacora.setTabla("NIVEL_EDUCATIVO");
+            bitacora.setColumna("NOMBRE");
+            bitacora.setAccion("MODIFICAR");
+            bitacora.setValorAct(nombre2);
+            bitacora.setValorAnt(nombre1);
+
+            if (!nombre1.equals(nombre2)) {
+                bitacoraC.edit(bitacora);
+            }
+        }
     }
 
     @Override
     protected void remove(NivelEducativo objeto) {
         this.nivelEducativoFacade.remove(objeto);
+
+        //Datos antes de modificar
+        NivelEducativo antes = this.find(this.selected.getId());
+
+        String nombre1 = antes.getNombre();
+
+        //----Bitacora----
+        Bitacora bitacora = new Bitacora();
+        //Fecha y hora//          
+        Date fechas = new Date();
+//           
+        //Ip Cliente
+        String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+
+        //Datos
+        bitacora.setUsuario("JC");
+        bitacora.setIpCliente(ip_cliente);
+        bitacora.setFecha(fechas);
+        bitacora.setHora(fechas);
+        bitacora.setTabla("NIVEL_EDUCATIVO");
+        bitacora.setColumna("NOMBRE");
+        bitacora.setAccion("ELIMINAR");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(nombre1);
+        bitacoraC.edit(bitacora);        
     }
 
     @Override

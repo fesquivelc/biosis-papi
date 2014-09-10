@@ -61,6 +61,29 @@ public class CambioTurno implements Serializable {
     @JoinColumn(name = "jefe_inmediato_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Empleado jefeInmediatoId;
+    
+    @JoinColumn(name = "empleado2_id", referencedColumnName = "id")
+    @ManyToOne
+    private Empleado empleado2Id;
+    @JoinColumn(name = "empleado1_id", referencedColumnName = "id")
+    @ManyToOne
+    private Empleado empleado1Id;
+
+    public Empleado getEmpleado2Id() {
+        return empleado2Id;
+    }
+
+    public void setEmpleado2Id(Empleado empleado2Id) {
+        this.empleado2Id = empleado2Id;
+    }
+
+    public Empleado getEmpleado1Id() {
+        return empleado1Id;
+    }
+
+    public void setEmpleado1Id(Empleado empleado1Id) {
+        this.empleado1Id = empleado1Id;
+    }
 
     public CambioTurno() {
     }

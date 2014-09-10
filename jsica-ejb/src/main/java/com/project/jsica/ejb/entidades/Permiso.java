@@ -74,6 +74,16 @@ public class Permiso implements Serializable {
     private MotivoPermiso motivoPermisoCodigo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "permisoId")
     private List<EmpleadoPermiso> empleadoPermisoList;
+    @OneToMany(mappedBy = "permisoId")
+    private List<RegistroAsistencia> registroList;
+
+    public List<RegistroAsistencia> getRegistroList() {
+        return registroList;
+    }
+
+    public void setRegistroList(List<RegistroAsistencia> registroList) {
+        this.registroList = registroList;
+    }
 
     public Permiso() {
     }
