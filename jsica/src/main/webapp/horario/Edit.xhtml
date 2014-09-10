@@ -51,7 +51,7 @@
                         <p:outputLabel value="#{myBundle.EditHorarioLabel_porFecha}" for="porFecha" />
                         <p:selectBooleanCheckbox id="porFecha" value="#{horarioController.selected.porFecha}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_porFecha}"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{horarioController.save}" value="#{myBundle.Save}" update="display,:HorarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('HorarioEditDialog'));">
+                    <p:commandButton actionListener="#{horarioController.save}" value="#{myBundle.Save}" update="display,:tabOpciones:HorarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('HorarioEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="PF('HorarioEditDialog').hide()"/>
