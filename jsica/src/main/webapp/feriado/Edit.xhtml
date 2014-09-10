@@ -18,12 +18,12 @@
                         <p:outputLabel value="#{myBundle.EditFeriadoLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{feriadoController.selected.nombre}" title="#{myBundle.EditFeriadoTitle_nombre}" size="45" maxlength="45"/>
 
-                        <p:outputLabel value="#{myBundle.CreateFeriadoLabel_fecha}" for="fechaInicio" />
+                        <p:outputLabel value="#{myBundle.CreateFeriadoLabel_fechaInicio}" for="fechaInicio" />
                         <p:inputMask id="fechaInicio" value="#{feriadoController.selected.fechaInicio}" mask="99/99/9999" title="#{myBundle.CreateFeriadoTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateFeriadoRequiredMessage_fecha}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:inputMask>   
                         
-                        <p:outputLabel value="#{myBundle.CreateFeriadoLabel_fecha}" for="fechaFin" />
+                        <p:outputLabel value="#{myBundle.CreateFeriadoLabel_fechaFin}" for="fechaFin" />
                         <p:inputMask id="fechaFin" value="#{feriadoController.selected.fechaFin}" mask="99/99/9999" title="#{myBundle.CreateFeriadoTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateFeriadoRequiredMessage_fecha}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:inputMask> 
