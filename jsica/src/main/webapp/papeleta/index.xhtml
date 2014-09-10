@@ -11,8 +11,69 @@
     </ui:define>
 
     <ui:define name="body">
+        
+        <p:tabView id="tabOpciones">
+            <p:tab title="Lista de Papeletas">
+                           <ui:include src="/papeleta/List.xhtml"/>
 
-        <ui:include src="/papeleta/List.xhtml"/>
+            </p:tab>
+            <p:tab title="ASIGNACION">
+                <h:form id="frmAsignacionEmpleado">
+                    <p:panel header="Seleccion de empleado">
+                        <p:panelGrid columnClasses="column" columns="2">
+                            <p:outputLabel value="Departamento / Área:" for="cboDepartamentos"/>
+
+                            <p:selectOneMenu id="cboDepartamentos" value="#{papeletaController.departamentoSeleccionado}" converter="areaConverter"  >
+                                <p:ajax listener="#{papeletaController.onDepartamentoSeleccionado}" update="cboServicios"/>                                
+                                <f:selectItem itemLabel="Seleccionar departamento / área" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{areaController.items}" var="departamento" itemLabel="#{departamento.nombre}" itemValue="#{departamento}"  />
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Servicio / Oficina:" for="cboServicios"/>
+
+                            <p:selectOneMenu id="cboServicios" value="#{papeletaController.servicioSeleccionado}" converter="servicioConverter" >
+                                <p:ajax listener="#{papeletaController.onServicioSeleccionado}" update="btnCargarEmpleados"/>
+                                <f:selectItem itemLabel="Seleccionar servicio / oficina" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{papeletaController.servicios}" var="servicio" itemLabel="#{servicio.nombre}" itemValue="#{servicio}"  />
+                            </p:selectOneMenu>
+
+                            <p:commandButton id="btnCargarEmpleados" value="Cargar" update="listaEmpleados" icon="ui-icon-search" disabled="#{empty papeletaController.servicioSeleccionado}"/>
+                        </p:panelGrid>
+
+                        <p:dataTable id="listaEmpleados"
+                                     value="#{papeletaController.empleados}"
+                                     var="empleado"
+                                     rowKey="#{empleado.id}"
+                                     paginator="true"
+                                     rows="15"
+                                     rowsPerPageTemplate="10,20,30,40,50"
+                                     selectionMode="single"
+                                     selection="#{permisoController.empleadoSeleccionado}">
+                            <p:ajax event="rowSelect" update=":tabOpciones:frmAsignacionEmpleado:createButton" listener="#{papeletaController.resetParents()}"/>
+                            <p:ajax event="rowUnselect" update=":tabOpciones:frmAsignacionEmpleado:createButton" listener="#{papeletaController.resetParents()}"/>         
+                        
+                            <p:column filterBy="#{empleado.docIdentidad}">
+                                <f:facet name="header">
+                                    <h:outputText value="Nro Documento"/>
+                                </f:facet>
+                                <h:outputText value="#{empleado.docIdentidad}"/>
+                            </p:column>
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>
+                                <h:outputText value="#{empleado.apellidos} #{empleado.nombres}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{permisoController.prepareCreate}" disabled="#{empty permisoController.empleadoSeleccionado}" update=":PapeletaCreateForm" oncomplete="PF('PapeletaCreateDialog').show()"/>
+                        
+                    </p:panel>
+                </h:form>
+            </p:tab>
+        </p:tabView>
+        
+       
         <ui:include src="/papeleta/View.xhtml"/>
         <ui:include src="/papeleta/Edit.xhtml"/>
         <ui:include src="/papeleta/Create.xhtml"/>
