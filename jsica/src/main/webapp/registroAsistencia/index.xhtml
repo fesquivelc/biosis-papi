@@ -42,17 +42,15 @@
                             id="listaMarcaciones"
                             value="#{registroAsistenciaController.registrosAsistencia}"
                             var="registro"
+                            paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                             paginator="true"
                             rowKey="#{registro.id}"
                             rows="15"
                             rowsPerPageTemplate="10,20,30,40,50"
                             selectionMode="single"
+                             style="margin-bottom:20px"
                             selection="#{registroAsistenciaController.selected}">
-                            <f:facet name="{Exporters}">
-                                <h:commandLink>
-                                    <p:graphicImage name=""
-                                </h:commandLink>
-                            </f:facet>
+                     
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Fecha Marcación"/>
@@ -78,8 +76,12 @@
                         </p:dataTable>
                         
                         <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{registroAsistenciaController.prepareCreate}"  update=":RegistroAsistenciaCreateForm" oncomplete="PF('RegistroAsistenciaCreateDialog').show()"/>
-                        
+                        <h:commandLink>
+                                    <h:outputText value="Descargar Excel"/>
+                                    <p:dataExporter type="xls" target="listaMarcaciones" fileName="Reporte para Empleado - Asistencias" />
+                        </h:commandLink>
                     </p:panel>
+                    
                 </h:form>
             </p:tab>
         </p:tabView>
