@@ -1,21 +1,29 @@
 package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.PermisoFacadeLocal;
+import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.Permiso;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 @Named(value = "permisoController")
 @ViewScoped
 public class PermisoController extends AbstractController<Permiso> {
+
     @EJB
     private PermisoFacadeLocal permisoFacade;
+
+    @Inject
+    private BitacoraController bitacoraC;
+
     @Inject
     private MotivoPermisoController motivoPermisoCodigoController;
     @Inject
@@ -63,11 +71,207 @@ public class PermisoController extends AbstractController<Permiso> {
     @Override
     protected void edit(Permiso objeto) {
         this.permisoFacade.edit(objeto);
+
+        if (this.esNuevo) {
+            Bitacora bitacora = new Bitacora();
+            //----Bitacora----
+            //Fecha y hora//          
+            Date fechas = new Date();//           
+            //Ip Cliente
+            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+
+            String horaInicio = this.selected.getHoraInicio().toString();
+            String horaFin = this.selected.getHoraFin().toString();
+            String fechaInicio = this.selected.getFechaInicio().toString();
+            String fechaFin = this.selected.getFechaFin().toString();
+            String tipo = this.selected.getTipo();
+            String porFecha = String.valueOf(this.selected.getPorFecha());
+            String motivoPermisoCodigo = this.selected.getMotivoPermisoCodigo().toString();
+
+            bitacora.setUsuario("JC");
+            bitacora.setIpCliente(ip_cliente);
+            bitacora.setFecha(fechas);
+            bitacora.setHora(fechas);
+            bitacora.setTabla("PERMISO");
+            bitacora.setColumna("HORA_INICIO");
+            bitacora.setAccion("CREAR");
+            bitacora.setValorAct(horaInicio);
+            bitacora.setValorAnt(" ");
+            bitacoraC.edit(bitacora);
+
+            bitacora.setColumna("HORA_FIN");
+            bitacora.setValorAct(horaFin);
+            bitacoraC.edit(bitacora);
+
+            bitacora.setColumna("FECHA_INICIO");
+            bitacora.setValorAct(fechaInicio);
+            bitacoraC.edit(bitacora);
+
+            bitacora.setColumna("FECHA_FIN");
+            bitacora.setValorAct(fechaFin);
+            bitacoraC.edit(bitacora);
+
+            bitacora.setColumna("TIPO");
+            bitacora.setValorAct(tipo);
+            bitacoraC.edit(bitacora);
+
+            bitacora.setColumna("POR_FECHA");
+            bitacora.setValorAct(porFecha);
+            bitacoraC.edit(bitacora);
+
+            bitacora.setColumna("MOTIVO_PERMISO_CODIGO");
+            bitacora.setValorAct(motivoPermisoCodigo);
+            bitacoraC.edit(bitacora);
+        } else {
+            //Datos antes de modificar
+            Permiso antes = this.find(this.selected.getId());
+
+            String horaInicio1 = antes.getHoraInicio().toString();
+            String horaFin1 = antes.getHoraFin().toString();
+            String fechaInicio1 = antes.getFechaInicio().toString();
+            String fechaFin1 = antes.getFechaFin().toString();
+            String tipo1 = antes.getTipo();
+            String porFecha1 = String.valueOf(antes.getPorFecha());
+            String motivoPermisoCodigo1 = antes.getMotivoPermisoCodigo().toString();
+
+            //Datos despues de modificar
+            String horaInicio2 = this.selected.getHoraInicio().toString();
+            String horaFin2 = this.selected.getHoraFin().toString();
+            String fechaInicio2 = this.selected.getFechaInicio().toString();
+            String fechaFin2 = this.selected.getFechaFin().toString();
+            String tipo2 = this.selected.getTipo();
+            String porFecha2 = String.valueOf(this.selected.getPorFecha());
+            String motivoPermisoCodigo2 = this.selected.getMotivoPermisoCodigo().toString();
+
+            //----Bitacora----
+            Bitacora bitacora = new Bitacora();
+            //Fecha y hora//          
+            Date fechas = new Date();
+//           
+            //Ip Cliente
+            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+
+            //Datos
+            bitacora.setUsuario("JC");
+            bitacora.setIpCliente(ip_cliente);
+            bitacora.setFecha(fechas);
+            bitacora.setHora(fechas);
+            bitacora.setTabla("PERMISO");
+            bitacora.setColumna("HORA_INICIO");
+            bitacora.setAccion("MODIFICAR");
+            bitacora.setValorAct(horaInicio2);
+            bitacora.setValorAnt(horaInicio1);
+
+            if (!horaInicio1.equals(horaInicio2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("HORA_FIN");
+            bitacora.setValorAct(horaFin2);
+            bitacora.setValorAnt(horaFin1);
+
+            if (!horaFin1.equals(horaFin2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("FECHA_INICIO");
+            bitacora.setValorAct(fechaInicio2);
+            bitacora.setValorAnt(fechaInicio1);
+
+            if (!fechaInicio1.equals(fechaInicio2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("FECHA_FIN");
+            bitacora.setValorAct(fechaFin2);
+            bitacora.setValorAnt(fechaFin1);
+
+            if (!fechaFin1.equals(fechaFin1)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("TIPO");
+            bitacora.setValorAct(tipo2);
+            bitacora.setValorAnt(tipo1);
+
+            if (!tipo1.equals(tipo2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("POR_FECHA");
+            bitacora.setValorAct(porFecha2);
+            bitacora.setValorAnt(porFecha1);
+
+            if (!porFecha1.equals(porFecha2)) {
+                bitacoraC.edit(bitacora);
+            }
+
+            bitacora.setColumna("MOTIVO_PERMISO_CODIGO");
+            bitacora.setValorAct(motivoPermisoCodigo2);
+            bitacora.setValorAnt(motivoPermisoCodigo1);
+
+            if (!motivoPermisoCodigo1.equals(motivoPermisoCodigo2)) {
+                bitacoraC.edit(bitacora);
+            }
+        }
     }
 
     @Override
     protected void remove(Permiso objeto) {
         this.permisoFacade.remove(objeto);
+
+        Permiso antes = this.find(this.selected.getId());
+
+        String horaInicio1 = antes.getHoraInicio().toString();
+        String horaFin1 = antes.getHoraFin().toString();
+        String fechaInicio1 = antes.getFechaInicio().toString();
+        String fechaFin1 = antes.getFechaFin().toString();
+        String tipo1 = antes.getTipo();
+        String porFecha1 = String.valueOf(antes.getPorFecha());
+        String motivoPermisoCodigo1 = antes.getMotivoPermisoCodigo().toString();
+
+        //----Bitacora----
+        Bitacora bitacora = new Bitacora();
+        //Fecha y hora//          
+        Date fechas = new Date();
+        //Ip Cliente
+        String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+
+        //Datos
+        bitacora.setUsuario("JC");
+        bitacora.setIpCliente(ip_cliente);
+        bitacora.setFecha(fechas);
+        bitacora.setHora(fechas);
+        bitacora.setTabla("PERMISO");
+        bitacora.setColumna("HORA_INICIO");
+        bitacora.setAccion("ELIMINAR");
+        bitacora.setValorAct(" ");
+        bitacora.setValorAnt(horaInicio1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("HORA_FIN");
+        bitacora.setValorAnt(horaFin1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("FECHA_INICIO");
+        bitacora.setValorAnt(fechaInicio1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("FECHA_FIN");
+        bitacora.setValorAnt(fechaFin1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("TIPO");
+        bitacora.setValorAnt(tipo1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("POR_FECHA");
+        bitacora.setValorAnt(porFecha1);
+        bitacoraC.edit(bitacora);
+        
+        bitacora.setColumna("MOTIVO_PERMISO_CODIGO");
+        bitacora.setValorAnt(motivoPermisoCodigo1);
+        bitacoraC.edit(bitacora);
     }
 
     @Override
