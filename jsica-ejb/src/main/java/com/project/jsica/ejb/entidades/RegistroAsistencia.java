@@ -9,6 +9,7 @@ package com.project.jsica.ejb.entidades;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -55,6 +56,61 @@ public class RegistroAsistencia implements Serializable {
     @JoinColumn(name = "empleado_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Empleado empleadoId;
+    @Column(name = "e_o_s")
+    private Boolean eOS;
+    private String tipo;
+    @JoinColumn(name = "turno_original", referencedColumnName = "id")
+    @ManyToOne
+    private DetalleHorario turnoOriginal;
+    @JoinColumn(name = "turno_reemplazo", referencedColumnName = "id")
+    @ManyToOne
+    private DetalleHorario turnoReemplazo;
+    @JoinColumn(name = "permiso_id", referencedColumnName = "id")
+    @ManyToOne
+    private Permiso permisoId;
+    
+
+    public Boolean iseOS() {
+        return eOS;
+    }
+
+    public void seteOS(Boolean eOS) {
+        this.eOS = eOS;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public DetalleHorario getTurnoOriginal() {
+        return turnoOriginal;
+    }
+
+    public void setTurnoOriginal(DetalleHorario turnoOriginal) {
+        this.turnoOriginal = turnoOriginal;
+    }
+
+    public DetalleHorario getTurnoReemplazo() {
+        return turnoReemplazo;
+    }
+
+    public void setTurnoReemplazo(DetalleHorario turnoReemplazo) {
+        this.turnoReemplazo = turnoReemplazo;
+    }
+
+    public Permiso getPermisoId() {
+        return permisoId;
+    }
+
+    public void setPermisoId(Permiso permisoId) {
+        this.permisoId = permisoId;
+    }
+    
+    
 
     public RegistroAsistencia() {
     }

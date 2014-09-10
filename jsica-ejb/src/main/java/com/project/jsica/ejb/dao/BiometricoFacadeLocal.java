@@ -37,5 +37,7 @@ public interface BiometricoFacadeLocal {
     List<Biometrico> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
+
+    Biometrico searchByIp(String ip);
     
 }

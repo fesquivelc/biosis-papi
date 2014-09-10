@@ -119,6 +119,27 @@ public class Empleado implements Serializable {
     private List<Usuario> usuarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoId")
     private List<FichaLaboralEmpleado> fichaLaboralEmpleadoList;
+    
+    @OneToMany(mappedBy = "empleado2Id")
+    private List<CambioTurno> cambioTurnoList2;
+    @OneToMany(mappedBy = "empleado1Id")
+    private List<CambioTurno> cambioTurnoList3;
+
+    public List<CambioTurno> getCambioTurnoList2() {
+        return cambioTurnoList2;
+    }
+
+    public void setCambioTurnoList2(List<CambioTurno> cambioTurnoList2) {
+        this.cambioTurnoList2 = cambioTurnoList2;
+    }
+
+    public List<CambioTurno> getCambioTurnoList3() {
+        return cambioTurnoList3;
+    }
+
+    public void setCambioTurnoList3(List<CambioTurno> cambioTurnoList3) {
+        this.cambioTurnoList3 = cambioTurnoList3;
+    }
 
     public Empleado() {
     }

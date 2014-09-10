@@ -54,10 +54,12 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
     String queryPlus;
 
     Properties properties;
+    private static final Logger LOG = Logger.getLogger(UtilitarioAsistencia.class.getName());
     
     private void instanciar(){
         try {
-            File fileProperties = new File("biosis/biostar-conexion.properties");
+            File fileProperties = new File("biosis/conexion.properties");
+            LOG.log(Level.INFO, "PATH DEL FICHERON BIOSTAR: {0}", fileProperties.getAbsolutePath());
 //            fileProperties.createNewFile();            
             FileInputStream fileInputStreamProperties = new FileInputStream(fileProperties);
 
@@ -134,6 +136,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
         try {
             if (fecha == null || hora == null) {
                 ps = connSQLServer.prepareStatement(this.query);
+                LOG.log(Level.INFO, "QUERY", this.query);
             } else {
                 ps = connSQLServer.prepareStatement(this.query + " " + this.queryPlus);
 

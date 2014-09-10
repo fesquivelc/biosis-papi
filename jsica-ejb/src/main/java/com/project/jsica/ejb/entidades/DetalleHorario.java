@@ -58,7 +58,27 @@ public class DetalleHorario implements Serializable {
     private List<CambioTurno> cambioTurnoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleHorarioReemplazo")
     private List<CambioTurno> cambioTurnoList1;
+    @OneToMany(mappedBy = "turnoOriginal")
+    private List<RegistroAsistencia> registroList;
+    @OneToMany(mappedBy = "turnoReemplazo")
+    private List<RegistroAsistencia> registroList1;
 
+    public List<RegistroAsistencia> getRegistroList() {
+        return registroList;
+    }
+
+    public void setRegistroList(List<RegistroAsistencia> registroList) {
+        this.registroList = registroList;
+    }
+
+    public List<RegistroAsistencia> getRegistroList1() {
+        return registroList1;
+    }
+
+    public void setRegistroList1(List<RegistroAsistencia> registroList1) {
+        this.registroList1 = registroList1;
+    }
+    
     public DetalleHorario() {
     }
 
