@@ -22,23 +22,60 @@
                     <p:panel header="Búsqueda de Asistencias">
                         <p:panelGrid columnClasses="column" columns="2">
                            <p:outputLabel value="Empleado:" for="empleadoBuscado"/>                           
-                            <p:autoComplete id="empleadoBuscado" value="#{registroAsistenciaController.selected.empleadoId}" completeMethod="#{empleadoController.metodo}"
+                           <p:autoComplete id="empleadoBuscado" value="#{registroAsistenciaController.empleadoSeleccionado}" completeMethod="#{empleadoController.metodo}"
                                                 var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="70" required="true"/>
                              
-                            
                             <p:outputLabel value="De:" for="fechaInicio"/>
-                            <p:inputMask id="fechaInicio" value="#{registroAsistenciaController.selected.fecha}" mask="99/99/9999" title="#{myBundle.CreatePermisoTitle_fechaInicio}">  
+                            <p:inputMask id="fechaInicio" value="#{registroAsistenciaController.fechaInicio}" mask="99/99/9999" title="#{myBundle.CreatePermisoTitle_fechaInicio}">  
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </p:inputMask>
                             
                             <p:outputLabel value="Hasta:" for="fechaFin"/>
-                            <p:inputMask id="fechaFin" value="#{registroAsistenciaController.selected.fecha}" mask="99/99/9999" title="#{myBundle.CreatePermisoTitle_fechaFin}">  
+                            <p:inputMask id="fechaFin" value="#{registroAsistenciaController.fechaFin}" mask="99/99/9999" title="#{myBundle.CreatePermisoTitle_fechaFin}">  
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </p:inputMask>
 
-                            
+                            <p:commandButton id="btnBuscar" icon="ui-icon-search" value="Buscar Registros" update="listaMarcaciones"/>
                         </p:panelGrid>
                         
+                        <p:dataTable
+                            id="listaMarcaciones"
+                            value="#{registroAsistenciaController.registrosAsistencia}"
+                            var="registro"
+                            paginator="true"
+                            rowKey="#{registro.id}"
+                            rows="15"
+                            rowsPerPageTemplate="10,20,30,40,50"
+                            selectionMode="single"
+                            selection="#{registroAsistenciaController.selected}">
+                            <f:facet name="{Exporters}">
+                                <h:commandLink>
+                                    <p:graphicImage name=""
+                                </h:commandLink>
+                            </f:facet>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Fecha Marcación"/>
+                                </f:facet>                                
+                                <h:outputText value="#{registro.fecha}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Hora de Marcación"/>
+                                </f:facet>
+                                <h:outputText value="#{registro.hora}">
+                                    <f:convertDateTime pattern="HH:mm"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Biométrico"/>
+                                </f:facet>
+                                <h:outputText value="#{registro.biometricoId.marca} #{registro.biometricoId.modelo}"/>
+                            </p:column>
+                        </p:dataTable>
                         
                         <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{registroAsistenciaController.prepareCreate}"  update=":RegistroAsistenciaCreateForm" oncomplete="PF('RegistroAsistenciaCreateDialog').show()"/>
                         

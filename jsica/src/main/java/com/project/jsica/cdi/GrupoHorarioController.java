@@ -19,11 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 public class GrupoHorarioController extends AbstractController<GrupoHorario> {
 
     @EJB
-
+    private GrupoHorarioFacadeLocal grupoHorarioFacade;
     @Inject
     private BitacoraController bitacoraC;
-
-    private GrupoHorarioFacadeLocal grupoHorarioFacade;
     @Inject
     private EmpleadoController empleadoListController;
     @Inject
