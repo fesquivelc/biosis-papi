@@ -20,9 +20,9 @@
                          selectionMode="single"
                          selection="#{registroAsistenciaController.selected}">
 
-                <p:ajax event="rowSelect"   update=":RegistroAsistenciaListForm:createButton :RegistroAsistenciaListForm:viewButton :RegistroAsistenciaListForm:editButton :RegistroAsistenciaListForm:deleteButton " listener="#{registroAsistenciaController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":RegistroAsistenciaListForm:createButton :RegistroAsistenciaListForm:viewButton :RegistroAsistenciaListForm:editButton :RegistroAsistenciaListForm:deleteButton " listener="#{registroAsistenciaController.resetParents}"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('RegistroAsistenciaListForm:viewButton').click();"/>
+                <p:ajax event="rowSelect"   update=":tabOpciones:RegistroAsistenciaListForm:createButton :tabOpciones:RegistroAsistenciaListForm:viewButton :tabOpciones:RegistroAsistenciaListForm:editButton :tabOpciones:RegistroAsistenciaListForm:deleteButton " listener="#{registroAsistenciaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":tabOpciones:RegistroAsistenciaListForm:createButton :tabOpciones:RegistroAsistenciaListForm:viewButton :tabOpciones:RegistroAsistenciaListForm:editButton :tabOpciones:RegistroAsistenciaListForm:deleteButton " listener="#{registroAsistenciaController.resetParents}"/>
+                
 
 
                 <p:column>
