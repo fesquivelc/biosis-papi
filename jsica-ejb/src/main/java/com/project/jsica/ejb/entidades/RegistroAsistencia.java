@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.project.jsica.ejb.entidades;
 
 import java.io.Serializable;
@@ -37,38 +36,36 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RegistroAsistencia.findByFecha", query = "SELECT r FROM RegistroAsistencia r WHERE r.fecha = :fecha"),
     @NamedQuery(name = "RegistroAsistencia.findByHora", query = "SELECT r FROM RegistroAsistencia r WHERE r.hora = :hora")})
 public class RegistroAsistencia implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @Basic(optional = true)
     private Long id;
-    @Basic(optional = false)
-    @NotNull
+    @Basic(optional = true)
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Basic(optional = false)
-    @NotNull
+    @Basic(optional = true)
     @Temporal(TemporalType.TIME)
     private Date hora;
-    @JoinColumn(name = "biometrico_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "biometrico_id", referencedColumnName = "id", nullable = true)
+    @ManyToOne(optional = true)
     private Biometrico biometricoId;
-    @JoinColumn(name = "empleado_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "empleado_id", referencedColumnName = "id", nullable = true)
+    @ManyToOne(optional = true)
     private Empleado empleadoId;
     @Column(name = "e_o_s")
     private Boolean eOS;
     private String tipo;
-    @JoinColumn(name = "turno_original", referencedColumnName = "id")
+    @JoinColumn(name = "turno_original", referencedColumnName = "id", nullable = true)
     @ManyToOne
     private DetalleHorario turnoOriginal;
-    @JoinColumn(name = "turno_reemplazo", referencedColumnName = "id")
+    @JoinColumn(name = "turno_reemplazo", referencedColumnName = "id", nullable = true)
     @ManyToOne
     private DetalleHorario turnoReemplazo;
-    @JoinColumn(name = "permiso_id", referencedColumnName = "id")
+    @JoinColumn(name = "permiso_id", referencedColumnName = "id", nullable = true)
     @ManyToOne
     private Permiso permisoId;
-    
 
     public Boolean iseOS() {
         return eOS;
@@ -109,8 +106,6 @@ public class RegistroAsistencia implements Serializable {
     public void setPermisoId(Permiso permisoId) {
         this.permisoId = permisoId;
     }
-    
-    
 
     public RegistroAsistencia() {
     }
@@ -187,7 +182,7 @@ public class RegistroAsistencia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.project.jsica.ejb.entidades.RegistroAsistencia[ id=" + id + " ]";
+        return "RegistroAsistencia{" + "id=" + id + ", fecha=" + fecha+ ", hora=" + hora + ", biometricoId=" + biometricoId + ", empleadoId=" + empleadoId + ", eOS=" + eOS + ", tipo=" + tipo + ", turnoOriginal=" + turnoOriginal + ", turnoReemplazo=" + turnoReemplazo + ", permisoId=" + permisoId + '}';
     }
-    
+
 }

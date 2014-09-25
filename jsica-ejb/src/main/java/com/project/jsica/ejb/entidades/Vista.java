@@ -126,7 +126,9 @@ public class Vista implements Serializable {
 
     @Override
     public String toString() {
-        return "com.pruebas.entidades.Vista[ id=" + id + " ]";
+        return "Vista{" + "id=" + id + ", fecha=" + fecha + ", hora=" + hora + ", equipoIp=" + equipoIp + ", dni=" + dni + '}';
     }
+
+    
     
 }

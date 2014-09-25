@@ -59,7 +59,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
     private void instanciar(){
         try {
             File fileProperties = new File("biosis/conexion.properties");
-            LOG.log(Level.INFO, "PATH DEL FICHERON BIOSTAR: {0}", fileProperties.getAbsolutePath());
+            LOG.log(Level.INFO, "PATH DEL FICHERON DE CONEXION: {0}", fileProperties.getAbsolutePath());
 //            fileProperties.createNewFile();            
             FileInputStream fileInputStreamProperties = new FileInputStream(fileProperties);
 
@@ -73,7 +73,6 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
 
             this.query = properties.getProperty("query");
             this.queryPlus = properties.getProperty("queryPlus");
-                        
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -136,7 +135,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
         try {
             if (fecha == null || hora == null) {
                 ps = connSQLServer.prepareStatement(this.query);
-                LOG.log(Level.INFO, "QUERY", this.query);
+                LOG.log(Level.INFO, "QUERY {0}", this.query);
             } else {
                 ps = connSQLServer.prepareStatement(this.query + " " + this.queryPlus);
 
@@ -187,7 +186,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
     }
 
     private void crearPuntosDePartida() {
-        String jpql = "SELECT v FROM Vista v ORDER BY v.fecha ASC";
+        String jpql = "SELECT v FROM Vista v ORDER BY v.fecha, v.hora ASC";
 
         /*
          NO HAY QUE PEDIR MAS DE UN ELEMENTO A LA CONSULTA 
