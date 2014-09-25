@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -68,9 +69,9 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
 
     private final int MINUTOS_MAX_MARCACION_REGULAR = 5;
     private final int MINUTOS_MAX_MARCACION_TARDANZA = 15;
-    private final int MINUTOS_ANTES_MARCACION_ENTRADA = 30;
+    private final int MINUTOS_ANTES_MARCACION_ENTRADA = 60;
     private final int MINUTOS_ANTES_MARCACION_SALIDA = 0;
-    private final int MINUTOS_MAX_MARCACION_SALIDA = 40;
+    private final int MINUTOS_MAX_MARCACION_SALIDA = 120;
 
     private void analizarRegistroAdministrativo(Empleado empleado, DetalleHorario turno, List<Vista> marcacionesXMes, List<Permiso> permisosXMes) {
         //CASOS
@@ -144,7 +145,7 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
                     }
                     registroxMes.add(registroEntrada);
                 } else {
-                    registroSalida = obtenerRegistroSalida(empleado, turno, fechaSalida, marcacionesXMes);
+                    registroSalida = obtenerRegistroSalida(empleado, turno, fechaEntrada, marcacionesXMes);
                     if (registroSalida == null) {
                         if (turnoReemplazo != null) {
                             registroEntrada.setTurnoOriginal(turnoOriginal);
@@ -192,7 +193,7 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
             if (registroEntrada.getTipo().substring(0, 1).equals("F")) {
                 //SE HA DETERMINADO COMO FALTA NO EXISTE NADA QUE SE PUEDA HACER
             } else {
-                registroSalida = this.obtenerRegistroSalida(empleado, turno, fechaSalida, marcacionesXMes);
+                registroSalida = this.obtenerRegistroSalida(empleado, turno, fechaEntrada, marcacionesXMes);
                 if (registroSalida == null) {
                     if (turnoReemplazo == null) {
                         registroEntrada.setTipo("FT");
@@ -266,11 +267,16 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
         cal.setTime(hora);
         cal.add(Calendar.MINUTE, maximo);
 
+        LOG.log(Level.INFO, "FECHA PARA EL FILTRADO: {0}", fecha.toString());
+        
         java.util.Date horaMaxima = cal.getTime();
+        LOG.log(Level.INFO, "HORA MAXIMA: {0}", horaMaxima.toString());
 
         cal.add(Calendar.MINUTE, -maximo - minimo);
         java.util.Date horaMinima = cal.getTime();
+        LOG.log(Level.INFO, "HORA MINIMA: {0}", horaMinima.toString());
         for (Vista marcacion : marcacionesXMes) {
+            LOG.log(Level.INFO, "COMPARACION DE LA FECHA DE MARCACION CON LA FECHA: {0}", marcacion.getFecha().compareTo(fecha));
             if (marcacion.getFecha().compareTo(fecha) == 0) {
                 if (marcacion.getHora().compareTo(horaMaxima) <= 0 && marcacion.getHora().compareTo(horaMinima) >= 0) {
                     comp = Math.abs(marcacion.getHora().getTime() - hora.getTime());

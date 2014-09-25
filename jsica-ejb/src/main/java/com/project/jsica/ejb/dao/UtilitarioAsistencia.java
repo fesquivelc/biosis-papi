@@ -32,13 +32,12 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
+
     @EJB
     private VistaFacadeLocal vistaDAO;
     @EJB
     private TCImportacionFacadeLocal tcDAO;
 
-    
-    
     Date fechaPartida;
     Date horaPartida;
 
@@ -50,16 +49,18 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
     String contrasena;
     String url;
     String driverManager;
+    String tipoSistema;
+    String tipoGestorBD;
     String query;
     String queryPlus;
 
     Properties properties;
     private static final Logger LOG = Logger.getLogger(UtilitarioAsistencia.class.getName());
-    
-    private void instanciar(){
+
+    private void instanciar() {
         try {
             File fileProperties = new File("biosis/conexion.properties");
-            LOG.log(Level.INFO, "PATH DEL FICHERON DE CONEXION: {0}", fileProperties.getAbsolutePath());
+            LOG.log(Level.INFO, "PATH DEL FICHERO DE CONEXION: {0}", fileProperties.getAbsolutePath());
 //            fileProperties.createNewFile();            
             FileInputStream fileInputStreamProperties = new FileInputStream(fileProperties);
 
@@ -71,8 +72,13 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
             this.url = properties.getProperty("url");
             this.driverManager = properties.getProperty("driverManager");
 
-            this.query = properties.getProperty("query");
-            this.queryPlus = properties.getProperty("queryPlus");
+            this.tipoSistema = properties.getProperty("tipoSistema");
+            this.tipoGestorBD = properties.getProperty("tipoBase");
+
+            this.query = getQuery(tipoSistema, tipoGestorBD);
+            this.queryPlus = getQueryPlus(tipoSistema, tipoGestorBD);
+
+            LOG.log(Level.INFO, "CONSULTA: {0} {1}", new Object[]{query, queryPlus});
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -83,8 +89,8 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
     @Override
     public void crearEspejo() {
         //INSTANCIAMOS LAS PROPIEDADES
-        this.instanciar();        
-        
+        this.instanciar();
+
         List<TCImportacion> importaciones = tcDAO.search("SELECT t FROM TCImportacion t ORDER BY t.id DESC", null, -1, 1);
         if (importaciones.isEmpty()) {
             this.cargaMasiva();
@@ -109,7 +115,6 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-
     private void conectarBiostar() {
         try {
             Class.forName(driverManager);
@@ -129,7 +134,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
 
     private void cargaMasiva(Date fecha, Date hora) {
         this.conectarBiostar();
-        
+
         List<Vista> vistas = new ArrayList<>();
         PreparedStatement ps;
         try {
@@ -148,6 +153,8 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
             }
             ResultSet rs = ps.executeQuery();
 
+            int contador = 0;
+
             while (rs.next()) {
                 Vista vista = new Vista();
                 vista.setDni(rs.getInt("dni"));
@@ -155,11 +162,20 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
                 vista.setFecha(rs.getDate("fecha"));
                 vista.setHora(rs.getTime("hora"));
                 vistas.add(vista);
+//
+//                contador++;
+//                if (contador == 500) {
+//                    for (Vista v : vistas) {
+//                        vistaDAO.create(v);
+//                    }
+//                    vistas.clear();
+//                    contador = 0;
+//                }
             }
-            
-            for(Vista vista : vistas){
+
+            for (Vista vista : vistas) {
                 vistaDAO.create(vista);
-            }            
+            }
 
         } catch (SQLException ex) {
             Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
@@ -173,7 +189,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
                 Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
     }
 
     private void crearPuntosDeLlegada() {
@@ -194,7 +210,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
          */
         Vista v = vistaDAO.search(jpql, null, -1, 1).get(0);
 
-        fechaPartida = v.getFecha();        
+        fechaPartida = v.getFecha();
         horaPartida = v.getHora();
     }
 
@@ -217,6 +233,73 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
     public Date getHoraLlegada() {
         return this.horaLlegada;
     }
-    
-    
+
+    private String getQuery(String tipo, String base) {
+        /*
+         1. BIOSTAR
+         2. BIOADMIN
+         */
+
+        int tipoSistemaMarcacion = Integer.parseInt(tipo);
+        /*
+         1. SQL SERVER
+         2. MySQL
+         */
+        int tipoBase = Integer.parseInt(base);
+
+        String consulta = "";
+        switch (tipoSistemaMarcacion) {
+            case 1:
+                break;
+            case 2:
+                switch (tipoBase) {
+                    case 1:
+                        consulta = "SELECT "
+                                + "CONVERT(DATE,reporte.dtDatetime) AS fecha, "
+                                + "CONVERT(TIME, reporte.dtdatetime) AS hora, "
+                                + "reporte.nUserID AS dni, "
+                                + "equipo.nIPAddr as equipo_ip "
+                                + "FROM tb_reportslist reporte INNER JOIN tb_device equipo ON reporte.nDeviceID = equipo.nDeviceID "
+                                + "WHERE YEAR(reporte.dtDateTime) = '2013' AND MONTH(reporte.dtDateTime) = '07' AND reporte.nEvent = '55' ";
+
+                        break;
+                }
+
+                break;
+        }
+        LOG.info(consulta);
+        return consulta;
+    }
+
+    private String getQueryPlus(String tipo, String base) {
+        /*
+         1. BIOSTAR
+         2. BIOADMIN
+         */
+
+        int tipoSistemaMarcacion = Integer.parseInt(tipo);
+        /*
+         1. SQL SERVER
+         2. MySQL
+         */
+        int tipoBase = Integer.parseInt(base);
+
+        String consultaPlus = "";
+
+        switch (tipoSistemaMarcacion) {
+            case 1:
+                break;
+            case 2:
+                switch (tipoBase) {
+                    case 1:
+                        consultaPlus = "AND CONVERT(DATE,reporte.dtDateTime) > ? OR (CONVERT(DATE,reporte.dtDateTime) = ? AND CONVERT(TIME,reporte.dtDateTime) >= ?)";
+                        break;
+                }
+
+                break;
+        }
+        LOG.info(consultaPlus);
+        return consultaPlus;
+    }
+
 }
