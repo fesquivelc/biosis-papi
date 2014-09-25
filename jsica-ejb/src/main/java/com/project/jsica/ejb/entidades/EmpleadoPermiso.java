@@ -79,6 +79,14 @@ public class EmpleadoPermiso implements Serializable {
         this.permisoId = permisoId;
     }
 
+    /*Metodos para papeleta*/
+    public Papeleta getPapeleta(){
+        return this.papeletaList.get(0);
+    }
+    
+    public void setPapeleta(Papeleta papeleta){
+        this.papeletaList.set(0, papeleta);
+    }
     @XmlTransient
     public List<Papeleta> getPapeletaList() {
         return papeletaList;

@@ -46,7 +46,7 @@
 
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{registroAsistenciaController.save}" value="#{myBundle.Save}" update="display,:RegistroAsistenciaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RegistroAsistenciaEditDialog'));">
+                    <p:commandButton actionListener="#{registroAsistenciaController.save}" value="#{myBundle.Save}" update="display,:tabOpciones:RegistroAsistenciaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RegistroAsistenciaEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="PF('RegistroAsistenciaEditDialog').hide()"/>

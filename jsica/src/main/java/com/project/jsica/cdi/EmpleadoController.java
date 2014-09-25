@@ -716,6 +716,13 @@ public class EmpleadoController extends AbstractController<Empleado> {
         return this.empleadoFacade.search(query, parametros);
     }
 
+    public List<Empleado> metodoPorServicio(String parametro){
+        String query = "SELECT e FROM Empleado e WHERE CONCAT(e.nombres,e.apellidos,e.docIdentidad) LIKE CONCAT('%',:parametro,'%') AND e.servicioId=:servicio";
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("parametro", parametro.toUpperCase());
+        parametros.put("servicio", servicioSeleccionado);
+        return this.empleadoFacade.search(query, parametros);
+    }
     @Override
     public Empleado prepareCreate(ActionEvent event) {
         Empleado empleado = new Empleado();
@@ -759,6 +766,10 @@ public class EmpleadoController extends AbstractController<Empleado> {
         this.isAreaSeleccionado = false;
     }
 
+    public void onServicioSeleccionado(){
+        this.isServicioSeleccionado = this.servicioSeleccionado!=null;
+    }
+    
     public List<Area> getAreas() {
         if (this.isSucursalSeleccionado) {
             return this.sucursalSeleccionado.getAreaList();

@@ -62,7 +62,7 @@
 
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{papeletaController.save}" value="#{myBundle.Save}" update="display,:PapeletaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PapeletaEditDialog'));">
+                    <p:commandButton actionListener="#{papeletaController.save}" value="#{myBundle.Save}" update="display,:tabOpciones:PapeletaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PapeletaEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="PF('PapeletaEditDialog').hide()"/>

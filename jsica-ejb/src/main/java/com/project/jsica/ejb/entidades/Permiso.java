@@ -161,7 +161,16 @@ public class Permiso implements Serializable {
     public void setMotivoPermisoCodigo(MotivoPermiso motivoPermisoCodigo) {
         this.motivoPermisoCodigo = motivoPermisoCodigo;
     }
-
+    
+    /*Metodo par trabajar las listas*/
+    public EmpleadoPermiso getEmpleadoPermiso(){
+        return this.empleadoPermisoList.get(0);
+    }
+    
+    public void setEmpleadoPermiso(EmpleadoPermiso empleadoPermiso){
+        this.empleadoPermisoList.set(0,empleadoPermiso);
+    }
+    
     @XmlTransient
     public List<EmpleadoPermiso> getEmpleadoPermisoList() {
         return empleadoPermisoList;

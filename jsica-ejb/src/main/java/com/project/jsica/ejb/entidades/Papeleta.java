@@ -105,7 +105,7 @@ public class Papeleta implements Serializable {
     public void setEmpleadoPermisoId(EmpleadoPermiso empleadoPermisoId) {
         this.empleadoPermisoId = empleadoPermisoId;
     }
-
+        
     @Override
     public int hashCode() {
         int hash = 0;

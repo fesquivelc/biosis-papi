@@ -20,10 +20,9 @@
                          selectionMode="single"
                          selection="#{horarioController.selected}">
 
-                <p:ajax event="rowSelect"   update=":HorarioListForm:createButton :HorarioListForm:viewButton :HorarioListForm:editButton :HorarioListForm:deleteButton " listener="#{horarioController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":HorarioListForm:createButton :HorarioListForm:viewButton :HorarioListForm:editButton :HorarioListForm:deleteButton " listener="#{horarioController.resetParents}"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('HorarioListForm:viewButton').click();"/>
-
+                <p:ajax event="rowSelect"   update=":tabOpciones:HorarioListForm:createButton :tabOpciones:HorarioListForm:viewButton :tabOpciones:HorarioListForm:editButton :tabOpciones:HorarioListForm:deleteButton " listener="#{horarioController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":tabOpciones:HorarioListForm:createButton :tabOpciones:HorarioListForm:viewButton :tabOpciones:HorarioListForm:editButton :tabOpciones:HorarioListForm:deleteButton " listener="#{horarioController.resetParents}"/>
+                
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListHorarioTitle_nombre}"/>
