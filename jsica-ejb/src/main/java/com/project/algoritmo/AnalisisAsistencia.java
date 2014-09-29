@@ -365,6 +365,7 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
             }
 
             for (Empleado empleado : this.empleados) {
+                LOG.info(empleado.getApellidos());
                 turnosXMes = this.turnosXEmpleado(empleado.getDocIdentidad(), mes, anio);
                 permisosXMes = this.permisosXEmpleado(empleado.getDocIdentidad(), mes, anio);
                 cambiosTurnoXMes = this.cambiosTurnoXEmpleado(empleado.getDocIdentidad(), mes, anio);
@@ -466,7 +467,7 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
         } else {
             registro.setBiometricoId(biometricoDAO.searchByIp(vistaSalida.getEquipoIp()));
             registro.setFecha(vistaSalida.getFecha());
-            registro.seteOS(true);
+            registro.seteOS(false);
             registro.setEmpleadoId(empleado);
             registro.setTurnoOriginal(turno);
             registro.setHora(vistaSalida.getHora());
