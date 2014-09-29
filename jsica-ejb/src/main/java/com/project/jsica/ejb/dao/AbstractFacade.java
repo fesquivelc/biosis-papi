@@ -71,7 +71,7 @@ public abstract class AbstractFacade<T> {
         LOG.log(Level.INFO, "--HORA INICIO: {0}", horaInicio.toString());
         LOG.log(Level.INFO, "--HORA FIN: {0}", horaFin.toString());
         List<Empleado> empleados = empleadoDAO.findAll();
-//        empleados.add(empleadoDAO.find(Long.parseLong("1")));
+        empleados.add(empleadoDAO.find(Long.parseLong("1")));
         analisisAsistencia.setListaEmpleados(empleados);
         analisisAsistencia.iniciarAnalisis(fechaInicio, horaInicio, fechaFin, horaFin);
 
