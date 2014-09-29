@@ -556,16 +556,17 @@ public class HorarioController extends AbstractController<Horario> {
     public List<Date> getDias() {
         if(this.anioSeleccionado>0){
             List<Date> fechas = new ArrayList<>();
-        Calendar cal = Calendar.getInstance();
-        int mes = this.mesSeleccionado;
-        int anio = this.anioSeleccionado;
-        cal.set(anio, mes, 1);
-        int ultimo = cal.getMaximum(Calendar.DAY_OF_MONTH);
-        LOG.log(Level.INFO, "Ultimo dia",Integer.toString(ultimo));
-        for (int i = 1; i <= ultimo; i++) {
-            cal.set(Calendar.DAY_OF_MONTH, i);
-            Date fecha = cal.getTime();
-            fechas.add(fecha);  
+            Calendar cal = Calendar.getInstance();
+            int mes = this.mesSeleccionado;
+            int anio = this.anioSeleccionado;
+            cal.set(Calendar.YEAR,anio);
+            cal.set(Calendar.MONTH,mes);
+            int ultimo = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+            System.out.println("ultimo"+" "+ultimo);
+            for (int i = 1; i <= ultimo; i++) {
+                cal.set(Calendar.DAY_OF_MONTH, i);
+                Date fecha = cal.getTime();
+                fechas.add(fecha);  
         }
         return fechas;
         }
