@@ -22,12 +22,7 @@
                                                                    
                                 <p:outputLabel value="#{myBundle.CreateContratoLabel_codigo}" for="codigo" />
                                 <p:inputText id="codigo" value="#{contratoController.selected.codigo}" title="#{myBundle.CreateContratoTitle_codigo}" size="55" maxlength="55"/>
-
-                                <p:outputLabel value="#{myBundle.CreateContratoLabel_fechaInicio}" for="fechaInicio" />
-                                <p:inputMask id="fechaInicio" value="#{contratoController.selected.fechaInicio}" mask="99/99/9999"  title="#{myBundle.CreateContratoTitle_fechaInicio}" size="55">
-                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                </p:inputMask>                        
-                                                                                               
+                                                                                                                                
                                 <p:outputLabel value="#{myBundle.CreateContratoLabel_ocupacionId}" for="ocupacionId" />
                                 <p:selectOneMenu id="ocupacionId" value="#{contratoController.selected.ocupacionId}" required="true" requiredMessage="#{myBundle.CreateContratoRequiredMessage_ocupacionId}" converter="ocupacionConverter">
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
@@ -64,7 +59,12 @@
                         </p:tab>
                         
                         <p:tab id="EmpleadoTab2" title="Datos del Contrato">
-                            <p:panelGrid columns="2" columnClasses="column">  
+                            <p:panelGrid columns="2" columnClasses="column">
+                                
+                                <p:outputLabel value="#{myBundle.CreateContratoLabel_fechaInicio}" for="fechaInicio" />
+                                <p:inputMask id="fechaInicio" value="#{contratoController.selected.fechaInicio}" mask="99/99/9999"  title="#{myBundle.CreateContratoTitle_fechaInicio}" size="55">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:inputMask>  
 
                                 <p:outputLabel value="#{myBundle.CreateContratoLabel_fechaFin}" for="fechaFin" />
                                 <p:inputMask id="fechaFin" value="#{contratoController.selected.fechaFin}" mask="99/99/9999"  title="#{myBundle.CreateContratoTitle_fechaFin}" size="55">
