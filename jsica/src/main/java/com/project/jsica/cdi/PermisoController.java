@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -102,10 +104,11 @@ public class PermisoController extends AbstractController<Permiso> {
         }
         return "/empleadoPermiso/index";
     }
+    private static final Logger LOG = Logger.getLogger(PermisoController.class.getName());
 
     @Override
     public Permiso prepareCreate(ActionEvent event) {
-
+        LOG.log(Level.INFO, "llego aqui permiso");
         Permiso permiso = new Permiso();
         this.empleadoPermisoSeleccionado = new EmpleadoPermiso();
         this.papeletaSeleccionada = new Papeleta();
@@ -113,14 +116,15 @@ public class PermisoController extends AbstractController<Permiso> {
         permiso.setEmpleadoPermisoList(new ArrayList<EmpleadoPermiso>());
         this.empleadoPermisoSeleccionado.setPapeletaList(new ArrayList<Papeleta>());
         
-        this.empleadoPermisoSeleccionado.setEmpleadoId(empleadoSeleccionado);
+        this.empleadoPermisoSeleccionado.setEmpleadoId(this.empleadoSeleccionado);
         this.empleadoPermisoSeleccionado.setPermisoId(permiso);
-        this.papeletaSeleccionada.setEmpleadoPermisoId(empleadoPermisoSeleccionado);
+        this.papeletaSeleccionada.setEmpleadoPermisoId(this.empleadoPermisoSeleccionado);
     
-        permiso.getEmpleadoPermisoList().add(empleadoPermisoSeleccionado);
-        this.empleadoPermisoSeleccionado.getPapeletaList().add(papeletaSeleccionada);
+        permiso.getEmpleadoPermisoList().add(this.empleadoPermisoSeleccionado);
+        this.empleadoPermisoSeleccionado.getPapeletaList().add(this.papeletaSeleccionada);
            
         this.setSelected(permiso);
+        LOG.log(Level.INFO, "llego aqui permiso2");
         return permiso;
     }
 
