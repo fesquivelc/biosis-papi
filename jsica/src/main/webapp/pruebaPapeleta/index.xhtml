@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template.xhtml">
+
+    <ui:define name="title">
+        <h:outputText value="#{myBundle.PapeletaTitle}"/>
+    </ui:define>
+
+    <ui:define name="body">
+        
+        <p:tabView id="tabOpciones">
+            <p:tab title="Ingresar Motivo">
+                <ui:include src="/motivoPermiso/List.xhtml"/>
+            </p:tab>
+            <p:tab title="Ingresar Permiso">
+                <ui:include src="/permiso/List.xhtml"/>
+            </p:tab>
+            
+            <p:tab title="Asignar empleado">
+                <ui:include src="/empleadoPermiso/List.xhtml"/>
+            </p:tab>
+            <p:tab title="Papeletas">
+                <ui:include src="/papeleta/List.xhtml"/>
+            </p:tab>
+        </p:tabView>
+        
+       
+        <ui:include src="/papeleta/View.xhtml"/>
+        <ui:include src="/papeleta/Edit.xhtml"/>
+        <ui:include src="/papeleta/Create.xhtml"/>
+        <ui:include src="/empleadoPermiso/View.xhtml"/>
+        <ui:include src="/empleado/View.xhtml"/>
+        <ui:include src="/motivoPermiso/View.xhtml"/>
+        <ui:include src="/motivoPermiso/Edit.xhtml"/>
+        <ui:include src="/motivoPermiso/Create.xhtml"/>
+        <ui:include src="/permiso/View.xhtml"/>
+        <ui:include src="/permiso/Edit.xhtml"/>
+        <ui:include src="/permiso/Create.xhtml"/>
+       
+        <ui:include src="/empleadoPermiso/Edit.xhtml"/>
+        <ui:include src="/empleadoPermiso/Create.xhtml"/>
+
+
+
+    </ui:define>
+
+</ui:composition>
