@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PapeletaCreateDlg" widgetVar="PapeletaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreatePapeletaTitle}" closeOnEscape="true">
+
+            <h:form id="PapeletaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{permisoController.selected != null}">
+                    <p:tabView>
+                        <p:tab id="papeleta1" title="Registro de Papeleta">
+                             <p:panelGrid columns="2" columnClasses="column">
+
+                                <p:outputLabel value="#{myBundle.CreatePapeletaLabel_codigo}" for="codigo" />
+                                <p:inputText id="codigo" value="#{permisoController.selected.empleadoPermiso.papeleta.codigo}" title="#{myBundle.CreatePapeletaTitle_codigo}" size="45" maxlength="45"/>
+
+                                <p:outputLabel value="#{myBundle.CreatePapeletaLabel_empleadoIdempleado}" for="empleadoIdempleado" />
+                                <p:inputText id="empleadoIdempleado" value="#{permisoController.empleadoSeleccionado.apellidos} #{permisoController.empleadoSeleccionado.nombres}" title="#{myBundle.CreatePapeletaTitle_id}" required="true" requiredMessage="#{myBundle.CreatePapeletaRequiredMessage_empleadoIdempleado}"/>                    
+
+                                <p:outputLabel value="#{myBundle.CreatePapeletaLabel_empleadoIdjefeInmediato}" for="empleadoIdjefeInmediato" />
+                                <p:selectOneMenu id="empleadoIdjefeInmediato" value="#{permisoController.selected.empleadoPermiso.papeleta.empleadoIdjefeInmediato}" required="true" requiredMessage="#{myBundle.CreatePapeletaRequiredMessage_empleadoIdjefeInmediato}" converter="empleadoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{empleadoController.items}"
+                                                   var="empleadoIdjefeInmediatoItem"
+                                                   itemValue="#{empleadoIdjefeInmediatoItem}"
+                                                   itemLabel="#{empleadoIdjefeInmediatoItem.apellidos} #{empleadoIdjefeInmediatoItem.nombres} "
+                                                   />
+
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="#{myBundle.CreatePapeletaLabel_empleadoIdjefePersonal}" for="empleadoIdjefePersonal" />
+                                <p:selectOneMenu id="empleadoIdjefePersonal" value="#{permisoController.selected.empleadoPermiso.papeleta.empleadoIdjefePersonal}" required="true" requiredMessage="#{myBundle.CreatePapeletaRequiredMessage_empleadoIdjefePersonal}" converter="empleadoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{empleadoController.items}"
+                                                   var="empleadoIdjefePersonalItem"
+                                                   itemValue="#{empleadoIdjefePersonalItem}"
+                                                   itemLabel="#{empleadoIdjefePersonalItem.apellidos} #{empleadoIdjefePersonalItem.nombres} "
+                                                   />
+
+                                </p:selectOneMenu>
+
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab id="papeleta2" title="Permiso para Papeleta">
+                            <p:panelGrid columns="2" columnClasses="column">
+                                <p:outputLabel value="#{myBundle.CreatePermisoLabel_tipo}" for="tipo"/>
+                                <p:selectOneMenu id="tipo" value="#{permisoController.selected.tipo}">
+                                    <f:selectItem itemLabel="Seleccione un tipo"/>
+                                    <f:selectItem itemLabel="LICENCIA" itemValue="LI"/>
+                                    <f:selectItem itemLabel="PERMISO" itemValue="PE"/>
+                                    <f:selectItem itemLabel="AUSENCIA" itemValue="AU"/>
+                                </p:selectOneMenu>
+                                
+                                <p:outputLabel value="#{myBundle.CreatePermisoLabel_porFecha}" for="porFecha" />
+                                <p:selectBooleanCheckbox id="porFecha" value="#{permisoController.selected.porFecha}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_porFecha}"/>
+                                
+                                <p:outputLabel value="#{myBundle.CreatePermisoLabel_horaInicio}" for="horaInicio"/>
+                                <p:inputMask id="horaInicio" value="#{permisoController.selected.horaInicio}" mask="99:99" title="#{myBundle.CreatePermisoTitle_horaInicio}">
+                                    <f:convertDateTime pattern="HH:mm"/>
+                                </p:inputMask>
+                                
+                                <p:outputLabel value="#{myBundle.CreatePermisoLabel_horaFin}" for="horaFin"/>
+                                <p:inputMask id="horaFin" value="#{permisoController.selected.horaFin}" mask="99:99" title="#{myBundle.CreatePermisoTitle_horaFin}">
+                                    <f:convertDateTime pattern="HH:mm"/>
+                                </p:inputMask> 
+                                
+                                <p:outputLabel value="#{myBundle.CreatePermisoLabel_fechaInicio}" for="fechaInicio"/>
+                                <p:inputMask id="fechaInicio" value="#{permisoController.selected.fechaInicio}" mask="99/99/9999" title="#{myBundle.CreatePermisoTitle_fechaInicio}">  
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:inputMask>
+                                
+                                <p:outputLabel value="#{myBundle.CreatePermisoLabel_fechaFin}" for="fechaFin"/>
+                                <p:inputMask id="fechaFin" value="#{permisoController.selected.fechaFin}" mask="99/99/9999" title="#{myBundle.CreatePermisoTitle_fechaFin}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:inputMask>
+                                <p:outputLabel value="#{myBundle.CreatePermisoLabel_motivoPermisoCodigo}" for="motivoPermisoCodigo" />
+                                <p:selectOneMenu id="motivoPermisoCodigo" value="#{permisoController.selected.motivoPermisoCodigo}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_motivoPermisoCodigo}" converter="motivoPermisoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItems value="#{motivoPermisoController.items}"
+                                                   var="motivoPermisoCodigoItem"
+                                                   itemValue="#{motivoPermisoCodigoItem}"
+                                                   itemLabel="#{motivoPermisoCodigoItem.nombre.toString()}"
+                                                   />
+
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+                   
+                    
+                    <p:commandButton actionListener="#{permisoController.saveNew}" value="#{myBundle.Save}" update="display,:tabOpciones:PapeletaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PapeletaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('PapeletaCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
