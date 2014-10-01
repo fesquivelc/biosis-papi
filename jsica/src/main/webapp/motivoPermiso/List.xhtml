@@ -20,8 +20,8 @@
                          selectionMode="single"
                          selection="#{motivoPermisoController.selected}">
 
-                <p:ajax event="rowSelect"   update=":MotivoPermisoListForm:createButton :MotivoPermisoListForm:viewButton :MotivoPermisoListForm:editButton :MotivoPermisoListForm:deleteButton " listener="#{motivoPermisoController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":MotivoPermisoListForm:createButton :MotivoPermisoListForm:viewButton :MotivoPermisoListForm:editButton :MotivoPermisoListForm:deleteButton " listener="#{motivoPermisoController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":tabOpciones:MotivoPermisoListForm:createButton :tabOpciones:MotivoPermisoListForm:viewButton :tabOpciones:MotivoPermisoListForm:editButton :tabOpciones:MotivoPermisoListForm:deleteButton " listener="#{motivoPermisoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":tabOpciones:MotivoPermisoListForm:createButton :tabOpciones:MotivoPermisoListForm:viewButton :tabOpciones:MotivoPermisoListForm:editButton :tabOpciones:MotivoPermisoListForm:deleteButton " listener="#{motivoPermisoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('MotivoPermisoListForm:viewButton').click();"/>
 
                 <p:column >
