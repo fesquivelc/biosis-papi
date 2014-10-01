@@ -40,7 +40,7 @@
 
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{empleadoPermisoController.save}" value="#{myBundle.Save}" update="display,:EmpleadoPermisoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmpleadoPermisoEditDialog'));">
+                    <p:commandButton actionListener="#{empleadoPermisoController.save}" value="#{myBundle.Save}" update="display,:tabOpciones:EmpleadoPermisoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmpleadoPermisoEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="PF('EmpleadoPermisoEditDialog').hide()"/>
