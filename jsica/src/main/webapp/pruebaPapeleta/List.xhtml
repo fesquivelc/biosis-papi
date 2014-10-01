@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PapeletaListForm">
+
+        <p:panel header="#{myBundle.ListPapeletaTitle}">
+
+            <p:dataTable id="datalist"
+                         value="#{papeletaController.items}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         paginatorPosition="bottom"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{papeletaController.selected}">
+
+                <p:ajax event="rowSelect"   update=":tabOpciones:PapeletaListForm:createButton :tabOpciones:PapeletaListForm:viewButton :tabOpciones:PapeletaListForm:editButton :tabOpciones:PapeletaListForm:deleteButton " listener="#{papeletaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":tabOpciones:PapeletaListForm:createButton :tabOpciones:PapeletaListForm:viewButton :tabOpciones:PapeletaListForm:editButton :tabOpciones:PapeletaListForm:deleteButton " listener="#{papeletaController.resetParents}"/>
+              
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPapeletaTitle_codigo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codigo}"/>
+                </p:column>
+
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPapeletaTitle_empleadoIdempleado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleadoIdempleado.apellidos} #{item.empleadoIdempleado.nombres}"/>
+                </p:column>
+
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPapeletaTitle_empleadoIdjefeInmediato}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleadoIdjefeInmediato.apellidos} #{item.empleadoIdjefeInmediato.nombres}"/>
+                </p:column>
+
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPapeletaTitle_empleadoIdjefePersonal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleadoIdjefePersonal.apellidos} #{item.empleadoIdjefePersonal.nombres}"/>
+                </p:column>
+
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPapeletaTitle_empleadoPermisoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleadoPermisoId.id}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            
+            <p:commandButton id="createButton"  icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{permisoController.prepareCreate}" update=":PapeletaCreateForm" oncomplete="PF('PapeletaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":PapeletaViewForm" oncomplete="PF('PapeletaViewDialog').show()" disabled="#{empty papeletaController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PapeletaEditForm" oncomplete="PF('PapeletaEditDialog').show()" disabled="#{empty papeletaController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{papeletaController.delete}" update=":growl,datalist" disabled="#{empty papeletaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>
