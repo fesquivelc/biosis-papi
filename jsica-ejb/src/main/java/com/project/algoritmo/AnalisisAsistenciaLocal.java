@@ -20,6 +20,6 @@ public interface AnalisisAsistenciaLocal {
 
     void setListaEmpleados(List<Empleado> listaEmpleados);
 
-    void iniciarAnalisis(Date fechaInicio, Date horaInicio, Date fechaFin, Date horaFin);
+    void iniciarAnalisis(Date fechaInicio, Date horaInicio, Date fechaFin, Date horaFin, List<Empleado> listaEmpleados);
     
 }
