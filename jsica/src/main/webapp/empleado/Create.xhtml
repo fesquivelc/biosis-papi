@@ -37,14 +37,8 @@
                                 </p:selectOneMenu> 
                                 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoId}" for="empleadoId" />
-                                <p:selectOneMenu id="empleadoId" value="#{empleadoController.selected.empleadoId}" required="false" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_empleadoId}" converter="empleadoConverter">
-                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                    <f:selectItems value="#{empleadoController.items}"
-                                                   var="empleadoIdItem"
-                                                   itemValue="#{empleadoIdItem}"
-                                                   itemLabel="#{empleadoIdItem.apellidos} #{empleadoIdItem.nombres} "
-                                                   />
-                                </p:selectOneMenu>
+                                <p:autoComplete id="empleadoId" value="#{empleadoController.selected.empleadoId}" completeMethod="#{empleadoController.metodo}"
+                                                var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="55" required="true"/>
                                                                
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_fechaNacimiento}" for="fechaNacimiento" />
                                 <p:inputMask id="fechaNacimiento" value="#{empleadoController.selected.fechaNacimiento}" mask="99/99/9999" title="#{myBundle.CreateEmpleadoTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_fechaNacimiento}">
