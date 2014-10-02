@@ -39,6 +39,7 @@ public class PermisoController extends AbstractController<Permiso> {
     @Inject
     private EmpleadoPermisoController empleadoPermisoListController;
     private Empleado empleadoSeleccionado;
+    private boolean porPapeleta;
     
     public PermisoController() {
         // Inform the Abstract parent controller of the concrete Permiso?cap_first Entity
@@ -68,6 +69,14 @@ public class PermisoController extends AbstractController<Permiso> {
 
     public void setEmpleadoSeleccionado(Empleado empleadoSeleccionado) {
         this.empleadoSeleccionado = empleadoSeleccionado;
+    }
+
+    public boolean isPorPapeleta() {
+        return porPapeleta;
+    }
+
+    public void setPorPapeleta(boolean porPapeleta) {
+        this.porPapeleta = porPapeleta;
     }
     
     
@@ -128,7 +137,16 @@ public class PermisoController extends AbstractController<Permiso> {
         return permiso;
     }
 
-    
+    @Override
+    public void saveNew(ActionEvent event) {
+        if(!this.porPapeleta){
+            LOG.log(Level.INFO, "pasa check");
+            this.getSelected().getEmpleadoPermiso().setPapeleta(null);
+        }
+        super.saveNew(event); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
     @Override
     protected void edit(Permiso objeto) {
         this.permisoFacade.edit(objeto);
