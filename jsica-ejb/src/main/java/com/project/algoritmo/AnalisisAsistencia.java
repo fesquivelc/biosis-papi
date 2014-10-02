@@ -215,6 +215,13 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
 
         }
     }//TERMINA METODO ANALIZAR ASISTENCIAL
+    
+    
+//    
+//    
+//    private RegistroAsistencia[] analizarRegistros(Empleado empleado, Date fechaEntrada, Date fechaSalida, Date horaEntrada, Date horaSalida, List<Vista> marcacionesXMes, List<Permiso> permisosXMes, List<CambioTurno> cambiosTurnoXMes){      
+//        
+//    }
 
     private RegistroAsistencia buscarRegistroXTurno(DetalleHorario turno) {
         String jpql = "SELECT r FROM RegistroAsistencia r WHERE r.turnoOriginal = :turno OR r.turnoReemplazo = :turno";
@@ -338,7 +345,9 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
     private static final Logger LOG = Logger.getLogger(AnalisisAsistencia.class.getName());
 
     @Override
-    public void iniciarAnalisis(Date fechaInicio, Date horaInicio, Date fechaFin, Date horaFin) {
+    public void iniciarAnalisis(Date fechaInicio, Date horaInicio, Date fechaFin, Date horaFin, List<Empleado> empleados) {
+        LOG.info("INICIO DE ANALISIS DE ASISTENCIA");
+        this.empleados = empleados;
         Calendar calendario = Calendar.getInstance();
 
         this.fechaInicio = fechaInicio;
