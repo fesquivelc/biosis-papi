@@ -17,6 +17,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -142,14 +144,21 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
                 ps = connSQLServer.prepareStatement(this.query);
                 LOG.log(Level.INFO, "QUERY {0}", this.query);
             } else {
-                ps = connSQLServer.prepareStatement(this.query + " " + this.queryPlus);
-
                 java.sql.Date pFecha = new java.sql.Date(fecha.getTime());
                 Time pHora = new Time(hora.getTime());
 
-                ps.setDate(1, pFecha);
-                ps.setDate(2, pFecha);
-                ps.setTime(3, pHora);
+//                String carga = this.query + " " + this.queryPlus;
+                DateFormat dtFecha = new SimpleDateFormat("yyyy/MM/dd");
+                DateFormat dtHora = new SimpleDateFormat("HH:mm:ss");                
+               
+                String carga = this.query + "  AND CONVERT(DATE,reporte.dtDateTime) > '"+dtFecha.format(pFecha)+"' OR(CONVERT(DATE, reporte.dtDateTime) =  '"+dtFecha.format(pFecha)+"' AND  CONVERT(TIME, reporte.dtDateTime) >= '"+dtHora.format(pHora)+"')";
+                LOG.log(Level.INFO, "CONSULTA DE CARGA MASIVA{0}", carga);
+                ps = connSQLServer.prepareStatement(carga);
+
+//
+//                ps.setDate(1, pFecha);
+//                ps.setDate(2, pFecha);
+//                ps.setTime(3, pHora);
             }
             ResultSet rs = ps.executeQuery();
 
