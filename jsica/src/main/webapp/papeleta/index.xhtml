@@ -49,8 +49,8 @@
                                      rowsPerPageTemplate="10,20,30,40,50"
                                      selectionMode="single"
                                      selection="#{permisoController.empleadoSeleccionado}">
-                            <p:ajax event="rowSelect" update=":tabOpciones:frmAsignacionEmpleado:createButton" listener="#{papeletaController.resetParents()}"/>
-                            <p:ajax event="rowUnselect" update=":tabOpciones:frmAsignacionEmpleado:createButton" listener="#{papeletaController.resetParents()}"/>         
+                            <p:ajax event="rowSelect" update=":tabOpciones:frmAsignacionEmpleado:createButton" listener="#{permisoController.resetParents()}"/>
+                            <p:ajax event="rowUnselect" update=":tabOpciones:frmAsignacionEmpleado:createButton" listener="#{permisoController.resetParents()}"/>         
                         
                             <p:column filterBy="#{empleado.docIdentidad}">
                                 <f:facet name="header">

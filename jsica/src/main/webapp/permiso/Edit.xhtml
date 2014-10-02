@@ -46,12 +46,12 @@
                             <f:selectItems value="#{motivoPermisoController.items}"
                                            var="motivoPermisoCodigoItem"
                                            itemValue="#{motivoPermisoCodigoItem}"
-                                           itemLabel="#{motivoPermisoCodigoItem.descripcion.toString()}"
+                                           itemLabel="#{motivoPermisoCodigoItem.nombre}"
                                            />
 
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{permisoController.save}" value="#{myBundle.Save}" update="display,:PermisoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PermisoEditDialog'));">
+                    <p:commandButton actionListener="#{permisoController.save}" value="#{myBundle.Save}" update="display,:tabOpciones:PermisoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PermisoEditDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="PF('PermisoEditDialog').hide()"/>

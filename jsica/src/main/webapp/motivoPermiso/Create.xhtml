@@ -27,7 +27,7 @@
                         <p:outputLabel value="#{myBundle.CreateMotivoPermisoLabel_conGoce}" for="conGoce" />
                         <p:selectBooleanCheckbox id="conGoce" value="#{motivoPermisoController.selected.conGoce}" required="true" requiredMessage="#{myBundle.CreateMotivoPermisoRequiredMessage_conGoce}"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{motivoPermisoController.saveNew}" value="#{myBundle.Save}" update="display,:MotivoPermisoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MotivoPermisoCreateDialog'));">
+                    <p:commandButton actionListener="#{motivoPermisoController.saveNew}" value="#{myBundle.Save}" update="display,:tabOpciones:MotivoPermisoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MotivoPermisoCreateDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
 

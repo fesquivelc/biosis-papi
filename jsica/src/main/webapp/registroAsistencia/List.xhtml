@@ -49,7 +49,7 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_biometricoId}"/>
                     </f:facet>
-                    <h:outputText value="#{item.biometricoId.id}"/>
+                    <h:outputText value="#{item.biometricoId.marca} #{item.biometricoId.modelo}"/>
                 </p:column>
 
 
@@ -57,9 +57,29 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_empleadoId}"/>
                     </f:facet>
-                    <h:outputText value="#{item.empleadoId.id}"/>
+                    <h:outputText value="#{item.empleadoId.apellidos} #{item.empleadoId.nombres}"/>
                 </p:column>
 
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Entra o Salida"/>
+                    </f:facet>
+                    <h:outputText value="#{item.iseOS}"/>
+                </p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Turno Original"/>
+                    </f:facet>
+                    <h:outputText value="#{item.turnoOriginal.jornadaCodigo.nombre}"/>
+                </p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Turno Reemplazo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.turnoReemplazo.jornadaCodigo.nombre}"/>
+                </p:column>
 
             </p:dataTable>
 

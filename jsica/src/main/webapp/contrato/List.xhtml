@@ -111,9 +111,9 @@
             </p:dataTable>
 
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{contratoController.prepareCreate}" update=":ContratoCreateForm" oncomplete="PF('ContratoCreateDialog').show()"/>
-            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":ContratoViewForm" oncomplete="PF('ContratoViewDialog').show()" disabled="#{empty contratoController.selected}"/>
-            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ContratoEditForm" oncomplete="PF('ContratoEditDialog').show()" disabled="#{empty contratoController.selected}"/>
-            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{contratoController.delete}" update=":growl,datalist" disabled="#{empty contratoController.selected}">
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":ContratoViewForm" oncomplete="PF('ContratoViewDialog').show()" />
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ContratoEditForm" oncomplete="PF('ContratoEditDialog').show()" />
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{contratoController.delete}" update=":growl,datalist" >
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 

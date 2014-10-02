@@ -19,8 +19,8 @@
                          selectionMode="single"
                          selection="#{empleadoPermisoController.selected}">
 
-                <p:ajax event="rowSelect"   update=":EmpleadoPermisoListForm:createButton :EmpleadoPermisoListForm:viewButton :EmpleadoPermisoListForm:editButton :EmpleadoPermisoListForm:deleteButton " listener="#{empleadoPermisoController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":EmpleadoPermisoListForm:createButton :EmpleadoPermisoListForm:viewButton :EmpleadoPermisoListForm:editButton :EmpleadoPermisoListForm:deleteButton " listener="#{empleadoPermisoController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":tabOpciones:EmpleadoPermisoListForm:createButton :tabOpciones:EmpleadoPermisoListForm:viewButton :tabOpciones:EmpleadoPermisoListForm:editButton :tabOpciones:EmpleadoPermisoListForm:deleteButton " listener="#{empleadoPermisoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":tabOpciones:EmpleadoPermisoListForm:createButton :tabOpciones:EmpleadoPermisoListForm:viewButton :tabOpciones:EmpleadoPermisoListForm:editButton :tabOpciones:EmpleadoPermisoListForm:deleteButton " listener="#{empleadoPermisoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('EmpleadoPermisoListForm:viewButton').click();"/>
 
 

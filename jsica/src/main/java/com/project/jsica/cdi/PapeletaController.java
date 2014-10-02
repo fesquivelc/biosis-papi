@@ -386,22 +386,6 @@ public class PapeletaController extends AbstractController<Papeleta> {
         return this.papeletaFacade.search(namedQuery, parametros, inicio, tamanio);
     }
     /*metodo create*/
-    @Override
-    public Papeleta prepareCreate(ActionEvent event){
-        this.papeleta = new Papeleta();
-        this.empleadoPermiso = new EmpleadoPermiso();
-        this.permiso = new Permiso();
-        
-        this.empleadoPermiso.setPermisoId(permiso);
-        this.empleadoPermiso.setPapeletaList(new ArrayList<Papeleta>());
-        this.empleadoPermiso.getPapeletaList().add(papeleta);
-        this.empleadoPermiso.setEmpleadoId(empleadoSeleccionado);
-        this.papeleta.setEmpleadoPermisoId(empleadoPermiso);
-        
-        this.setSelected(papeleta);
-        return this.papeleta;
-    }
-    
     private static final Logger LOG = Logger.getLogger(DetalleHorarioController.class.getName());
     
     public void onDepartamentoSeleccionado(){
