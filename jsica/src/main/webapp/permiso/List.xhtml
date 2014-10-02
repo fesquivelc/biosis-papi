@@ -20,8 +20,8 @@
                          selectionMode="single"
                          selection="#{permisoController.selected}">
 
-                <p:ajax event="rowSelect"   update=":tabOpciones:PermisoListForm:createButton :tabOpciones:PermisoListForm:viewButton :tabOpciones:PermisoListForm:editButton :tabOpciones:PermisoListForm:deleteButton " listener="#{permisoController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":tabOpciones:PermisoListForm:createButton :tabOpciones:PermisoListForm:viewButton :tabOpciones:PermisoListForm:editButton :tabOpciones:PermisoListForm:deleteButton " listener="#{permisoController.resetParents}"/>
+                <p:ajax event="rowSelect"   update=":PermisoListForm:createButton :PermisoListForm:viewButton  :PermisoListForm:editButton  :PermisoListForm:deleteButton " listener="#{permisoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":PermisoListForm:createButton :PermisoListForm:viewButton  :PermisoListForm:editButton  :PermisoListForm:deleteButton " listener="#{permisoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('PermisoListForm:viewButton').click();"/>
 
                 <p:column >
@@ -83,7 +83,7 @@
                                         <f:facet name="header">
                                             <h:outputText value="#{myBundle.ListPermisoTitle_motivoPermisoCodigo}"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.motivoPermisoCodigo.descripcion}"/>
+                                        <h:outputText value="#{item.motivoPermisoCodigo.nombre}"/>
                                     </p:column>
       
 
