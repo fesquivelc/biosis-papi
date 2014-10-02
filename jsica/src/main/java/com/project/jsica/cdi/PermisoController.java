@@ -139,7 +139,7 @@ public class PermisoController extends AbstractController<Permiso> {
 
     @Override
     public void saveNew(ActionEvent event) {
-        if(!this.porPapeleta){
+        if(this.porPapeleta){
             LOG.log(Level.INFO, "pasa check");
             this.getSelected().getEmpleadoPermiso().setPapeleta(null);
         }
