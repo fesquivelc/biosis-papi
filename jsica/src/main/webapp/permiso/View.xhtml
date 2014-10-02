@@ -42,7 +42,7 @@
                         <h:selectBooleanCheckbox id="porFecha" value="#{permisoController.selected.porFecha}" title="#{myBundle.EditPermisoTitle_porFecha}" required="true" requiredMessage="#{myBundle.EditPermisoRequiredMessage_porFecha}" disabled="true"/>
 
                         <h:outputText value="#{myBundle.ViewPermisoLabel_motivoPermisoCodigo}"/>
-                        <h:outputText value="#{permisoController.selected.motivoPermisoCodigo.descripcion}"/>
+                        <h:outputText value="#{permisoController.selected.motivoPermisoCodigo.nombre}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PF('PermisoViewDialog').hide()"/>
                 </h:panelGroup>
