@@ -15,6 +15,10 @@
                 <h:panelGroup id="display" rendered="#{permisoController.selected != null}">
                             <p:panelGrid columns="2" columnClasses="column">
 
+                                <p:outputLabel value="#{myBundle.CreateDetalleContratoLabel_empleadoId}" for="empleadoId" />
+                                <p:autoComplete id="empleadoId" value="#{permisoController.selected.empleadoPermiso.empleadoId}" completeMethod="#{empleadoController.metodo}"
+                                                var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="55" required="true"/>
+                                
                                 <p:outputLabel value="#{myBundle.CreatePermisoLabel_horaInicio}" for="horaInicio" />
                                 <p:inputMask id="horaInicio" value="#{permisoController.selected.horaInicio}" mask="99:99" title="#{myBundle.CreatePermisoTitle_horaInicio}">
                                     <f:convertDateTime pattern="HH:mm"/>
@@ -36,11 +40,18 @@
                                 </p:inputMask>
 
                                 <p:outputLabel value="#{myBundle.CreatePermisoLabel_tipo}" for="tipo" />
-                                <p:inputText id="tipo" value="#{permisoController.selected.tipo}" title="#{myBundle.CreatePermisoTitle_tipo}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_tipo}" size="2" maxlength="2"/>
-
+                                <p:selectOneMenu id="tipo" value="#{permisoController.selected.tipo}" required="true">
+                                    <f:selectItem itemLabel="Seleccione un tipo"/>
+                                    <f:selectItem itemLabel="LICENCIA" itemValue="LI"/>
+                                    <f:selectItem itemLabel="PERMISO" itemValue="PE"/>
+                                    <f:selectItem itemLabel="AUSENCIA" itemValue="AU"/>
+                                </p:selectOneMenu>
                                 <p:outputLabel value="#{myBundle.CreatePermisoLabel_porFecha}" for="porFecha" />
                                 <p:selectBooleanCheckbox id="porFecha" value="#{permisoController.selected.porFecha}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_porFecha}"/>
 
+                                <p:outputLabel value="Con papeleta?" for="porPapeleta"/>
+                                <p:selectBooleanCheckbox id="porPapeleta" value="#{permisoController.porPapeleta}" required="true" />
+                                
                                 <p:outputLabel value="#{myBundle.CreatePermisoLabel_motivoPermisoCodigo}" for="motivoPermisoCodigo" />
                                 <p:selectOneMenu id="motivoPermisoCodigo" value="#{permisoController.selected.motivoPermisoCodigo}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_motivoPermisoCodigo}" converter="motivoPermisoConverter">
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
@@ -52,7 +63,7 @@
 
                                 </p:selectOneMenu>
                             </p:panelGrid>
-                    <p:commandButton actionListener="#{permisoController.saveNew}" value="#{myBundle.Save}" update="display,:tabOpciones:PermisoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PermisoCreateDialog'));">
+                    <p:commandButton actionListener="#{permisoController.saveNew}" value="#{myBundle.Save}" update="display,:PermisoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PermisoCreateDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
 
