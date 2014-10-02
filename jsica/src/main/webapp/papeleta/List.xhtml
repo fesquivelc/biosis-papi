@@ -68,7 +68,7 @@
             </p:dataTable>
 
             
-            <p:commandButton id="createButton"  icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{papeletaController.prepareCreate}" update=":PapeletaCreateForm" oncomplete="PF('PapeletaCreateDialog').show()"/>
+            <p:commandButton id="createButton"  icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{permisoController.prepareCreate}" update=":PapeletaCreateForm" oncomplete="PF('PapeletaCreateDialog').show()"/>
             <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":PapeletaViewForm" oncomplete="PF('PapeletaViewDialog').show()" disabled="#{empty papeletaController.selected}"/>
             <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PapeletaEditForm" oncomplete="PF('PapeletaEditDialog').show()" disabled="#{empty papeletaController.selected}"/>
             <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{papeletaController.delete}" update=":growl,datalist" disabled="#{empty papeletaController.selected}">
