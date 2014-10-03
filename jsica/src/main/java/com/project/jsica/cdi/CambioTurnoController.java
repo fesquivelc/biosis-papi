@@ -1,10 +1,18 @@
 package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.CambioTurnoFacadeLocal;
+import com.project.jsica.ejb.dao.DetalleHorarioFacade;
+import com.project.jsica.ejb.dao.DetalleHorarioFacadeLocal;
+import com.project.jsica.ejb.dao.EmpleadoHorarioFacadeLocal;
 import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.CambioTurno;
+import com.project.jsica.ejb.entidades.DetalleHorario;
+import com.project.jsica.ejb.entidades.Empleado;
+import com.project.jsica.ejb.entidades.EmpleadoHorario;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -22,7 +30,13 @@ public class CambioTurnoController extends AbstractController<CambioTurno> {
 
     @EJB
     private CambioTurnoFacadeLocal cambioTurnoFacade;
-
+    
+    @EJB
+    private DetalleHorarioFacadeLocal detalleTurnoFacade;
+    
+    @EJB
+    private EmpleadoHorarioFacadeLocal empleadoDAO;
+    
     @Inject
     private BitacoraController bitacoraC;
 
@@ -32,7 +46,47 @@ public class CambioTurnoController extends AbstractController<CambioTurno> {
     private DetalleHorarioController detalleHorarioReemplazoController;
     @Inject
     private EmpleadoController jefeInmediatoIdController;
+    
+    private Date fechaTurno1;
+    private Date fechaTurno2;
 
+    private boolean isFechaTurno1;
+    private boolean isFechaTurno2;
+    
+    public Date getFechaTurno1() {
+        return fechaTurno1;
+    }
+
+    public void setFechaTurno1(Date fechaTurno1) {
+        this.fechaTurno1 = fechaTurno1;
+    }
+
+    public Date getFechaTurno2() {
+        return fechaTurno2;
+    }
+
+    public void setFechaTurno2(Date fechaTurno2) {
+        this.fechaTurno2 = fechaTurno2;
+    }
+
+    public boolean isIsFechaTurno1() {
+        return isFechaTurno1;
+    }
+
+    public void setIsFechaTurno1(boolean isFechaTurno1) {
+        this.isFechaTurno1 = isFechaTurno1;
+    }
+
+    public boolean isIsFechaTurno2() {
+        return isFechaTurno2;
+    }
+
+    public void setIsFechaTurno2(boolean isFechaTurno2) {
+        this.isFechaTurno2 = isFechaTurno2;
+    }
+
+    
+    
     public CambioTurnoController() {
         // Inform the Abstract parent controller of the concrete CambioTurno?cap_first Entity
         super(CambioTurno.class);
@@ -287,5 +341,51 @@ public class CambioTurnoController extends AbstractController<CambioTurno> {
     @Override
     public List<CambioTurno> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
         return this.cambioTurnoFacade.search(namedQuery, parametros, inicio, tamanio);
+    }
+    
+    public List<DetalleHorario> getTurnosxEmpleados1(){
+        String query="SELECT eh FROM empleadoHorario WHERE eh.empleadoId=:dni";
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("dni",this.getSelected().getEmpleado1Id().getDocIdentidad());
+        List<EmpleadoHorario> lista = empleadoDAO.search(query, parametros);
+        
+        List<DetalleHorario> resultado = new ArrayList<>();
+        
+        for(EmpleadoHorario eh : lista){
+            resultado.addAll(eh.getHorarioId().getDetalleHorarioList());
+        }
+        
+        return resultado;
+    }
+    
+    public List<DetalleHorario> getTurnosxEmpleados2(){
+        String query="SELECT eh FROM empleadoHorario WHERE eh.empleadoId=:dni";
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("dni",this.getSelected().getEmpleado2Id().getDocIdentidad());
+        List<EmpleadoHorario> lista = empleadoDAO.search(query, parametros);
+        
+        List<DetalleHorario> resultado = new ArrayList<>();
+        
+        for(EmpleadoHorario eh : lista){
+            resultado.addAll(eh.getHorarioId().getDetalleHorarioList());
+        }
+        
+        return resultado;
+    }
+ 
+    public void onFechaSelecciona1(){
+        if(this.fechaTurno1!=null){
+            this.isFechaTurno1=true;
+            return;
+        }
+        this.isFechaTurno1=false;
+    }
+    
+    public void onFechaSelecciona2(){
+        if(this.fechaTurno2!=null){
+            this.isFechaTurno2=true;
+            return;
+        }
+        this.isFechaTurno2=false;
     }
 }
