@@ -15,41 +15,36 @@
                 <h:panelGroup id="display" rendered="#{empleadoHorarioController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="#{myBundle.CreateEmpleadoHorarioLabel_fecha}" for="fecha" />
-                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{empleadoHorarioController.selected.fecha}" title="#{myBundle.CreateEmpleadoHorarioTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateEmpleadoHorarioRequiredMessage_fecha}" showOn="button"/>
+                        <p:outputLabel value="Fecha de registro:" for="fecha" />
+                        <p:calendar id="fecha" pattern="dd/MM/yyyy" value="#{empleadoHorarioController.selected.fecha}" title="#{myBundle.CreateEmpleadoHorarioTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateEmpleadoHorarioRequiredMessage_fecha}" showOn="button"/>
 
-                        <p:outputLabel value="#{myBundle.CreateEmpleadoHorarioLabel_porGrupo}" for="porGrupo" />
-                        <p:selectBooleanCheckbox id="porGrupo" value="#{empleadoHorarioController.selected.porGrupo}" required="true" requiredMessage="#{myBundle.CreateEmpleadoHorarioRequiredMessage_porGrupo}"/>
-
-                        <p:outputLabel value="#{myBundle.CreateEmpleadoHorarioLabel_empleadoId}" for="empleadoId" />
-                        <p:selectOneMenu id="empleadoId" value="#{empleadoHorarioController.selected.empleadoId}"  converter="empleadoConverter">
-                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{empleadoController.items}"
-                                           var="empleadoIdItem"
-                                           itemValue="#{empleadoIdItem}"
-                                           itemLabel="#{empleadoIdItem.id.toString()}"
-                                           />
-
-                        </p:selectOneMenu>
-
-                        <p:outputLabel value="#{myBundle.CreateEmpleadoHorarioLabel_horarioId}" for="horarioId" />
+                        <p:outputLabel value="Horario:" for="horarioId" />
                         <p:selectOneMenu id="horarioId" value="#{empleadoHorarioController.selected.horarioId}" required="true" requiredMessage="#{myBundle.CreateEmpleadoHorarioRequiredMessage_horarioId}" converter="horarioConverter">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{horarioController.items}"
+                            <f:selectItems value="#{horarioController.horariosAdministrativos}"
                                            var="horarioIdItem"
                                            itemValue="#{horarioIdItem}"
-                                           itemLabel="#{horarioIdItem.descripcion.toString()}"
+                                           itemLabel="#{horarioIdItem.nombre}"
                                            />
 
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="#{myBundle.CreateEmpleadoHorarioLabel_grupoHorarioId}" for="grupoHorarioId" />
+                        <p:outputLabel value="¿Por grupo?:" for="porGrupo" />
+                        <p:selectBooleanCheckbox id="porGrupo" value="#{empleadoHorarioController.selected.porGrupo}" required="true" requiredMessage="#{myBundle.CreateEmpleadoHorarioRequiredMessage_porGrupo}"/>
+
+                        <p:outputLabel value="Empleado:" for="empleadoBuscado" />
+                        <p:autoComplete id="empleadoBuscado" value="#{empleadoController.seleccionado}" completeMethod="#{empleadoController.metodo}"
+                                        var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="55"/>
+
+
+
+                        <p:outputLabel value="Grupo Horario:" for="grupoHorarioId" />
                         <p:selectOneMenu id="grupoHorarioId" value="#{empleadoHorarioController.selected.grupoHorarioId}"  converter="grupoHorarioConverter">
-                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItem itemLabel="Seleccione un grupo horario"/>
                             <f:selectItems value="#{grupoHorarioController.items}"
                                            var="grupoHorarioIdItem"
                                            itemValue="#{grupoHorarioIdItem}"
-                                           itemLabel="#{grupoHorarioIdItem.id.toString()}"
+                                           itemLabel="#{grupoHorarioIdItem.nombre}"
                                            />
 
                         </p:selectOneMenu>

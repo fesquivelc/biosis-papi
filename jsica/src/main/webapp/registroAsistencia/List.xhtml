@@ -10,7 +10,7 @@
 
         <p:panel header="#{myBundle.ListRegistroAsistenciaTitle}">
             <p:dataTable id="datalist"
-                         value="#{registroAsistenciaController.items}"
+                         value="#{registroAsistenciaController.registros}"
                          var="item"
                          rowKey="#{item.id}"
                          paginator="true"
@@ -20,24 +20,19 @@
                          selectionMode="single"
                          selection="#{registroAsistenciaController.selected}">
 
-                <p:ajax event="rowSelect"   update=":tabOpciones:RegistroAsistenciaListForm:createButton :tabOpciones:RegistroAsistenciaListForm:viewButton :tabOpciones:RegistroAsistenciaListForm:editButton :tabOpciones:RegistroAsistenciaListForm:deleteButton " listener="#{registroAsistenciaController.resetParents}"/>
-                <p:ajax event="rowUnselect" update=":tabOpciones:RegistroAsistenciaListForm:createButton :tabOpciones:RegistroAsistenciaListForm:viewButton :tabOpciones:RegistroAsistenciaListForm:editButton :tabOpciones:RegistroAsistenciaListForm:deleteButton " listener="#{registroAsistenciaController.resetParents}"/>
-                
-
-
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_fecha}"/>
+                        <h:outputText value="Fecha"/>
                     </f:facet>
                     <h:outputText value="#{item.fecha}">
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
                     </h:outputText>
                 </p:column>
 
 
                 <p:column >
                     <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_hora}"/>
+                        <h:outputText value="Hora"/>
                     </f:facet>
                     <h:outputText value="#{item.hora}">
                         <f:convertDateTime pattern="HH:mm:ss" />
@@ -47,24 +42,23 @@
 
                 <p:column >
                     <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_biometricoId}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.biometricoId.marca} #{item.biometricoId.modelo}"/>
-                </p:column>
-
-
-                <p:column >
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_empleadoId}"/>
+                        <h:outputText value="Empleado"/>
                     </f:facet>
                     <h:outputText value="#{item.empleadoId.apellidos} #{item.empleadoId.nombres}"/>
                 </p:column>
 
                 <p:column >
                     <f:facet name="header">
-                        <h:outputText value="Entra o Salida"/>
+                        <h:outputText value="Evento"/>
                     </f:facet>
-                    <h:outputText value="#{item.iseOS}"/>
+                    <h:outputText value="#{item.EOS}" converter="eventoAsistenciaConverter"/>
+                </p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Asistencia"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipo}"/>
                 </p:column>
                 
                 <p:column >
@@ -82,16 +76,7 @@
                 </p:column>
 
             </p:dataTable>
-
-            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{registroAsistenciaController.prepareCreate}" update=":RegistroAsistenciaCreateForm" oncomplete="PF('RegistroAsistenciaCreateDialog').show()"/>
-            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":RegistroAsistenciaViewForm" oncomplete="PF('RegistroAsistenciaViewDialog').show()" disabled="#{empty registroAsistenciaController.selected}"/>
-            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RegistroAsistenciaEditForm" oncomplete="PF('RegistroAsistenciaEditDialog').show()" disabled="#{empty registroAsistenciaController.selected}"/>
-            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{registroAsistenciaController.delete}" update=":growl,datalist" disabled="#{empty registroAsistenciaController.selected}">
-                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
-            </p:commandButton>
-
         </p:panel>
-        <ui:include src="/confirmation.xhtml"/>
     </h:form>
 
 </ui:composition>

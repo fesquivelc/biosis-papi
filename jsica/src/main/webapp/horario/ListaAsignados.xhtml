@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EmpleadoHorarioListForm">
+
+        <p:panel header="ASIGNACIÓN DE HORARIOS ADMINISTRATIVOS">
+            <p:dataTable id="datalist"
+                         value="#{empleadoHorarioController.asignacionAdministrativo}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{empleadoHorarioController.selected}">
+
+
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Fecha"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Horario"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horarioId.nombre}" />                    
+                </p:column>
+
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Empleado"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleadoId.apellidos} #{item.empleadoId.nombres}" />
+                </p:column>
+
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Grupo horario"/>
+                    </f:facet>
+                    <h:outputText value="#{item.grupoHorarioId.nombre}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandLink action="/empleadoHorario/index" value="ASIGNACION DE HORARIOS"/>
+            
+
+        </p:panel>       
+    </h:form>
+
+</ui:composition>

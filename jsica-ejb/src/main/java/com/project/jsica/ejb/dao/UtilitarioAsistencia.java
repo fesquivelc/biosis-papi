@@ -277,7 +277,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
 
                 break;
             case 3:
-                consulta = "SELECT fecha,hora,dni,equipo_ip FROM vista WHERE evento = '55' AND fecha >= '2013-07-01' ";
+                consulta = "SELECT fecha,hora,dni,equipo_ip FROM vista WHERE evento = '55' AND fecha BETWEEN '2013-07-01' AND '2013-07-31' ";
                 break;
         }
         LOG.info(consulta);

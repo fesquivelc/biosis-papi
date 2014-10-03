@@ -96,6 +96,11 @@ public class RegistroAsistenciaController extends AbstractController<RegistroAsi
         biometricoIdController.setSelected(null);
         empleadoIdController.setSelected(null);
     }
+    
+    public List<RegistroAsistencia> getRegistros(){
+        String sql = "SELECT r FROM RegistroAsistencia r ORDER BY r.empleadoId.id, r.fecha, r.hora";
+        return this.search(sql);
+    }
 
     /**
      * Sets the "selected" attribute of the Biometrico controller in order to

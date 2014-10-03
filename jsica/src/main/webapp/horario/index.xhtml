@@ -17,6 +17,7 @@
 
             </p:tab>
             <p:tab title="ASIGNACION">
+                <ui:include src="/horario/ListaAsignados.xhtml"/>
                 <h:form id="frmAsignacionEmpleado">
                     <p:panel header="Asignación de Horarios">
                         <p:panelGrid columnClasses="column" columns="2">
@@ -119,9 +120,7 @@
                         </p:panelGrid>
                         
                     </p:panel> 
-                    <p:commandButton actionListener="#{horarioController.prepareCreate}" value="#{myBundle.Save}" update="display,:HorarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('HorarioCreateDialog'));">
-                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
+
                 </h:form>
             </p:tab> 
         </p:tabView>
