@@ -205,7 +205,14 @@ public class Horario implements Serializable {
     public void setPorFecha(boolean porFecha) {
         this.porFecha = porFecha;
     }
-
+    
+    public DetalleHorario getDetalleHorario(){
+        return this.detalleHorarioList.get(0);
+    }
+    
+    public EmpleadoHorario getEmpleadoHorario(){
+        return this.empleadoHorarioList.get(0);
+    }
     @XmlTransient
     public List<DetalleHorario> getDetalleHorarioList() {
         return detalleHorarioList;
