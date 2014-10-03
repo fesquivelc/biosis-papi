@@ -10,6 +10,7 @@ import com.project.jsica.ejb.dao.CambioTurnoFacadeLocal;
 import com.project.jsica.ejb.dao.EmpleadoFacadeLocal;
 import com.project.jsica.ejb.dao.EmpleadoHorarioFacadeLocal;
 import com.project.jsica.ejb.dao.EmpleadoPermisoFacadeLocal;
+
 import com.project.jsica.ejb.dao.FeriadoFacadeLocal;
 import com.project.jsica.ejb.dao.RegistroAsistenciaFacadeLocal;
 import com.project.jsica.ejb.dao.VistaFacadeLocal;
@@ -74,10 +75,40 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
     private final int MINUTOS_MAX_MARCACION_SALIDA = 120;
 
     private void analizarRegistroAdministrativo(Empleado empleado, DetalleHorario turno, List<Vista> marcacionesXMes, List<Permiso> permisosXMes) {
-        //CASOS
-        if (fechaInicio.compareTo(fechaFin) == 0) {
+        //SE ANALIZA EL CASO DEL ONOMÁSTICO
+        List<Integer> diasLaborables = getDiasLaborables(turno.getHorarioId().getLunes(), turno.getHorarioId().getMartes(), turno.getHorarioId().getMiercoles(), turno.getHorarioId().getJueves(), turno.getHorarioId().getViernes(), turno.getHorarioId().getSabado(), turno.getHorarioId().getDomingo());
+//        boolean diaLaboral = false;
+//        if (fechaInicio.compareTo(empleado.getFechaNacimiento()) == 0) {
+//            LOG.info("ONOMASTICO");
+//            if (diaLaboral) {
+//                LOG.info("SE BUSCA SI ES FALTA SINO SE GENERA UN PERMISO");
+//            } else {
+//                LOG.info("SE BUSCA EL DIA LABORAL MAS CERCANO");
+//            }
+//        } else {
+
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTime(fechaInicio);
+//            if (cal.get(Calendar.MONTH) == 6) { // SOLO DE PRUEBA
+        Date desde = cal.getTime();
+
+        cal.set(Calendar.DAY_OF_MONTH, cal.getMaximum(Calendar.DAY_OF_MONTH));
+
+        Date hasta = cal.getTime();
+
+        while (desde.compareTo(hasta) <= 0) {
+            if (isDiaLaboral(desde, diasLaborables)) {
+                analizarRegistros(empleado, desde, desde, turno.getJornadaCodigo().getHEntrada(), turno.getJornadaCodigo().getHSalida(), turno, null, marcacionesXMes, permisosXMes, null);
+            }
+            //aumenta un dia
+            cal.setTime(desde);
+            cal.add(Calendar.DAY_OF_MONTH, 1);
+            desde = cal.getTime();
 
         }
+//            }
+//        }
     }
 
     private void analizarRegistroAsistencial(Empleado empleado, DetalleHorario turnoOriginal, DetalleHorario turnoReemplazo, List<Vista> marcacionesXMes, List<Permiso> permisosXMes, List<CambioTurno> cambiosTurnoXMes) {
@@ -215,13 +246,120 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
 
         }
     }//TERMINA METODO ANALIZAR ASISTENCIAL
-    
-    
+
 //    
 //    
-//    private RegistroAsistencia[] analizarRegistros(Empleado empleado, Date fechaEntrada, Date fechaSalida, Date horaEntrada, Date horaSalida, List<Vista> marcacionesXMes, List<Permiso> permisosXMes, List<CambioTurno> cambiosTurnoXMes){      
-//        
-//    }
+    private void analizarRegistros(Empleado empleado, Date fechaEntrada, Date fechaSalida, Date horaEntrada, Date horaSalida, DetalleHorario turnoOriginal, DetalleHorario turnoReemplazo, List<Vista> marcacionesXMes, List<Permiso> permisosXMes, List<CambioTurno> cambiosTurnoXMes) {
+        DetalleHorario turno;
+
+        if (turnoReemplazo != null) {
+            turno = turnoReemplazo;
+        } else {
+            turno = turnoOriginal;
+        }
+
+        RegistroAsistencia registroEntrada;
+        RegistroAsistencia registroSalida;
+
+        Permiso permiso = this.isEstaEnPermisoXFecha(fechaEntrada, permisosXMes);
+
+        if (permiso != null) {
+            registroEntrada = new RegistroAsistencia();
+            registroEntrada.setTipo("PE");
+            registroEntrada.setFecha(fechaEntrada);
+            registroEntrada.setTurnoOriginal(turnoOriginal);
+            registroEntrada.setEmpleadoId(empleado);
+            registroEntrada.setPermisoId(permiso);
+            registroxMes.add(registroEntrada);
+        } else if (FechaUtil.compararFechaHora(fechaInicio, horaInicio, fechaEntrada, horaEntrada) <= 0) {
+            if (FechaUtil.compararFechaHora(fechaFin, horaFin, fechaEntrada, horaEntrada) < 0) {
+                LOG.info("NADA");
+            } else if (FechaUtil.compararFechaHora(fechaFin, horaFin, fechaSalida, horaSalida) >= 0) {
+                LOG.info("ANALIZAMOS HORA DE ENTRADA Y HORA DE SALIDA");
+
+                registroEntrada = obtenerRegistroEntrada(empleado, turno, fechaEntrada, marcacionesXMes);
+
+                if (registroEntrada.getTipo().charAt(0) == 'F') {
+                    if (turnoReemplazo != null) {
+                        registroEntrada.setTurnoOriginal(turnoOriginal);
+                        registroEntrada.setTurnoReemplazo(turnoReemplazo);
+                        registroEntrada.setTipo("FC");
+                    } else {
+                        registroEntrada.setTipo("FT");
+                    }
+                    registroxMes.add(registroEntrada);
+                } else {
+                    registroSalida = obtenerRegistroSalida(empleado, turno, fechaEntrada, marcacionesXMes);
+                    if (registroSalida == null) {
+                        if (turnoReemplazo != null) {
+                            registroEntrada.setTurnoOriginal(turnoOriginal);
+                            registroEntrada.setTurnoReemplazo(turnoReemplazo);
+                            registroEntrada.setTipo("FC");
+                        } else {
+                            registroEntrada.setTipo("FT");
+                        }
+                        registroxMes.add(registroEntrada);
+                    } else {
+                        if (turnoReemplazo != null) {
+                            registroEntrada.setTurnoOriginal(turnoOriginal);
+                            registroEntrada.setTurnoReemplazo(turnoReemplazo);
+                            registroEntrada.setTipo(registroEntrada.getTipo().replace("N", "C"));
+                        } else {
+                            registroEntrada.setTipo(registroEntrada.getTipo().replace("N", "T"));
+                        }
+                        registroxMes.add(registroEntrada);
+                        registroxMes.add(registroSalida);
+                    }
+                }
+
+            } else {
+                LOG.info("ANALIZANDO HORA DE ENTRADA");
+
+                registroEntrada = obtenerRegistroEntrada(empleado, turno, fechaEntrada, marcacionesXMes);
+                if (registroEntrada.getTipo().charAt(0) == 'F') {
+                    if (turnoReemplazo != null) {
+                        registroEntrada.setTurnoOriginal(turnoOriginal);
+                        registroEntrada.setTurnoReemplazo(turnoReemplazo);
+                        registroEntrada.setTipo("FC");
+                    }
+                } else if (turnoReemplazo != null) {
+                    registroEntrada.setTurnoOriginal(turnoOriginal);
+                    registroEntrada.setTurnoReemplazo(turnoReemplazo);
+                }
+                registroxMes.add(registroEntrada);
+            }
+        } else if (FechaUtil.compararFechaHora(fechaInicio, horaInicio, fechaSalida, horaSalida) > 0) {
+            LOG.info("NADA");
+        } else if (FechaUtil.compararFechaHora(fechaFin, horaFin, fechaSalida, horaSalida) >= 0) {
+            LOG.info("SE ANALIZA SALIDA");
+
+            registroEntrada = this.buscarRegistroXTurno(turno);
+            if (registroEntrada.getTipo().substring(0, 1).equals("F")) {
+                //SE HA DETERMINADO COMO FALTA NO EXISTE NADA QUE SE PUEDA HACER
+            } else {
+                registroSalida = this.obtenerRegistroSalida(empleado, turno, fechaEntrada, marcacionesXMes);
+                if (registroSalida == null) {
+                    if (turnoReemplazo == null) {
+                        registroEntrada.setTipo("FT");
+                    } else {
+                        registroEntrada.setTipo("FC");
+                    }
+                    this.registroxMes.add(registroEntrada);
+                } else {
+                    if (turnoReemplazo == null) {
+                        registroEntrada.setTipo(registroEntrada.getTipo().replace("N", "T"));
+                    } else {
+                        registroEntrada.setTipo(registroEntrada.getTipo().replace("N", "C"));
+                    }
+                    this.registroxMes.add(registroEntrada);
+                    this.registroxMes.add(registroSalida);
+                }
+
+            }
+
+        }
+
+    }
 
     private RegistroAsistencia buscarRegistroXTurno(DetalleHorario turno) {
         String jpql = "SELECT r FROM RegistroAsistencia r WHERE r.turnoOriginal = :turno OR r.turnoReemplazo = :turno";
@@ -275,7 +413,7 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
         cal.add(Calendar.MINUTE, maximo);
 
         LOG.log(Level.INFO, "FECHA PARA EL FILTRADO: {0}", fecha.toString());
-        
+
         java.util.Date horaMaxima = cal.getTime();
         LOG.log(Level.INFO, "HORA MAXIMA: {0}", horaMaxima.toString());
 
@@ -310,6 +448,13 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
             }
         }
         return null;
+    }
+
+    private boolean isDiaLaboral(Date fecha, List<Integer> diasLaborables) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        int diaActual = cal.get(Calendar.DAY_OF_WEEK);
+        return diasLaborables.contains(diaActual);
     }
 
     //LOS PERMISOS SE CARGAN POR MES ASI QUE SOLO PERTENECEN A UN USUARIO A MENOS QUE ESTE USUARIO CAMBIE
@@ -375,7 +520,7 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
 
             for (Empleado empleado : this.empleados) {
                 LOG.info(empleado.getApellidos());
-                turnosXMes = this.turnosXEmpleado(empleado.getDocIdentidad(), mes, anio);
+                turnosXMes = this.turnosXEmpleado(empleado, mes, anio);
                 permisosXMes = this.permisosXEmpleado(empleado.getDocIdentidad(), mes, anio);
                 cambiosTurnoXMes = this.cambiosTurnoXEmpleado(empleado.getDocIdentidad(), mes, anio);
                 marcacionesXMes = this.vistaXEmpleado(empleado.getDocIdentidad(), mes, anio);
@@ -445,7 +590,7 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
         if (vistaEntrada == null) {
             LOG.info("ES UN REGISTRO DE FALTA");
             registro.setEmpleadoId(empleado);
-            registro.setFecha(turno.getFecha());
+            registro.setFecha(fechaEntrada);
             registro.seteOS(true);
             registro.setTurnoOriginal(turno);
             registro.setTipo("FT");
@@ -515,22 +660,35 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
         this.empleados = listaEmpleados;
     }
 
-    public List<DetalleHorario> turnosXEmpleado(String dni, int mes, int anio) {
+    public List<DetalleHorario> turnosXEmpleado(Empleado empleado, int mes, int anio) {
 
         int primero = 1;
         int ultimo = this.ultimoDiaMes(mes, anio);
 
         String fechaI = "{d '" + anio + "-" + mes + "-" + primero + "'}";
         String fechaF = "{d '" + anio + "-" + mes + "-" + ultimo + "'}";
-
-        String sql = "SELECT eh FROM EmpleadoHorario eh"
-                + " WHERE"
-                + " eh.empleadoId.docIdentidad = :dni"
-                + " AND (eh.horarioId.porFecha = false"
-                + " OR (eh.horarioId.porFecha = true AND eh.horarioId.fecha BETWEEN " + fechaI + " AND " + fechaF + "))";
-
+        
+        String sql;
+        
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("dni", dni);
+        
+        
+        
+        if(empleado.getGrupoHorarioId() != null){
+            sql = "SELECT eh FROM EmpleadoHorario eh "
+                    + "WHERE (eh.porGrupo = TRUE AND eh.grupoHorarioId = :grupo) "
+                    + "AND (eh.horarioId.porFecha = FALSE "
+                    + "OR (eh.horarioId.porFecha = TRUE AND eh.horarioId.fecha BETWEEN " + fechaI + " AND " + fechaF + ")) ";
+            parametros.put("grupo", empleado.getGrupoHorarioId());
+        }else{
+            sql = "SELECT eh FROM EmpleadoHorario eh "
+                    + "WHERE (eh.porGrupo = FALSE AND eh.empleadoId.docIdentidad = :dni) "
+                    + "AND (eh.horarioId.porFecha = FALSE "
+                    + "OR (eh.horarioId.porFecha = TRUE AND eh.horarioId.fecha BETWEEN " + fechaI + " AND " + fechaF + ")) ";
+            parametros.put("dni", empleado.getDocIdentidad());
+        }
+
+        
 
         List<EmpleadoHorario> empleadoHorarios = empleadoHorarioDAO.search(sql, parametros);
         List<DetalleHorario> lista = new ArrayList<>();
@@ -568,6 +726,33 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
             registroAsistenciaDAO.edit(registroAsistencia);
         }
         registros.clear();
+    }
+
+    private List<Integer> getDiasLaborables(boolean lunes, boolean martes, boolean miercoles, boolean jueves, boolean viernes, boolean sabado, boolean domingo) {
+        List<Integer> diasLaborables = new ArrayList<>();
+        if (domingo) {
+            diasLaborables.add(1);
+        }
+        if (lunes) {
+            diasLaborables.add(2);
+        }
+        if (martes) {
+            diasLaborables.add(3);
+        }
+        if (miercoles) {
+            diasLaborables.add(4);
+        }
+        if (jueves) {
+            diasLaborables.add(5);
+        }
+        if (viernes) {
+            diasLaborables.add(6);
+        }
+        if (sabado) {
+            diasLaborables.add(7);
+        }
+
+        return diasLaborables;
     }
 
 }
