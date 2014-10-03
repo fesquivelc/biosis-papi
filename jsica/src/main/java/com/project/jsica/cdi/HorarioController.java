@@ -3,7 +3,9 @@ package com.project.jsica.cdi;
 import com.project.jsica.ejb.dao.HorarioFacadeLocal;
 import com.project.jsica.ejb.entidades.Area;
 import com.project.jsica.ejb.entidades.Bitacora;
+import com.project.jsica.ejb.entidades.DetalleHorario;
 import com.project.jsica.ejb.entidades.Empleado;
+import com.project.jsica.ejb.entidades.EmpleadoHorario;
 import com.project.jsica.ejb.entidades.Horario;
 import com.project.jsica.ejb.entidades.Servicio;
 import com.project.jsica.ejb.entidades.Sucursal;
@@ -31,7 +33,9 @@ public class HorarioController extends AbstractController<Horario> {
 
     private Empleado empleadoSeleccionado;
     private boolean isEmpleadoSeleccionado;
-    
+    private DetalleHorario detalleHorario;
+    private EmpleadoHorario empleadoHorario;
+            
     private int mesSeleccionado;
     private boolean isMesSeleccionado;
     private int anioSeleccionado;
@@ -56,7 +60,8 @@ public class HorarioController extends AbstractController<Horario> {
     @Inject
     private EmpleadoController empleadoListController;
 
-    private DualListModel<Empleado> empleados;
+    private boolean porEmpleado;
+    private boolean porGrupo;
     
     //Getters and setters
     public Empleado getEmpleadoSeleccionado() {
@@ -148,7 +153,30 @@ public class HorarioController extends AbstractController<Horario> {
         this.isMesSeleccionado = isMesSeleccionado;
     }
 
-    
+    public boolean isPorEmpleado() {
+        return porEmpleado;
+    }
+
+    public void setPorEmpleado(boolean porEmpleado) {
+        this.porEmpleado = porEmpleado;
+    }
+
+    public boolean isPorGrupo() {
+        return porGrupo;
+    }
+
+    public void setPorGrupo(boolean porGrupo) {
+        this.porGrupo = porGrupo;
+    }
+
+    public EmpleadoHorario getEmpleadoHorario() {
+        return empleadoHorario;
+    }
+
+    public void setEmpleadoHorario(EmpleadoHorario empleadoHorario) {
+        this.empleadoHorario = empleadoHorario;
+    }
+
     public HorarioController() {
         // Inform the Abstract parent controller of the concrete Horario?cap_first Entity
         super(Horario.class);
@@ -523,6 +551,25 @@ public class HorarioController extends AbstractController<Horario> {
 
      private static final Logger LOG = Logger.getLogger(DetalleHorarioController.class.getName());
 
+    @Override
+    public Horario prepareCreate(ActionEvent event) {
+        LOG.log(Level.INFO, "Llega al prepare create de horario");
+        Horario horario = new Horario();
+        
+        horario.setDetalleHorarioList(new ArrayList<DetalleHorario>());
+        
+        this.detalleHorario = new DetalleHorario();
+        
+        horario.getDetalleHorarioList().add(this.detalleHorario);
+        
+        this.detalleHorario.setHorarioId(horario);
+        
+        this.setSelected(horario);
+        
+        return horario;
+    }
+     
+     
     public void onSucursalSeleccionado() {
         if (this.sucursalSeleccionado != null) {
             LOG.log(Level.INFO, "ID DEL DEPARTAMENTO: {0}", this.sucursalSeleccionado.getId());

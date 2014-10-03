@@ -43,10 +43,21 @@
                         <p:selectBooleanCheckbox id="domingo" value="#{horarioController.selected.domingo}" required="true" requiredMessage="#{myBundle.CreateHorarioRequiredMessage_domingo}"/>
 
                         <p:outputLabel value="#{myBundle.CreateHorarioLabel_fecha}" for="fecha" />
-                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{horarioController.selected.fecha}" title="#{myBundle.CreateHorarioTitle_fecha}"  showOn="button"/>
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{horarioController.selected.detalleHorario.fecha}" title="#{myBundle.CreateHorarioTitle_fecha}"  showOn="button"/>
 
                         <p:outputLabel value="#{myBundle.CreateHorarioLabel_porFecha}" for="porFecha" />
                         <p:selectBooleanCheckbox id="porFecha" value="#{horarioController.selected.porFecha}" required="true" requiredMessage="#{myBundle.CreateHorarioRequiredMessage_porFecha}"/>
+                    
+                        <p:outputLabel value="#{myBundle.CreateDetalleHorarioLabel_jornadaCodigo}" for="jornadaCodigo" />
+                        <p:selectOneMenu id="jornadaCodigo" value="#{horarioController.selected.detalleHorario.jornadaCodigo}" required="true" requiredMessage="#{myBundle.CreateDetalleHorarioRequiredMessage_jornadaCodigo}" converter="jornadaConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{jornadaController.items}"
+                                           var="jornadaCodigoItem"
+                                           itemValue="#{jornadaCodigoItem}"
+                                           itemLabel="#{jornadaCodigoItem.nombre}"
+                                           />
+
+                        </p:selectOneMenu>    
                     </p:panelGrid>
                     <p:commandButton actionListener="#{horarioController.saveNew}" value="#{myBundle.Save}" update="display,:tabOpciones:HorarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('HorarioCreateDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
