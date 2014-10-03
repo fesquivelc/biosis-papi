@@ -61,22 +61,22 @@ public abstract class AbstractFacade<T> {
     }
 
     public List<T> findAll() {
-        utilitarioAsistencia.crearEspejo();
-        Date fechaInicio = utilitarioAsistencia.getFechaPartida();
-        Date fechaFin = utilitarioAsistencia.getFechaLlegada();
-        Date horaInicio = utilitarioAsistencia.getHoraPartida();
-        Date horaFin = utilitarioAsistencia.getHoraLlegada();
-        LOG.log(Level.INFO, "--FECHA INICIO: {0}", fechaInicio.toString());
-        LOG.log(Level.INFO, "--FECHA FIN: {0}", fechaFin.toString());
-        LOG.log(Level.INFO, "--HORA INICIO: {0}", horaInicio.toString());
-        LOG.log(Level.INFO, "--HORA FIN: {0}", horaFin.toString());
-//        List<Empleado> empleados = empleadoDAO.findAll();
-        List<Empleado> empleados = empleadoDAO.search("SELECT e FROM Empleado e");
-//        empleados.add(empleadoDAO.find(Long.parseLong("1")));
-//        empleados.add(empleadoDAO.find(Long.parseLong("2")));
-//        analisisAsistencia.setListaEmpleados(empleados);
-//        empleados.addAll(empleadoDAO.search("SELECT e FROM Empleado e"));
-        analisisAsistencia.iniciarAnalisis(fechaInicio, horaInicio, fechaFin, horaFin, empleados);
+//        utilitarioAsistencia.crearEspejo();
+//        Date fechaInicio = utilitarioAsistencia.getFechaPartida();
+//        Date fechaFin = utilitarioAsistencia.getFechaLlegada();
+//        Date horaInicio = utilitarioAsistencia.getHoraPartida();
+//        Date horaFin = utilitarioAsistencia.getHoraLlegada();
+//        LOG.log(Level.INFO, "--FECHA INICIO: {0}", fechaInicio.toString());
+//        LOG.log(Level.INFO, "--FECHA FIN: {0}", fechaFin.toString());
+//        LOG.log(Level.INFO, "--HORA INICIO: {0}", horaInicio.toString());
+//        LOG.log(Level.INFO, "--HORA FIN: {0}", horaFin.toString());
+////        List<Empleado> empleados = empleadoDAO.findAll();
+//        List<Empleado> empleados = empleadoDAO.search("SELECT e FROM Empleado e");
+////        empleados.add(empleadoDAO.find(Long.parseLong("1")));
+////        empleados.add(empleadoDAO.find(Long.parseLong("2")));
+////        analisisAsistencia.setListaEmpleados(empleados);
+////        empleados.addAll(empleadoDAO.search("SELECT e FROM Empleado e"));
+//        analisisAsistencia.iniciarAnalisis(fechaInicio, horaInicio, fechaFin, horaFin, empleados);
 
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));

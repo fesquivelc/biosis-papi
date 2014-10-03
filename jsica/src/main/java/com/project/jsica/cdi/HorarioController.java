@@ -63,6 +63,11 @@ public class HorarioController extends AbstractController<Horario> {
     private boolean porEmpleado;
     private boolean porGrupo;
     
+    public List<Horario> getHorariosAdministrativos(){
+        String sql = "SELECT h FROM Horario h WHERE h.porFecha = FALSE";
+        return this.search(sql);
+    }
+    
     //Getters and setters
     public Empleado getEmpleadoSeleccionado() {
         return empleadoSeleccionado;
@@ -200,7 +205,7 @@ public class HorarioController extends AbstractController<Horario> {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("DetalleHorario_items", this.getSelected().getDetalleHorarioList());
         }
         return "/detalleHorario/index";
-    }
+    }        
 
     /**
      * Sets the "items" attribute with a collection of EmpleadoHorario entities

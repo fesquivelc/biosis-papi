@@ -95,6 +95,11 @@ public class EmpleadoHorarioController extends AbstractController<EmpleadoHorari
     public List<EmpleadoHorario> getItems() {
         return this.empleadoHorarioFacade.findAll();
     }
+    
+    public List<EmpleadoHorario> getAsignacionAdministrativo(){
+        String sql = "SELECT eh FROM EmpleadoHorario eh WHERE eh.horarioId.porFecha = FALSE";
+        return this.search(sql);
+    }
 
     @Override
     public List<EmpleadoHorario> search(String namedQuery) {

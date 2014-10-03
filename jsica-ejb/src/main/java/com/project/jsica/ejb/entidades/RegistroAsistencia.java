@@ -78,6 +78,10 @@ public class RegistroAsistencia implements Serializable {
     public String getTipo() {
         return tipo;
     }
+    
+    public boolean getEOS(){
+        return this.eOS;
+    }
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
