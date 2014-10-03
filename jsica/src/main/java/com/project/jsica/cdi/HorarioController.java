@@ -6,6 +6,7 @@ import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.Horario;
 import com.project.jsica.ejb.entidades.Servicio;
+import com.project.jsica.ejb.entidades.Sucursal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +23,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import org.primefaces.model.DualListModel;
 
 @Named(value = "horarioController")
 @ViewScoped
@@ -29,16 +31,18 @@ public class HorarioController extends AbstractController<Horario> {
 
     private Empleado empleadoSeleccionado;
     private boolean isEmpleadoSeleccionado;
-
-    private Area departamentoSeleccionado;
-    private boolean isDepartamentoSeleccionado;
-
-    private Servicio servicioSeleccionado;
-    private boolean isServicioSeleccionado;
+    
     private int mesSeleccionado;
     private boolean isMesSeleccionado;
     private int anioSeleccionado;
-
+    
+    private Sucursal sucursalSeleccionado;
+    private boolean isSucursalSeleccionado;
+    private Area areaSeleccionado;
+    private boolean isAreaSeleccionado;
+    private Servicio servicioSeleccionado;
+    private boolean isServicioSeleccionado;
+    
     @EJB
     private HorarioFacadeLocal horarioFacade;
 
@@ -52,6 +56,8 @@ public class HorarioController extends AbstractController<Horario> {
     @Inject
     private EmpleadoController empleadoListController;
 
+    private DualListModel<Empleado> empleados;
+    
     //Getters and setters
     public Empleado getEmpleadoSeleccionado() {
         return empleadoSeleccionado;
@@ -69,20 +75,37 @@ public class HorarioController extends AbstractController<Horario> {
         this.isEmpleadoSeleccionado = isEmpleadoSeleccionado;
     }
 
-    public Area getDepartamentoSeleccionado() {
-        return departamentoSeleccionado;
+    /**Metodos getters and setters**/
+    public Sucursal getSucursalSeleccionado() {
+        return sucursalSeleccionado;
     }
 
-    public void setDepartamentoSeleccionado(Area departamentoSeleccionado) {
-        this.departamentoSeleccionado = departamentoSeleccionado;
+    public void setSucursalSeleccionado(Sucursal sucursalSeleccionado) {
+        this.sucursalSeleccionado = sucursalSeleccionado;
     }
 
-    public boolean isIsDepartamentoSeleccionado() {
-        return isDepartamentoSeleccionado;
+    public boolean isIsSucursalSeleccionado() {
+        return isSucursalSeleccionado;
     }
 
-    public void setIsDepartamentoSeleccionado(boolean isDepartamentoSeleccionado) {
-        this.isDepartamentoSeleccionado = isDepartamentoSeleccionado;
+    public void setIsSucursalSeleccionado(boolean isSucursalSeleccionado) {
+        this.isSucursalSeleccionado = isSucursalSeleccionado;
+    }
+
+    public Area getAreaSeleccionado() {
+        return areaSeleccionado;
+    }
+
+    public void setAreaSeleccionado(Area areaSeleccionado) {
+        this.areaSeleccionado = areaSeleccionado;
+    }
+
+    public boolean isIsAreaSeleccionado() {
+        return isAreaSeleccionado;
+    }
+
+    public void setIsAreaSeleccionado(boolean isAreaSeleccionado) {
+        this.isAreaSeleccionado = isAreaSeleccionado;
     }
 
     public Servicio getServicioSeleccionado() {
@@ -498,31 +521,49 @@ public class HorarioController extends AbstractController<Horario> {
         return this.horarioFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 
-    private static final Logger LOG = Logger.getLogger(DetalleHorarioController.class.getName());
+     private static final Logger LOG = Logger.getLogger(DetalleHorarioController.class.getName());
 
-    public void onDepartamentoSeleccionado() {
-        if (this.departamentoSeleccionado != null) {
-            LOG.log(Level.INFO, "ID DEL DEPARTAMENTO:{0}", this.departamentoSeleccionado.getId());
-            if (this.departamentoSeleccionado.getId() != 0) {
-                this.isDepartamentoSeleccionado = true;
+    public void onSucursalSeleccionado() {
+        if (this.sucursalSeleccionado != null) {
+            LOG.log(Level.INFO, "ID DEL DEPARTAMENTO: {0}", this.sucursalSeleccionado.getId());
+            if (this.sucursalSeleccionado.getId() != 0) {
+                this.isSucursalSeleccionado = true;
                 return;
             }
-            this.isDepartamentoSeleccionado = false;
         }
+        this.isSucursalSeleccionado = false;
     }
 
-    public void onServicioSeleccionado() {
-        this.isServicioSeleccionado = this.servicioSeleccionado != null;
+    public void onAreaSeleccionado() {
+        if (this.areaSeleccionado != null) {
+            if (this.areaSeleccionado.getId() != 0) {
+                this.isAreaSeleccionado = true;
+                return;
+            }
+        }
+        this.isAreaSeleccionado = false;
     }
 
-    public List<Servicio> getServicios() {
-        if (this.isDepartamentoSeleccionado) {
-            return this.departamentoSeleccionado.getServicioList();
+    public void onServicioSeleccionado(){
+        this.isServicioSeleccionado = this.servicioSeleccionado!=null;
+    }
+    
+    public List<Area> getAreas() {
+        if (this.isSucursalSeleccionado) {
+            return this.sucursalSeleccionado.getAreaList();
         } else {
             return null;
         }
     }
 
+    public List<Servicio> getServicios() {
+        if (this.isAreaSeleccionado) {
+            return this.areaSeleccionado.getServicioList();
+        } else {
+            return null;
+        }
+    }
+    
     public List<Empleado> getEmpleados() {
         if (this.isServicioSeleccionado) {
             LOG.log(Level.INFO, "ID DEL SERVICIO:{0}", this.servicioSeleccionado.getId());
@@ -534,7 +575,7 @@ public class HorarioController extends AbstractController<Horario> {
 
     public void onEmpleadoSeleccionado() {
         if (this.empleadoSeleccionado != null) {
-            LOG.log(Level.INFO, "ID DEL EMPLEADO SELECCIONADO: {0}", this.empleadoSeleccionado.getId());
+            //LOG.log(Level.INFO, "ID DEL EMPLEADO SELECCIONADO: {0}", this.empleadoSeleccionado.getId());
             if (this.empleadoSeleccionado.getId() != 0) {
                 this.isEmpleadoSeleccionado = true;
                 return;
