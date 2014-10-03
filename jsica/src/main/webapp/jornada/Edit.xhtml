@@ -31,8 +31,11 @@
                             <f:convertDateTime pattern="HH:mm"/>
                         </p:inputMask>
                         
-                        <p:outputLabel value="#{myBundle.EditJornadaLabel_flexible}" for="flexible" />
-                        <p:selectBooleanCheckbox id="flexible" value="#{jornadaController.selected.flexible}" required="true" requiredMessage="#{myBundle.EditJornadaRequiredMessage_flexible}"/>
+                        <p:outputLabel value="Termina el día siguiente?" for="diaSiguiente"/>
+                        <p:selectBooleanCheckbox id="diaSiguiente" value="#{jornadaController.selected.terminaDiaSiguiente}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_porFecha}"/>
+                         
+                        <p:outputLabel value="Es asistencial?" for="asistencial"/>
+                        <p:selectBooleanCheckbox id="asistencial" value="#{jornadaController.selected.asistencial}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_porFecha}"/>
 
                         <p:outputLabel value="#{myBundle.CreateAreaLabel_sucursalId}" for="sucursalId" />
                         <p:selectOneMenu id="sucursalId" value="#{jornadaController.sucursalSeleccionado}" required="true" converter="sucursalConverter">

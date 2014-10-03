@@ -31,6 +31,12 @@
                             <f:convertDateTime pattern="HH:mm:ss" />
                         </h:outputText>
 
+                        <p:outputLabel value="Termina el día siguiente?" for="diaSiguiente"/>
+                        <p:selectBooleanCheckbox id="diaSiguiente" value="#{jornadaController.selected.terminaDiaSiguiente}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_porFecha}" disabled="true"/>
+                         
+                        <p:outputLabel value="Es asistencial?" for="asistencial"/>
+                        <p:selectBooleanCheckbox id="asistencial" value="#{jornadaController.selected.asistencial}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_porFecha}" disabled="true"/>
+    
                         <h:outputText value="#{myBundle.ViewJornadaLabel_servicioId}"/>
                         <h:outputText value="#{jornadaController.selected.servicioId.nombre}"/>
                     </p:panelGrid>

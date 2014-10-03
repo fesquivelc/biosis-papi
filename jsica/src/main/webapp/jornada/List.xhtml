@@ -59,7 +59,19 @@
                     </h:outputText>
                 </p:column>
 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Termina al día siguiente?"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox value="#{item.terminaDiaSiguiente}" title="#{myBundle.EditPermisoTitle_porFecha}" required="true" requiredMessage="#{myBundle.EditPermisoRequiredMessage_porFecha}" disabled="true"/>   
+                </p:column>
 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Es Asistencial?"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox  value="#{item.asistencial}" title="#{myBundle.EditPermisoTitle_porFecha}" required="true" requiredMessage="#{myBundle.EditPermisoRequiredMessage_porFecha}" disabled="true"/>      
+                </p:column>
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListJornadaTitle_servicioId}"/>
