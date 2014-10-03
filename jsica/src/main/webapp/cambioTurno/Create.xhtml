@@ -14,47 +14,7 @@
 
                 <h:panelGroup id="display" rendered="#{cambioTurnoController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
-                        <p:outputLabel value="Empleado que pide cambio:" for="empleadoId1" />
-                        <p:autoComplete id="empleadoId1" value="#{cambioTurnoController.selected.empleado1Id}" completeMethod="#{empleadoController.metodo}"
-                                                var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="55" required="true"/>
-                        
-                        <p:outputLabel value="Fecha Turno" for="fechaPedido1" />
-                        <p:inputMask id="fechaPedido1" value="#{cambioTurnoController.fechaTurno1}" mask="99/99/9999" title="#{myBundle.CreateCambioTurnoTitle_fechaPedido}" required="true" requiredMessage="#{myBundle.CreateCambioTurnoRequiredMessage_fechaPedido}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            <p:ajax listener="#{cambioTurnoController.onFechaSelecciona1}" update="turno1"/>
-                        </p:inputMask>
-                        
-                        <p:outputLabel value="Turno" for="turno1"/>
-                        <p:selectOneMenu id="turno1" value="#{cambioTurnoController.selected.detalleHorarioOriginal}" required="true" requiredMessage="#{myBundle.CreateFichaLaboralEmpleadoRequiredMessage_tipoEmpleadoId}" converter="detalleHorarioConverter" disabled="#{cambioTurnoController.selected.empleado1Id == null}">
-                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{cambioTurnoController.turnosxEmpleados1}"
-                                           var="turno"
-                                           itemValue="#{turno}"
-                                           itemLabel="#{turno.fecha} #{turno.jornadaCodigo.nombre}"
-                                           
-                                           />
-                        </p:selectOneMenu>
-                        
-                        <p:outputLabel value="Empleado que cambiara" for="empleadoId2" />
-                        <p:autoComplete id="empleadoId2" value="#{cambioTurnoController.selected.empleado2Id}" completeMethod="#{empleadoController.metodo}"
-                                                var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="55" required="true"/>
-                            
-                        <p:outputLabel value="Fecha Turno" for="fechaPedido2" />
-                        <p:inputMask id="fechaPedido2" value="#{cambioTurnoController.fechaTurno2}" mask="99/99/9999" title="#{myBundle.CreateCambioTurnoTitle_fechaPedido}" required="true" requiredMessage="#{myBundle.CreateCambioTurnoRequiredMessage_fechaPedido}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            <p:ajax listener="#{cambioTurnoController.onFechaSelecciona2}" update="turno2"/>
-                        </p:inputMask>
-                        
-                        <p:outputLabel value="Turno" for="turno2"/>
-                        <p:selectOneMenu id="turno2" value="#{cambioTurnoController.selected.detalleHorarioReemplazo}" required="true" requiredMessage="#{myBundle.CreateFichaLaboralEmpleadoRequiredMessage_tipoEmpleadoId}" converter="detalleHorarioConverter" disabled="#{cambioTurnoController.selected.empleado2Id == null}">
-                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{cambioTurnoController.turnosxEmpleados2}"
-                                           var="turno"
-                                           itemValue="#{turno}"
-                                           itemLabel="#{turno.fecha} #{turno.jornadaCodigo.nombre}"
-                                           />
-                        </p:selectOneMenu>
-                        
+                                              
                         <p:outputLabel value="Fecha Pedido" for="fechaPedido" />
                         <p:inputMask id="fechaPedido" value="#{cambioTurnoController.selected.fechaPedido}" mask="99/99/9999" title="#{myBundle.CreateCambioTurnoTitle_fechaPedido}" required="true" requiredMessage="#{myBundle.CreateCambioTurnoRequiredMessage_fechaPedido}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>

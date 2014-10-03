@@ -63,6 +63,9 @@ public class HorarioController extends AbstractController<Horario> {
     private boolean porEmpleado;
     private boolean porGrupo;
     
+    private List<DetalleHorario> lista1;
+    private List<DetalleHorario> lista2;
+    
     public List<Horario> getHorariosAdministrativos(){
         String sql = "SELECT h FROM Horario h WHERE h.porFecha = FALSE";
         return this.search(sql);
