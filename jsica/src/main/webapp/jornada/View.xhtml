@@ -31,9 +31,6 @@
                             <f:convertDateTime pattern="HH:mm:ss" />
                         </h:outputText>
 
-                        <h:outputText value="#{myBundle.ViewJornadaLabel_flexible}"/>
-                        <h:selectBooleanCheckbox id="flexible" value="#{jornadaController.selected.flexible}" title="#{myBundle.EditJornadaTitle_flexible}" required="true" requiredMessage="#{myBundle.EditJornadaRequiredMessage_flexible}" disabled="true"/>
-
                         <h:outputText value="#{myBundle.ViewJornadaLabel_servicioId}"/>
                         <h:outputText value="#{jornadaController.selected.servicioId.nombre}"/>
                     </p:panelGrid>

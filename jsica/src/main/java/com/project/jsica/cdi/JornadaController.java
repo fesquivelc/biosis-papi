@@ -1,11 +1,16 @@
 package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.JornadaFacadeLocal;
+import com.project.jsica.ejb.entidades.Area;
 import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.Jornada;
+import com.project.jsica.ejb.entidades.Servicio;
+import com.project.jsica.ejb.entidades.Sucursal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -18,6 +23,13 @@ import javax.servlet.http.HttpServletRequest;
 @ViewScoped
 public class JornadaController extends AbstractController<Jornada> {
 
+    private Sucursal sucursalSeleccionado;
+    private boolean isSucursalSeleccionado;
+    private Area areaSeleccionado;
+    private boolean isAreaSeleccionado;
+    private Servicio servicioSeleccionado;
+    private boolean isServicioSeleccionado;
+    
     @EJB
     private JornadaFacadeLocal jornadaFacade;
 
@@ -32,6 +44,57 @@ public class JornadaController extends AbstractController<Jornada> {
     public JornadaController() {
         // Inform the Abstract parent controller of the concrete Jornada?cap_first Entity
         super(Jornada.class);
+    }
+
+    /**
+     Metodos getter and setters
+     **/
+    public Sucursal getSucursalSeleccionado() {    
+        return sucursalSeleccionado;
+    }
+
+    public void setSucursalSeleccionado(Sucursal sucursalSeleccionado) {
+        this.sucursalSeleccionado = sucursalSeleccionado;
+    }
+
+    public boolean isIsSucursalSeleccionado() {
+        return isSucursalSeleccionado;
+    }
+
+    public void setIsSucursalSeleccionado(boolean isSucursalSeleccionado) {
+        this.isSucursalSeleccionado = isSucursalSeleccionado;
+    }
+
+    public Area getAreaSeleccionado() {
+        return areaSeleccionado;
+    }
+
+    public void setAreaSeleccionado(Area areaSeleccionado) {
+        this.areaSeleccionado = areaSeleccionado;
+    }
+
+    public boolean isIsAreaSeleccionado() {
+        return isAreaSeleccionado;
+    }
+
+    public void setIsAreaSeleccionado(boolean isAreaSeleccionado) {
+        this.isAreaSeleccionado = isAreaSeleccionado;
+    }
+
+    public Servicio getServicioSeleccionado() {
+        return servicioSeleccionado;
+    }
+
+    public void setServicioSeleccionado(Servicio servicioSeleccionado) {
+        this.servicioSeleccionado = servicioSeleccionado;
+    }
+
+    public boolean isIsServicioSeleccionado() {
+        return isServicioSeleccionado;
+    }
+
+    public void setIsServicioSeleccionado(boolean isServicioSeleccionado) {
+        this.isServicioSeleccionado = isServicioSeleccionado;
     }
 
     /**
@@ -281,4 +344,45 @@ public class JornadaController extends AbstractController<Jornada> {
         return this.jornadaFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 
+    private static final Logger LOG = Logger.getLogger(DetalleHorarioController.class.getName());
+     public void onSucursalSeleccionado() {
+        if (this.sucursalSeleccionado != null) {
+            LOG.log(Level.INFO, "ID DEL DEPARTAMENTO: {0}", this.sucursalSeleccionado.getId());
+            if (this.sucursalSeleccionado.getId() != 0) {
+                this.isSucursalSeleccionado = true;
+                return;
+            }
+        }
+        this.isSucursalSeleccionado = false;
+    }
+    
+      public void onAreaSeleccionado() {
+        if (this.areaSeleccionado != null) {
+            if (this.areaSeleccionado.getId() != 0) {
+                this.isAreaSeleccionado = true;
+                return;
+            }
+        }
+        this.isAreaSeleccionado = false;
+    }
+      
+     public void onServicioSeleccionado(){
+        this.isServicioSeleccionado = this.servicioSeleccionado!=null;
+    }
+    
+    public List<Area> getAreas() {
+        if (this.isSucursalSeleccionado) {
+            return this.sucursalSeleccionado.getAreaList();
+        } else {
+            return null;
+        }
+    }
+
+    public List<Servicio> getServicios() {
+        if (this.isAreaSeleccionado) {
+            return this.areaSeleccionado.getServicioList();
+        } else {
+            return null;
+        }
+    }
 }

@@ -62,14 +62,6 @@
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListJornadaTitle_flexible}"/>
-                    </f:facet>
-                    <h:selectBooleanCheckbox id="flexible" value="#{item.flexible}" title="#{myBundle.EditJornadaTitle_flexible}" required="true" requiredMessage="#{myBundle.EditJornadaRequiredMessage_flexible}" disabled="true"/>
-                </p:column>
-
-
-                <p:column>
-                    <f:facet name="header">
                         <h:outputText value="#{myBundle.ListJornadaTitle_servicioId}"/>
                     </f:facet>
                     <h:outputText value="#{item.servicioId.nombre}"/>
