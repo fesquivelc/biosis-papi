@@ -34,15 +34,37 @@
                         <p:outputLabel value="#{myBundle.EditJornadaLabel_flexible}" for="flexible" />
                         <p:selectBooleanCheckbox id="flexible" value="#{jornadaController.selected.flexible}" required="true" requiredMessage="#{myBundle.EditJornadaRequiredMessage_flexible}"/>
 
-                        <p:outputLabel value="#{myBundle.EditJornadaLabel_servicioId}" for="servicioId" />
-                        <p:selectOneMenu id="servicioId" value="#{jornadaController.selected.servicioId}" required="true" requiredMessage="#{myBundle.EditJornadaRequiredMessage_servicioId}" converter="servicioConverter">
+                        <p:outputLabel value="#{myBundle.CreateAreaLabel_sucursalId}" for="sucursalId" />
+                        <p:selectOneMenu id="sucursalId" value="#{jornadaController.sucursalSeleccionado}" required="true" converter="sucursalConverter">
+                            <p:ajax listener="#{jornadaController.onSucursalSeleccionado}" update="areaId"/>
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}" />
+                            <f:selectItems value="#{sucursalController.items}"  
+                                           var="sucursal" 
+                                           itemValue="#{sucursal}" 
+                                           itemLabel="#{sucursal.nombre}"
+                                           />                                 
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{myBundle.CreateServicioLabel_areaId}" for="areaId" />
+                        <p:selectOneMenu id="areaId" value="#{jornadaController.areaSeleccionado}" required="true" converter="areaConverter" >
+                            <p:ajax listener="#{jornadaController.onAreaSeleccionado()}" update="servicioId"/>
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{servicioController.items}"
-                                           var="servicioIdItem"
-                                           itemValue="#{servicioIdItem}"
-                                           itemLabel="#{servicioIdItem.nombre}"
+                            <f:selectItems value="#{jornadaController.areas}"
+                                           var="area"
+                                           itemValue="#{area}"
+                                           itemLabel="#{area.nombre}"
                                            />
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_servicioId}" for="servicioId" />
+                        <p:selectOneMenu id="servicioId" value="#{jornadaController.selected.servicioId}" required="true" requiredMessage="#{myBundle.CreateJornadaRequiredMessage_servicioId}" converter="servicioConverter">
 
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{jornadaController.servicios}"
+                                           var="servicio"
+                                           itemValue="#{servicio}"
+                                           itemLabel="#{servicio.nombre}"
+                                           />
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{jornadaController.save}" value="#{myBundle.Save}" update="display,:JornadaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('JornadaEditDialog'));">
