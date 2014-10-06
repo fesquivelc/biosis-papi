@@ -14,8 +14,8 @@
 
                 <h:panelGroup id="display" rendered="#{cambioTurnoController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
-
-                        <p:outputLabel value="#{myBundle.CreateCambioTurnoLabel_fechaPedido}" for="fechaPedido" />
+                                              
+                        <p:outputLabel value="Fecha Pedido" for="fechaPedido" />
                         <p:inputMask id="fechaPedido" value="#{cambioTurnoController.selected.fechaPedido}" mask="99/99/9999" title="#{myBundle.CreateCambioTurnoTitle_fechaPedido}" required="true" requiredMessage="#{myBundle.CreateCambioTurnoRequiredMessage_fechaPedido}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:inputMask>
