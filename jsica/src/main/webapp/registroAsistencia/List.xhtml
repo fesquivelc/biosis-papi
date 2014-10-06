@@ -7,12 +7,20 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <h:form id="RegistroAsistenciaListForm">
+        <p:ajaxStatus onstart="PF('dialogoEstado').show()" onsuccess="PF('dialogoEstado').hide()" />
 
+        <p:dialog widgetVar="dialogoEstado" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <p:panelGrid columns="1">
+                <h:outputText value="Cargando" />
+                <p:graphicImage value="http://www.vertele.com/wp-includes/js/thickbox/loadingAnimation.gif" />
+            </p:panelGrid>
+        </p:dialog>
+        <p:commandButton value="RECARGAR MARCACIONES" action="#{analisisAsistenciaBean.recargar()}" update="datalist"/>
         <p:panel header="#{myBundle.ListRegistroAsistenciaTitle}">
             <p:dataTable id="datalist"
-                         value="#{registroAsistenciaController.registros}"
-                         var="item"
-                         rowKey="#{item.id}"
+                         value="#{registroAsistenciaController.lazyModel}"
+                         lazy="true"                         
+                         var="item"                         
                          paginator="true"
                          paginatorPosition="bottom"
                          rows="10"
@@ -53,21 +61,21 @@
                     </f:facet>
                     <h:outputText value="#{item.EOS}" converter="eventoAsistenciaConverter"/>
                 </p:column>
-                
+
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="Asistencia"/>
                     </f:facet>
-                    <h:outputText value="#{item.tipo}"/>
+                    <h:outputText value="#{item.tipo}" converter="tipoAsistenciaConverter"/>
                 </p:column>
-                
+
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="Turno Original"/>
                     </f:facet>
                     <h:outputText value="#{item.turnoOriginal.jornadaCodigo.nombre}"/>
                 </p:column>
-                
+
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="Turno Reemplazo"/>

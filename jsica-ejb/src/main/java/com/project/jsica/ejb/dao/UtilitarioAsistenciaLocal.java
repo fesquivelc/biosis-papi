@@ -25,5 +25,7 @@ public interface UtilitarioAsistenciaLocal {
     Date getHoraPartida();
 
     Date getHoraLlegada();
+
+    int getContador();
     
 }

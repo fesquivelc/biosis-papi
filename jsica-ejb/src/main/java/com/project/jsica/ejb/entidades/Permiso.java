@@ -61,8 +61,7 @@ public class Permiso implements Serializable {
     @Column(name = "fecha_fin")
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
-    @Basic(optional = false)
-    @NotNull
+    @Basic(optional = true)
     @Size(min = 1, max = 2)
     private String tipo;
     @Basic(optional = false)

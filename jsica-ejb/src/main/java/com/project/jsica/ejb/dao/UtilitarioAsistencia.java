@@ -5,6 +5,7 @@
  */
 package com.project.jsica.ejb.dao;
 
+import static com.project.jsica.ejb.dao.AbstractFacade.jsica_PU;
 import com.project.jsica.ejb.entidades.TCImportacion;
 import com.project.jsica.ejb.entidades.Vista;
 import java.io.File;
@@ -27,6 +28,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -39,6 +42,13 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
     private VistaFacadeLocal vistaDAO;
     @EJB
     private TCImportacionFacadeLocal tcDAO;
+
+    @PersistenceContext(unitName = jsica_PU)
+    private EntityManager em;
+
+    protected EntityManager getEntityManager() {
+        return em;
+    }
 
     Date fechaPartida;
     Date horaPartida;
@@ -57,6 +67,8 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
     String queryPlus;
 
     Properties properties;
+
+    int contador = 0;
     private static final Logger LOG = Logger.getLogger(UtilitarioAsistencia.class.getName());
 
     private void instanciar() {
@@ -137,7 +149,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
     private void cargaMasiva(Date fecha, Date hora) {
         this.conectarBiostar();
 
-        List<Vista> vistas = new ArrayList<>();
+//        List<Vista> vistas = new ArrayList<>();
         PreparedStatement ps;
         try {
             if (fecha == null || hora == null) {
@@ -149,9 +161,10 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
 
 //                String carga = this.query + " " + this.queryPlus;
                 DateFormat dtFecha = new SimpleDateFormat("yyyy/MM/dd");
-                DateFormat dtHora = new SimpleDateFormat("HH:mm:ss");                
-               
-                String carga = this.query + "  AND fecha > '"+dtFecha.format(pFecha)+"' OR (fecha =  '"+dtFecha.format(pFecha)+"' AND  hora >= '"+dtHora.format(pHora)+"')";
+                DateFormat dtHora = new SimpleDateFormat("HH:mm:ss");
+
+//                String carga = this.query + "  AND CONVERT(DATE,reporte.dtDateTime) > '" + dtFecha.format(pFecha) + "' OR (CONVERT(DATE,reporte.dtDateTime) =  '" + dtFecha.format(pFecha) + "' AND  CONVERT(TIME,reporte.dtDateTime) >= '" + dtHora.format(pHora) + "')";
+                String carga = this.query + "  AND date_part('year',fecha) == 2014 AND fecha > '" + dtFecha.format(pFecha) + "' OR (fecha =  '" + dtFecha.format(pFecha) + "' AND  hora >= '" + dtHora.format(pHora) + "')";
                 LOG.log(Level.INFO, "CONSULTA DE CARGA MASIVA{0}", carga);
                 ps = connSQLServer.prepareStatement(carga);
 
@@ -162,16 +175,19 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
             }
             ResultSet rs = ps.executeQuery();
 
-            int contador = 0;
+            this.generarInserts(rs);
 
-            while (rs.next()) {
-                Vista vista = new Vista();
-                vista.setDni(rs.getInt("dni"));
-                vista.setEquipoIp(rs.getString("equipo_ip"));
-                vista.setFecha(rs.getDate("fecha"));
-                vista.setHora(rs.getTime("hora"));
-                vistas.add(vista);
-//
+            LOG.log(Level.INFO, "CONTADOR: {0}", contador);
+
+//            contador = 0;
+//            while (rs.next()) {
+//                Vista vista = new Vista();
+//                vista.setDni(rs.getInt("dni"));
+//                vista.setEquipoIp(rs.getString("equipo_ip"));
+//                vista.setFecha(rs.getDate("fecha"));
+//                vista.setHora(rs.getTime("hora"));
+//                vistas.add(vista);
+////
 //                contador++;
 //                if (contador == 500) {
 //                    for (Vista v : vistas) {
@@ -180,12 +196,11 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
 //                    vistas.clear();
 //                    contador = 0;
 //                }
-            }
-
-            for (Vista vista : vistas) {
-                vistaDAO.create(vista);
-            }
-
+//            }
+//
+//            for (Vista vista : vistas) {
+//                vistaDAO.create(vista);
+//            }
         } catch (SQLException ex) {
             Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -270,14 +285,14 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
                                 + "reporte.nUserID AS dni, "
                                 + "equipo.nIPAddr as equipo_ip "
                                 + "FROM tb_reportslist reporte INNER JOIN tb_device equipo ON reporte.nDeviceID = equipo.nDeviceID "
-                                + "WHERE YEAR(reporte.dtDateTime) = '2013' AND MONTH(reporte.dtDateTime) = '07' AND reporte.nEvent = '55' ";
+                                + "WHERE YEAR(reporte.dtDateTime) >= 2012 AND reporte.nEvent = '55' ";
 
                         break;
                 }
 
                 break;
             case 3:
-                consulta = "SELECT fecha,hora,dni,equipo_ip FROM vista WHERE evento = '55' AND fecha BETWEEN '2013-07-01' AND '2013-07-31' ";
+                consulta = "SELECT fecha,hora,dni,equipo_ip FROM vista WHERE evento = '55'";
                 break;
         }
         LOG.info(consulta);
@@ -313,6 +328,63 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
         }
         LOG.info(consultaPlus);
         return consultaPlus;
+    }
+
+    @Override
+    public int getContador() {
+        return contador;
+    }
+
+    private void generarInserts(ResultSet rs) {
+        try {
+//            String consulta = "BEGIN ";
+            String consulta = "";
+            DateFormat dtFecha = new SimpleDateFormat("yyyy/MM/dd");
+            DateFormat dtHora = new SimpleDateFormat("HH:mm:ss");
+
+            String dni;
+            String equipo_ip;
+            String fecha;
+            String hora;
+
+            contador = 0;
+
+            while (rs.next()) {
+                consulta += "INSERT INTO vista(dni, equipo_ip, fecha, hora) VALUES";
+                dni = rs.getInt("dni") + "";
+                equipo_ip = rs.getString("equipo_ip");
+                fecha = dtFecha.format(rs.getDate("fecha"));
+                hora = dtHora.format(rs.getTime("hora"));
+
+                if (dni.length() == 7) {
+                    dni = "0" + dni;
+                }
+
+                consulta += "(";
+                consulta += "'" + dni + "',";
+                consulta += "'" + equipo_ip + "',";
+                consulta += "'" + fecha + "',";
+                consulta += "'" + hora + "'";
+                consulta += ");";
+                contador++;
+
+                if (contador >= 5000) {
+                    LOG.log(Level.INFO, "CONTADOR: {0}", contador+"");
+                    getEntityManager().createNativeQuery("BEGIN;"+consulta+"END;").executeUpdate();
+                    contador = 0;
+                    consulta = "";
+                }
+            }
+            if(contador > 0){
+                getEntityManager().createNativeQuery("BEGIN;"+consulta+"END;").executeUpdate();
+                contador = 0;
+            }
+            //            consulta += " END;";
+            LOG.info(consulta);            
+        } catch (SQLException ex) {
+
+            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

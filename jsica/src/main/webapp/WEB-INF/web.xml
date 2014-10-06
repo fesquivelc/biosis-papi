@@ -31,16 +31,23 @@
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
     <!--
-    <security-constraint>
+    <security-constraint>        
         <display-name>Restriccion de acceso</display-name>
         <web-resource-collection>
             <web-resource-name>Acceso normal</web-resource-name>
             <description/>
             <url-pattern>/faces/*</url-pattern>
+            
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>acceso</web-resource-name>
+            <description/>
+            <url-pattern>/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>ACCESO</role-name>
+            <role-name>ADMINISTRADOR</role-name>
+            <role-name>PERSONAL</role-name>
         </auth-constraint>
     </security-constraint>
     <security-constraint>
@@ -80,12 +87,127 @@
             <description/>
             <url-pattern>/faces/empleadoPermiso/*</url-pattern>
         </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>faltas</web-resource-name>
+            <description/>
+            <url-pattern>/faces/falta/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>registro de feriados</web-resource-name>
+            <description/>
+            <url-pattern>/faces/feriado/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Ficha general de empleado</web-resource-name>
+            <description/>
+            <url-pattern>/faces/fichaGeneralEmpleado/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Ficha laboral empleado</web-resource-name>
+            <description/>
+            <url-pattern>/faces/fichaLaboralEmpleado/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Grupo horario</web-resource-name>
+            <description/>
+            <url-pattern>/faces/grupoHorario/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Mantenimiento de horario</web-resource-name>
+            <description/>
+            <url-pattern>/faces/horario/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Mantenimiento jornada</web-resource-name>
+            <description/>
+            <url-pattern>/faces/jornada/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Motivo permiso</web-resource-name>
+            <description/>
+            <url-pattern>/faces/motivoPermiso/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Mantenimiento papeleta</web-resource-name>
+            <description/>
+            <url-pattern>/faces/papeleta/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Mantenimiento permiso</web-resource-name>
+            <description/>
+            <url-pattern>/faces/permiso/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Registro de asistencia</web-resource-name>
+            <description/>
+            <url-pattern>/faces/registroAsistencia/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Vacaciones</web-resource-name>
+            <description/>
+            <url-pattern>/faces/vacacion/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>a</web-resource-name>
+            <description/>
+            <url-pattern>/faces/*</url-pattern>
+        </web-resource-collection>
         <auth-constraint>
             <description/>
             <role-name>PERSONAL</role-name>
             <role-name>ADMINISTRADOR</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+        <display-name>Restricción de administrador</display-name>
+        <web-resource-collection>
+            <web-resource-name>Mantenimiento de años</web-resource-name>
+            <description/>
+            <url-pattern>/faces/anio/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Mantenimiento de areas</web-resource-name>
+            <description/>
+            <url-pattern>/faces/area/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Mantenimiento de biometricos</web-resource-name>
+            <description/>
+            <url-pattern>/faces/biometrico/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Mantenimiento condicion laboral</web-resource-name>
+            <description/>
+            <url-pattern>/faces/condicionLaboral/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Mantenimiento feriados</web-resource-name>
+            <description/>
+            <url-pattern>/faces/feriado/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Mantenimiento nivel educativo</web-resource-name>
+            <description/>
+            <url-pattern>/faces/nivelEducativo/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>todo</web-resource-name>
+            <description/>
+            <url-pattern>/faces/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMINISTRADOR</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>biosis-realm</realm-name>
+        <form-login-config>
+            <form-login-page>/faces/login.xhtml</form-login-page>
+            <form-error-page>/faces/login.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
     <security-role>
         <description/>
         <role-name>ACCESO</role-name>

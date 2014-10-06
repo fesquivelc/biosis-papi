@@ -12,6 +12,8 @@ import com.project.jsica.ejb.dao.EmpleadoHorarioFacadeLocal;
 import com.project.jsica.ejb.dao.EmpleadoPermisoFacadeLocal;
 
 import com.project.jsica.ejb.dao.FeriadoFacadeLocal;
+import com.project.jsica.ejb.dao.MotivoPermisoFacadeLocal;
+import com.project.jsica.ejb.dao.PermisoFacadeLocal;
 import com.project.jsica.ejb.dao.RegistroAsistenciaFacadeLocal;
 import com.project.jsica.ejb.dao.VistaFacadeLocal;
 import com.project.jsica.ejb.entidades.CambioTurno;
@@ -20,6 +22,7 @@ import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.EmpleadoHorario;
 import com.project.jsica.ejb.entidades.EmpleadoPermiso;
 import com.project.jsica.ejb.entidades.Feriado;
+import com.project.jsica.ejb.entidades.MotivoPermiso;
 import com.project.jsica.ejb.entidades.Permiso;
 import com.project.jsica.ejb.entidades.RegistroAsistencia;
 import com.project.jsica.ejb.entidades.Vista;
@@ -58,6 +61,10 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
     private VistaFacadeLocal vistaDAO;
     @EJB
     private EmpleadoFacadeLocal empleadoDAO;
+    @EJB
+    private MotivoPermisoFacadeLocal motivoPermisoDAO;
+    @EJB
+    private PermisoFacadeLocal permisoDAO;
 
     private Date horaInicio;
     private Date fechaInicio;
@@ -98,7 +105,34 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
         Date hasta = cal.getTime();
 
         while (desde.compareTo(hasta) <= 0) {
-            if (isDiaLaboral(desde, diasLaborables)) {
+            boolean diaLaborable = isDiaLaboral(desde, diasLaborables);
+            if (isOnomastico(empleado, desde)) {
+                LOG.info("ES ONOMASTICO");
+                if (diaLaborable) {
+                    LOG.info("SE LE ASIGNA UN PERMISO POR ONOMASTICO");
+                    if (!tienePermisoPorOnomastico(empleado, desde)) {
+                        Permiso permiso = this.generarPermiso(empleado, desde, "ONO");
+
+                        RegistroAsistencia registro = new RegistroAsistencia();
+                        registro.setTipo("PE");
+                        registro.setFecha(desde);
+//                        registroEntrada.setTurnoOriginal(turnoOriginal);
+                        registro.setEmpleadoId(empleado);
+                        registro.setPermisoId(permiso);
+                        registroAsistenciaDAO.create(registro);
+                    }
+                } else {
+                    LOG.info("SE LE BUSCA LA FECHA MAS CERCANA Y SI NO TIENE PERMISO SE LE ASIGNA UNO");
+
+                    Date fechaLaboral = buscarDiaLaboralProximo(empleado, desde, hasta, diasLaborables);
+//                  
+                    LOG.log(Level.INFO, "FECHA LABORAL ENCONTRADA: {0}", fechaLaboral.toString());
+                    if(!tienePermisoPorOnomastico(empleado, fechaLaboral)){
+                        this.generarPermiso(empleado, fechaLaboral, "ONO");
+                    }
+                    
+                }
+            } else if (isDiaLaboral(desde, diasLaborables)) {
                 analizarRegistros(empleado, desde, desde, turno.getJornadaCodigo().getHEntrada(), turno.getJornadaCodigo().getHSalida(), turno, null, marcacionesXMes, permisosXMes, null);
             }
             //aumenta un dia
@@ -454,7 +488,7 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
         Calendar cal = Calendar.getInstance();
         cal.setTime(fecha);
         int diaActual = cal.get(Calendar.DAY_OF_WEEK);
-        return diasLaborables.contains(diaActual);
+        return diasLaborables.contains(diaActual) && !isFeriado(fecha);
     }
 
     //LOS PERMISOS SE CARGAN POR MES ASI QUE SOLO PERTENECEN A UN USUARIO A MENOS QUE ESTE USUARIO CAMBIE
@@ -667,28 +701,24 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
 
         String fechaI = "{d '" + anio + "-" + mes + "-" + primero + "'}";
         String fechaF = "{d '" + anio + "-" + mes + "-" + ultimo + "'}";
-        
+
         String sql;
-        
+
         Map<String, Object> parametros = new HashMap<>();
-        
-        
-        
-        if(empleado.getGrupoHorarioId() != null){
+
+        if (empleado.getGrupoHorarioId() != null) {
             sql = "SELECT eh FROM EmpleadoHorario eh "
                     + "WHERE (eh.porGrupo = TRUE AND eh.grupoHorarioId = :grupo) "
                     + "AND (eh.horarioId.porFecha = FALSE "
                     + "OR (eh.horarioId.porFecha = TRUE AND eh.horarioId.fecha BETWEEN " + fechaI + " AND " + fechaF + ")) ";
             parametros.put("grupo", empleado.getGrupoHorarioId());
-        }else{
+        } else {
             sql = "SELECT eh FROM EmpleadoHorario eh "
                     + "WHERE (eh.porGrupo = FALSE AND eh.empleadoId.docIdentidad = :dni) "
                     + "AND (eh.horarioId.porFecha = FALSE "
                     + "OR (eh.horarioId.porFecha = TRUE AND eh.horarioId.fecha BETWEEN " + fechaI + " AND " + fechaF + ")) ";
             parametros.put("dni", empleado.getDocIdentidad());
         }
-
-        
 
         List<EmpleadoHorario> empleadoHorarios = empleadoHorarioDAO.search(sql, parametros);
         List<DetalleHorario> lista = new ArrayList<>();
@@ -753,6 +783,89 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
         }
 
         return diasLaborables;
+    }
+
+    private boolean isOnomastico(Empleado empleado, Date fecha) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(empleado.getFechaNacimiento());
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(fecha);
+
+        if (cal.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) && cal.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean tienePermisoPorOnomastico(Empleado empleado, Date fecha) {
+        String sql = "SELECT ep FROM EmpleadoPermiso ep WHERE "
+                + "ep.empleadoId = :empleado AND :fecha BETWEEN ep.permisoId.fechaInicio AND "
+                + "ep.permisoId.fechaFin AND ep.permisoId.motivoPermisoCodigo.codigo = :codigo";
+
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("empleado", empleado);
+        parametros.put("fecha", fecha);
+        parametros.put("codigo", "ONO");
+
+        List<EmpleadoPermiso> lista = this.empleadoPermisoDAO.search(sql, parametros);
+
+        if (lista.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    private Permiso generarPermiso(Empleado empleado, Date fecha, String motivo) {
+        MotivoPermiso mt = motivoPermisoDAO.find(motivo);
+
+        EmpleadoPermiso ep = new EmpleadoPermiso();
+        Permiso permiso = new Permiso();
+        permiso.setMotivoPermisoCodigo(mt);
+        ep.setPermisoId(permiso);
+        ep.setEmpleadoId(empleado);
+
+        permiso.setFechaInicio(fecha);
+        permiso.setFechaFin(fecha);
+        permiso.setPorFecha(true);
+
+        List<EmpleadoPermiso> emps = new ArrayList<>();
+        emps.add(ep);
+
+        permiso.setEmpleadoPermisoList(emps);
+
+//        empleadoPermisoDAO.create(ep);
+        permisoDAO.create(permiso);
+        
+        return permiso;
+
+    }
+
+    private Date buscarDiaLaboralProximo(Empleado empleado, Date desde, Date hasta, List<Integer> diasLaborables) {
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(desde);
+        Date fechaLaboral = cal2.getTime();
+        
+        Calendar cal3 = Calendar.getInstance();
+        cal3.setTime(hasta);
+        cal3.add(Calendar.DAY_OF_MONTH, 15);
+        Date fin = cal3.getTime();
+
+        while (fechaLaboral.compareTo(fin) <= 0) {
+            if (isDiaLaboral(fechaLaboral, diasLaborables)) {
+                LOG.log(Level.INFO, "SE GENERA PERMISO POR ONOMASTICO EN LA FECHA LABORAL: {0}", fechaLaboral.toString());
+                return fechaLaboral;
+//                
+            }
+            cal2.setTime(fechaLaboral);
+            cal2.add(Calendar.DAY_OF_MONTH, 1);
+            fechaLaboral = cal2.getTime();
+        }
+
+        return null;
     }
 
 }

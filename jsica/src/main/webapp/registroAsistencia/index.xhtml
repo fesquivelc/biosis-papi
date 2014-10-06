@@ -35,7 +35,7 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </p:inputMask>
 
-                            <p:commandButton id="btnBuscar" icon="ui-icon-search" value="Buscar Registros" update="listaMarcaciones"/>
+                            <p:commandButton id="btnBuscar" icon="ui-icon-search" value="Buscar Registros" update="listaMarcaciones idFaltas idTardanzas" />
                         </p:panelGrid>
 
                         <p:dataTable
@@ -89,7 +89,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="Asistencia"/>
                                 </f:facet>
-                                <h:outputText value="#{registro.tipo}"/>
+                                <h:outputText value="#{registro.tipo}" converter="tipoAsistenciaConverter"/>
                             </p:column>
 
                             <p:column >
@@ -105,15 +105,35 @@
                                 </f:facet>
                                 <h:outputText value="#{registro.turnoReemplazo.jornadaCodigo.nombre}"/>
                             </p:column>
+                            
+                            <p:column >
+                                <f:facet name="header">
+                                    <h:outputText value="Detalle"/>
+                                </f:facet>
+                                <h:outputText value="#{registro.permisoId.motivoPermisoCodigo.nombre}"/>
+                            </p:column>
                         </p:dataTable>
 
                         <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{registroAsistenciaController.prepareCreate}"  update=":RegistroAsistenciaCreateForm" oncomplete="PF('RegistroAsistenciaCreateDialog').show()"/>
                         <h:commandLink>
-                            <h:outputText value="Descargar Excel"/>
+                            <h:outputText value="Descargar Excel">
+                                <h:graphicImage name="images/Excel-icon.png"/>
+                            </h:outputText>
                             <p:dataExporter type="xls" target="listaMarcaciones" fileName="Reporte para Empleado - Asistencias" />
                         </h:commandLink>
                     </p:panel>
-
+                    
+                    <p:panel>
+                        <p:panelGrid columns="3">
+                            <p:outputLabel value="TOTAL DE FALTAS:"/>
+                            <p:outputLabel id="idFaltas" value="#{registroAsistenciaController.faltas}"/>
+                            <p:commandButton value="VER DETALLE DE FALTAS"/>
+                            
+                            <p:outputLabel value="TOTAL DE TARDANZAS:"/>
+                            <p:outputLabel id="idTardanzas" value="#{registroAsistenciaController.tardanzas}"/>
+                            <p:commandButton value="VER DETALLE DE FALTAS"/>
+                        </p:panelGrid>
+                    </p:panel>
                 </h:form>
             </p:tab>
         </p:tabView>
