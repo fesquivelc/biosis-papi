@@ -45,19 +45,35 @@
                         <p:menuitem value="Tipo Empleado" outcome="/tipoEmpleado/index"/>
                     </p:submenu>
                 </p:submenu>
+                <p:submenu label="Reportes">
+                    <p:submenu label="Reporte de permisos">
+                        <p:menuitem value="Por área" outcome="/reportes/permisos/porArea"/>
+                        <p:menuitem value="Por empleado" outcome="/reportes/permisos/porEmpleado"/>
+                    </p:submenu>             
+                    <p:submenu label="Reporte de horas trabajadas">
+                        <p:menuitem value="Por área" outcome="/reportes/horasTrabajadas/porArea"/>
+                        <p:menuitem value="Por empleado" outcome="/reportes/horasTrabajadas/porEmpleado"/>
+                    </p:submenu>
+                    <p:submenu label="Reporte de tardanzas">
+                        
+                    </p:submenu>
+                    <p:submenu label="Reporte de horas extra">
+                        
+                    </p:submenu>
+                </p:submenu>
                 <p:submenu label="Configuración">
                     <p:submenu label="Año">
                         <p:menuitem value="Creación de Año" outcome="/anio/index"/>
                         <p:menuitem value="Creación de Feriados" outcome="/feriado/index"/>
                     </p:submenu>
                     <p:menuitem value="Sucursales" outcome="/sucursal/index"/>
-                    <p:menuitem value="Departamentos" outcome="/area/index"/>
-                    <p:menuitem value="Servicios" outcome="/servicio/index"/>
+                    <p:menuitem value="Áreas" outcome="/area/index"/>
+                    <p:menuitem value="Oficinas" outcome="/servicio/index"/>
                     <p:menuitem value="Equipos Biométricos" outcome="/biometrico/index"/>
                 </p:submenu>
                 
                 <f:facet name="options">                       
-                    <p:commandButton value="Cerrar Sesión" icon="ui-icon-extlink" action="#{loginBean.logout}" />
+                    <p:commandButton value="Cerrar Sesión" icon="ui-icon-extlink" action="#{loginBean.logout}" ajax="false" />
                 </f:facet>
             </p:menubar>
         </h:form>

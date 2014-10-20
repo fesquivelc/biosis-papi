@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <welcome-file-list>
+        <welcome-file>faces/index.xhtml</welcome-file>
+    </welcome-file-list>
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>home</param-value>
@@ -27,17 +30,13 @@
             270
         </session-timeout>
     </session-config>
-    <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
-    </welcome-file-list>
     <!--
-    <security-constraint>        
+    <security-constraint>
         <display-name>Restriccion de acceso</display-name>
         <web-resource-collection>
             <web-resource-name>Acceso normal</web-resource-name>
             <description/>
             <url-pattern>/faces/*</url-pattern>
-            
         </web-resource-collection>
         <web-resource-collection>
             <web-resource-name>acceso</web-resource-name>
@@ -194,6 +193,21 @@
             <web-resource-name>todo</web-resource-name>
             <description/>
             <url-pattern>/faces/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Directorio recursos</web-resource-name>
+            <description/>
+            <url-pattern>/faces/resources/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Mantenimiento ubigeo</web-resource-name>
+            <description/>
+            <url-pattern>/faces/ubigeo/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Mantenimiento usuarios</web-resource-name>
+            <description/>
+            <url-pattern>/faces/usuario/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>

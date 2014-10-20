@@ -6,7 +6,7 @@
     <properties/>
   </persistence-unit>
   <persistence-unit name="jsica-postgresql-PU" transaction-type="JTA">
-    <jta-data-source>jdbc/jsica-postgresql</jta-data-source>
+    <jta-data-source>jdbc/biosis</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

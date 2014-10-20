@@ -105,7 +105,7 @@
                                 </f:facet>
                                 <h:outputText value="#{registro.turnoReemplazo.jornadaCodigo.nombre}"/>
                             </p:column>
-                            
+
                             <p:column >
                                 <f:facet name="header">
                                     <h:outputText value="Detalle"/>
@@ -121,20 +121,26 @@
                             </h:outputText>
                             <p:dataExporter type="xls" target="listaMarcaciones" fileName="Reporte para Empleado - Asistencias" />
                         </h:commandLink>
-                    </p:panel>
-                    
+                    </p:panel>                                        
+                </h:form>
+                <h:form>
                     <p:panel>
                         <p:panelGrid columns="3">
                             <p:outputLabel value="TOTAL DE FALTAS:"/>
                             <p:outputLabel id="idFaltas" value="#{registroAsistenciaController.faltas}"/>
                             <p:commandButton value="VER DETALLE DE FALTAS"/>
-                            
+
                             <p:outputLabel value="TOTAL DE TARDANZAS:"/>
                             <p:outputLabel id="idTardanzas" value="#{registroAsistenciaController.tardanzas}"/>
                             <p:commandButton value="VER DETALLE DE FALTAS"/>
+
+                            <p:outputLabel value="TOTAL DE TARDANZAS:"/>
+                            <p:outputLabel id="idTardanzas" value="#{registroAsistenciaController.tardanzas}"/>
+                            <p:commandButton value="VER DETALLE DE PERMISOS"/>
                         </p:panelGrid>
                     </p:panel>
                 </h:form>
+
             </p:tab>
         </p:tabView>
 

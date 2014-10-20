@@ -211,4 +211,22 @@ public class RegistroAsistenciaController extends AbstractController<RegistroAsi
     public List<RegistroAsistencia> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
         return this.registroAsistenciaFacade.search(namedQuery, parametros, inicio, tamanio);
     }
+
+    List<RegistroAsistencia> getRegistros(boolean eos, boolean refrigerio, boolean permiso, Empleado empleado, Date inicio, Date fin) {
+        String sql = null;
+        if(!permiso){
+            sql = "SELECT r FROM RegistroAsistencia r WHERE r.refrigerio = :refrigerio AND"
+                    + " r.eOS = :eos AND r.empleadoId = :empleado AND r.fecha BETWEEN :inicio AND :fin "
+                    + "ORDER BY r.fecha,r.hora ASC";
+        }
+        
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("refrigerio", refrigerio);
+        parametros.put("eos", eos);
+        parametros.put("empleado", empleado);
+        parametros.put("inicio", inicio);
+        parametros.put("fin", fin);
+        
+        return this.registroAsistenciaFacade.search(sql, parametros);
+    }
 }

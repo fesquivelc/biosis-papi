@@ -1,14 +1,23 @@
 package com.project.jsica.cdi.util;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.component.UISelectItem;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 
 public class JsfUtil {
+    
+    public enum ContentType{
+        XLS
+    }
 
     public static void addErrorMessage(Exception ex, String defaultMsg) {
         String msg = ex.getLocalizedMessage();
@@ -81,6 +90,29 @@ public class JsfUtil {
             }
         }
         return "";
+    }
+    
+    public static OutputStream getOutputStream(String nombreDocumento, ContentType contenido){
+        try {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
+            response.reset();
+            
+            String contentType = "";
+            
+            switch(contenido){
+                case XLS:
+                    contentType = "application/vnd.ms-excel";
+                    break;
+            }
+            response.setContentType(contentType);
+            response.setHeader("Content-Disposition", "attachment; filename="+nombreDocumento);
+            
+            return response.getOutputStream();
+        } catch (IOException ex) {
+            Logger.getLogger(JsfUtil.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
 }

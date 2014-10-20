@@ -26,15 +26,40 @@
                             <f:convertDateTime pattern="HH:mm"/>
                         </p:inputMask> 
                         
+                        <p:outputLabel value ="Tolerancia regular (min)" />
+                        <p:inputText value="#{jornadaController.selected.minutosToleranciaRegularEntradaJornada}"/>
+                        
+                        <p:outputLabel value ="Tolerancia tardanza (min)" />
+                        <p:inputText value="#{jornadaController.selected.minutosToleranciaTardanzaEntradaJornada}"/>
+                        
+                        <p:outputLabel value="Termina el día siguiente?" for="diaSiguiente"/>
+                        <p:selectBooleanCheckbox id="diaSiguiente" value="#{jornadaController.selected.terminaDiaSiguiente}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_porFecha}"/>
+                         
                         <p:outputLabel value="#{myBundle.CreateJornadaLabel_HSalida}" for="HSalida" />
                         <p:inputMask id="HSalida" value="#{jornadaController.selected.HSalida}" mask="99:99" title="#{myBundle.CreateJornadaTitle_HSalida}">
                             <f:convertDateTime pattern="HH:mm"/>
                         </p:inputMask> 
                         
-                        <p:outputLabel value="Termina el día siguiente?" for="diaSiguiente"/>
-                        <p:selectBooleanCheckbox id="diaSiguiente" value="#{jornadaController.selected.terminaDiaSiguiente}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_porFecha}"/>
-                         
-                        <p:outputLabel value="Es asistencial?" for="asistencial"/>
+                        <p:outputLabel value="¿Tiene salida a refrigerio?"/>
+                        <p:selectBooleanCheckbox value="#{jornadaController.selected.jornadaConRefrigerio}"/>
+                        
+                        <p:outputLabel value="Hora de salida a refrigerio"/>
+                        <p:inputMask value="#{jornadaController.selected.HSalidaRefrigerio}" mask="99:99" title="#{myBundle.CreateJornadaTitle_HSalida}">
+                            <f:convertDateTime pattern="HH:mm"/>
+                        </p:inputMask>
+                        
+                        <p:outputLabel value="Hora de entrada de refrigerio"/>
+                        <p:inputMask value="#{jornadaController.selected.HEntradaRefrigerio}" mask="99:99" title="#{myBundle.CreateJornadaTitle_HSalida}">
+                            <f:convertDateTime pattern="HH:mm"/>
+                        </p:inputMask>
+                        
+                        <p:outputLabel value="Tolerancia regular de entrada de refrigerio"/>
+                        <p:inputText value="#{jornadaController.selected.minutosToleranciaRegularEntradaRefrigerio}"/>
+                        
+                        <p:outputLabel value="Tolerancia tardanza de entrada de refrigerio"/>
+                        <p:inputText value="#{jornadaController.selected.minutosToleranciaTardanzaEntradaRefrigerio}"/>
+                        
+                        <p:outputLabel value="¿Es turno de emergencia?" for="asistencial"/>
                         <p:selectBooleanCheckbox id="asistencial" value="#{jornadaController.selected.asistencial}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_porFecha}"/>
 
                         <p:outputLabel value="#{myBundle.CreateAreaLabel_sucursalId}" for="sucursalId" />

@@ -1,7 +1,14 @@
 package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.EmpleadoHorarioFacadeLocal;
+import com.project.jsica.ejb.entidades.DetalleHorario;
+import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.EmpleadoHorario;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -26,6 +33,40 @@ public class EmpleadoHorarioController extends AbstractController<EmpleadoHorari
     public EmpleadoHorarioController() {
         // Inform the Abstract parent controller of the concrete EmpleadoHorario?cap_first Entity
         super(EmpleadoHorario.class);
+    }
+    
+    public List<DetalleHorario> turnosXEmpleado(Empleado empleado, Date fechaInicio, Date fechaFin) {
+        
+        SimpleDateFormat dtFecha = new SimpleDateFormat("yyyy-MM-dd");
+
+        String fechaI = "{d '" + dtFecha.format(fechaInicio) + "'}";
+        String fechaF = "{d '" + dtFecha.format(fechaFin) + "'}";
+
+        String sql;
+
+        Map<String, Object> parametros = new HashMap<>();
+
+        if (empleado.getGrupoHorarioId() != null) {
+            sql = "SELECT eh FROM EmpleadoHorario eh "
+                    + "WHERE (eh.porGrupo = TRUE AND eh.grupoHorarioId = :grupo) "
+                    + "AND (eh.horarioId.porFecha = FALSE "
+                    + "OR (eh.horarioId.porFecha = TRUE AND eh.horarioId.fecha BETWEEN " + fechaI + " AND " + fechaF + ")) ";
+            parametros.put("grupo", empleado.getGrupoHorarioId());
+        } else {
+            sql = "SELECT eh FROM EmpleadoHorario eh "
+                    + "WHERE (eh.porGrupo = FALSE AND eh.empleadoId.docIdentidad = :dni) "
+                    + "AND (eh.horarioId.porFecha = FALSE "
+                    + "OR (eh.horarioId.porFecha = TRUE AND eh.horarioId.fecha BETWEEN " + fechaI + " AND " + fechaF + ")) ";
+            parametros.put("dni", empleado.getDocIdentidad());
+        }
+
+        List<EmpleadoHorario> empleadoHorarios = this.empleadoHorarioFacade.search(sql, parametros);
+        List<DetalleHorario> lista = new ArrayList<>();
+        for (EmpleadoHorario empleadoHorario : empleadoHorarios) {
+            List<DetalleHorario> horarioJornadas = empleadoHorario.getHorarioId().getDetalleHorarioList();
+            lista.addAll(horarioJornadas);
+        }
+        return lista;
     }
 
     /**
@@ -114,5 +155,11 @@ public class EmpleadoHorarioController extends AbstractController<EmpleadoHorari
     @Override
     public List<EmpleadoHorario> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
         return this.empleadoHorarioFacade.search(namedQuery, parametros, inicio, tamanio);
+    }
+    
+    private int ultimoDiaMes(int mes, int anio) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(anio, mes - 1, 1);
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 }

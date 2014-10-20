@@ -56,6 +56,8 @@ public class RegistroAsistencia implements Serializable {
     private Empleado empleadoId;
     @Column(name = "e_o_s")
     private Boolean eOS;
+    @Column(name = "refrigerio")
+    private Boolean refrigerio;
     private String tipo;
     @JoinColumn(name = "turno_original", referencedColumnName = "id", nullable = true)
     @ManyToOne
@@ -67,6 +69,15 @@ public class RegistroAsistencia implements Serializable {
     @ManyToOne
     private Permiso permisoId;
 
+    public Boolean getRefrigerio() {
+        return refrigerio;
+    }
+
+    public void setRefrigerio(Boolean refrigerio) {
+        this.refrigerio = refrigerio;
+    }
+
+    
     public Boolean iseOS() {
         return eOS;
     }

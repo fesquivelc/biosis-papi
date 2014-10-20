@@ -163,8 +163,8 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
                 DateFormat dtFecha = new SimpleDateFormat("yyyy/MM/dd");
                 DateFormat dtHora = new SimpleDateFormat("HH:mm:ss");
 
-//                String carga = this.query + "  AND CONVERT(DATE,reporte.dtDateTime) > '" + dtFecha.format(pFecha) + "' OR (CONVERT(DATE,reporte.dtDateTime) =  '" + dtFecha.format(pFecha) + "' AND  CONVERT(TIME,reporte.dtDateTime) >= '" + dtHora.format(pHora) + "')";
-                String carga = this.query + "  AND date_part('year',fecha) == 2014 AND fecha > '" + dtFecha.format(pFecha) + "' OR (fecha =  '" + dtFecha.format(pFecha) + "' AND  hora >= '" + dtHora.format(pHora) + "')";
+                String carga = this.query + "  AND CONVERT(DATE,reporte.dtDateTime) > '" + dtFecha.format(pFecha) + "' OR (CONVERT(DATE,reporte.dtDateTime) =  '" + dtFecha.format(pFecha) + "' AND  CONVERT(TIME,reporte.dtDateTime) >= '" + dtHora.format(pHora) + "')";
+//                String carga = this.query + "  AND date_part('year',fecha) == 2014 AND fecha > '" + dtFecha.format(pFecha) + "' OR (fecha =  '" + dtFecha.format(pFecha) + "' AND  hora >= '" + dtHora.format(pHora) + "')";
                 LOG.log(Level.INFO, "CONSULTA DE CARGA MASIVA{0}", carga);
                 ps = connSQLServer.prepareStatement(carga);
 

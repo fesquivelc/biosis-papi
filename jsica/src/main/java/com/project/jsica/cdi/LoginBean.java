@@ -32,7 +32,7 @@ public class LoginBean implements Serializable {
         } catch (ServletException e) {
             context.addMessage(null, new FacesMessage("Logout failed."));
         }
-        return "/faces/index.xhtml";
+        return "/index";
         
     }
 

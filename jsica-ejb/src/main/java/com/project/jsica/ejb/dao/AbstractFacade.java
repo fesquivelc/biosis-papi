@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -33,6 +33,9 @@ public abstract class AbstractFacade<T> {
     private EmpleadoFacadeLocal empleadoDAO;
 
     private Class<T> entityClass;
+    private static final Logger LOG = Logger.getLogger(AbstractFacade.class.getName());
+    
+    
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -41,18 +44,19 @@ public abstract class AbstractFacade<T> {
     protected abstract EntityManager getEntityManager();
 
     public void create(T entity) {
-
+        LOG.info("SE CREA LA ENTIDAD");
         getEntityManager().persist(entity);
 
     }
 
     public void edit(T entity) {
+        LOG.info("SE EDITA LA ENTIDAD");
         getEntityManager().merge(entity);
 
     }
-    private static final java.util.logging.Logger LOG = java.util.logging.Logger.getLogger(AbstractFacade.class.getName());
 
     public void remove(T entity) {
+        LOG.info("SE ELIMINA LA ENTIDAD");
         getEntityManager().remove(getEntityManager().merge(entity));
     }
 

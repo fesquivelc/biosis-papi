@@ -1,7 +1,13 @@
 package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.EmpleadoPermisoFacadeLocal;
+import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.EmpleadoPermiso;
+import com.project.jsica.ejb.entidades.Permiso;
+import com.project.jsica.ejb.entidades.RegistroAsistencia;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -22,6 +28,23 @@ public class EmpleadoPermisoController extends AbstractController<EmpleadoPermis
     private PermisoController permisoIdController;
     @Inject
     private PapeletaController papeletaListController;
+    
+    public List<Permiso> permisosXEmpleado(Date desde,Date hasta, Empleado empleado){
+        String sql = "SELECT ep FROM EmpleadoPermiso ep WHERE ep.empleadoId = :empleado AND ep.permisoId.porFecha = FALSE AND ep.permisoId.fechaInicio BETWEEN :desde AND :hasta ORDER BY ep.permisoId.fechaInicio,ep.permisoId.horaInicio ASC";
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("empleado", empleado);
+        parametros.put("desde", desde);
+        parametros.put("hasta", hasta);
+        List<EmpleadoPermiso> lista = empleadoPermisoFacade.search(sql, parametros);
+        List<Permiso> permisos = new ArrayList<>();
+        
+        for(EmpleadoPermiso ep : lista){
+            permisos.add(ep.getPermisoId());
+        }
+        
+        return permisos;
+        
+    }
 
     public EmpleadoPermisoController() {
         // Inform the Abstract parent controller of the concrete EmpleadoPermiso?cap_first Entity

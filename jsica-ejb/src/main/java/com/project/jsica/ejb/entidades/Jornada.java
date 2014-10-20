@@ -69,6 +69,27 @@ public class Jornada implements Serializable {
     private Servicio servicioId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "jornadaCodigo")
     private List<DetalleHorario> detalleHorarioList;
+    
+    
+    //AGREGADO PARA ELECTRONORTE
+    @Column(name = "h_salida_refrigerio")
+    @Temporal(TemporalType.TIME)
+    private Date hSalidaRefrigerio;
+    
+    @Column(name = "h_entrada_refrigerio")
+    @Temporal(TemporalType.TIME)
+    private Date hEntradaRefrigerio;
+    @Column(name = "minutos_tolerancia_entrada_regular")
+    private Integer minutosToleranciaRegularEntradaJornada;
+    @Column(name = "minutos_tolerancia_entrada_tardanza")
+    private Integer minutosToleranciaTardanzaEntradaJornada;        
+    
+    @Column(name = "jornada_con_refrigerio")    
+    private Boolean jornadaConRefrigerio;
+    @Column(name = "minutos_tolerancia_entrada_refrigerio_regular")
+    private Integer minutosToleranciaRegularEntradaRefrigerio;
+    @Column(name = "minutos_tolerancia_entrada_refrigerio_tardanza")
+    private Integer minutosToleranciaTardanzaEntradaRefrigerio;
 
     public Jornada() {
     }
@@ -82,6 +103,64 @@ public class Jornada implements Serializable {
         this.nombre = nombre;
         this.flexible = flexible;
     }
+
+    public Date getHSalidaRefrigerio() {
+        return hSalidaRefrigerio;
+    }
+
+    public void setHSalidaRefrigerio(Date hSalidaRefrigerio) {
+        this.hSalidaRefrigerio = hSalidaRefrigerio;
+    }
+
+    public Date getHEntradaRefrigerio() {
+        return hEntradaRefrigerio;
+    }
+
+    public void setHEntradaRefrigerio(Date hEntradaRefrigerio) {
+        this.hEntradaRefrigerio = hEntradaRefrigerio;
+    }
+
+    public Integer getMinutosToleranciaRegularEntradaJornada() {
+        return minutosToleranciaRegularEntradaJornada;
+    }
+
+    public void setMinutosToleranciaRegularEntradaJornada(Integer minutosToleranciaRegularEntradaJornada) {
+        this.minutosToleranciaRegularEntradaJornada = minutosToleranciaRegularEntradaJornada;
+    }
+
+    public Integer getMinutosToleranciaTardanzaEntradaJornada() {
+        return minutosToleranciaTardanzaEntradaJornada;
+    }
+
+    public void setMinutosToleranciaTardanzaEntradaJornada(Integer minutosToleranciaTardanzaEntradaJornada) {
+        this.minutosToleranciaTardanzaEntradaJornada = minutosToleranciaTardanzaEntradaJornada;
+    }
+
+    public Boolean getJornadaConRefrigerio() {
+        return jornadaConRefrigerio;
+    }
+
+    public void setJornadaConRefrigerio(Boolean jornadaConRefrigerio) {
+        this.jornadaConRefrigerio = jornadaConRefrigerio;
+    }
+
+    public Integer getMinutosToleranciaRegularEntradaRefrigerio() {
+        return minutosToleranciaRegularEntradaRefrigerio;
+    }
+
+    public void setMinutosToleranciaRegularEntradaRefrigerio(Integer minutosToleranciaRegularEntradaRefrigerio) {
+        this.minutosToleranciaRegularEntradaRefrigerio = minutosToleranciaRegularEntradaRefrigerio;
+    }
+
+    public Integer getMinutosToleranciaTardanzaEntradaRefrigerio() {
+        return minutosToleranciaTardanzaEntradaRefrigerio;
+    }
+
+    public void setMinutosToleranciaTardanzaEntradaRefrigerio(Integer minutosToleranciaTardanzaEntradaRefrigerio) {
+        this.minutosToleranciaTardanzaEntradaRefrigerio = minutosToleranciaTardanzaEntradaRefrigerio;
+    }
+    
+    
 
     public boolean isTerminaDiaSiguiente() {
         return terminaDiaSiguiente;

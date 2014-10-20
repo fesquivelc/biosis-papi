@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template.xhtml">
+
+            <ui:define name="title">
+                REPORTE DE PERMISOS
+            </ui:define>
+
+            <ui:define name="footer">
+
+            </ui:define>
+
+            <ui:define name="body">
+                <h:form>                    
+                    <p:growl id="growl" showDetail="true" sticky="false" life="500"  /> 
+                    <p:tabView>
+
+                        <p:tab title="Por área">
+                            <h:form>
+                                <p:panelGrid columns="2">                            
+                                    <p:outputLabel value="Área" for="cboArea"/>
+                                    <p:selectOneMenu id="cboArea" value="#{reporteBean.areaSeleccionada}" converter="areaConverter" >
+                                        <f:selectItem itemLabel="Seleccione un área" noSelectionOption="true"/>
+                                        <f:selectItems value="#{reporteBean.areas}"
+                                                       var="area"
+                                                       itemValue="#{area}"
+                                                       itemLabel="#{area.nombre}" 
+
+                                                       />
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel value="Desde"/>
+                                    <p:inputMask value="#{reporteBean.desde}" mask="99/99/9999" requiredMessage="Defina desde que fecha se mostrará">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:inputMask>
+
+                                    <p:outputLabel value="Hasta"/>
+                                    <p:inputMask value="#{reporteBean.hasta}" mask="99/99/9999" requiredMessage="Defina hasta que fecha se mostrará">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:inputMask>
+
+                                    <p:commandButton ajax="false" value="Generar reporte" action="#{reporteBean.reportePermisos(2)}" update="growl"/>
+                                </p:panelGrid>
+                            </h:form>
+                        </p:tab>
+
+                        <p:tab title="Por Empleado">
+                            <h:form>
+                                <p:panelGrid columns="2">                            
+
+                                    <p:outputLabel value="Empleado"/>
+                                    <p:autoComplete id="txtEmpleado" value="#{reporteBean.empleado}"
+                                                    var="empleado" itemLabel="#{empleado.empleado}" completeMethod="#{empleadoController.metodo}" itemValue="#{empleado}" converter="empleadoConverter" size="70" />
+
+                                    <p:outputLabel value="Desde"/>
+                                    <p:inputMask value="#{reporteBean.desde}" mask="99/99/9999" requiredMessage="Defina desde que fecha se mostrará">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:inputMask>
+
+                                    <p:outputLabel value="Hasta"/>
+                                    <p:inputMask value="#{reporteBean.hasta}" mask="99/99/9999" requiredMessage="Defina hasta que fecha se mostrará">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:inputMask>
+
+                                    <p:commandButton ajax="false" value="Generar reporte" action="#{reporteBean.reportePermisos(1)}" update="growl"/>
+                                </p:panelGrid>
+                            </h:form>
+                        </p:tab>
+                    </p:tabView>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
