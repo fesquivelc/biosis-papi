@@ -113,8 +113,8 @@ public class ReporteBean implements Serializable {
      */
     public ReporteBean() {
     }
-    
-    private void agregarData(WritableSheet hoja, String[] titulos, List<String[]> contenido, Integer[] anchuras){
+
+    private void agregarData(WritableSheet hoja, String[] titulos, List<String[]> contenido, Integer[] anchuras) {
         this.agregarData(hoja, titulos, contenido, anchuras, 0);
     }
 
@@ -180,55 +180,64 @@ public class ReporteBean implements Serializable {
             WritableSheet hojaResumen = w.createSheet("RESUMEN", 0);
             WritableSheet hojaDetalle = w.createSheet("DETALLE", 1);
 
-            String[] tituloResumen = {"CODIGO", "APELLIDOS Y NOMBRES", "TOTAL HORAS", "TOTAL MINUTOS", "TOTAL SEGUNDOS"};                        
-            String[] subtituloDetalle = {"FECHA","HORAS", "MINUTOS", "SEGUNDOS"}; 
-            String[] tituloDetalle = {"CODIGO","APELLIDOS Y NOMBRES"};
-            Integer[] anchuras = {10, 30, 10, 10, 10, 10, 10, 10};
-            
+            String[] tituloResumen = {"CODIGO", "APELLIDOS Y NOMBRES", "TOTAL HORAS", "TOTAL MINUTOS", "TOTAL SEGUNDOS"};
+            String[] subtituloDetalle = {"FECHA", "HORAS", "MINUTOS", "SEGUNDOS"};
+            String[] tituloDetalle = {"CODIGO", "APELLIDOS Y NOMBRES"};
+            Integer[] anchurasResumen = {10, 40, 10, 10, 10};
+            Integer[] anchurasDetalle = {10, 10, 10, 10};
+
             List<String[]> resumen = new ArrayList<>();
-                        
+
             // CODIGO - APELLIDOS Y NOMBRES
             int filaResumen = 0;
             int filaDetalle = 0;
-            long milisegundosTotales = 0;
-            
-            
-            
-            for(Empleado emp : empleados){
-                List<RegistroAsistencia> registrosSalida = registroAsistenciaController.getRegistros(false,false,false,emp,desde,hasta);
+
+            for (Empleado emp : empleados) {
+                List<RegistroAsistencia> registrosSalida = registroAsistenciaController.getRegistros(false, false, false, emp, desde, hasta);
                 List<String[]> detalles = new ArrayList<>();
-                
+
                 //LLENANDO EL DETALLE
                 hojaDetalle.mergeCells(1, filaDetalle, 3, filaDetalle);
                 filaDetalle++;
                 agregarCelda(hojaDetalle, filaDetalle, 0, emp.getFichaLaboral().getCodigoTrabajador());
                 agregarCelda(hojaDetalle, filaDetalle, 1, emp.getApellidos() + emp.getNombres());
                 filaDetalle++;
-                
+
                 int filaInicio = filaDetalle;
-                
-                for(RegistroAsistencia ra : registrosSalida){
+                long milisegundosTotales = 0;
+
+                for (RegistroAsistencia ra : registrosSalida) {
                     long diferencia = ra.getHora().getTime() - ra.getTurnoOriginal().getJornadaCodigo().getHSalida().getTime();
-                    if(diferencia > 0){
+                    if (diferencia > 0) {
                         int horas = (int) diferencia / (60 * 60 * 1000);
                         int minutos = (int) (Math.abs(diferencia - (horas * 60 * 60 * 1000)) / (60 * 1000));
-                        String detalle[] = {dtFecha.format(ra.getFecha()),horas+"",minutos+"",""};
+                        String detalle[] = {dtFecha.format(ra.getFecha()), horas + "", minutos + "", ""};
                         detalles.add(detalle);
                         milisegundosTotales += diferencia;
-                        
+
                         filaDetalle++;
                     }
                 }
+
                 //SE AGREGA LA DATA DEL DETALLE A LA HOJA
-                this.agregarData(hojaDetalle, subtituloDetalle, detalles, anchuras, filaInicio);
-                
+                this.agregarData(hojaDetalle, subtituloDetalle, detalles, anchurasDetalle, filaInicio);
+
+                filaDetalle++;
+
                 //LLENADO DEL RESUMEN
-                
-                
-                
+                int horas = (int) milisegundosTotales / (60 * 60 * 1000);
+                int minutos = (int) (Math.abs(milisegundosTotales - (horas * 60 * 60 * 1000)) / (60 * 1000));
+
+                String[] resmn = {emp.getFichaLaboral().getCodigoTrabajador(), emp.getApellidos() + " " + emp.getNombres(), horas + "", minutos + "", ""};
+                resumen.add(resmn);
             }
-            
-            
+
+            this.agregarData(hojaResumen, tituloResumen, resumen, anchurasResumen);
+
+            w.write();
+            w.close();
+
+            FacesContext.getCurrentInstance().responseComplete();
         } catch (Exception e) {
         }
     }

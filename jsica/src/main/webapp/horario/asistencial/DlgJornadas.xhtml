@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="JornadasDlg" widgetVar="JornadasDlg" modal="true" resizable="false" appendTo="@(body)" header="Seleccione jornadas">
+            <h:form id="JornadaSeleccionadaForm">
+                <h:panelGroup id="display" rendered="#{empleadoHorarioController.detalleSeleccionado != null}">
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel value="Jornada"/>
+                        <p:selectOneMenu value="#{empleadoHorarioController.detalleSeleccionado.jornadaCodigo}" required="true" converter="jornadaConverter">
+                            <f:selectItem itemLabel="Seleccione una jornada" noSelectionOption="true"/>
+                            <f:selectItems value="#{jornadaController.items}"
+                                           var="jornada"
+                                           itemValue="#{jornada}"
+                                           itemLabel="#{jornada.nombre}"
+                                           />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Dia"/>
+                        <p:inputText value="#{empleadoHorarioController.diaSeleccionado}" placeholder="Escriba los dias separados por comas"/>                        
+                        <p:commandButton value="Agregar" actionListener="#{empleadoHorarioController.agregarFecha()}" update=":horarioAsistencialForm:datalist" oncomplete="PF('JornadasDlg').hide()" />
+                    </p:panelGrid>                    
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

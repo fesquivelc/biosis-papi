@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.EmpleadoHorario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,6 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class EmpleadoHorarioFacade extends AbstractFacade<EmpleadoHorario> implements EmpleadoHorarioFacadeLocal {
+
     @PersistenceContext(unitName = jsica_PU)
     private EntityManager em;
 
@@ -28,5 +29,12 @@ public class EmpleadoHorarioFacade extends AbstractFacade<EmpleadoHorario> imple
     public EmpleadoHorarioFacade() {
         super(EmpleadoHorario.class);
     }
-    
+
+    @Override
+    public List<EmpleadoHorario> getHorariosAsistenciales() {
+        String sql = "SELECT eh FROM EmpleadoHorario eh WHERE eh.horarioId.porFecha = TRUE";
+        return this.getEntityManager().createQuery(sql).getResultList();
+
+    }
+
 }

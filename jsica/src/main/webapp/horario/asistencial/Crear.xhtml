@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="/template.xhtml">
+
+            <ui:define name="title">
+                Horario asistencial
+            </ui:define>
+
+            <ui:define name="footer">
+                footer
+            </ui:define>
+
+            <ui:define name="body">
+                <h:form>
+                    <p:commandButton   action="#{empleadoHorarioController.reset()}" value="Regresar a la lista"/>
+                </h:form>
+                <h:form id="horarioAsistencialForm">
+
+                    <p:panel id="pnl1" header="NUEVO HORARIO ASISTENCIAL" >
+                        
+
+                        <p:panel header="Datos generales">
+                            <p:panelGrid columns="2" columnClasses="columns">
+                                <p:outputLabel value="Fecha de registro"/>
+                                <p:inputMask value="#{empleadoHorarioController.selected.fecha}" mask="99/99/9999" required="true">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:inputMask>
+
+                                <p:outputLabel value="Mes"/>
+                                <h:panelGroup>
+                                    <p:selectOneMenu value="#{empleadoHorarioController.mes}" required="true">
+                                        <p:ajax update="calendario"/> 
+                                        <f:selectItem itemLabel="Seleccione el mes" itemValue="-1"/>
+                                        <f:selectItem itemValue="0" itemLabel="Enero"/>
+                                        <f:selectItem itemValue="1" itemLabel="Febrero"/>
+                                        <f:selectItem itemValue="2" itemLabel="Marzo"/>
+                                        <f:selectItem itemValue="3" itemLabel="Abril"/>
+                                        <f:selectItem itemValue="4" itemLabel="Mayo"/>
+                                        <f:selectItem itemValue="5" itemLabel="Junio"/>
+                                        <f:selectItem itemValue="6" itemLabel="Julio"/>
+                                        <f:selectItem itemValue="7" itemLabel="Agosto"/>
+                                        <f:selectItem itemValue="8" itemLabel="Setiembre"/>
+                                        <f:selectItem itemValue="9" itemLabel="Octubre"/>
+                                        <f:selectItem itemValue="10" itemLabel="Noviembre"/>
+                                        <f:selectItem itemValue="11" itemLabel="Diciembre"/>
+                                    </p:selectOneMenu>
+
+                                    <p:selectOneMenu value="#{empleadoHorarioController.anio}" required="true" converter="anioConverter">
+                                        <p:ajax update="calendario"/> 
+                                        <f:selectItem itemLabel="Seleccione el año" noSelectionOption="true" />
+                                        <f:selectItems value="#{anioController.items}"
+                                                   var="anio"
+                                                   itemValue="#{anio}"
+                                                   itemLabel="#{anio.anio}"
+                                                   />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+
+                                <p:outputLabel value="Empleado"/>
+                                <p:selectOneMenu value="#{empleadoHorarioController.selected.empleadoId}" required="true" converter="empleadoConverter">
+                                    <p:ajax update="calendario"/> 
+                                    <f:selectItem itemLabel="Selecciona un empleado"/>
+                                    <f:selectItems value="#{empleadoController.items}"
+                                                   var="empleado"
+                                                   itemValue="#{empleado}"
+                                                   itemLabel="#{empleado.apellidos} #{empleado.nombres}"
+                                                   />
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="Denominacion de horario"/>
+                                <p:inputText placeholder="Escriba una denominacion para el horario"  />
+
+                                <p:outputLabel value="Descripción"/>
+                                <p:inputTextarea placeholder="Escriba una descripcion (en caso se necesite) del horario" cols="60"/>
+
+                            </p:panelGrid>
+                        </p:panel> 
+                        <p:outputPanel id="calendario" >                            
+                            <p:panel header="Dias de trabajo" rendered="#{empleadoHorarioController.bandera}">
+                                <p:commandButton id="btnAgregarTurnos" value="Agregar turnos" actionListener="#{empleadoHorarioController.crearDetalleHorario}" update=":JornadaSeleccionadaForm :JornadaSeleccionadaForm:display" oncomplete="PF('JornadasDlg').show()"/>
+                                <p:dataTable id="datalist"                                              
+                                             value="#{empleadoHorarioController.selected.horarioId.detalleHorarioList}"
+                                             var="detalle"
+                                             paginator="false"                                             
+                                             emptyMessage="No hay dias agregados"
+                                             >                                    
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Fecha"/>
+                                        </f:facet>
+                                        <h:outputText value="#{detalle.fecha}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Jornada"/>
+                                        </f:facet>
+                                        <h:outputText value="#{detalle.jornadaCodigo.nombre}"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Hora de entrada"/>
+                                        </f:facet>
+                                        <h:outputText value="#{detalle.jornadaCodigo.HEntrada}">
+                                            <f:convertDateTime pattern="HH:mm"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Hora de salida"/>
+                                        </f:facet>
+                                        <h:outputText value="#{detalle.jornadaCodigo.HSalida}">
+                                            <f:convertDateTime pattern="HH:mm"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="¿Termina al dia siguiente?"/>
+                                        </f:facet>
+                                        <h:selectBooleanCheckbox value="#{detalle.jornadaCodigo.terminaDiaSiguiente}" disabled="true" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+                        </p:outputPanel>
+                        
+                        
+
+
+                    </p:panel>
+
+                </h:form>
+                <h:form>
+                    <p:commandButton value="GUARDAR TODO" action="#{empleadoHorarioController.guardar()}"/>
+                </h:form>
+                <ui:include src="DlgJornadas.xhtml"/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

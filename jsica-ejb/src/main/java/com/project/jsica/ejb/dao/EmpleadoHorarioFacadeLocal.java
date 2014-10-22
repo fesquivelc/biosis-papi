@@ -37,5 +37,7 @@ public interface EmpleadoHorarioFacadeLocal {
     List<EmpleadoHorario> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
+
+    List<EmpleadoHorario> getHorariosAsistenciales();
     
 }
