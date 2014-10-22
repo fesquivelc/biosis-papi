@@ -25,7 +25,7 @@
 
                         <p:outputLabel value="Dia"/>
                         <p:inputText value="#{empleadoHorarioController.diaSeleccionado}" placeholder="Escriba los dias separados por comas"/>                        
-                        <p:commandButton value="Agregar" actionListener="#{empleadoHorarioController.agregarFecha()}" update=":horarioAsistencialForm:datalist" oncomplete="PF('JornadasDlg').hide()" />
+                        <p:commandButton value="Agregar" actionListener="#{empleadoHorarioController.agregarFecha()}" update=":horarioAsistencialForm:datalist :frmGuardarTodo:brnGuardarTodo" oncomplete="PF('JornadasDlg').hide()" />
                     </p:panelGrid>                    
                 </h:panelGroup>
             </h:form>

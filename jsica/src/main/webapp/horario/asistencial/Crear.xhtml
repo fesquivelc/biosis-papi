@@ -143,8 +143,8 @@
                     </p:panel>
 
                 </h:form>
-                <h:form>
-                    <p:commandButton value="GUARDAR TODO" action="#{empleadoHorarioController.guardar()}"/>
+                <h:form id="frmGuardarTodo">
+                    <p:commandButton id="btnGuardarTodo" disabled="#{empleadoHorarioController.selected.horarioId.detalleHorarioList.size() == 0}" value="GUARDAR TODO" action="#{empleadoHorarioController.guardar()}"/>
                 </h:form>
                 <ui:include src="DlgJornadas.xhtml"/>
             </ui:define>
