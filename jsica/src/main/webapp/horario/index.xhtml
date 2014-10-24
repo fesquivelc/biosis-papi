@@ -2,7 +2,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 template="/template.xhtml">
 
@@ -12,61 +11,16 @@
 
     <ui:define name="body">
          <p:tabView id="tabOpciones">
-            <p:tab title="Lista de Horarios">
+            <p:tab title="Lista de Horarios administrativos">
                            <ui:include src="/horario/List.xhtml"/>
 
             </p:tab>
-            <p:tab title="ASIGNACION">
+            <p:tab title="Asignación de horario administrativo">
                 <ui:include src="/horario/ListaAsignados.xhtml"/>
                 
             </p:tab>
-            <p:tab title="Asignación de Horario Administrativo">
-                <h:form id="frmAsignacionAdministrativo">
-                    <p:panel header="Asignación de Horarios Administrativos">
-                        <p:panelGrid columns="2" columnClasses="column">
-
-                            <p:outputLabel value="Por grupo" for="asigGrupo"/>
-                            <p:selectBooleanCheckbox id="asigGrupo" value="#{horarioController.porGrupo}" required="true"/>
-                       
-                        
-                            <p:outputLabel value="#{myBundle.CreatePapeletaLabel_empleadoIdempleado}" for="empleadoId" />
-                            <p:autoComplete id="empleadoId" value="#{horarioController.selected.empleadoHorario.empleadoId}" completeMethod="#{empleadoController.metodo}"
-                                            var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="55" required="true"/>
-                        
-                            <p:outputLabel value="#{myBundle.CreateEmpleadoHorarioLabel_grupoHorarioId}" for="grupoHorarioId" />
-                            <p:selectOneMenu id="grupoHorarioId" value="#{horarioController.selected.empleadoHorario.grupoHorarioId}"  converter="grupoHorarioConverter">
-                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                <f:selectItems value="#{grupoHorarioController.items}"
-                                               var="grupoHorarioIdItem"
-                                               itemValue="#{grupoHorarioIdItem}"
-                                               itemLabel="#{grupoHorarioIdItem.nombre}"
-                                               />
-                            </p:selectOneMenu>
-                            
-                            <p:outputLabel value="#{myBundle.CreateEmpleadoHorarioLabel_horarioId}" for="horarioId" />
-                            <p:selectOneMenu id="horarioId" value="#{horarioController.selected.empleadoHorario.horarioId}" required="true" requiredMessage="#{myBundle.CreateEmpleadoHorarioRequiredMessage_horarioId}" converter="horarioConverter">
-                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                <f:selectItems value="#{horarioController.items}"
-                                               var="horarioIdItem"
-                                               itemValue="#{horarioIdItem}"
-                                               itemLabel="#{horarioIdItem.nombre}"
-                                               />
-                            </p:selectOneMenu>
-
-                        </p:panelGrid>
-                        
-                    </p:panel> 
-
-                </h:form>
-            </p:tab> 
-        </p:tabView>
-        
-            <p:dialog header="ASIGNACIÓN DE HORARIO" appendTo="@(body)" modal="true" resizable="false" widgetVar="dlgAsignacionHorario" width="800" height="600">
-            <h:form id="frmAsignacionCreate">
-                <p:schedule id="schCalendario" />
-            </h:form>
-
-            </p:dialog>
+             
+        </p:tabView>     
         
         <ui:include src="/horario/View.xhtml"/>
         <ui:include src="/horario/Edit.xhtml"/>

@@ -25,9 +25,11 @@
                     
                  </p:submenu>
                 <p:submenu label="Horarios">
-                    <p:menuitem value="Creación" outcome="/horario/index"/>
-                    <p:menuitem value="Horario asistencial" outcome="/horario/asistencial/List"/>
-                    <p:menuitem value="Cambio de Horario" outcome="/cambioTurno/index"/>
+                    <p:menuitem value="Horarios administrativos" outcome="/horario/index"/>                    
+                    <p:submenu label="Horarios de emergencia">
+                        <p:menuitem value="Listado" outcome="/horario/asistencial/List"/>
+                        <p:menuitem value="Cambios de turno" outcome="/cambioTurno/index" />
+                    </p:submenu>
                     <p:submenu label="Parámetros de Horario">
                         <p:menuitem value="Jornadas" outcome="/jornada/index"/>
                         <p:menuitem value="Grupos Horarios" outcome="/grupoHorario/index"/>

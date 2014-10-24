@@ -270,7 +270,7 @@ public class EmpleadoHorarioController extends AbstractController<EmpleadoHorari
         if (this.getSelected() != null && horarioIdController.getSelected() == null) {
             horarioIdController.setSelected(this.getSelected().getHorarioId());
         }
-    }
+    } 
     
     public Collection<EmpleadoHorario> getHorarioAsistencial() { 
         if (items == null) {
