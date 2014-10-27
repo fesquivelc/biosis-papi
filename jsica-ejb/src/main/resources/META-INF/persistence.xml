@@ -3,7 +3,9 @@
   <persistence-unit name="com.project_jsica-ejb_ejb_1.0PU" transaction-type="JTA">
     <jta-data-source>jdbc/jsicabd-mysql</jta-data-source>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
-    <properties/>
+    <properties>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+    </properties>
   </persistence-unit>
   <persistence-unit name="jsica-postgresql-PU" transaction-type="JTA">
     <jta-data-source>jdbc/biosis</jta-data-source>

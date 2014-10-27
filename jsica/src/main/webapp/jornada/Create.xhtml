@@ -15,85 +15,55 @@
                 <h:panelGroup id="display" rendered="#{jornadaController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
+                        <p:outputLabel value="¿Es turno de emergencia?" for="asistencial"/>
+                        <p:selectBooleanCheckbox id="asistencial" value="#{jornadaController.selected.asistencial}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_porFecha}"/>
+
                         <p:outputLabel value="#{myBundle.CreateJornadaLabel_codigo}" for="codigo" />
                         <p:inputText id="codigo" value="#{jornadaController.selected.codigo}" title="#{myBundle.CreateJornadaTitle_codigo}" required="true" requiredMessage="#{myBundle.CreateJornadaRequiredMessage_codigo}" size="10" maxlength="10"/>
 
                         <p:outputLabel value="#{myBundle.CreateJornadaLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{jornadaController.selected.nombre}" title="#{myBundle.CreateJornadaTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateJornadaRequiredMessage_nombre}" size="60" maxlength="255"/>
 
-                        <p:outputLabel value="#{myBundle.CreateJornadaLabel_HEntrada}" for="HEntrada" />
+                        <p:outputLabel value="Hora de entrada" for="HEntrada" />
                         <p:inputMask id="HEntrada" value="#{jornadaController.selected.HEntrada}" mask="99:99" title="#{myBundle.CreateJornadaTitle_HEntrada}">
                             <f:convertDateTime pattern="HH:mm"/>
                         </p:inputMask> 
-                        
+
                         <p:outputLabel value ="Tolerancia regular (min)" />
                         <p:inputText value="#{jornadaController.selected.minutosToleranciaRegularEntradaJornada}"/>
-                        
+
                         <p:outputLabel value ="Tolerancia tardanza (min)" />
                         <p:inputText value="#{jornadaController.selected.minutosToleranciaTardanzaEntradaJornada}"/>
-                        
+
                         <p:outputLabel value="Termina el día siguiente?" for="diaSiguiente"/>
                         <p:selectBooleanCheckbox id="diaSiguiente" value="#{jornadaController.selected.terminaDiaSiguiente}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_porFecha}"/>
-                         
-                        <p:outputLabel value="#{myBundle.CreateJornadaLabel_HSalida}" for="HSalida" />
+
+                        <p:outputLabel value="Hora de salida" for="HSalida" />
                         <p:inputMask id="HSalida" value="#{jornadaController.selected.HSalida}" mask="99:99" title="#{myBundle.CreateJornadaTitle_HSalida}">
                             <f:convertDateTime pattern="HH:mm"/>
                         </p:inputMask> 
-                        
+
                         <p:outputLabel value="¿Tiene salida a refrigerio?"/>
                         <p:selectBooleanCheckbox value="#{jornadaController.selected.jornadaConRefrigerio}"/>
-                        
+
                         <p:outputLabel value="Hora de salida a refrigerio"/>
                         <p:inputMask value="#{jornadaController.selected.HSalidaRefrigerio}" mask="99:99" title="#{myBundle.CreateJornadaTitle_HSalida}">
                             <f:convertDateTime pattern="HH:mm"/>
                         </p:inputMask>
-                        
+
                         <p:outputLabel value="Hora de entrada de refrigerio"/>
                         <p:inputMask value="#{jornadaController.selected.HEntradaRefrigerio}" mask="99:99" title="#{myBundle.CreateJornadaTitle_HSalida}">
                             <f:convertDateTime pattern="HH:mm"/>
                         </p:inputMask>
-                        
+
                         <p:outputLabel value="Tolerancia regular de entrada de refrigerio"/>
                         <p:inputText value="#{jornadaController.selected.minutosToleranciaRegularEntradaRefrigerio}"/>
-                        
+
                         <p:outputLabel value="Tolerancia tardanza de entrada de refrigerio"/>
                         <p:inputText value="#{jornadaController.selected.minutosToleranciaTardanzaEntradaRefrigerio}"/>
-                        
-                        <p:outputLabel value="¿Es turno de emergencia?" for="asistencial"/>
-                        <p:selectBooleanCheckbox id="asistencial" value="#{jornadaController.selected.asistencial}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_porFecha}"/>
 
-                        <p:outputLabel value="#{myBundle.CreateAreaLabel_sucursalId}" for="sucursalId" />
-                        <p:selectOneMenu id="sucursalId" value="#{jornadaController.sucursalSeleccionado}" required="true" converter="sucursalConverter">
-                            <p:ajax listener="#{jornadaController.onSucursalSeleccionado}" update="areaId"/>
-                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}" />
-                            <f:selectItems value="#{sucursalController.items}"  
-                                           var="sucursal" 
-                                           itemValue="#{sucursal}" 
-                                           itemLabel="#{sucursal.nombre}"
-                                           />                                 
-                        </p:selectOneMenu>
-                        
-                        <p:outputLabel value="#{myBundle.CreateServicioLabel_areaId}" for="areaId" />
-                        <p:selectOneMenu id="areaId" value="#{jornadaController.areaSeleccionado}" required="true" converter="areaConverter" >
-                            <p:ajax listener="#{jornadaController.onAreaSeleccionado()}" update="servicioId"/>
-                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{jornadaController.areas}"
-                                           var="area"
-                                           itemValue="#{area}"
-                                           itemLabel="#{area.nombre}"
-                                           />
-                        </p:selectOneMenu>
-                        
-                        <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_servicioId}" for="servicioId" />
-                        <p:selectOneMenu id="servicioId" value="#{jornadaController.selected.servicioId}" required="true" requiredMessage="#{myBundle.CreateJornadaRequiredMessage_servicioId}" converter="servicioConverter">
 
-                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{jornadaController.servicios}"
-                                           var="servicio"
-                                           itemValue="#{servicio}"
-                                           itemLabel="#{servicio.nombre}"
-                                           />
-                        </p:selectOneMenu>
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{jornadaController.saveNew}" value="#{myBundle.Save}" update="display,:JornadaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('JornadaCreateDialog'));">
                         <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
