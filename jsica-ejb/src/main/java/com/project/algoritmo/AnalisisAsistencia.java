@@ -321,10 +321,12 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
             boolean permisoEntreRefrigerio = false;
 
             List<Permiso> permisosXDia = obtenerPermisoXDia(fechaEntrada, permisosXMes);
-            
-            for(Permiso permiso : permisosXDia){
-                
+
+            for (Permiso permiso : permisosXDia) {
+
             }
+
+            boolean tieneRefrigerio = turno.getJornadaCodigo().getJornadaConRefrigerio();
 
             LOG.info("ANALIZAMOS HORA DE ENTRADA Y HORA DE SALIDA");
 
@@ -422,7 +424,7 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
         LOG.log(Level.INFO, "FECHA PARA EL FILTRADO: " + fecha.toString());
 
         java.util.Date horaMaxima = cal.getTime();
-        LOG.log(Level.INFO, "HORA MAXIMA: " +  horaMaxima.toString());
+        LOG.log(Level.INFO, "HORA MAXIMA: " + horaMaxima.toString());
 
         cal.add(Calendar.MINUTE, -maximo - minimo);
         java.util.Date horaMinima = cal.getTime();
@@ -561,18 +563,17 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
             this.fechaInicio = calendario.getTime();
         }
     }
-    
+
 //    private Vista obtenerMarcacion(Date fecha, Date hora, int toleranciaMin, int toleranciaMax ,boolean terminaDiaSiguiente, boolean entrada_salida, List<Vista> marcacionesXMes){
 //        
 //    }
-
     private Vista obtenerMarcacion(Date fecha, Date hora, boolean terminaDiaSiguiente, boolean entrada_salida, List<Vista> marcacionesXMes) {
         Vista vista;
 
         if (entrada_salida) {
             vista = this.filtrarMarcacion(fecha, hora, MINUTOS_ANTES_MARCACION_ENTRADA, MINUTOS_MAX_MARCACION_TARDANZA, marcacionesXMes);
 
-            LOG.log(Level.INFO, "VISTA ENTRADA: " +vista);
+            LOG.log(Level.INFO, "VISTA ENTRADA: " + vista);
         } else {
 
             Calendar cal = Calendar.getInstance();
@@ -847,8 +848,8 @@ public class AnalisisAsistencia implements AnalisisAsistenciaLocal {
 
     private List<Permiso> obtenerPermisoXDia(Date fechaEntrada, List<Permiso> permisosXMes) {
         List<Permiso> permisos = new ArrayList<>();
-        for(Permiso permiso : permisosXMes){
-            if(!permiso.getPorFecha() && permiso.getFechaInicio().compareTo(fechaEntrada) == 0){
+        for (Permiso permiso : permisosXMes) {
+            if (!permiso.getPorFecha() && permiso.getFechaInicio().compareTo(fechaEntrada) == 0) {
                 permisos.add(permiso);
             }
         }
