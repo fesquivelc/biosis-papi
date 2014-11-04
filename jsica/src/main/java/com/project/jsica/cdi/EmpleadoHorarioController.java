@@ -274,9 +274,10 @@ public class EmpleadoHorarioController extends AbstractController<EmpleadoHorari
     } 
     
     public Collection<EmpleadoHorario> getHorarioAsistencial() { 
-        if (items == null) {
+//        if (items == null) {
             items = this.empleadoHorarioFacade.getHorariosAsistenciales();
-        }
+//            LOG.info("items empleado horario: "+items.size());
+//        }
         return items;
     }
 
