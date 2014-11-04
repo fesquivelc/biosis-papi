@@ -175,6 +175,7 @@ public class EmpleadoHorarioController extends AbstractController<EmpleadoHorari
         horarioSeleccionado.setPorGrupo(false);
         horarioSeleccionado.setHorarioId(horario);
         this.setSelected(horarioSeleccionado);
+        LOG.info("HORARIO: "+horario.toString());
         LOG.info("HORARIO SELECCIONADO CREAR HORARIO: "+horarioSeleccionado);
         return "Crear";
     }

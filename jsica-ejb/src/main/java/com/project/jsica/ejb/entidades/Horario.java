@@ -60,25 +60,25 @@ public class Horario implements Serializable {
     private String descripcion;
     @Basic(optional = false)
     @NotNull
-    private boolean lunes;
+    private boolean lunes = false;
     @Basic(optional = false)
     @NotNull
-    private boolean martes;
+    private boolean martes = false;
     @Basic(optional = false)
     @NotNull
-    private boolean miercoles;
+    private boolean miercoles = false;
     @Basic(optional = false)
     @NotNull
-    private boolean jueves;
+    private boolean jueves = false;
     @Basic(optional = false)
     @NotNull
-    private boolean viernes;
+    private boolean viernes = false;
     @Basic(optional = false)
     @NotNull
-    private boolean sabado;
+    private boolean sabado = false;
     @Basic(optional = false)
     @NotNull
-    private boolean domingo;
+    private boolean domingo = false;
     @Temporal(TemporalType.DATE)
     private Date fecha;
     @Basic(optional = false)
@@ -253,7 +253,9 @@ public class Horario implements Serializable {
 
     @Override
     public String toString() {
-        return "com.project.jsica.ejb.entidades.Horario[ id=" + id + " ]";
+        return "Horario{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", fecha=" + fecha + ", porFecha=" + porFecha + ", detalleHorarioList=" + detalleHorarioList + ", empleadoHorarioList=" + empleadoHorarioList + '}';
     }
+    
+    
     
 }

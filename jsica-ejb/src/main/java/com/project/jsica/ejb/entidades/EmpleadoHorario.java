@@ -143,7 +143,8 @@ public class EmpleadoHorario implements Serializable {
 
     @Override
     public String toString() {
-        return "com.project.jsica.ejb.entidades.EmpleadoHorario[ id=" + id + " ]";
+        return "EmpleadoHorario{" + "id=" + id + ", fecha=" + fecha + ", porGrupo=" + porGrupo + ", empleadoId=" + empleadoId + ", horarioId=" + horarioId + ", grupoHorarioId=" + grupoHorarioId + '}';
     }
+    
     
 }

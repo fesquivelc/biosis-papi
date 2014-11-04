@@ -76,10 +76,10 @@
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="Denominacion de horario"/>
-                                <p:inputText placeholder="Escriba una denominacion para el horario"  />
+                                <p:inputText placeholder="Escriba una denominacion para el horario" value="#{empleadoHorarioController.selected.horarioId.nombre}" />
 
                                 <p:outputLabel value="Descripción"/>
-                                <p:inputTextarea placeholder="Escriba una descripcion (en caso se necesite) del horario" cols="60"/>
+                                <p:inputTextarea placeholder="Escriba una descripcion (en caso se necesite) del horario" cols="60" value="#{empleadoHorarioController.selected.horarioId.descripcion}"/>
 
                             </p:panelGrid>
                         </p:panel> 

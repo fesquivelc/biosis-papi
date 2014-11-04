@@ -109,7 +109,8 @@ public class GrupoHorario implements Serializable {
 
     @Override
     public String toString() {
-        return "com.project.jsica.ejb.entidades.GrupoHorario[ id=" + id + " ]";
+        return "GrupoHorario{" + "id=" + id + ", nombre=" + nombre + ", empleadoList=" + empleadoList + ", empleadoHorarioList=" + empleadoHorarioList + '}';
     }
+    
     
 }
