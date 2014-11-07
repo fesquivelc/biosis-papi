@@ -37,5 +37,7 @@ public interface AnioFacadeLocal {
     List<Anio> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
+
+    void vigenciaFalsa();
     
 }

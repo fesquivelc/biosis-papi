@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -214,6 +215,15 @@ public class AnioController extends AbstractController<Anio> {
     @Override
     public List<Anio> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
         return this.anioFacade.search(namedQuery, parametros, inicio, tamanio);
+    }
+
+    @Override
+    public void saveNew(ActionEvent event) {
+        if(this.selected.getVigente()){
+            this.anioFacade.vigenciaFalsa();
+        }
+        super.saveNew(event); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
 }

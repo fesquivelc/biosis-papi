@@ -31,5 +31,12 @@ public class AnioFacade extends AbstractFacade<Anio> implements AnioFacadeLocal 
     public AnioFacade() {
         super(Anio.class);
     }
+
+    @Override
+    public void vigenciaFalsa() {
+        String sql = "UPDATE Anio SET Anio.vigente = FALSE WHERE Anio.vigente = TRUE";
+        this.getEntityManager().createQuery(sql).executeUpdate();
+    }
+    
     
 }
