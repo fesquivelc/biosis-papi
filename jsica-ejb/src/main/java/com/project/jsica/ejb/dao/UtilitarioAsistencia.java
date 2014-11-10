@@ -145,6 +145,8 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
     private void cargaMasiva() {
         this.cargaMasiva(null, null);
     }
+    
+    
 
     private void cargaMasiva(Date fecha, Date hora) {
         this.conectarBiostar();
@@ -383,6 +385,18 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
             LOG.info(consulta);            
         } catch (SQLException ex) {
 
+            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void query(String query) {
+        try {
+            this.conectarBiostar();
+            PreparedStatement ps = connSQLServer.prepareStatement(query);
+            ps.executeUpdate();
+            LOG.info("SE LOGRO");
+        } catch (SQLException ex) {
             Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

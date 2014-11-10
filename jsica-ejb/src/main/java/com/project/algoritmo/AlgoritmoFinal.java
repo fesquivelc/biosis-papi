@@ -11,6 +11,7 @@ import com.project.jsica.ejb.entidades.DetalleRegistroAsistencia;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.EmpleadoPermiso;
 import com.project.jsica.ejb.entidades.Feriado;
+import com.project.jsica.ejb.entidades.Jornada;
 import com.project.jsica.ejb.entidades.RegistroAsistencia2;
 import com.project.jsica.ejb.entidades.Vista;
 import com.project.util.FechaUtil;
@@ -183,33 +184,146 @@ public class AlgoritmoFinal {
                     boolean permisoHoraSalida = false;
                     boolean permisoRefrigerio = false;
 
-                    Date horaEntrada = null;
+                    Date registroEntrada = null;
+                    Date registroSalida = null;
 
+                    long tardanza = 0;
+                    
                     List<DetalleRegistroAsistencia> detalle = new ArrayList<>();
-
+                    Jornada jornada = turno.getJornadaCodigo();
                     for (EmpleadoPermiso permiso : permisosXHora) {
 //                        DetalleRegistroAsistencia detalle = new DetalleRegistroAsistencia();
 
                         Date horaPermiso = permiso.getPermisoId().getHoraInicio();
 
-                        if (horaPermiso.compareTo(turno.getJornadaCodigo().getHEntrada()) == 0) {
-                            permisoHoraEntrada = true;
+                        List<DetalleRegistroAsistencia> permisos = analizarPermiso(
+                                permiso,
+                                registro,
+                                fecha,
+                                horaPermiso,
+                                turno.getJornadaCodigo().getHSalida(),
+                                MINUTOS_ANTES_DE_MARCAR_PERMISO,
+                                MINUTOS_DESPUES_DE_INICIO_PERMISO,
+                                marcacionesXMes
+                        );
+
+                        detalle.addAll(permisos);
+
+                        for (DetalleRegistroAsistencia dra : permisos) {
+
+                            if (dra.getHora().compareTo(jornada.getHEntrada()) == 0) {
+                                permisoHoraEntrada = true;
+                                registroEntrada = dra.getHora();
+                            }
+
+                            if (dra.getHora().compareTo(jornada.getHSalida()) == 0) {
+                                permisoHoraSalida = true;
+                                registroSalida = dra.getHora();
+                            }
                         }
 
-                        detalle.addAll(
-                                analizarPermiso(
-                                        permiso,
-                                        registro,
-                                        fecha,
-                                        horaPermiso,
-                                        turno.getJornadaCodigo().getHSalida(),
-                                        MINUTOS_ANTES_DE_MARCAR_PERMISO,
-                                        MINUTOS_DESPUES_DE_INICIO_PERMISO,
-                                        marcacionesXMes
-                                ));
+                        DetalleRegistroAsistencia dra1 = permisos.get(0);
+                        DetalleRegistroAsistencia dra2 = permisos.get(1);
+
+                        if (jornada.getJornadaConRefrigerio()) {
+                            if (dra1.getHora().compareTo(horaPermiso) <= 0 && dra2.getHora().compareTo(horaPermiso) >= 0) {
+                                permisoRefrigerio = true;
+                            }
+                        }
 
                     }
 
+                    //ANALIZAMOS LOS OTROS COMPONENTES                    
+                    if (permisoHoraEntrada) {
+                        DetalleRegistroAsistencia detalleRegistroAsistencia = new DetalleRegistroAsistencia();
+                        detalleRegistroAsistencia.setCarga(1);
+                        detalleRegistroAsistencia.setFecha(fecha);
+                        detalleRegistroAsistencia.setHora(registroEntrada);
+                        detalleRegistroAsistencia.setRegistroAsistencia(registro);
+                        detalleRegistroAsistencia.setTipoEvento("E");
+                        detalleRegistroAsistencia.setTipoRegistro("T");
+
+                        detalle.add(detalleRegistroAsistencia);
+                    } else {
+                        DetalleRegistroAsistencia draEntrada
+                                = analizarEvento(
+                                        fecha,
+                                        jornada.getHEntrada(),
+                                        MINUTOS_ANTES_DE_MARCAR,
+                                        jornada.getMinutosToleranciaRegularEntradaJornada() + jornada.getMinutosToleranciaTardanzaEntradaJornada(),
+                                        "E",
+                                        "T",
+                                        registro,
+                                        marcacionesXMes
+                                );
+                        if (draEntrada.getCarga() != 23) {
+                            Long tardanzaEntrada
+                                    = this.milisegundosTardanza(jornada.getHEntrada(), draEntrada.getHora(), jornada.getMinutosToleranciaRegularEntradaJornada());
+                            draEntrada.setMilisegundosTardanza(tardanza);
+                            tardanza += tardanzaEntrada;
+
+                        }
+
+                        detalle.add(draEntrada);
+                    }
+
+                    if (permisoHoraSalida) {
+                        DetalleRegistroAsistencia detalleRegistroAsistencia = new DetalleRegistroAsistencia();
+                        detalleRegistroAsistencia.setCarga(-1);
+                        detalleRegistroAsistencia.setFecha(fechaSalida.getTime());
+                        detalleRegistroAsistencia.setHora(registroSalida);
+                        detalleRegistroAsistencia.setRegistroAsistencia(registro);
+                        detalleRegistroAsistencia.setTipoEvento("S");
+                        detalleRegistroAsistencia.setTipoRegistro("T");
+
+                        detalle.add(detalleRegistroAsistencia);
+                    } else {
+                        DetalleRegistroAsistencia draSalida
+                                = analizarEvento(
+                                        fecha,
+                                        jornada.getHEntrada(),
+                                        0,
+                                        MINUTOS_DESPUES_DE_HORA_SALIDA,
+                                        "S",
+                                        "T",
+                                        registro,
+                                        marcacionesXMes
+                                );
+
+                        detalle.add(draSalida);
+                    }
+
+                    if (jornada.getJornadaConRefrigerio()) {
+                        if (!permisoRefrigerio) {
+                            DetalleRegistroAsistencia draSalidaRefrigerio
+                                    = analizarEvento(
+                                            fecha,
+                                            jornada.getHEntrada(),
+                                            0,
+                                            30,
+                                            "S",
+                                            "R",
+                                            registro,
+                                            marcacionesXMes
+                                    );
+
+                            DetalleRegistroAsistencia draEntradaRefrigerio
+                                    = analizarEvento(
+                                            fecha,
+                                            jornada.getHEntrada(),
+                                            30,
+                                            210,
+                                            "E",
+                                            "R",
+                                            registro,
+                                            marcacionesXMes
+                                    );
+
+                            //ANALIZAMOS SI HA LLEGADO TARDE
+                            detalle.add(draSalidaRefrigerio);
+                            detalle.add(draEntradaRefrigerio);
+                        }
+                    }
                 }
 
             } else {
@@ -314,66 +428,70 @@ public class AlgoritmoFinal {
         return diasLaborables;
     }
 
-    private List<DetalleRegistroAsistencia> analizarPermiso(EmpleadoPermiso permiso, RegistroAsistencia2 registro,Date fecha, Date horaInicio, Date horaMaxima, int minutosAntes, int minutosDespues, List<Vista> marcaciones) {
-        
+    private List<DetalleRegistroAsistencia> analizarPermiso(EmpleadoPermiso permiso, RegistroAsistencia2 registro, Date fecha, Date horaInicio, Date horaMaxima, int minutosAntes, int minutosDespues, List<Vista> marcaciones) {
+
         List<DetalleRegistroAsistencia> lista = new ArrayList<>();
-        
+
         //OBTENEMOS MARCACION DE INICIO DEL PERMISO
         Calendar cal = Calendar.getInstance();
         cal.setTime(horaInicio);
-        
+
         cal.add(Calendar.MINUTE, -minutosAntes);
         Date desde = cal.getTime();
-        
+
         cal.add(Calendar.MINUTE, minutosAntes + minutosDespues);
-        
+
         Date hasta = cal.getTime();
-        
+
         Vista marcacionInicio = obtenerMarcacion(fecha, desde, hasta, marcaciones);
-        
+
         Vista marcacionFinal = obtenerMarcacion(fecha, hasta, horaMaxima, marcaciones);
-        
+
         int cargaInicio;
         int cargaFin;
         Date horaI = null;
         Date horaF = null;
-        
+
         String tipoRegistro = "P";
-        
-        if(marcacionInicio == null){
+
+        if (marcacionInicio == null) {
             cargaInicio = 23;
-        }else{
+            horaI = permiso.getPermisoId().getHoraInicio();
+        } else {
             cargaInicio = 1;
             horaI = marcacionInicio.getHora();
         }
-        
-        if(marcacionFinal == null){
+
+        if (marcacionFinal == null) {
             cargaFin = 23;
-        }else{
+            horaF = horaMaxima;
+        } else {
             cargaFin = -1;
             horaF = marcacionFinal.getHora();
         }
-        
+
         DetalleRegistroAsistencia inicioPermiso = new DetalleRegistroAsistencia();
         DetalleRegistroAsistencia finPermiso = new DetalleRegistroAsistencia();
-        
+
         inicioPermiso.setFecha(fecha);
         inicioPermiso.setCarga(cargaInicio);
         inicioPermiso.setHora(horaI);
         inicioPermiso.setRegistroAsistencia(registro);
         inicioPermiso.setTipoEvento("S");
         inicioPermiso.setTipoRegistro(tipoRegistro);
-        
+        inicioPermiso.setPermiso(permiso);
+
         finPermiso.setFecha(fecha);
         finPermiso.setCarga(cargaFin);
         finPermiso.setHora(horaF);
         finPermiso.setRegistroAsistencia(registro);
         finPermiso.setTipoEvento("E");
         finPermiso.setTipoRegistro(tipoRegistro);
-        
+        finPermiso.setPermiso(permiso);
+
         lista.add(inicioPermiso);
         lista.add(finPermiso);
-        
+
         return lista;
     }
 
@@ -385,23 +503,86 @@ public class AlgoritmoFinal {
         boolean bandera = true;
         for (Vista v : marcacionesXMes) {
             if (fecha.compareTo(v.getFecha()) == 0) {
-                if(desde.compareTo(v.getHora()) <= 0 && hasta.compareTo(v.getHora()) >=0){
+                if (desde.compareTo(v.getHora()) <= 0 && hasta.compareTo(v.getHora()) >= 0) {
                     comparacion = v.getHora().getTime() - desde.getTime();
-                    
-                    if(bandera){
+
+                    if (bandera) {
                         vista = v;
                         menor = comparacion;
                         bandera = false;
-                    }else if(menor > comparacion){
+                    } else if (menor > comparacion) {
                         vista = v;
                         menor = comparacion;
                     }
-                    
+
                 }
             }
         }
 
         return vista;
+    }
+
+    private Long milisegundosTardanza(Date horaRegular, Date horaMarcada, int toleranciaRegular) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(horaRegular);
+        cal.add(Calendar.MINUTE, toleranciaRegular);
+        
+        Long diferencia = horaMarcada.getTime() - cal.getTimeInMillis();
+        
+        if(diferencia < 0){
+            return Long.parseLong("0");
+        }else{
+            return diferencia;
+        }
+    }
+
+    private DetalleRegistroAsistencia analizarEvento(
+            Date fecha,
+            Date hora,
+            int minutosAntes,
+            int minutosDespues,
+            String tipoEvento,
+            String tipoRegistro,
+            RegistroAsistencia2 registro,
+            List<Vista> marcacionesXMes) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(hora);
+        cal.add(Calendar.MINUTE, -minutosAntes);
+
+        Date desde = cal.getTime();
+
+        cal.add(Calendar.MINUTE, minutosAntes + minutosDespues);
+
+        Date hasta = cal.getTime();
+
+        Vista marcacion = obtenerMarcacion(fecha, desde, hasta, marcacionesXMes);
+
+        Date horaRegistro;
+        int carga;
+
+        if (marcacion == null) {
+            horaRegistro = null;
+            carga = 23;
+        } else {
+            horaRegistro = marcacion.getHora();
+            if (tipoEvento.equals("E")) {
+                carga = 1;
+            } else {
+                carga = -1;
+            }
+        }
+
+        DetalleRegistroAsistencia detalleRegistroAsistencia = new DetalleRegistroAsistencia();
+        detalleRegistroAsistencia.setCarga(carga);
+        detalleRegistroAsistencia.setFecha(fecha);
+        detalleRegistroAsistencia.setHora(horaRegistro);
+        detalleRegistroAsistencia.setRegistroAsistencia(registro);
+        detalleRegistroAsistencia.setTipoEvento(tipoEvento);
+        detalleRegistroAsistencia.setTipoRegistro(tipoRegistro);
+
+        return detalleRegistroAsistencia;
+
     }
 
 }

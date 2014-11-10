@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,6 +38,40 @@ public class DetalleRegistroAsistencia implements Serializable {
     private String tipoRegistro;
     
     private Integer carga; //numero a sumar, aun no tengo idea para que xD
+    
+    @JoinColumn(name = "empleado_permiso_id", referencedColumnName = "id", nullable = true)
+    @ManyToOne
+    private EmpleadoPermiso permiso;
+    
+    @Column(name = "tardanza")
+    private Boolean tardanza;
+    
+    @Column(name = "milisegundos_tardanza")
+    private Long milisegundosTardanza;
+
+    public Boolean getTardanza() {
+        return tardanza;
+    }
+
+    public void setTardanza(Boolean tardanza) {
+        this.tardanza = tardanza;
+    }
+
+    public Long getMilisegundosTardanza() {
+        return milisegundosTardanza;
+    }
+
+    public void setMilisegundosTardanza(Long milisegundosTardanza) {
+        this.milisegundosTardanza = milisegundosTardanza;
+    }
+
+    public EmpleadoPermiso getPermiso() {
+        return permiso;
+    }
+
+    public void setPermiso(EmpleadoPermiso permiso) {
+        this.permiso = permiso;
+    }
 
     public Long getId() {
         return id;

@@ -27,5 +27,7 @@ public interface UtilitarioAsistenciaLocal {
     Date getHoraLlegada();
 
     int getContador();
+
+    void query(String query);
     
 }
