@@ -188,6 +188,7 @@ public class AlgoritmoFinal {
                     Date registroSalida = null;
 
                     long tardanza = 0;
+                    long extra = 0;
                     
                     List<DetalleRegistroAsistencia> detalle = new ArrayList<>();
                     Jornada jornada = turno.getJornadaCodigo();
@@ -258,7 +259,7 @@ public class AlgoritmoFinal {
                                 );
                         if (draEntrada.getCarga() != 23) {
                             Long tardanzaEntrada
-                                    = this.milisegundosTardanza(jornada.getHEntrada(), draEntrada.getHora(), jornada.getMinutosToleranciaRegularEntradaJornada());
+                                    = this.milisegundosDiferencia(jornada.getHEntrada(), draEntrada.getHora(), jornada.getMinutosToleranciaRegularEntradaJornada());
                             draEntrada.setMilisegundosTardanza(tardanza);
                             tardanza += tardanzaEntrada;
 
@@ -281,7 +282,7 @@ public class AlgoritmoFinal {
                         DetalleRegistroAsistencia draSalida
                                 = analizarEvento(
                                         fecha,
-                                        jornada.getHEntrada(),
+                                        jornada.getHSalida(),
                                         0,
                                         MINUTOS_DESPUES_DE_HORA_SALIDA,
                                         "S",
@@ -289,7 +290,10 @@ public class AlgoritmoFinal {
                                         registro,
                                         marcacionesXMes
                                 );
-
+                        
+                        Long diferencia = this.milisegundosDiferencia(jornada.getHSalida(), draSalida.getHora(), 0);
+                        extra += diferencia;
+                        draSalida.setMilisegundosExtra(diferencia);
                         detalle.add(draSalida);
                     }
 
@@ -298,7 +302,7 @@ public class AlgoritmoFinal {
                             DetalleRegistroAsistencia draSalidaRefrigerio
                                     = analizarEvento(
                                             fecha,
-                                            jornada.getHEntrada(),
+                                            jornada.getHSalidaRefrigerio(),
                                             0,
                                             30,
                                             "S",
@@ -310,7 +314,7 @@ public class AlgoritmoFinal {
                             DetalleRegistroAsistencia draEntradaRefrigerio
                                     = analizarEvento(
                                             fecha,
-                                            jornada.getHEntrada(),
+                                            jornada.getHSalidaRefrigerio(),
                                             30,
                                             210,
                                             "E",
@@ -320,15 +324,22 @@ public class AlgoritmoFinal {
                                     );
 
                             //ANALIZAMOS SI HA LLEGADO TARDE
+                            Long diferencia = this.milisegundosDiferencia(jornada.getHEntradaRefrigerio(), draEntradaRefrigerio.getHora(), 0);
+                            draEntradaRefrigerio.setMilisegundosTardanza(diferencia);
+                            tardanza += diferencia;
                             detalle.add(draSalidaRefrigerio);
                             detalle.add(draEntradaRefrigerio);
                         }
                     }
+                    registro.setDetalleRegistroAsistenciaList(detalle);
                 }
+                
 
             } else {
                 return null;
             }
+            
+            
 
             return registro;
         } else {
@@ -522,7 +533,7 @@ public class AlgoritmoFinal {
         return vista;
     }
 
-    private Long milisegundosTardanza(Date horaRegular, Date horaMarcada, int toleranciaRegular) {
+    private Long milisegundosDiferencia(Date horaRegular, Date horaMarcada, int toleranciaRegular) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(horaRegular);
         cal.add(Calendar.MINUTE, toleranciaRegular);

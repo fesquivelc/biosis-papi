@@ -6,9 +6,6 @@
 package com.project.jsica.ejb.dao;
 
 import com.project.algoritmo.AnalisisAsistenciaLocal;
-import com.project.jsica.ejb.entidades.Empleado;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;

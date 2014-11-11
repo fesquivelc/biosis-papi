@@ -13,10 +13,6 @@
     <ui:define name="body">
 
         <p:tabView id="tabOpciones">
-            <p:tab title="Lista de Asistencias">
-                <ui:include src="/registroAsistencia/List.xhtml"/>
-
-            </p:tab>
             <p:tab title="BUSQUEDA">
                 <h:form id="frmAsignacionEmpleado">
                     <p:panel header="Búsqueda de Asistencias">
@@ -35,7 +31,7 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </p:inputMask>
 
-                            <p:commandButton id="btnBuscar" icon="ui-icon-search" value="Buscar Registros" update="listaMarcaciones idFaltas idTardanzas" />
+                            <p:commandButton id="btnBuscar" icon="ui-icon-search" value="Buscar Registros" update="listaMarcaciones idFaltas idTardanzas" actionListener="#{analisisAsistenciaBean.recargar()}" />
                         </p:panelGrid>
 
                         <p:dataTable

@@ -403,284 +403,286 @@ public class EmpleadoController extends AbstractController<Empleado> {
     @Override
     protected void edit(Empleado objeto) {
         this.empleadoFacade.edit(objeto);
-        if (this.esNuevo) {
-            Bitacora bitacora = new Bitacora();
-            //----Bitacora----
-            //Fecha y hora//          
-            Date fechas = new Date();//           
-            //Ip Cliente
-            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-
-            String nombres = this.selected.getNombres();
-            String apellidos = this.selected.getApellidos();
-            String doc = this.selected.getDocIdentidad();
-            String fechaNacimiento = this.selected.getFechaNacimiento().toString();
-            String situacionTrabajador = this.selected.getSituacionTrabajador();
-            String sexo = this.selected.getSexo().toString();
-            String grupoHorario = this.selected.getGrupoHorarioId().getNombre();
-            String foto = this.selected.getFoto();
-            String jefe = this.selected.getEmpleadoId().getNombres() + this.selected.getEmpleadoId().getApellidos();
-            String servicio = this.selected.getServicioId().getNombre();
-
-            bitacora.setUsuario("JC");
-            bitacora.setIpCliente(ip_cliente);
-            bitacora.setFecha(fechas);
-            bitacora.setHora(fechas);
-            bitacora.setTabla("EMPLEADO");
-            bitacora.setColumna("NOMBRES");
-            bitacora.setAccion("CREAR");
-            bitacora.setValorAct(nombres);
-            bitacora.setValorAnt(" ");
-            bitacoraC.edit(bitacora);
-
-            bitacora.setColumna("APELLIDOS");
-            bitacora.setValorAct(apellidos);
-            bitacora.setValorAnt(" ");
-            bitacoraC.edit(bitacora);
-
-            bitacora.setColumna("DOC_IDENTIDAD");
-            bitacora.setValorAct(doc);
-            bitacora.setValorAnt(" ");
-            bitacoraC.edit(bitacora);
-
-            bitacora.setColumna("FECHA_NACIMIENTO");
-            bitacora.setValorAct(fechaNacimiento);
-            bitacora.setValorAnt(" ");
-            bitacoraC.edit(bitacora);
-
-            bitacora.setColumna("SITUACION_TRABAJADOR");
-            bitacora.setValorAct(situacionTrabajador);
-            bitacora.setValorAnt(" ");
-            bitacoraC.edit(bitacora);
-
-            bitacora.setColumna("SEXO");
-            bitacora.setValorAct(sexo);
-            bitacora.setValorAnt(" ");
-            bitacoraC.edit(bitacora);
-
-            bitacora.setColumna("GRUPO_HORARIO_ID");
-            bitacora.setValorAct(grupoHorario);
-            bitacora.setValorAnt(" ");
-            bitacoraC.edit(bitacora);
-
-            bitacora.setColumna("FOTO");
-            bitacora.setValorAct(foto);
-            bitacora.setValorAnt(" ");
-            bitacoraC.edit(bitacora);
-
-            bitacora.setColumna("EMPLEADO_ID");
-            bitacora.setValorAct(jefe);
-            bitacora.setValorAnt(" ");
-            bitacoraC.edit(bitacora);
-
-            bitacora.setColumna("SERVICIO_ID");
-            bitacora.setValorAct(servicio);
-            bitacora.setValorAnt(" ");
-            bitacoraC.edit(bitacora);
-
-        } else {
-            //Datos antes de modificar
-            Empleado antes = this.find(this.selected.getId());
-
-            String nombres1 = antes.getNombres();
-            String apellidos1 = antes.getApellidos();
-            String doc1 = antes.getDocIdentidad();
-            String fechaNacimiento1 = antes.getFechaNacimiento().toString();
-            String situacionTrabajador1 = antes.getSituacionTrabajador();
-            String sexo1 = antes.getSexo().toString();
-            String grupoHorario1 = antes.getGrupoHorarioId().getNombre();
-            String foto1 = antes.getFoto();
-            String jefe1 = antes.getEmpleadoId().getNombres() + antes.getEmpleadoId().getApellidos();
-            String servicio1 = antes.getServicioId().getNombre();
-
-            //Datos despues de modificar
-            String nombres2 = this.selected.getNombres();
-            String apellidos2 = this.selected.getApellidos();
-            String doc2 = this.selected.getDocIdentidad();
-            String fechaNacimiento2 = this.selected.getFechaNacimiento().toString();
-            String situacionTrabajador2 = this.selected.getSituacionTrabajador();
-            String sexo2 = this.selected.getSexo().toString();
-            String grupoHorario2 = this.selected.getGrupoHorarioId().getNombre();
-            String foto2 = this.selected.getFoto();
-            String jefe2 = this.selected.getEmpleadoId().getNombres() + this.selected.getEmpleadoId().getApellidos();
-            String servicio2 = this.selected.getServicioId().getNombre();
-
-            //----Bitacora----
-            Bitacora bitacora = new Bitacora();
-            //Fecha y hora//          
-            Date fechas = new Date();
-//           
-            //Ip Cliente
-            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-
-            //Datos
-            bitacora.setUsuario("JC");
-            bitacora.setIpCliente(ip_cliente);
-            bitacora.setFecha(fechas);
-            bitacora.setHora(fechas);
-            bitacora.setTabla("EMPLEADO");
-            bitacora.setColumna("NOMBRES");
-            bitacora.setAccion("MODIFICAR");
-            bitacora.setValorAct(nombres2);
-            bitacora.setValorAnt(nombres1);
-
-            if (!nombres1.equals(nombres2)) {
-                bitacoraC.edit(bitacora);
-            }
-
-            bitacora.setColumna("APELLIDOS");
-            bitacora.setValorAct(apellidos2);
-            bitacora.setValorAnt(apellidos1);
-
-            if (!apellidos1.equals(apellidos2)) {
-                bitacoraC.edit(bitacora);
-            }
-
-            bitacora.setColumna("DOC_IDENTIDAD");
-            bitacora.setValorAct(doc2);
-            bitacora.setValorAnt(doc1);
-
-            if (!doc1.equals(doc2)) {
-                bitacoraC.edit(bitacora);
-            }
-
-            bitacora.setColumna("FECHA_NACIMIENTO");
-            bitacora.setValorAct(fechaNacimiento2);
-            bitacora.setValorAnt(fechaNacimiento1);
-
-            if (!fechaNacimiento1.equals(fechaNacimiento2)) {
-                bitacoraC.edit(bitacora);
-            }
-
-            bitacora.setColumna("SITUACION_TRABAJADOR");
-            bitacora.setValorAct(situacionTrabajador2);
-            bitacora.setValorAnt(situacionTrabajador1);
-
-            if (!situacionTrabajador1.equals(situacionTrabajador2)) {
-                bitacoraC.edit(bitacora);
-            }
-
-            bitacora.setColumna("SEXO");
-            bitacora.setValorAct(sexo2);
-            bitacora.setValorAnt(sexo1);
-
-            if (!sexo1.equals(sexo2)) {
-                bitacoraC.edit(bitacora);
-            }
-
-            bitacora.setColumna("GRUPO_HORARIO_ID");
-            bitacora.setValorAct(grupoHorario2);
-            bitacora.setValorAnt(grupoHorario1);
-
-            if (!grupoHorario1.equals(grupoHorario2)) {
-                bitacoraC.edit(bitacora);
-            }
-
-            bitacora.setColumna("FOTO");
-            bitacora.setValorAct(foto2);
-            bitacora.setValorAnt(foto1);
-
-            if (!foto1.equals(foto2)) {
-                bitacoraC.edit(bitacora);
-            }
-
-            bitacora.setColumna("EMPLEADO_ID");
-            bitacora.setValorAct(jefe2);
-            bitacora.setValorAnt(jefe1);
-
-            if (!jefe1.equals(jefe2)) {
-                bitacoraC.edit(bitacora);
-            }
-
-            bitacora.setColumna("SERVICIO_ID");
-            bitacora.setValorAct(servicio2);
-            bitacora.setValorAnt(servicio1);
-
-            if (!servicio1.equals(servicio2)) {
-                bitacoraC.edit(bitacora);
-            }
-        }
+        LOG.info("EMPLEADO GUARDADO");
+//        if (this.esNuevo) {
+//            Bitacora bitacora = new Bitacora();
+//            //----Bitacora----
+//            //Fecha y hora//          
+//            Date fechas = new Date();//           
+//            //Ip Cliente
+//            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+//
+//            String nombres = this.selected.getNombres();
+//            String apellidos = this.selected.getApellidos();
+//            String doc = this.selected.getDocIdentidad();
+//            String fechaNacimiento = this.selected.getFechaNacimiento().toString();
+//            String situacionTrabajador = this.selected.getSituacionTrabajador();
+//            String sexo = this.selected.getSexo().toString();
+//            String grupoHorario = this.selected.getGrupoHorarioId().getNombre();
+//            String foto = this.selected.getFoto();
+//            String jefe = this.selected.getEmpleadoId().getNombres() + this.selected.getEmpleadoId().getApellidos();
+//            String servicio = this.selected.getServicioId().getNombre();
+//
+//            bitacora.setUsuario("JC");
+//            bitacora.setIpCliente(ip_cliente);
+//            bitacora.setFecha(fechas);
+//            bitacora.setHora(fechas);
+//            bitacora.setTabla("EMPLEADO");
+//            bitacora.setColumna("NOMBRES");
+//            bitacora.setAccion("CREAR");
+//            bitacora.setValorAct(nombres);
+//            bitacora.setValorAnt(" ");
+//            bitacoraC.edit(bitacora);
+//
+//            bitacora.setColumna("APELLIDOS");
+//            bitacora.setValorAct(apellidos);
+//            bitacora.setValorAnt(" ");
+//            bitacoraC.edit(bitacora);
+//
+//            bitacora.setColumna("DOC_IDENTIDAD");
+//            bitacora.setValorAct(doc);
+//            bitacora.setValorAnt(" ");
+//            bitacoraC.edit(bitacora);
+//
+//            bitacora.setColumna("FECHA_NACIMIENTO");
+//            bitacora.setValorAct(fechaNacimiento);
+//            bitacora.setValorAnt(" ");
+//            bitacoraC.edit(bitacora);
+//
+//            bitacora.setColumna("SITUACION_TRABAJADOR");
+//            bitacora.setValorAct(situacionTrabajador);
+//            bitacora.setValorAnt(" ");
+//            bitacoraC.edit(bitacora);
+//
+//            bitacora.setColumna("SEXO");
+//            bitacora.setValorAct(sexo);
+//            bitacora.setValorAnt(" ");
+//            bitacoraC.edit(bitacora);
+//
+//            bitacora.setColumna("GRUPO_HORARIO_ID");
+//            bitacora.setValorAct(grupoHorario);
+//            bitacora.setValorAnt(" ");
+//            bitacoraC.edit(bitacora);
+//
+//            bitacora.setColumna("FOTO");
+//            bitacora.setValorAct(foto);
+//            bitacora.setValorAnt(" ");
+//            bitacoraC.edit(bitacora);
+//
+//            bitacora.setColumna("EMPLEADO_ID");
+//            bitacora.setValorAct(jefe);
+//            bitacora.setValorAnt(" ");
+//            bitacoraC.edit(bitacora);
+//
+//            bitacora.setColumna("SERVICIO_ID");
+//            bitacora.setValorAct(servicio);
+//            bitacora.setValorAnt(" ");
+//            bitacoraC.edit(bitacora);
+//
+//        } else {
+//            //Datos antes de modificar
+//            Empleado antes = this.find(this.selected.getId());
+//
+//            String nombres1 = antes.getNombres();
+//            String apellidos1 = antes.getApellidos();
+//            String doc1 = antes.getDocIdentidad();
+//            String fechaNacimiento1 = antes.getFechaNacimiento().toString();
+//            String situacionTrabajador1 = antes.getSituacionTrabajador();
+//            String sexo1 = antes.getSexo().toString();
+//            String grupoHorario1 = antes.getGrupoHorarioId().getNombre();
+//            String foto1 = antes.getFoto();
+//            String jefe1 = antes.getEmpleadoId().getNombres() + antes.getEmpleadoId().getApellidos();
+//            String servicio1 = antes.getServicioId().getNombre();
+//
+//            //Datos despues de modificar
+//            String nombres2 = this.selected.getNombres();
+//            String apellidos2 = this.selected.getApellidos();
+//            String doc2 = this.selected.getDocIdentidad();
+//            String fechaNacimiento2 = this.selected.getFechaNacimiento().toString();
+//            String situacionTrabajador2 = this.selected.getSituacionTrabajador();
+//            String sexo2 = this.selected.getSexo().toString();
+//            String grupoHorario2 = this.selected.getGrupoHorarioId().getNombre();
+//            String foto2 = this.selected.getFoto();
+//            String jefe2 = this.selected.getEmpleadoId().getNombres() + this.selected.getEmpleadoId().getApellidos();
+//            String servicio2 = this.selected.getServicioId().getNombre();
+//
+//            //----Bitacora----
+//            Bitacora bitacora = new Bitacora();
+//            //Fecha y hora//          
+//            Date fechas = new Date();
+////           
+//            //Ip Cliente
+//            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+//
+//            //Datos
+//            bitacora.setUsuario("JC");
+//            bitacora.setIpCliente(ip_cliente);
+//            bitacora.setFecha(fechas);
+//            bitacora.setHora(fechas);
+//            bitacora.setTabla("EMPLEADO");
+//            bitacora.setColumna("NOMBRES");
+//            bitacora.setAccion("MODIFICAR");
+//            bitacora.setValorAct(nombres2);
+//            bitacora.setValorAnt(nombres1);
+//
+//            if (!nombres1.equals(nombres2)) {
+//                bitacoraC.edit(bitacora);
+//            }
+//
+//            bitacora.setColumna("APELLIDOS");
+//            bitacora.setValorAct(apellidos2);
+//            bitacora.setValorAnt(apellidos1);
+//
+//            if (!apellidos1.equals(apellidos2)) {
+//                bitacoraC.edit(bitacora);
+//            }
+//
+//            bitacora.setColumna("DOC_IDENTIDAD");
+//            bitacora.setValorAct(doc2);
+//            bitacora.setValorAnt(doc1);
+//
+//            if (!doc1.equals(doc2)) {
+//                bitacoraC.edit(bitacora);
+//            }
+//
+//            bitacora.setColumna("FECHA_NACIMIENTO");
+//            bitacora.setValorAct(fechaNacimiento2);
+//            bitacora.setValorAnt(fechaNacimiento1);
+//
+//            if (!fechaNacimiento1.equals(fechaNacimiento2)) {
+//                bitacoraC.edit(bitacora);
+//            }
+//
+//            bitacora.setColumna("SITUACION_TRABAJADOR");
+//            bitacora.setValorAct(situacionTrabajador2);
+//            bitacora.setValorAnt(situacionTrabajador1);
+//
+//            if (!situacionTrabajador1.equals(situacionTrabajador2)) {
+//                bitacoraC.edit(bitacora);
+//            }
+//
+//            bitacora.setColumna("SEXO");
+//            bitacora.setValorAct(sexo2);
+//            bitacora.setValorAnt(sexo1);
+//
+//            if (!sexo1.equals(sexo2)) {
+//                bitacoraC.edit(bitacora);
+//            }
+//
+//            bitacora.setColumna("GRUPO_HORARIO_ID");
+//            bitacora.setValorAct(grupoHorario2);
+//            bitacora.setValorAnt(grupoHorario1);
+//
+//            if (!grupoHorario1.equals(grupoHorario2)) {
+//                bitacoraC.edit(bitacora);
+//            }
+//
+//            bitacora.setColumna("FOTO");
+//            bitacora.setValorAct(foto2);
+//            bitacora.setValorAnt(foto1);
+//
+//            if (!foto1.equals(foto2)) {
+//                bitacoraC.edit(bitacora);
+//            }
+//
+//            bitacora.setColumna("EMPLEADO_ID");
+//            bitacora.setValorAct(jefe2);
+//            bitacora.setValorAnt(jefe1);
+//
+//            if (!jefe1.equals(jefe2)) {
+//                bitacoraC.edit(bitacora);
+//            }
+//
+//            bitacora.setColumna("SERVICIO_ID");
+//            bitacora.setValorAct(servicio2);
+//            bitacora.setValorAnt(servicio1);
+//
+//            if (!servicio1.equals(servicio2)) {
+//                bitacoraC.edit(bitacora);
+//            }
+//        }
     }
 
     @Override
     protected void remove(Empleado objeto) {
         this.empleadoFacade.remove(objeto);
-
-        Empleado antes = this.find(this.selected.getId());
-
-        String nombres1 = antes.getNombres();
-        String apellidos1 = antes.getApellidos();
-        String doc1 = antes.getDocIdentidad();
-        String fechaNacimiento1 = antes.getFechaNacimiento().toString();
-        String situacionTrabajador1 = antes.getSituacionTrabajador();
-        String sexo1 = antes.getSexo().toString();
-        String grupoHorario1 = antes.getGrupoHorarioId().getNombre();
-        String foto1 = antes.getFoto();
-        String jefe1 = antes.getEmpleadoId().getNombres() + antes.getEmpleadoId().getApellidos();
-        String servicio1 = antes.getServicioId().getNombre();
-
-        Bitacora bitacora = new Bitacora();
-        //Fecha y hora//          
-        Date fechas = new Date();
-//           
-        //Ip Cliente
-        String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-
-        bitacora.setUsuario("JC");
-        bitacora.setIpCliente(ip_cliente);
-        bitacora.setFecha(fechas);
-        bitacora.setHora(fechas);
-        bitacora.setTabla("EMPLEADO");
-        bitacora.setColumna("NOMBRES");
-        bitacora.setAccion("ELIMINAR");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(nombres1);
-        bitacoraC.edit(bitacora);
-
-        bitacora.setColumna("APELLIDOS");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(apellidos1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("DOC_IDENTIDAD");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(doc1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("FECHA_NACIMIENTO");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(fechaNacimiento1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("SITUACION_TRABAJADOR");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(situacionTrabajador1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("SEXO");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(sexo1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("GRUPO_HORARIO_ID");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(grupoHorario1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("FOTO");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(foto1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("EMPLEADO_ID");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(jefe1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("SERVICIO_ID");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(servicio1);
-        bitacoraC.edit(bitacora);
+        LOG.info("EMPLEADO ELIMINADO");
+//
+//        Empleado antes = this.find(this.selected.getId());
+//
+//        String nombres1 = antes.getNombres();
+//        String apellidos1 = antes.getApellidos();
+//        String doc1 = antes.getDocIdentidad();
+//        String fechaNacimiento1 = antes.getFechaNacimiento().toString();
+//        String situacionTrabajador1 = antes.getSituacionTrabajador();
+//        String sexo1 = antes.getSexo().toString();
+//        String grupoHorario1 = antes.getGrupoHorarioId().getNombre();
+//        String foto1 = antes.getFoto();
+//        String jefe1 = antes.getEmpleadoId().getNombres() + antes.getEmpleadoId().getApellidos();
+//        String servicio1 = antes.getServicioId().getNombre();
+//
+//        Bitacora bitacora = new Bitacora();
+//        //Fecha y hora//          
+//        Date fechas = new Date();
+////           
+//        //Ip Cliente
+//        String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+//
+//        bitacora.setUsuario("JC");
+//        bitacora.setIpCliente(ip_cliente);
+//        bitacora.setFecha(fechas);
+//        bitacora.setHora(fechas);
+//        bitacora.setTabla("EMPLEADO");
+//        bitacora.setColumna("NOMBRES");
+//        bitacora.setAccion("ELIMINAR");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(nombres1);
+//        bitacoraC.edit(bitacora);
+//
+//        bitacora.setColumna("APELLIDOS");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(apellidos1);
+//        bitacoraC.edit(bitacora);
+//        
+//        bitacora.setColumna("DOC_IDENTIDAD");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(doc1);
+//        bitacoraC.edit(bitacora);
+//        
+//        bitacora.setColumna("FECHA_NACIMIENTO");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(fechaNacimiento1);
+//        bitacoraC.edit(bitacora);
+//        
+//        bitacora.setColumna("SITUACION_TRABAJADOR");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(situacionTrabajador1);
+//        bitacoraC.edit(bitacora);
+//        
+//        bitacora.setColumna("SEXO");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(sexo1);
+//        bitacoraC.edit(bitacora);
+//        
+//        bitacora.setColumna("GRUPO_HORARIO_ID");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(grupoHorario1);
+//        bitacoraC.edit(bitacora);
+//        
+//        bitacora.setColumna("FOTO");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(foto1);
+//        bitacoraC.edit(bitacora);
+//        
+//        bitacora.setColumna("EMPLEADO_ID");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(jefe1);
+//        bitacoraC.edit(bitacora);
+//        
+//        bitacora.setColumna("SERVICIO_ID");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(servicio1);
+//        bitacoraC.edit(bitacora);
         
     }
 

@@ -26,19 +26,10 @@
 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_docIdentidad}" for="docIdentidad" />
                                 <p:inputText id="docIdentidad" value="#{empleadoController.selected.docIdentidad}" title="#{myBundle.CreateEmpleadoTitle_docIdentidad}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_docIdentidad}" size="45" maxlength="8" />
-
-                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_situacionTrabajador}" for="situacionTrabajador" />
-                                <p:selectOneMenu id="situacionTrabajador" value="#{empleadoController.selected.situacionTrabajador}"  >
-                                    <f:selectItem itemLabel="Seleccione Uno" /> 
-                                    <f:selectItem itemLabel="ACTIVO O SUBSIDIO" itemValue="ACTIVO O SUBSIDIO"  />
-                                    <f:selectItem itemLabel="BAJA" itemValue="BAJA"  />
-                                    <f:selectItem itemLabel="LICENCIA SIN GOCE DE HABER" itemValue="LICENCIA SIN GOCE DE HABER" />
-                                    <f:selectItem itemLabel="SIN VÍNCULO LABORAL CON CONCEPTOS PENDIENTES" itemValue="SIN VÍNCULO LABORAL CON CONCEPTOS PENDIENTES" />                                   
-                                </p:selectOneMenu> 
                                 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoId}" for="empleadoId" />
                                 <p:autoComplete id="empleadoId" value="#{empleadoController.selected.empleadoId}" completeMethod="#{empleadoController.metodo}"
-                                                var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="55" required="true"/>
+                                                var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="55"/>
                                                                
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_fechaNacimiento}" for="fechaNacimiento" />
                                 <p:inputMask id="fechaNacimiento" value="#{empleadoController.selected.fechaNacimiento}" mask="99/99/9999" title="#{myBundle.CreateEmpleadoTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_fechaNacimiento}">
@@ -53,7 +44,7 @@
                                 </p:selectOneMenu> 
                                 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_grupoHorarioId}" for="grupoHorarioId" />
-                                <p:selectOneMenu id="grupoHorarioId" value="#{empleadoController.selected.grupoHorarioId}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_grupoHorarioId}" converter="grupoHorarioConverter">
+                                <p:selectOneMenu id="grupoHorarioId" value="#{empleadoController.selected.grupoHorarioId}" converter="grupoHorarioConverter">
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{grupoHorarioController.items}"
                                                    var="grupoHorarioIdItem"
@@ -63,51 +54,14 @@
                                 </p:selectOneMenu>
                                                                 
                                 <p:outputLabel value="#{myBundle.CreateFichaLaboralEmpleadoLabel_tipoEmpleadoId}" for="tipoEmpleadoId" />
-                                <p:selectOneMenu id="tipoEmpleadoId" value="#{empleadoController.selected.fichaLaboral.tipoEmpleadoId}" required="true" requiredMessage="#{myBundle.CreateFichaLaboralEmpleadoRequiredMessage_tipoEmpleadoId}" converter="tipoEmpleadoConverter">
-                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <p:selectOneMenu id="tipoEmpleadoId" value="#{empleadoController.selected.fichaLaboral.tipoEmpleadoId}" converter="tipoEmpleadoConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}" noSelectionOption="true"/>
                                     <f:selectItems value="#{tipoEmpleadoController.items}"
                                                    var="tipoEmpleadoIdItem"
                                                    itemValue="#{tipoEmpleadoIdItem}"
                                                    itemLabel="#{tipoEmpleadoIdItem.nombre}"
                                                    />
 
-                                </p:selectOneMenu>
-
-                                <p:outputLabel value="#{myBundle.CreateAreaLabel_sucursalId}" for="sucursalId" />
-                                <p:selectOneMenu id="sucursalId" value="#{empleadoController.sucursalSeleccionado}" required="true" converter="sucursalConverter">
-                                    <p:ajax listener="#{empleadoController.onSucursalSeleccionado}" update="areaId"/>
-                                    
-                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}" />
-                                    <f:selectItems value="#{sucursalController.items}"  
-                                                   var="sucursal" 
-                                                   itemValue="#{sucursal}" 
-                                                   itemLabel="#{sucursal.nombre}"
-                                                   />                                 
-
-                                </p:selectOneMenu>
-
-                                <p:outputLabel value="#{myBundle.CreateServicioLabel_areaId}" for="areaId" />
-                                <p:selectOneMenu id="areaId" value="#{empleadoController.areaSeleccionado}" required="true" converter="areaConverter" >
-                                    <p:ajax listener="#{empleadoController.onAreaSeleccionado()}" update="servicioId"/>
-                                    
-                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                    <f:selectItems value="#{empleadoController.areas}"
-                                                   var="area"
-                                                   itemValue="#{area}"
-                                                   itemLabel="#{area.nombre}"
-                                                   />
-
-                                </p:selectOneMenu>
-                                
-                                <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_servicioId}" for="servicioId" />
-                                <p:selectOneMenu id="servicioId" value="#{empleadoController.selected.servicioId}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_servicioId}" converter="servicioConverter">
-                                   
-                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                    <f:selectItems value="#{empleadoController.servicios}"
-                                                   var="servicio"
-                                                   itemValue="#{servicio}"
-                                                   itemLabel="#{servicio.nombre}"
-                                                   />
                                 </p:selectOneMenu>
                                 
                             </p:panelGrid>
@@ -167,8 +121,8 @@
                                 <p:autoComplete id="ubigeoCodigo" value="#{empleadoController.selected.ficha.ubigeoCodigo}" completeMethod="#{ubigeoController.metodo}"
                                                 var="ubigeo" itemLabel="#{ubigeo.ubigeo}" itemValue="#{ubigeo}" converter="ubigeoConverter" size="70" required="true"/>
                                 
-                                <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_estadoCivil}" />                       
-                                <p:selectOneMenu id="idgenero" value="#{empleadoController.selected.ficha.estadoCivil}" >
+                                <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_estadoCivil}"  />                       
+                                <p:selectOneMenu id="idgenero" value="#{empleadoController.selected.ficha.estadoCivil}" required="true">
                                     <f:selectItem itemLabel="Seleccione Uno" />                                  
                                     <f:selectItem itemLabel="SOLTERO(A)" itemValue="SO"  />
                                     <f:selectItem itemLabel="CASADO(A)" itemValue="CA" />
@@ -176,7 +130,7 @@
                                 </p:selectOneMenu>                    
 
                                 <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_nivelEducativoId}" for="nivelEducativoId" />
-                                <p:selectOneMenu id="nivelEducativoId" value="#{empleadoController.selected.ficha.nivelEducativoId}" required="true" requiredMessage="#{myBundle.CreateFichaGeneralEmpleadoRequiredMessage_nivelEducativoId}" converter="nivelEducativoConverter">
+                                <p:selectOneMenu id="nivelEducativoId" value="#{empleadoController.selected.ficha.nivelEducativoId}" requiredMessage="#{myBundle.CreateFichaGeneralEmpleadoRequiredMessage_nivelEducativoId}" converter="nivelEducativoConverter">
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{nivelEducativoController.items}"
                                                    var="nivelEducativoIdItem"

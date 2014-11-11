@@ -48,7 +48,19 @@ public class DetalleRegistroAsistencia implements Serializable {
     
     @Column(name = "milisegundos_tardanza")
     private Long milisegundosTardanza;
+    
+    @Column(name = "milisegundos_extra")
+    private Long milisegundosExtra;
 
+    public Long getMilisegundosExtra() {
+        return milisegundosExtra;
+    }
+
+    public void setMilisegundosExtra(Long milisegundosExtra) {
+        this.milisegundosExtra = milisegundosExtra;
+    }
+
+    
     public Boolean getTardanza() {
         return tardanza;
     }

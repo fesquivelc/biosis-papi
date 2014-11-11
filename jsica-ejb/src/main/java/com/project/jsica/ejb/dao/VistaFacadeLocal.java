@@ -37,5 +37,7 @@ public interface VistaFacadeLocal {
     List<Vista> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
+
+    List<Vista> buscarXEmpleado(String dni, Integer mes, Integer anio);
     
 }

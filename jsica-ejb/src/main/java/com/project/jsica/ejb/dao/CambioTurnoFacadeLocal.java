@@ -37,5 +37,7 @@ public interface CambioTurnoFacadeLocal {
     List<CambioTurno> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
+
+    List<CambioTurno> buscarXEmpleado(String dni, Integer mes, Integer anio);
     
 }

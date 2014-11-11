@@ -5,6 +5,7 @@
  */
 package com.project.util;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,5 +28,12 @@ public class FechaUtil {
             return 1;
         }
     }
+    
+    public static int ultimoDiaMes(int mes, int anio) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(anio, mes - 1, 1);
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+
 
 }

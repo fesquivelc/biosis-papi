@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.project.jsica.ejb.entidades;
 
 import java.io.Serializable;
@@ -42,10 +41,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empleado.findByApellidos", query = "SELECT e FROM Empleado e WHERE e.apellidos = :apellidos"),
     @NamedQuery(name = "Empleado.findByDocIdentidad", query = "SELECT e FROM Empleado e WHERE e.docIdentidad = :docIdentidad"),
     @NamedQuery(name = "Empleado.findByFechaNacimiento", query = "SELECT e FROM Empleado e WHERE e.fechaNacimiento = :fechaNacimiento"),
-    @NamedQuery(name = "Empleado.findBySituacionTrabajador", query = "SELECT e FROM Empleado e WHERE e.situacionTrabajador = :situacionTrabajador"),
     @NamedQuery(name = "Empleado.findBySexo", query = "SELECT e FROM Empleado e WHERE e.sexo = :sexo"),
     @NamedQuery(name = "Empleado.findByFoto", query = "SELECT e FROM Empleado e WHERE e.foto = :foto")})
 public class Empleado implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,7 +60,7 @@ public class Empleado implements Serializable {
     private String apellidos;
     @Basic(optional = false)
     @NotNull
-    @Pattern(regexp="(\\d{1,8})", message="Formato de DNI Invalido")
+    @Pattern(regexp = "(\\d{1,8})", message = "Formato de DNI Invalido")
     @Size(min = 1, max = 45)
     @Column(name = "doc_identidad")
     private String docIdentidad;
@@ -70,11 +69,11 @@ public class Empleado implements Serializable {
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "situacion_trabajador")
-    private String situacionTrabajador;
+//    @Basic(optional = false)
+//    @NotNull
+//    @Size(min = 1, max = 45)
+//    @Column(name = "situacion_trabajador")
+//    private String situacionTrabajador;
     @Basic(optional = false)
     @NotNull
     private Character sexo;
@@ -84,16 +83,16 @@ public class Empleado implements Serializable {
     private List<RegistroAsistencia> registroAsistenciaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoId")
     private List<DetalleContrato> detalleContratoList;
-    @JoinColumn(name = "grupo_horario_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "grupo_horario_id", referencedColumnName = "id",nullable = true)
+    @ManyToOne(optional = true)
     private GrupoHorario grupoHorarioId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoId")
     private List<Empleado> empleadoList;
     @JoinColumn(name = "empleado_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private Empleado empleadoId;
     @JoinColumn(name = "servicio_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private Servicio servicioId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "jefeInmediatoId")
     private List<CambioTurno> cambioTurnoList;
@@ -119,11 +118,21 @@ public class Empleado implements Serializable {
     private List<Usuario> usuarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoId")
     private List<FichaLaboralEmpleado> fichaLaboralEmpleadoList;
-    
+
     @OneToMany(mappedBy = "empleado2Id")
     private List<CambioTurno> cambioTurnoList2;
     @OneToMany(mappedBy = "empleado1Id")
     private List<CambioTurno> cambioTurnoList3;
+
+    private Boolean activo;
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
 
     public List<CambioTurno> getCambioTurnoList2() {
         return cambioTurnoList2;
@@ -154,7 +163,7 @@ public class Empleado implements Serializable {
         this.apellidos = apellidos;
         this.docIdentidad = docIdentidad;
         this.fechaNacimiento = fechaNacimiento;
-        this.situacionTrabajador = situacionTrabajador;
+//        this.situacionTrabajador = situacionTrabajador;
         this.sexo = sexo;
     }
 
@@ -198,13 +207,13 @@ public class Empleado implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getSituacionTrabajador() {
-        return situacionTrabajador;
-    }
-
-    public void setSituacionTrabajador(String situacionTrabajador) {
-        this.situacionTrabajador = situacionTrabajador.toUpperCase();
-    }
+//    public String getSituacionTrabajador() {
+//        return situacionTrabajador;
+//    }
+//
+//    public void setSituacionTrabajador(String situacionTrabajador) {
+//        this.situacionTrabajador = situacionTrabajador.toUpperCase();
+//    }
 
     public Character getSexo() {
         return sexo;
@@ -221,41 +230,42 @@ public class Empleado implements Serializable {
     public void setFoto(String foto) {
         this.foto = foto;
     }
-    
-    public String getEmpleado(){
-         return this.apellidos + " " + this.nombres + " - DNI:" + this.docIdentidad;
+
+    public String getEmpleado() {
+        return this.apellidos + " " + this.nombres + " - DNI:" + this.docIdentidad;
     }
     /*Para papeleta*/
-    public String getEmpleadoForPapeleta(){
-         return this.apellidos + " " + this.nombres + " - DNI:" + this.docIdentidad;
+
+    public String getEmpleadoForPapeleta() {
+        return this.apellidos + " " + this.nombres + " - DNI:" + this.docIdentidad;
     }
-    
-    public Sucursal getSucursal(){
+
+    public Sucursal getSucursal() {
         Sucursal sucursal = this.detalleContratoList.get(0).getAreaId().getSucursalId();
         return sucursal;
     }
-    
-    public Area getArea(){
+
+    public Area getArea() {
         Area area = this.detalleContratoList.get(0).getAreaId();
         return area;
     }
-    
-    public FichaGeneralEmpleado getFicha(){
+
+    public FichaGeneralEmpleado getFicha() {
         return this.fichaGeneralEmpleadoList.get(0);
     }
-    
-    public void setFicha(FichaGeneralEmpleado ficha){
-        this.fichaGeneralEmpleadoList.set(0, ficha);       
+
+    public void setFicha(FichaGeneralEmpleado ficha) {
+        this.fichaGeneralEmpleadoList.set(0, ficha);
     }
-    
-     public FichaLaboralEmpleado getFichaLaboral(){
+
+    public FichaLaboralEmpleado getFichaLaboral() {
         return this.fichaLaboralEmpleadoList.get(0);
     }
-    
-    public void setFichaLaboral(FichaLaboralEmpleado fichaLaboral){
-        this.fichaLaboralEmpleadoList.set(0, fichaLaboral);       
-    }   
-    
+
+    public void setFichaLaboral(FichaLaboralEmpleado fichaLaboral) {
+        this.fichaLaboralEmpleadoList.set(0, fichaLaboral);
+    }
+
     @XmlTransient
     public List<RegistroAsistencia> getRegistroAsistenciaList() {
         return registroAsistenciaList;
@@ -439,5 +449,5 @@ public class Empleado implements Serializable {
     public String toString() {
         return "com.project.jsica.ejb.entidades.Empleado[ id=" + id + " ]";
     }
-    
+
 }

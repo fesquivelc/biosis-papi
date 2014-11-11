@@ -37,5 +37,8 @@ public interface FeriadoFacadeLocal {
     List<Feriado> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
+
+    List<Feriado> buscarXAnio(Integer anio);
+
     
 }

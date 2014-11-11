@@ -7,6 +7,9 @@
 package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.Feriado;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +31,17 @@ public class FeriadoFacade extends AbstractFacade<Feriado> implements FeriadoFac
     public FeriadoFacade() {
         super(Feriado.class);
     }
+
+    @Override
+    public List<Feriado> buscarXAnio(Integer anio) {
+        String jpql = "SELECT f FROM Feriado f WHERE f.anioId.anio = :anio";
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("anio", anio + "");
+
+        return this.search(jpql, parametros);
+    }
+
+    
+    
     
 }

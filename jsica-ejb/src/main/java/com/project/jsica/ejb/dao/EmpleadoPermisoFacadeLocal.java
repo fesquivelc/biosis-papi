@@ -37,5 +37,7 @@ public interface EmpleadoPermisoFacadeLocal {
     List<EmpleadoPermiso> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
+
+    List<EmpleadoPermiso> buscarXEmpleado(String dni, Integer mes, Integer anio);
     
 }

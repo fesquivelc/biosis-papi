@@ -39,13 +39,13 @@ public class FichaLaboralEmpleado implements Serializable {
     @Basic(optional = false)
     private Long id;
     @Size(max = 45)
-    @Column(name = "codigo_trabajador")
+    @Column(name = "codigo_trabajador",nullable = false)    
     private String codigoTrabajador;
     @JoinColumn(name = "empleado_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Empleado empleadoId;
     @JoinColumn(name = "tipo_empleado_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private TipoEmpleado tipoEmpleadoId;
 
     public FichaLaboralEmpleado() {
