@@ -6,6 +6,7 @@
 package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.RegistroAsistencia2;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -36,5 +37,7 @@ public interface RegistroAsistenciaFinalFacadeLocal {
     List<RegistroAsistencia2> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
     
     void analizar();
+
+    List<RegistroAsistencia2> busquedaXFecha(Date fechaInicio, Date fechaFin);
     
 }

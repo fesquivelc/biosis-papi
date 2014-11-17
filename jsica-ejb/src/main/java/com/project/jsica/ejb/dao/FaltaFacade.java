@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class FaltaFacade extends AbstractFacade<Falta> implements FaltaFacadeLocal {
-    @PersistenceContext(unitName = jsica_PU)
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     @Override

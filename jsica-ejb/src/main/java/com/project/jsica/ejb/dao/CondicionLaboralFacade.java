@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CondicionLaboralFacade extends AbstractFacade<CondicionLaboral> implements CondicionLaboralFacadeLocal {
-    @PersistenceContext(unitName = jsica_PU)
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     @Override

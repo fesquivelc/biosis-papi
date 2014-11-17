@@ -134,6 +134,7 @@ public class Empleado implements Serializable {
         this.activo = activo;
     }
 
+    @XmlTransient
     public List<CambioTurno> getCambioTurnoList2() {
         return cambioTurnoList2;
     }
@@ -142,6 +143,7 @@ public class Empleado implements Serializable {
         this.cambioTurnoList2 = cambioTurnoList2;
     }
 
+    @XmlTransient
     public List<CambioTurno> getCambioTurnoList3() {
         return cambioTurnoList3;
     }

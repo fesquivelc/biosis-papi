@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class LogsFacade extends AbstractFacade<Logs> implements LogsFacadeLocal {
-    @PersistenceContext(unitName = jsica_PU)
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     @Override

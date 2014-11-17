@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class MotivoPermisoFacade extends AbstractFacade<MotivoPermiso> implements MotivoPermisoFacadeLocal {
-    @PersistenceContext(unitName = jsica_PU)
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     @Override

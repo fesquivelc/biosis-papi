@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class TCImportacionFacade extends AbstractFacade<TCImportacion> implements TCImportacionFacadeLocal {
-    @PersistenceContext(unitName = "jsica-postgresql-PU")
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     @Override

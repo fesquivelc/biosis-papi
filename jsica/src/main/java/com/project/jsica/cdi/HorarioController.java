@@ -2,7 +2,6 @@ package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.HorarioFacadeLocal;
 import com.project.jsica.ejb.entidades.Area;
-import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.DetalleHorario;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.EmpleadoHorario;
@@ -12,7 +11,6 @@ import com.project.jsica.ejb.entidades.Sucursal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +22,6 @@ import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
-import org.primefaces.model.DualListModel;
 
 @Named(value = "horarioController")
 @ViewScoped
@@ -35,18 +31,20 @@ public class HorarioController extends AbstractController<Horario> {
     private boolean isEmpleadoSeleccionado;
     private DetalleHorario detalleHorario;
     private EmpleadoHorario empleadoHorario;
-            
+
     private int mesSeleccionado;
     private boolean isMesSeleccionado;
     private int anioSeleccionado;
-    
+
     private Sucursal sucursalSeleccionado;
     private boolean isSucursalSeleccionado;
     private Area areaSeleccionado;
     private boolean isAreaSeleccionado;
     private Servicio servicioSeleccionado;
     private boolean isServicioSeleccionado;
-    
+
+    private List<Horario> horariosAdministrativos;
+
     @EJB
     private HorarioFacadeLocal horarioFacade;
 
@@ -62,15 +60,18 @@ public class HorarioController extends AbstractController<Horario> {
 
     private boolean porEmpleado;
     private boolean porGrupo;
-    
+
     private List<DetalleHorario> lista1;
     private List<DetalleHorario> lista2;
-    
-    public List<Horario> getHorariosAdministrativos(){
-        String sql = "SELECT h FROM Horario h WHERE h.porFecha = FALSE";
-        return this.search(sql);
+
+    public List<Horario> getHorariosAdministrativos() {
+        if (horariosAdministrativos == null) {
+            String sql = "SELECT h FROM Horario h WHERE h.porFecha = FALSE";
+            horariosAdministrativos = this.search(sql);
+        }
+        return horariosAdministrativos;
     }
-    
+
     //Getters and setters
     public Empleado getEmpleadoSeleccionado() {
         return empleadoSeleccionado;
@@ -88,7 +89,9 @@ public class HorarioController extends AbstractController<Horario> {
         this.isEmpleadoSeleccionado = isEmpleadoSeleccionado;
     }
 
-    /**Metodos getters and setters**/
+    /**
+     * Metodos getters and setters*
+     */
     public Sucursal getSucursalSeleccionado() {
         return sucursalSeleccionado;
     }
@@ -208,7 +211,7 @@ public class HorarioController extends AbstractController<Horario> {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("DetalleHorario_items", this.getSelected().getDetalleHorarioList());
         }
         return "/detalleHorario/index";
-    }        
+    }
 
     /**
      * Sets the "items" attribute with a collection of EmpleadoHorario entities
@@ -446,91 +449,91 @@ public class HorarioController extends AbstractController<Horario> {
     @Override
     protected void remove(Horario objeto) {
         this.horarioFacade.remove(objeto);
-
-        //Datos antes de modificar
-        Horario antes = this.find(this.selected.getId());
-
-        String nombre1 = antes.getNombre();
-        String descripcion1 = antes.getDescripcion();
-        String porFecha1 = String.valueOf(antes.getPorFecha());
-        String fecha1 = antes.getFecha().toString();
-        String lunes1 = String.valueOf(antes.getLunes());
-        String martes1 = String.valueOf(antes.getMartes());
-        String miercoles1 = String.valueOf(antes.getMiercoles());
-        String jueves1 = String.valueOf(antes.getJueves());
-        String viernes1 = String.valueOf(antes.getViernes());
-        String sabado1 = String.valueOf(antes.getSabado());
-        String domingo1 = String.valueOf(antes.getDomingo());
-
-        //----Bitacora----
-        Bitacora bitacora = new Bitacora();
-        //Fecha y hora//          
-        Date fechas = new Date();
-//           
-        //Ip Cliente
-        String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-
-        //Datos
-        bitacora.setUsuario("JC");
-        bitacora.setIpCliente(ip_cliente);
-        bitacora.setFecha(fechas);
-        bitacora.setHora(fechas);
-        bitacora.setTabla("HORARIO");
-        bitacora.setColumna("NOMBRE");
-        bitacora.setAccion("ELIMINAR");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(nombre1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("DESCRIPCION");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(descripcion1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("POR_FECHA");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(porFecha1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("FECHA");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(fecha1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("LUNES");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(lunes1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("MARTES");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(martes1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("MIERCOLES");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(miercoles1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("JUEVES");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(jueves1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("VIERNES");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(viernes1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("SABADO");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(sabado1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("DOMINGO");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(domingo1);
-        bitacoraC.edit(bitacora);        
+//
+//        //Datos antes de modificar
+//        Horario antes = this.find(this.selected.getId());
+//
+//        String nombre1 = antes.getNombre();
+//        String descripcion1 = antes.getDescripcion();
+//        String porFecha1 = String.valueOf(antes.getPorFecha());
+//        String fecha1 = antes.getFecha().toString();
+//        String lunes1 = String.valueOf(antes.getLunes());
+//        String martes1 = String.valueOf(antes.getMartes());
+//        String miercoles1 = String.valueOf(antes.getMiercoles());
+//        String jueves1 = String.valueOf(antes.getJueves());
+//        String viernes1 = String.valueOf(antes.getViernes());
+//        String sabado1 = String.valueOf(antes.getSabado());
+//        String domingo1 = String.valueOf(antes.getDomingo());
+//
+//        //----Bitacora----
+//        Bitacora bitacora = new Bitacora();
+//        //Fecha y hora//          
+//        Date fechas = new Date();
+////           
+//        //Ip Cliente
+//        String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+//
+//        //Datos
+//        bitacora.setUsuario("JC");
+//        bitacora.setIpCliente(ip_cliente);
+//        bitacora.setFecha(fechas);
+//        bitacora.setHora(fechas);
+//        bitacora.setTabla("HORARIO");
+//        bitacora.setColumna("NOMBRE");
+//        bitacora.setAccion("ELIMINAR");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(nombre1);
+//        bitacoraC.edit(bitacora);
+//
+//        bitacora.setColumna("DESCRIPCION");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(descripcion1);
+//        bitacoraC.edit(bitacora);
+//
+//        bitacora.setColumna("POR_FECHA");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(porFecha1);
+//        bitacoraC.edit(bitacora);
+//
+//        bitacora.setColumna("FECHA");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(fecha1);
+//        bitacoraC.edit(bitacora);
+//
+//        bitacora.setColumna("LUNES");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(lunes1);
+//        bitacoraC.edit(bitacora);
+//
+//        bitacora.setColumna("MARTES");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(martes1);
+//        bitacoraC.edit(bitacora);
+//
+//        bitacora.setColumna("MIERCOLES");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(miercoles1);
+//        bitacoraC.edit(bitacora);
+//
+//        bitacora.setColumna("JUEVES");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(jueves1);
+//        bitacoraC.edit(bitacora);
+//
+//        bitacora.setColumna("VIERNES");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(viernes1);
+//        bitacoraC.edit(bitacora);
+//
+//        bitacora.setColumna("SABADO");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(sabado1);
+//        bitacoraC.edit(bitacora);
+//
+//        bitacora.setColumna("DOMINGO");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(domingo1);
+//        bitacoraC.edit(bitacora);
     }
 
     @Override
@@ -558,27 +561,26 @@ public class HorarioController extends AbstractController<Horario> {
         return this.horarioFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 
-     private static final Logger LOG = Logger.getLogger(DetalleHorarioController.class.getName());
+    private static final Logger LOG = Logger.getLogger(DetalleHorarioController.class.getName());
 
     @Override
     public Horario prepareCreate(ActionEvent event) {
         LOG.log(Level.INFO, "Llega al prepare create de horario");
         Horario horario = new Horario();
-        
+
         horario.setDetalleHorarioList(new ArrayList<DetalleHorario>());
-        
+
         this.detalleHorario = new DetalleHorario();
-        
+
         horario.getDetalleHorarioList().add(this.detalleHorario);
-        
+
         this.detalleHorario.setHorarioId(horario);
-        
+
         this.setSelected(horario);
-        
+
         return horario;
     }
-     
-     
+
     public void onSucursalSeleccionado() {
         if (this.sucursalSeleccionado != null) {
             LOG.log(Level.INFO, "ID DEL DEPARTAMENTO: {0}", this.sucursalSeleccionado.getId());
@@ -600,10 +602,10 @@ public class HorarioController extends AbstractController<Horario> {
         this.isAreaSeleccionado = false;
     }
 
-    public void onServicioSeleccionado(){
-        this.isServicioSeleccionado = this.servicioSeleccionado!=null;
+    public void onServicioSeleccionado() {
+        this.isServicioSeleccionado = this.servicioSeleccionado != null;
     }
-    
+
     public List<Area> getAreas() {
         if (this.isSucursalSeleccionado) {
             return this.sucursalSeleccionado.getAreaList();
@@ -619,7 +621,7 @@ public class HorarioController extends AbstractController<Horario> {
             return null;
         }
     }
-    
+
     public List<Empleado> getEmpleados() {
         if (this.isServicioSeleccionado) {
             LOG.log(Level.INFO, "ID DEL SERVICIO:{0}", this.servicioSeleccionado.getId());
@@ -649,23 +651,22 @@ public class HorarioController extends AbstractController<Horario> {
         return this.empleadoListController.search(namedString, parametros);
     }
 
-
     public List<Date> getDias() {
-        if(this.anioSeleccionado>0){
+        if (this.anioSeleccionado > 0) {
             List<Date> fechas = new ArrayList<>();
             Calendar cal = Calendar.getInstance();
             int mes = this.mesSeleccionado;
             int anio = this.anioSeleccionado;
-            cal.set(Calendar.YEAR,anio);
-            cal.set(Calendar.MONTH,mes);
+            cal.set(Calendar.YEAR, anio);
+            cal.set(Calendar.MONTH, mes);
             int ultimo = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-            System.out.println("ultimo"+" "+ultimo);
+            System.out.println("ultimo" + " " + ultimo);
             for (int i = 1; i <= ultimo; i++) {
                 cal.set(Calendar.DAY_OF_MONTH, i);
                 Date fecha = cal.getTime();
-                fechas.add(fecha);  
-        }
-        return fechas;
+                fechas.add(fecha);
+            }
+            return fechas;
         }
         return null;
 

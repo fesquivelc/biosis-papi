@@ -24,22 +24,35 @@
                 <p:ajax event="rowUnselect" update=":PermisoListForm:createButton :PermisoListForm:viewButton  :PermisoListForm:editButton  :PermisoListForm:deleteButton " listener="#{permisoController.resetParents}"/>
                 <p:ajax event="rowDblselect" onsuccess="document.getElementById('PermisoListForm:viewButton').click();"/>
 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="DNI / Código"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleadoPermiso.empleadoId}" converter="codigoConverter"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Empleado"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleadoPermiso.empleadoId.apellidos} #{item.empleadoPermiso.empleadoId.nombres}"/>
+                </p:column>
+
                 <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPermisoTitle_horaInicio}"/>
                     </f:facet>
                     <h:outputText value="#{item.horaInicio}">
-                        <f:convertDateTime pattern="HH:mm:ss" />
+                        <f:convertDateTime pattern="HH.mm" />
                     </h:outputText>
                 </p:column>
 
-
                 <p:column >
                     <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListPermisoTitle_horaFin}"/>
+                        <h:outputText value="Hora fin"/>
                     </f:facet>
                     <h:outputText value="#{item.horaFin}">
-                        <f:convertDateTime pattern="HH:mm:ss" />
+                        <f:convertDateTime pattern="HH.mm" />
                     </h:outputText>
                 </p:column>
 
@@ -49,7 +62,7 @@
                         <h:outputText value="#{myBundle.ListPermisoTitle_fechaInicio}"/>
                     </f:facet>
                     <h:outputText value="#{item.fechaInicio}">
-                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                        <f:convertDateTime pattern="dd.MM.yyyy" />
                     </h:outputText>
                 </p:column>
 
@@ -59,7 +72,7 @@
                         <h:outputText value="#{myBundle.ListPermisoTitle_fechaFin}"/>
                     </f:facet>
                     <h:outputText value="#{item.fechaFin}">
-                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                        <f:convertDateTime pattern="dd.MM.yyyy" />
                     </h:outputText>
                 </p:column>
 
@@ -68,27 +81,11 @@
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPermisoTitle_tipo}"/>
                     </f:facet>
-                    <h:outputText value="#{item.tipo}"/>
+                    <h:outputText value="#{item.motivoPermisoCodigo.nombre}"/>
                 </p:column>
 
-            
-                                    <p:column >
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListPermisoTitle_porFecha}"/>
-                                        </f:facet>
-                                        <h:selectBooleanCheckbox id="porFecha" value="#{item.porFecha}" title="#{myBundle.EditPermisoTitle_porFecha}" required="true" requiredMessage="#{myBundle.EditPermisoRequiredMessage_porFecha}" disabled="true"/>
-                                    </p:column>
-          
-                                    <p:column >
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListPermisoTitle_motivoPermisoCodigo}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.motivoPermisoCodigo.nombre}"/>
-                                    </p:column>
-      
-
             </p:dataTable>
-
+            
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{permisoController.prepareCreate}" update=":PermisoCreateForm" oncomplete="PF('PermisoCreateDialog').show()"/>
             <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":PermisoViewForm" oncomplete="PF('PermisoViewDialog').show()" disabled="#{empty permisoController.selected}"/>
             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PermisoEditForm" oncomplete="PF('PermisoEditDialog').show()" disabled="#{empty permisoController.selected}"/>

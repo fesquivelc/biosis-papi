@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ContratoFacade extends AbstractFacade<Contrato> implements ContratoFacadeLocal {
-    @PersistenceContext(unitName = jsica_PU)
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     @Override

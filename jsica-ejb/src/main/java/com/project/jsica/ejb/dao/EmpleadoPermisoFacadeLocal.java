@@ -6,7 +6,9 @@
 
 package com.project.jsica.ejb.dao;
 
+import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.EmpleadoPermiso;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -39,5 +41,7 @@ public interface EmpleadoPermisoFacadeLocal {
     int count();
 
     List<EmpleadoPermiso> buscarXEmpleado(String dni, Integer mes, Integer anio);
+
+    List<EmpleadoPermiso> buscarXEmpleado(Empleado empleado, Date fechaInicio, Date fechaFin, Boolean conGoce);
     
 }

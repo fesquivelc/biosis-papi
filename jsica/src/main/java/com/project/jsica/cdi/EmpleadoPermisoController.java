@@ -133,5 +133,9 @@ public class EmpleadoPermisoController extends AbstractController<EmpleadoPermis
     public List<EmpleadoPermiso> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio) {
         return this.empleadoPermisoFacade.search(namedQuery, parametros, inicio, tamanio);
     }
+    
+    public List<EmpleadoPermiso> buscarXEmpleado(Empleado empleado, Date fechaInicio, Date fechaFin, Boolean conGoce){
+        return this.empleadoPermisoFacade.buscarXEmpleado(empleado, fechaInicio, fechaFin, conGoce);
+    }
 
 }

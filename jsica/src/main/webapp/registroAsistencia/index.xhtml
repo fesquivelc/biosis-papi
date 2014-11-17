@@ -19,7 +19,7 @@
                         <p:panelGrid columnClasses="column" columns="2">
                             <p:outputLabel value="Empleado:" for="empleadoBuscado"/>                           
                             <p:autoComplete id="empleadoBuscado" value="#{registroAsistenciaController.empleadoSeleccionado}" completeMethod="#{empleadoController.metodo}"
-                                            var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="70" required="true"/>
+                                            var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="70" />
 
                             <p:outputLabel value="De:" for="fechaInicio"/>
                             <p:inputMask id="fechaInicio" value="#{registroAsistenciaController.fechaInicio}" mask="99/99/9999" title="#{myBundle.CreatePermisoTitle_fechaInicio}">  
@@ -31,7 +31,7 @@
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </p:inputMask>
 
-                            <p:commandButton id="btnBuscar" icon="ui-icon-search" value="Buscar Registros" update="listaMarcaciones idFaltas idTardanzas" actionListener="#{analisisAsistenciaBean.recargar()}" />
+                            <p:commandButton id="btnBuscar" icon="ui-icon-search" value="Buscar Registros" update="listaMarcaciones" action="#{analisisAsistenciaBean.recargar()}" />
                         </p:panelGrid>
 
                         <p:dataTable
@@ -110,7 +110,7 @@
                             </p:column>
                         </p:dataTable>
 
-                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{registroAsistenciaController.prepareCreate}"  update=":RegistroAsistenciaCreateForm" oncomplete="PF('RegistroAsistenciaCreateDialog').show()"/>
+                        
                         <h:commandLink>
                             <h:outputText value="Descargar Excel">
                                 <h:graphicImage name="images/Excel-icon.png"/>
@@ -119,7 +119,7 @@
                         </h:commandLink>
                     </p:panel>                                        
                 </h:form>
-                <h:form>
+                <h:form id="frmResumen">
                     <p:panel>
                         <p:panelGrid columns="3">
                             <p:outputLabel value="TOTAL DE FALTAS:"/>
@@ -129,10 +129,6 @@
                             <p:outputLabel value="TOTAL DE TARDANZAS:"/>
                             <p:outputLabel id="idTardanzas" value="#{registroAsistenciaController.tardanzas}"/>
                             <p:commandButton value="VER DETALLE DE FALTAS"/>
-
-                            <p:outputLabel value="TOTAL DE TARDANZAS:"/>
-                            <p:outputLabel id="idTardanzas" value="#{registroAsistenciaController.tardanzas}"/>
-                            <p:commandButton value="VER DETALLE DE PERMISOS"/>
                         </p:panelGrid>
                     </p:panel>
                 </h:form>
@@ -140,10 +136,6 @@
             </p:tab>
         </p:tabView>
 
-
-        <ui:include src="/registroAsistencia/View.xhtml"/>
-        <ui:include src="/registroAsistencia/Edit.xhtml"/>
-        <ui:include src="/registroAsistencia/Create.xhtml"/>
         <ui:include src="/empleado/View.xhtml"/>
         <ui:include src="/biometrico/View.xhtml"/>
 

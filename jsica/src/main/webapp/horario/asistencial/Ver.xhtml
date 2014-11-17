@@ -20,9 +20,15 @@
 
             <ui:define name="body">
                 <h:form>
-                    <p:panel header="HORARIO DE #{empleadoHorarioController.selected.empleadoId.apellidos} #{empleadoHorarioController.selected.empleadoId.nombres} EN LA FECHA" >
+                    <p:panel header="HORARIO DE #{empleadoHorarioController.selected.empleadoId.apellidos} #{empleadoHorarioController.selected.empleadoId.nombres}" >
                         <p:commandButton action="#{empleadoHorarioController.reset}" value="Regresar a la lista"/>
                         
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Mes de vigencia:"/>
+                            <p:outputLabel value="#{empleadoHorarioController.selected.horarioId.fecha}">
+                                <f:convertDateTime pattern="MM"/>
+                            </p:outputLabel>
+                        </p:panelGrid>
                         
                     </p:panel>
 

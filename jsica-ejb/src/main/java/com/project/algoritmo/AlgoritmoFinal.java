@@ -106,7 +106,8 @@ public class AlgoritmoFinal {
         hora.setTime(horaDesde);
 
         int contador = 0;
-        for (Date fecha = inicio.getTime(); !fecha.after(fechaHasta); inicio.add(Calendar.DAY_OF_MONTH, 1)) {
+        Date fecha = inicio.getTime();
+        while (!fecha.after(fechaHasta)) {
             LOG.info("RECORRIENDO DIA A DIA " + fecha.toString());
             Date horaAnalisis = hora.getTime();
 
@@ -117,8 +118,25 @@ public class AlgoritmoFinal {
             }
 
             hora.set(Calendar.HOUR_OF_DAY, hora.getMinimum(Calendar.HOUR_OF_DAY));
+
+            inicio.add(Calendar.DAY_OF_MONTH, 1);
+
             contador++;
+            fecha = inicio.getTime();
         }
+//        for (Date fecha = inicio.getTime(); !fecha.after(fechaHasta); inicio.add(Calendar.DAY_OF_MONTH, 1)) {
+//            LOG.info("RECORRIENDO DIA A DIA " + fecha.toString());
+//            Date horaAnalisis = hora.getTime();
+//
+//            RegistroAsistencia2 registro = analizarRegistro(empleado, turno, fecha, horaAnalisis, fechaHasta, horaHasta, marcacionesXMes, permisosXMes);
+//
+//            if (registro != null) {
+//                registros.add(registro);
+//            }
+//
+//            hora.set(Calendar.HOUR_OF_DAY, hora.getMinimum(Calendar.HOUR_OF_DAY));
+//            contador++;
+//        }
 
         return registros;
     }
@@ -144,12 +162,17 @@ public class AlgoritmoFinal {
         Calendar horaSalida = Calendar.getInstance();
         horaSalida.setTime(turno.getJornadaCodigo().getHSalida());
         horaSalida.add(Calendar.MINUTE, MINUTOS_DESPUES_DE_HORA_SALIDA);
+        
+        boolean falta = false;
 
         if (FechaUtil.compararFechaHora(fechaInicio, horaInicio, fechaSalida.getTime(), horaSalida.getTime()) <= 0
                 && FechaUtil.compararFechaHora(fechaFin, horaFin, fechaSalida.getTime(), horaSalida.getTime()) >= 0) {
 
             LOG.info("SE COMPARO LAS FECHAS Y HORAS, SE DA INICIO AL ANALISIS");
             RegistroAsistencia2 registro = new RegistroAsistencia2();
+            registro.setEmpleado(empleado);
+            registro.setFecha(fecha);            
+            
             String tipo;
             //SE PROCEDE A ANALIZAR CADA DETALLE 
             EmpleadoPermiso permisoXFecha = tienePermisoXFecha(fecha, permisosXMes);
@@ -158,12 +181,16 @@ public class AlgoritmoFinal {
                 LOG.info("PERMISO POR FECHA");
                 String codigo = permisoXFecha.getPermisoId().getMotivoPermisoCodigo().getCodigo();
 
-                if (codigo.equals("VAC")) {
-                    tipo = "V";
-                } else if (codigo.equals("LIC")) {
-                    tipo = "L";
-                } else {
-                    tipo = "P";
+                switch (codigo) {
+                    case "VAC":
+                        tipo = "V";
+                        break;
+                    case "LIC":
+                        tipo = "L";
+                        break;
+                    default:
+                        tipo = "P";
+                        break;
                 }
                 registro.setPermiso(permisoXFecha);
 
@@ -171,12 +198,14 @@ public class AlgoritmoFinal {
                 LOG.info("ES ONOMASTICO");
 
             } else if (isDiaLaboral(fecha, turno) || turno.getHorarioId().getPorFecha()) {
+                LOG.info("ES DIA LABORAL");
                 Feriado feriado = isFeriado(fecha, feriadosXAnio);
 
                 if (feriado != null && !turno.getHorarioId().getPorFecha()) {
                     LOG.info("ES FERIADO");
                     tipo = "F";
                     registro.setFeriado(feriado);
+                    registro.setTipo(tipo);
                 } else {
                     List<EmpleadoPermiso> permisosXHora = isPermisoPorhora(fecha, fechaSalida.getTime(), turno, permisosXMes);
 
@@ -189,7 +218,8 @@ public class AlgoritmoFinal {
 
                     long tardanza = 0;
                     long extra = 0;
-                    
+                    int cargaTotal = 0;
+
                     List<DetalleRegistroAsistencia> detalle = new ArrayList<>();
                     Jornada jornada = turno.getJornadaCodigo();
                     for (EmpleadoPermiso permiso : permisosXHora) {
@@ -263,7 +293,10 @@ public class AlgoritmoFinal {
                             draEntrada.setMilisegundosTardanza(tardanza);
                             tardanza += tardanzaEntrada;
 
+                        }else{
+                            falta = true;
                         }
+                        
 
                         detalle.add(draEntrada);
                     }
@@ -290,14 +323,17 @@ public class AlgoritmoFinal {
                                         registro,
                                         marcacionesXMes
                                 );
-                        
-                        Long diferencia = this.milisegundosDiferencia(jornada.getHSalida(), draSalida.getHora(), 0);
-                        extra += diferencia;
-                        draSalida.setMilisegundosExtra(diferencia);
+                        if (draSalida.getCarga() != 23) {
+                            Long diferencia = this.milisegundosDiferencia(jornada.getHSalida(), draSalida.getHora(), 0);
+                            extra += diferencia;
+                            draSalida.setMilisegundosExtra(diferencia);
+                        }
+
                         detalle.add(draSalida);
                     }
 
                     if (jornada.getJornadaConRefrigerio()) {
+                        LOG.info("ANALIZANDO EL REFRIGERIO");
                         if (!permisoRefrigerio) {
                             DetalleRegistroAsistencia draSalidaRefrigerio
                                     = analizarEvento(
@@ -322,24 +358,40 @@ public class AlgoritmoFinal {
                                             registro,
                                             marcacionesXMes
                                     );
+                            if (draEntradaRefrigerio.getCarga() != 23) {
+                                Long diferencia = this.milisegundosDiferencia(jornada.getHEntradaRefrigerio(), draEntradaRefrigerio.getHora(), 0);
+                                draEntradaRefrigerio.setMilisegundosTardanza(diferencia);
+                                tardanza += diferencia;
+                            }else{
+                                falta = true;
+                            }
 
                             //ANALIZAMOS SI HA LLEGADO TARDE
-                            Long diferencia = this.milisegundosDiferencia(jornada.getHEntradaRefrigerio(), draEntradaRefrigerio.getHora(), 0);
-                            draEntradaRefrigerio.setMilisegundosTardanza(diferencia);
-                            tardanza += diferencia;
                             detalle.add(draSalidaRefrigerio);
                             detalle.add(draEntradaRefrigerio);
                         }
                     }
+                    if(falta){
+                        tipo = "A";
+                    }
+                    else if(tardanza > 0){
+                        tipo = "T";
+                    }else{
+                        tipo = "R";
+                    }
+                    registro.setTurnoOriginal(turno);
+                    registro.setTipo(tipo);
+                    registro.setMilisegundosExtra(extra);
+                    registro.setMilisegundosTardanza(tardanza);
                     registro.setDetalleRegistroAsistenciaList(detalle);
+//                    registro.setFecha(fecha);
+                    return registro;
                 }
-                
 
             } else {
+                LOG.warn("NO ES DIA LABORAL "+fecha);
                 return null;
             }
-            
-            
 
             return registro;
         } else {
@@ -362,8 +414,8 @@ public class AlgoritmoFinal {
     private boolean isDiaLaboral(Date fecha, DetalleHorario turno) {
         Calendar dia = Calendar.getInstance();
         dia.setTime(fecha);
-
-        int comparacion = dia.get(Calendar.DAY_OF_MONTH);
+        
+        int comparacion = dia.get(Calendar.DAY_OF_WEEK);
 
         return diasLaborables(turno.getHorarioId().getLunes(), turno.getHorarioId().getMartes(), turno.getHorarioId().getMiercoles(), turno.getHorarioId().getJueves(), turno.getHorarioId().getViernes(), turno.getHorarioId().getSabado(), turno.getHorarioId().getDomingo()).contains(comparacion);
     }
@@ -403,6 +455,7 @@ public class AlgoritmoFinal {
     }
 
     private Feriado isFeriado(Date fecha, List<Feriado> feriadosXAnio) {
+        LOG.info("¿ES FERIADO?" + fecha);
         for (Feriado feriado : feriadosXAnio) {
             if (feriado.getFechaInicio().compareTo(fecha) <= 0
                     && feriado.getFechaFin().compareTo(fecha) >= 0) {
@@ -534,15 +587,17 @@ public class AlgoritmoFinal {
     }
 
     private Long milisegundosDiferencia(Date horaRegular, Date horaMarcada, int toleranciaRegular) {
+        LOG.info("DIFERENCIA ENTRE " + horaRegular + " y " + horaMarcada + " CON TOLERANCIA " + toleranciaRegular);
+
         Calendar cal = Calendar.getInstance();
         cal.setTime(horaRegular);
         cal.add(Calendar.MINUTE, toleranciaRegular);
-        
+
         Long diferencia = horaMarcada.getTime() - cal.getTimeInMillis();
-        
-        if(diferencia < 0){
+
+        if (diferencia < 0) {
             return Long.parseLong("0");
-        }else{
+        } else {
             return diferencia;
         }
     }

@@ -7,15 +7,18 @@ package com.project.jsica.ejb.dao;
 
 import com.project.algoritmo.AnalisisAsistenciaLocal;
 import com.project.algoritmo.AnalisisFinalLocal;
-import static com.project.jsica.ejb.dao.AbstractFacade.jsica_PU;
+import static com.project.jsica.ejb.dao.AbstractFacade.biosis_PU;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.RegistroAsistencia2;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -23,11 +26,12 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class RegistroAsistenciaFinalFacade extends AbstractFacade<RegistroAsistencia2> implements RegistroAsistenciaFinalFacadeLocal {
-    @PersistenceContext(unitName = jsica_PU)
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
+    private static final Logger LOG = Logger.getLogger(RegistroAsistenciaFinalFacade.class.getName());
     
     @EJB
-    private UtilitarioAsistenciaLocal utilitario;
+    private UtilitarioAsistenciaLocal utilitario; 
     
     @EJB
     private EmpleadoFacadeLocal empleadoDAO;
@@ -43,10 +47,7 @@ public class RegistroAsistenciaFinalFacade extends AbstractFacade<RegistroAsiste
     public RegistroAsistenciaFinalFacade() {
         super(RegistroAsistencia2.class);
     }
-    
-    
-    
-    
+
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
@@ -61,6 +62,20 @@ public class RegistroAsistenciaFinalFacade extends AbstractFacade<RegistroAsiste
         List<Empleado> empleados = empleadoDAO.search("SELECT e FROM Empleado e");        
         
         analisis.iniciarAnalisis(empleados, fechaInicio, horaInicio, fechaFin, horaFin);
+        LOG.info("TERMINO EL ANALISIS");
+    }
+
+    @Override
+    public List<RegistroAsistencia2> busquedaXFecha(Date fechaInicio, Date fechaFin) {
+        LOG.info("INICIANDO BUSQUEDA POR FECHA");
+//        this.analizar();
+        String jpql = "SELECT r FROM RegistroAsistencia2 r WHERE r.fecha BETWEEN :fechaInicio AND :fechaFin";
+        
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("fechaInicio", fechaInicio);
+        variables.put("fechaFin", fechaFin);
+        
+        return this.search(jpql, variables);
     }
     
     

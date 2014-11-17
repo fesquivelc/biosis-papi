@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class EmpleadoHorarioFacade extends AbstractFacade<EmpleadoHorario> implements EmpleadoHorarioFacadeLocal {
 
-    @PersistenceContext(unitName = jsica_PU)
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     @Override

@@ -21,6 +21,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -28,6 +30,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "registro_asistencia_2")
+@XmlRootElement
 public class RegistroAsistencia2 implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,13 +60,14 @@ public class RegistroAsistencia2 implements Serializable {
     @JoinColumn(name = "empleado_permiso_id", referencedColumnName = "id", nullable = true)
     @ManyToOne
     private EmpleadoPermiso permiso;
-    @JoinColumn(name = "feriado_id", referencedColumnName = "id", nullable = true)
+    @JoinColumn(name = "feriado_id", referencedColumnName = "idferiados", nullable = true)
     @ManyToOne
     private Feriado feriado;
     
     @OneToMany(mappedBy = "registroAsistencia",cascade = CascadeType.ALL)
     private List<DetalleRegistroAsistencia> detalleRegistroAsistenciaList;
 
+    @XmlTransient
     public List<DetalleRegistroAsistencia> getDetalleRegistroAsistenciaList() {
         return detalleRegistroAsistenciaList;
     }

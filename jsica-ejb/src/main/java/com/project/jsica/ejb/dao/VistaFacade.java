@@ -21,7 +21,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class VistaFacade extends AbstractFacade<Vista> implements VistaFacadeLocal {
-    @PersistenceContext(unitName = "jsica-postgresql-PU")
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     @Override

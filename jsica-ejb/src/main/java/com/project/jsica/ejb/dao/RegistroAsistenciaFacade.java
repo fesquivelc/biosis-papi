@@ -23,7 +23,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class RegistroAsistenciaFacade extends AbstractFacade<RegistroAsistencia> implements RegistroAsistenciaFacadeLocal {
-    @PersistenceContext(unitName = jsica_PU)
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
 //    @EJB

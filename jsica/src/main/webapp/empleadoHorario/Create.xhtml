@@ -33,7 +33,7 @@
                         <p:selectBooleanCheckbox id="porGrupo" value="#{empleadoHorarioController.selected.porGrupo}" required="true" requiredMessage="#{myBundle.CreateEmpleadoHorarioRequiredMessage_porGrupo}"/>
 
                         <p:outputLabel value="Empleado:" for="empleadoBuscado" />
-                        <p:autoComplete id="empleadoBuscado" value="#{empleadoController.seleccionado}" completeMethod="#{empleadoController.metodo}"
+                        <p:autoComplete id="empleadoBuscado" value="#{empleadoHorarioController.selected.empleadoId}" completeMethod="#{empleadoController.metodo}"
                                         var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="55"/>
 
 

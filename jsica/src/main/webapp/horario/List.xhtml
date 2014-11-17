@@ -8,9 +8,9 @@
 
     <h:form id="HorarioListForm">
 
-        <p:panel header="#{myBundle.ListHorarioTitle}">
+        <p:panel header="HORARIOS ADMINISTRATIVOS">
             <p:dataTable id="datalist"
-                         value="#{horarioController.items}"
+                         value="#{horarioController.horariosAdministrativos}"
                          var="item"
                          rowKey="#{item.id}"
                          paginator="true"
@@ -22,90 +22,65 @@
 
                 <p:ajax event="rowSelect"   update=":tabOpciones:HorarioListForm:createButton :tabOpciones:HorarioListForm:viewButton :tabOpciones:HorarioListForm:editButton :tabOpciones:HorarioListForm:deleteButton " listener="#{horarioController.resetParents}"/>
                 <p:ajax event="rowUnselect" update=":tabOpciones:HorarioListForm:createButton :tabOpciones:HorarioListForm:viewButton :tabOpciones:HorarioListForm:editButton :tabOpciones:HorarioListForm:deleteButton " listener="#{horarioController.resetParents}"/>
-                
+
+                <p:columnGroup type="header">
+                    <p:row>
+                        <p:column rowspan="2" headerText="Nombre"/>
+                        <p:column rowspan="2" headerText="Descripción"/>
+                        <p:column colspan="7" headerText="Días laborales"/>
+                    </p:row>                   
+                    <p:row>
+                        <p:column headerText="Lunes"/>
+                        <p:column headerText="Martes"/>
+                        <p:column headerText="Miercoles"/>
+                        <p:column headerText="Jueves"/>
+                        <p:column headerText="Viernes"/>
+                        <p:column headerText="Sábado"/>
+                        <p:column headerText="Domingo"/>
+                    </p:row>
+                </p:columnGroup>
+
+
                 <p:column >
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListHorarioTitle_nombre}"/>
-                    </f:facet>
                     <h:outputText value="#{item.nombre}"/>
                 </p:column>
 
 
                 <p:column >
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListHorarioTitle_descripcion}"/>
-                    </f:facet>
                     <h:outputText value="#{item.descripcion}"/>
                 </p:column>
 
 
                 <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListHorarioTitle_lunes}"/>
-                    </f:facet>
                     <h:selectBooleanCheckbox id="lunes" value="#{item.lunes}" title="#{myBundle.EditHorarioTitle_lunes}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_lunes}" disabled="true"/>
                 </p:column>
 
 
                 <p:column >
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListHorarioTitle_martes}"/>
-                    </f:facet>
                     <h:selectBooleanCheckbox id="martes" value="#{item.martes}" title="#{myBundle.EditHorarioTitle_martes}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_martes}" disabled="true"/>
                 </p:column>
 
 
                 <p:column >
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListHorarioTitle_miercoles}"/>
-                    </f:facet>
                     <h:selectBooleanCheckbox id="miercoles" value="#{item.miercoles}" title="#{myBundle.EditHorarioTitle_miercoles}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_miercoles}" disabled="true"/>
                 </p:column>
 
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListHorarioTitle_jueves}"/>
-                                        </f:facet>
-                                        <h:selectBooleanCheckbox id="jueves" value="#{item.jueves}" title="#{myBundle.EditHorarioTitle_jueves}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_jueves}" disabled="true"/>
-                                    </p:column>
-        
-                                    <p:column >
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListHorarioTitle_viernes}"/>
-                                        </f:facet>
-                                        <h:selectBooleanCheckbox id="viernes" value="#{item.viernes}" title="#{myBundle.EditHorarioTitle_viernes}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_viernes}" disabled="true"/>
-                                    </p:column>
-            
-                                    <p:column >
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListHorarioTitle_sabado}"/>
-                                        </f:facet>
-                                        <h:selectBooleanCheckbox id="sabado" value="#{item.sabado}" title="#{myBundle.EditHorarioTitle_sabado}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_sabado}" disabled="true"/>
-                                    </p:column>
-           
-                                    <p:column >
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListHorarioTitle_domingo}"/>
-                                        </f:facet>
-                                        <h:selectBooleanCheckbox id="domingo" value="#{item.domingo}" title="#{myBundle.EditHorarioTitle_domingo}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_domingo}" disabled="true"/>
-                                    </p:column>
-         
-                                    <p:column >
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListHorarioTitle_fecha}"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.fecha}">
-                                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                                        </h:outputText>
-                                    </p:column>
+                <p:column>
+                    <h:selectBooleanCheckbox id="jueves" value="#{item.jueves}" title="#{myBundle.EditHorarioTitle_jueves}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_jueves}" disabled="true"/>
+                </p:column>
 
-                                    <p:column >
-                                        <f:facet name="header">
-                                            <h:outputText value="#{myBundle.ListHorarioTitle_porFecha}"/>
-                                        </f:facet>
-                                        <h:selectBooleanCheckbox id="porFecha" value="#{item.porFecha}" title="#{myBundle.EditHorarioTitle_porFecha}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_porFecha}" disabled="true"/>
-                                    </p:column>
-                
+                <p:column >
+                    <h:selectBooleanCheckbox id="viernes" value="#{item.viernes}" title="#{myBundle.EditHorarioTitle_viernes}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_viernes}" disabled="true"/>
+                </p:column>
+
+                <p:column >
+                    <h:selectBooleanCheckbox id="sabado" value="#{item.sabado}" title="#{myBundle.EditHorarioTitle_sabado}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_sabado}" disabled="true"/>
+                </p:column>
+
+                <p:column >
+                    <h:selectBooleanCheckbox id="domingo" value="#{item.domingo}" title="#{myBundle.EditHorarioTitle_domingo}" required="true" requiredMessage="#{myBundle.EditHorarioRequiredMessage_domingo}" disabled="true"/>
+                </p:column>
+
 
             </p:dataTable>
 

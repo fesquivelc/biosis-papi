@@ -20,7 +20,7 @@ public class AnioFacade extends AbstractFacade<Anio> implements AnioFacadeLocal 
     //Bitacora-------
        
     
-    @PersistenceContext(unitName = jsica_PU)
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     @Override
@@ -34,7 +34,7 @@ public class AnioFacade extends AbstractFacade<Anio> implements AnioFacadeLocal 
 
     @Override
     public void vigenciaFalsa() {
-        String sql = "UPDATE Anio SET Anio.vigente = FALSE WHERE Anio.vigente = TRUE";
+        String sql = "UPDATE Anio a SET a.vigente = FALSE WHERE a.vigente = TRUE";
         this.getEntityManager().createQuery(sql).executeUpdate();
     }
     

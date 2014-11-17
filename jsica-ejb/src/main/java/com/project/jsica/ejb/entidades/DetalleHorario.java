@@ -63,6 +63,7 @@ public class DetalleHorario implements Serializable {
     @OneToMany(mappedBy = "turnoReemplazo")
     private List<RegistroAsistencia> registroList1;
 
+    @XmlTransient
     public List<RegistroAsistencia> getRegistroList() {
         return registroList;
     }
@@ -71,6 +72,7 @@ public class DetalleHorario implements Serializable {
         this.registroList = registroList;
     }
 
+    @XmlTransient
     public List<RegistroAsistencia> getRegistroList1() {
         return registroList1;
     }

@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class FichaLaboralEmpleadoFacade extends AbstractFacade<FichaLaboralEmpleado> implements FichaLaboralEmpleadoFacadeLocal {
-    @PersistenceContext(unitName = jsica_PU)
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     @Override

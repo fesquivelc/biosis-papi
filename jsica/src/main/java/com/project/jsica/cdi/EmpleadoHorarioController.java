@@ -197,6 +197,14 @@ public class EmpleadoHorarioController extends AbstractController<EmpleadoHorari
         
         return "List";
     }
+
+    @Override
+    public void saveNew(ActionEvent event) {
+        LOG.info(this.getSelected().toString());
+        super.saveNew(event); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
 
     public EmpleadoHorarioController() {

@@ -8,7 +8,7 @@
 
     <h:form id="EmpleadoHorarioListForm">
 
-        <p:panel header="ASIGNACIÓN DE HORARIOS ADMINISTRATIVOS">
+        <p:panel header="HORARIOS ADMINISTRATIVOS ASIGNADOS">
             <p:dataTable id="datalist"
                          value="#{empleadoHorarioController.asignacionAdministrativo}"
                          var="item"
@@ -19,44 +19,43 @@
                          selectionMode="single"
                          selection="#{empleadoHorarioController.selected}">
 
-                <p:column >
-                    <f:facet name="header">
-                        <h:outputText value="Fecha"/>
-                    </f:facet>
-                    <h:outputText value="#{item.fecha}">
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:outputText>
+                <p:columnGroup type="header">
+                    <p:row>
+                        <p:column colspan="2" headerText="Empleado"/>
+                        <p:column rowspan="2" headerText="Grupo"/>
+                        <p:column colspan="2" headerText="Horario"/>
+                    </p:row>                   
+                    <p:row>
+                        <p:column headerText="Codigo"/>
+                        <p:column headerText="Nombre completo"/>
+                        <p:column headerText="Nombre"/>
+                        <p:column headerText="Descripcion"/>
+                    </p:row>
+                </p:columnGroup>
+
+                <p:column>
+                    <h:outputText value="#{item.empleadoId.fichaLaboral.codigoTrabajador}" />
                 </p:column>
 
-
-                <p:column >
-                    <f:facet name="header">
-                        <h:outputText value="Horario"/>
-                    </f:facet>
-                    <h:outputText value="#{item.horarioId.nombre}" />                    
-                </p:column>
-
-
-                <p:column >
-                    <f:facet name="header">
-                        <h:outputText value="Empleado"/>
-                    </f:facet>
+                <p:column>
                     <h:outputText value="#{item.empleadoId.apellidos} #{item.empleadoId.nombres}" />
                 </p:column>
 
-
                 <p:column >
-                    <f:facet name="header">
-                        <h:outputText value="Grupo horario"/>
-                    </f:facet>
                     <h:outputText value="#{item.grupoHorarioId.nombre}"/>
                 </p:column>
 
+                <p:column >
+                    <h:outputText value="#{item.horarioId.nombre}"/>
+                </p:column>
 
+                <p:column >
+                    <h:outputText value="#{item.horarioId.descripcion}" />                    
+                </p:column>
             </p:dataTable>
 
             <p:commandButton action="/empleadoHorario/index" value="ASIGNACION DE HORARIOS"/>
-            
+
 
         </p:panel>       
     </h:form>

@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.project.jsica.ejb.dao;
 
+import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.EmpleadoPermiso;
 import com.project.jsica.ejb.entidades.Permiso;
 import com.project.util.FechaUtil;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,8 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class EmpleadoPermisoFacade extends AbstractFacade<EmpleadoPermiso> implements EmpleadoPermisoFacadeLocal {
-    @PersistenceContext(unitName = jsica_PU)
+
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     @Override
@@ -50,11 +52,30 @@ public class EmpleadoPermisoFacade extends AbstractFacade<EmpleadoPermiso> imple
                 + " (pe.permisoId.porFecha = true AND "
                 + "    (pe.permisoId.fechaInicio BETWEEN " + fechaI + " AND " + fechaF + " OR pe.permisoId.fechaFin BETWEEN " + fechaI + " AND " + fechaF + "))";
         Map<String, Object> parametros = new HashMap<>();
-        parametros.put("dni", dni);        
+        parametros.put("dni", dni);
 
         List<EmpleadoPermiso> lista = this.search(jpql, parametros);
-        
+
         return lista;
     }
+
+    @Override
+    public List<EmpleadoPermiso> buscarXEmpleado(Empleado empleado, Date fechaInicio, Date fechaFin, Boolean conGoce) {
+        String jpql = "SELECT p FROM EmpleadoPermiso p "
+                + "WHERE p.empleadoId = :empleado "
+                + "AND "
+                + "p.permisoId.motivoPermisoCodigo.conGoce = :goce"
+                + "AND "
+                + "p.permisoId.fechaInicio BETWEEN :fechaInicio AND :fechaFin ";
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("empleado", empleado);
+        parametros.put("fechaInicio", fechaInicio);
+        parametros.put("fechaFin", fechaFin);
+        parametros.put("goce", conGoce);
+
+        return this.search(jpql, parametros);
+    }
+
     
+
 }

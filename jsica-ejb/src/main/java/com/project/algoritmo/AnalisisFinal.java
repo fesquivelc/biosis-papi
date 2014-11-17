@@ -18,6 +18,7 @@ import com.project.jsica.ejb.entidades.EmpleadoPermiso;
 import com.project.jsica.ejb.entidades.Feriado;
 import com.project.jsica.ejb.entidades.RegistroAsistencia2;
 import com.project.jsica.ejb.entidades.Vista;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,7 @@ import org.apache.log4j.Logger;
  */
 @Stateless
 public class AnalisisFinal implements AnalisisFinalLocal {
+
     @EJB
     private RegistroAsistenciaFinalFacadeLocal registroAsistenciaDAO;
     @EJB
@@ -41,7 +43,7 @@ public class AnalisisFinal implements AnalisisFinalLocal {
     private EmpleadoPermisoFacadeLocal empleadoPermisoDAO;
     @EJB
     private VistaFacadeLocal vistaDAO;
-    
+
     @EJB
     private DetalleHorarioFacadeLocal turnoDAO;
     private static final Logger LOG = Logger.getLogger(AnalisisFinal.class.getName());
@@ -49,7 +51,7 @@ public class AnalisisFinal implements AnalisisFinalLocal {
     @Override
     public void iniciarAnalisis(List<Empleado> empleados, Date fechaInicio, Date horaInicio, Date fechaFin, Date horaFin) {
         AlgoritmoFinal algoritmo = new AlgoritmoFinal();
-        
+
         Calendar calendario = Calendar.getInstance();
 
         List<DetalleHorario> turnosXMes;
@@ -61,8 +63,13 @@ public class AnalisisFinal implements AnalisisFinalLocal {
 
         int anio = calendario.get(Calendar.YEAR);
         calendario.setTime(fechaInicio);
+
+        Calendar cal = Calendar.getInstance();
         
+        feriadosXAnio = feriadoDAO.buscarXAnio(anio);
+
         while (fechaInicio.compareTo(fechaFin) <= 0) {
+            LOG.info("INICIANDO EL LOOP");
             int mes = calendario.get(Calendar.MONTH) + 1;
 
             if (anio != calendario.get(Calendar.YEAR)) {
@@ -76,9 +83,30 @@ public class AnalisisFinal implements AnalisisFinalLocal {
                 permisosXMes = empleadoPermisoDAO.buscarXEmpleado(empleado.getDocIdentidad(), mes, anio);
                 cambiosTurnoXMes = cambioTurnoDAO.buscarXEmpleado(empleado.getDocIdentidad(), mes, anio);
                 marcacionesXMes = vistaDAO.buscarXEmpleado(getCodigo(empleado), mes, anio);
-//                registrosXMes = new ArrayList<>();
 
-                registrosXMes = algoritmo.analizar(empleado, fechaInicio, fechaFin, horaInicio, horaFin, feriadosXAnio, turnosXMes, permisosXMes, marcacionesXMes, cambiosTurnoXMes);
+                Date finMes = null;
+                Date horaFinMes = null;
+
+                cal.setTime(fechaInicio);
+                int mesInicio = cal.get(Calendar.MONTH);
+
+                cal.setTime(fechaFin);
+                int mesFin = cal.get(Calendar.MONTH);
+
+                LOG.info("PARAMETROS DE FIN");
+                if (mesInicio < mesFin) {
+                    cal.setTime(fechaInicio);
+                    cal.set(Calendar.DAY_OF_MONTH, cal.getMaximum(Calendar.DAY_OF_MONTH));
+                    finMes = cal.getTime();
+                    cal.setTime(horaInicio);
+                    cal.set(Calendar.HOUR_OF_DAY, cal.getMaximum(Calendar.HOUR_OF_DAY));
+                    horaFinMes = cal.getTime();
+                } else if (mesInicio == mesFin) {
+                    finMes = cal.getTime();
+                    horaFinMes = horaFin;
+                }
+
+                registrosXMes = algoritmo.analizar(empleado, fechaInicio, finMes, horaInicio, horaFinMes, feriadosXAnio, turnosXMes, permisosXMes, marcacionesXMes, cambiosTurnoXMes);
 
                 this.guardarRegistros(registrosXMes);
             }
@@ -90,20 +118,19 @@ public class AnalisisFinal implements AnalisisFinalLocal {
             fechaInicio = calendario.getTime();
         }
     }
-    
-    private String getCodigo(Empleado empleado){
+
+    private String getCodigo(Empleado empleado) {
         //SI SE TRATA DE CAJAMARCA ES EL DOCUMENTO DE IDENTIDAD
         //SI SE TRATA DE ELECTRONORTE ES EL CODIGO DE TRABAJADOR :D
         return empleado.getFichaLaboral().getCodigoTrabajador();
     }
-    
-    private void guardarRegistros(List<RegistroAsistencia2> registros){
-        for(RegistroAsistencia2 registro : registros){
+
+    private void guardarRegistros(List<RegistroAsistencia2> registros) {
+        for (RegistroAsistencia2 registro : registros) {
             registroAsistenciaDAO.create(registro);
         }
     }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-    
 }

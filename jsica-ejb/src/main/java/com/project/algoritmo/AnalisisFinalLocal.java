@@ -6,6 +6,7 @@
 package com.project.algoritmo;
 
 import com.project.jsica.ejb.entidades.Empleado;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
@@ -15,7 +16,7 @@ import javax.ejb.Local;
  * @author fesquivelc
  */
 @Local
-public interface AnalisisFinalLocal {
+public interface AnalisisFinalLocal extends Serializable{
 
     void iniciarAnalisis(List<Empleado> empleados, Date fechaInicio, Date horaInicio, Date fechaFin, Date horaFin);
     

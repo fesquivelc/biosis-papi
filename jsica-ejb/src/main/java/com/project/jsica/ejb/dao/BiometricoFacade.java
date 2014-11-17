@@ -20,7 +20,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class BiometricoFacade extends AbstractFacade<Biometrico> implements BiometricoFacadeLocal {
 
-    @PersistenceContext(unitName = jsica_PU)
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     @Override

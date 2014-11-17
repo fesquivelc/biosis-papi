@@ -59,6 +59,7 @@ public class Anio implements Serializable {
     private List<Feriado> feriadoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anioId")
     private List<Vacacion> vacacionList;
+    
 
     public Anio() {
     }

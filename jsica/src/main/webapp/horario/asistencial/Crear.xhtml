@@ -85,7 +85,7 @@
                         </p:panel> 
                         <p:outputPanel id="calendario" >                            
                             <p:panel header="Dias de trabajo" rendered="#{empleadoHorarioController.bandera}">
-                                <p:commandButton id="btnAgregarTurnos" value="Agregar turnos" actionListener="#{empleadoHorarioController.crearDetalleHorario}" update=":JornadaSeleccionadaForm :JornadaSeleccionadaForm:display" oncomplete="PF('JornadasDlg').show()"/>
+                                <p:commandButton id="btnAgregarTurnos" icon="ui-icon-plusthick" value="Agregar turnos" actionListener="#{empleadoHorarioController.crearDetalleHorario}" update=":JornadaSeleccionadaForm :JornadaSeleccionadaForm:display" oncomplete="PF('JornadasDlg').show()"/>
                                 <p:dataTable id="datalist"                                              
                                              value="#{empleadoHorarioController.selected.horarioId.detalleHorarioList}"
                                              var="detalle"

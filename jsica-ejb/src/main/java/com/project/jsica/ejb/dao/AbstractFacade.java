@@ -5,11 +5,11 @@
  */
 package com.project.jsica.ejb.dao;
 
-import com.project.algoritmo.AnalisisAsistenciaLocal;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import javax.ejb.EJB;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.apache.log4j.Logger;
 
@@ -18,18 +18,13 @@ import org.apache.log4j.Logger;
  * @author RyuujiMD
  * @param <T>
  */
-public abstract class AbstractFacade<T> {
+public abstract class AbstractFacade<T> implements Serializable{
 
-    protected static final String jsica_PU = "jsica-postgresql-PU";
+    protected static final String biosis_PU = "biosis-PU";
+    @PersistenceContext(name = biosis_PU)
+    private EntityManager em;
 
-    @EJB
-    private UtilitarioAsistenciaLocal utilitarioAsistencia;
-    @EJB
-    private AnalisisAsistenciaLocal analisisAsistencia;
-    @EJB
-    private EmpleadoFacadeLocal empleadoDAO;
-
-    private Class<T> entityClass;
+    private final Class<T> entityClass;
     private static final Logger LOG = Logger.getLogger(AbstractFacade.class.getName());
     
     
@@ -37,8 +32,11 @@ public abstract class AbstractFacade<T> {
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
+    
 
-    protected abstract EntityManager getEntityManager();
+    protected EntityManager getEntityManager(){
+        return em;
+    }
 
     public void create(T entity) {
         LOG.info("SE CREA LA ENTIDAD");
@@ -62,23 +60,6 @@ public abstract class AbstractFacade<T> {
     }
 
     public List<T> findAll() {
-//        utilitarioAsistencia.crearEspejo();
-//        Date fechaInicio = utilitarioAsistencia.getFechaPartida();
-//        Date fechaFin = utilitarioAsistencia.getFechaLlegada();
-//        Date horaInicio = utilitarioAsistencia.getHoraPartida();
-//        Date horaFin = utilitarioAsistencia.getHoraLlegada();
-//        LOG.log(Level.INFO, "--FECHA INICIO: {0}", fechaInicio.toString());
-//        LOG.log(Level.INFO, "--FECHA FIN: {0}", fechaFin.toString());
-//        LOG.log(Level.INFO, "--HORA INICIO: {0}", horaInicio.toString());
-//        LOG.log(Level.INFO, "--HORA FIN: {0}", horaFin.toString());
-////        List<Empleado> empleados = empleadoDAO.findAll();
-//        List<Empleado> empleados = empleadoDAO.search("SELECT e FROM Empleado e");
-////        empleados.add(empleadoDAO.find(Long.parseLong("1")));
-////        empleados.add(empleadoDAO.find(Long.parseLong("2")));
-////        analisisAsistencia.setListaEmpleados(empleados);
-////        empleados.addAll(empleadoDAO.search("SELECT e FROM Empleado e"));
-//        analisisAsistencia.iniciarAnalisis(fechaInicio, horaInicio, fechaFin, horaFin, empleados);
-
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
 

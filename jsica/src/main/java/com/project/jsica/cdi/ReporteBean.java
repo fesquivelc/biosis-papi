@@ -5,13 +5,16 @@
  */
 package com.project.jsica.cdi;
 
-import com.project.algoritmo.AnalisisAsistenciaLocal;
+import com.biosis.reportes.entidades.ReportePermisoBean;
 import com.project.jsica.cdi.util.JsfUtil;
 import com.project.jsica.ejb.entidades.Area;
+import com.project.jsica.ejb.entidades.DetalleRegistroAsistencia;
 import com.project.jsica.ejb.entidades.Empleado;
+import com.project.jsica.ejb.entidades.EmpleadoPermiso;
 import com.project.jsica.ejb.entidades.Permiso;
 import com.project.jsica.ejb.entidades.RegistroAsistencia;
 import com.project.jsica.ejb.entidades.Servicio;
+import com.project.util.FechaUtil;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -19,19 +22,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import jxl.Workbook;
-import jxl.biff.FontRecord;
 import jxl.format.Colour;
 import jxl.format.VerticalAlignment;
-import jxl.write.Alignment;
-import jxl.write.DateFormat;
 import jxl.write.Label;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableSheet;
@@ -59,6 +57,8 @@ public class ReporteBean implements Serializable {
     private Empleado empleado;
     private Area areaSeleccionada;
     private int opcion = 1;
+    private List<ReportePermisoBean> reportePermisos;
+
     private static final java.util.logging.Logger LOG = java.util.logging.Logger.getLogger(ReporteBean.class.getName());
 
     public List<Area> getAreas() {
@@ -242,98 +242,145 @@ public class ReporteBean implements Serializable {
         }
     }
 
-    public void reportePermisos(int opcion) {
-        this.opcion = opcion;
-        SimpleDateFormat dtFecha = new SimpleDateFormat("dd.MM.yyyy");
-        SimpleDateFormat dtHora = new SimpleDateFormat("HH:mm");
-
+    public void reportePermisos(Boolean conGoce, int opcion) {
         List<Empleado> empleados = this.getEmpleados(opcion);
+        List<EmpleadoPermiso> permisos;
+        List<ReportePermisoBean> reporte = new ArrayList<>();
+        for (Empleado emp : empleados) {
+            permisos = this.empleadoPermisoController.buscarXEmpleado(emp, desde, hasta, conGoce);
 
-        OutputStream out = null;
-        try {
-            String header = "REPORTE_DE_PERMISOS_DEL_" + dtFecha.format(desde) + "_AL_" + dtFecha.format(hasta) + ".xls";
-            out = JsfUtil.getOutputStream(header, JsfUtil.ContentType.XLS);
+            List<DetalleRegistroAsistencia> detalles;
+            for (EmpleadoPermiso permiso : permisos) {
+                detalles = permiso.getRegistroList();
 
-            WritableWorkbook w = Workbook.createWorkbook(out);
-            WritableSheet hoja1 = w.createSheet("SIN SUSTENTO", 0);
-            WritableSheet hoja2 = w.createSheet("CON SUSTENTO", 1);
+                DetalleRegistroAsistencia detalleEntrada = detalles.get(0);
+                DetalleRegistroAsistencia detalleSalida = detalles.get(1);
+                DetalleRegistroAsistencia aux;
 
-            String[] titulos = {"CODIGO", "APELLIDOS Y NOMBRES", "FECHA REAL", "INICIO", "FIN", "MINUTOS", "HORAS", "MOTIVO"};
-            Integer[] anchuras = {10, 30, 10, 10, 10, 10, 10, 10};
-            List<String[]> contenidos1 = new ArrayList<>();
-            List<String[]> contenidos2 = new ArrayList<>();
-
-            if (empleados.isEmpty()) {
-                LOG.info("NO HAY EMPLEADOS");
-                JsfUtil.addErrorMessage("NO HAY DATOS");
-            } else {
-                LOG.info("SI HAY EMPLEADOS");
-                for (Empleado emp : empleados) {
-                    List<Permiso> permisos = empleadoPermisoController.permisosXEmpleado(desde, hasta, emp);
-
-                    for (Permiso permiso : permisos) {
-                        List<RegistroAsistencia> registros = permiso.getRegistroList();
-
-                        RegistroAsistencia registro1 = registros.get(0);
-                        RegistroAsistencia registro2 = registros.get(1);
-
-                        Date horaInicio;
-                        Date horaFin;
-
-                        if (registro1.getHora().compareTo(registro2.getHora()) < 0) {
-                            horaInicio = registro1.getHora();
-                            horaFin = registro2.getHora();
-                        } else {
-                            horaInicio = registro2.getHora();
-                            horaFin = registro1.getHora();
-                        }
-
-                        long diferencia = Math.abs(registro1.getHora().getTime() - registro2.getHora().getTime());
-                        int horas = (int) diferencia / (60 * 60 * 1000);
-                        int minutos = (int) (Math.abs(diferencia - (horas * 60 * 60 * 1000)) / (60 * 1000));
-
-                        String[] contenido = new String[titulos.length];
-                        contenido[0] = emp.getFichaLaboral().getCodigoTrabajador();
-                        contenido[1] = emp.getApellidos() + " " + emp.getNombres();
-                        contenido[2] = dtFecha.format(permiso.getFechaInicio());
-                        contenido[3] = dtHora.format(horaInicio);
-                        contenido[4] = dtHora.format(horaFin);
-                        contenido[5] = minutos + "";
-                        contenido[6] = horas + "";
-                        contenido[7] = permiso.getMotivoPermisoCodigo().getNombre();
-
-                        if (permiso.getMotivoPermisoCodigo().getConGoce()) {
-                            LOG.info("CON GOCE");
-                            contenidos2.add(contenido);
-//                        agregarCelda(hoja1, fila2, 7, "SUSTENTO");
-                        } else {
-                            LOG.info("SIN GOCE");
-                            contenidos1.add(contenido);
-                        }
-
+                if (detalleEntrada.getCarga() != 23 && detalleEntrada.getCarga() != 23) {
+                    if (detalleEntrada.getHora().compareTo(detalleSalida.getHora()) < 0) {
+                        aux = detalleEntrada;
+                        detalleEntrada = detalleSalida;
+                        detalleSalida = aux;
                     }
+
+                    long milisegundosDiferencia = detalleEntrada.getHora().getTime() - detalleSalida.getHora().getTime();
+
+                    int hora[] = FechaUtil.milisToTime(milisegundosDiferencia);
+
+                    ReportePermisoBean reporteBean = new ReportePermisoBean();
+                    reporteBean.setCodigo(emp.getFichaLaboral().getCodigoTrabajador());
+                    reporteBean.setNombre(emp.getNombres());
+                    reporteBean.setHoraInicio(detalleSalida.getHora());
+                    reporteBean.setHoraFin(detalleEntrada.getHora());
+                    reporteBean.setHoras(hora[0]);
+                    reporteBean.setMinutos(hora[1]);
+                    reporteBean.setSegundos(hora[2]);
+                    reporteBean.setFechaReal(detalleEntrada.getFecha());
+                    reporteBean.setMotivo(permiso.getPermisoId().getMotivoPermisoCodigo().getNombre());                    
+
+                    reporte.add(reporteBean);
+
                 }
 
-                agregarData(hoja2, titulos, contenidos2, anchuras);
-                agregarData(hoja1, titulos, contenidos1, anchuras);
-
-                w.write();
-                w.close();
-
-                FacesContext.getCurrentInstance().responseComplete();
-            }
-
-        } catch (IOException | WriteException ex) {
-            Logger.getLogger(ReporteBean.class.getName()).log(Level.WARN, null, ex);
-        } finally {
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ReporteBean.class.getName()).log(Level.WARN, null, ex);
-                }
             }
         }
+
+        reportePermisos = reporte;
+    }
+
+    public void reportePermisos(int opcion) {
+//        this.opcion = opcion;
+//        SimpleDateFormat dtFecha = new SimpleDateFormat("dd.MM.yyyy");
+//        SimpleDateFormat dtHora = new SimpleDateFormat("HH:mm");
+//
+//        List<Empleado> empleados = this.getEmpleados(opcion);
+//
+//        OutputStream out = null;
+//        try {
+//            String header = "REPORTE_DE_PERMISOS_DEL_" + dtFecha.format(desde) + "_AL_" + dtFecha.format(hasta) + ".xls";
+//            out = JsfUtil.getOutputStream(header, JsfUtil.ContentType.XLS);
+//
+//            WritableWorkbook w = Workbook.createWorkbook(out);
+//            WritableSheet hoja1 = w.createSheet("SIN SUSTENTO", 0);
+//            WritableSheet hoja2 = w.createSheet("CON SUSTENTO", 1);
+//
+//            String[] titulos = {"CODIGO", "APELLIDOS Y NOMBRES", "FECHA REAL", "INICIO", "FIN", "MINUTOS", "HORAS", "MOTIVO"};
+//            Integer[] anchuras = {10, 30, 10, 10, 10, 10, 10, 10};
+//            List<String[]> contenidos1 = new ArrayList<>();
+//            List<String[]> contenidos2 = new ArrayList<>();
+//
+//            if (empleados.isEmpty()) {
+//                LOG.info("NO HAY EMPLEADOS");
+//                JsfUtil.addErrorMessage("NO HAY DATOS");
+//            } else {
+//                LOG.info("SI HAY EMPLEADOS");
+//                for (Empleado emp : empleados) {
+//                    List<Permiso> permisos = empleadoPermisoController.permisosXEmpleado(desde, hasta, emp);
+//
+//                    for (Permiso permiso : permisos) {
+//                        List<RegistroAsistencia> registros = permiso.getRegistroList();
+//
+//                        RegistroAsistencia registro1 = registros.get(0);
+//                        RegistroAsistencia registro2 = registros.get(1);
+//
+//                        Date horaInicio;
+//                        Date horaFin;
+//
+//                        if (registro1.getHora().compareTo(registro2.getHora()) < 0) {
+//                            horaInicio = registro1.getHora();
+//                            horaFin = registro2.getHora();
+//                        } else {
+//                            horaInicio = registro2.getHora();
+//                            horaFin = registro1.getHora();
+//                        }
+//
+//                        long diferencia = Math.abs(registro1.getHora().getTime() - registro2.getHora().getTime());
+//                        int horas = (int) diferencia / (60 * 60 * 1000);
+//                        int minutos = (int) (Math.abs(diferencia - (horas * 60 * 60 * 1000)) / (60 * 1000));
+//
+//                        String[] contenido = new String[titulos.length];
+//                        contenido[0] = emp.getFichaLaboral().getCodigoTrabajador();
+//                        contenido[1] = emp.getApellidos() + " " + emp.getNombres();
+//                        contenido[2] = dtFecha.format(permiso.getFechaInicio());
+//                        contenido[3] = dtHora.format(horaInicio);
+//                        contenido[4] = dtHora.format(horaFin);
+//                        contenido[5] = minutos + "";
+//                        contenido[6] = horas + "";
+//                        contenido[7] = permiso.getMotivoPermisoCodigo().getNombre();
+//
+//                        if (permiso.getMotivoPermisoCodigo().getConGoce()) {
+//                            LOG.info("CON GOCE");
+//                            contenidos2.add(contenido);
+////                        agregarCelda(hoja1, fila2, 7, "SUSTENTO");
+//                        } else {
+//                            LOG.info("SIN GOCE");
+//                            contenidos1.add(contenido);
+//                        }
+//
+//                    }
+//                }
+//
+//                agregarData(hoja2, titulos, contenidos2, anchuras);
+//                agregarData(hoja1, titulos, contenidos1, anchuras);
+//
+//                w.write();
+//                w.close();
+//
+//                FacesContext.getCurrentInstance().responseComplete();
+//            }
+//
+//        } catch (IOException | WriteException ex) {
+//            Logger.getLogger(ReporteBean.class.getName()).log(Level.WARN, null, ex);
+//        } finally {
+//            if (out != null) {
+//                try {
+//                    out.close();
+//                } catch (IOException ex) {
+//                    Logger.getLogger(ReporteBean.class.getName()).log(Level.WARN, null, ex);
+//                }
+//            }
+//        }
 
     }
 

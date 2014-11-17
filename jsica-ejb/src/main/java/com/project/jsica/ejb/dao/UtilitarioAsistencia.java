@@ -5,13 +5,14 @@
  */
 package com.project.jsica.ejb.dao;
 
-import static com.project.jsica.ejb.dao.AbstractFacade.jsica_PU;
+import static com.project.jsica.ejb.dao.AbstractFacade.biosis_PU;
 import com.project.jsica.ejb.entidades.TCImportacion;
 import com.project.jsica.ejb.entidades.Vista;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -24,26 +25,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author RyuujiMD
  */
 @Stateless
-public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
+public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal,Serializable {
 
     @EJB
     private VistaFacadeLocal vistaDAO;
     @EJB
     private TCImportacionFacadeLocal tcDAO;
 
-    @PersistenceContext(unitName = jsica_PU)
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     protected EntityManager getEntityManager() {
@@ -74,7 +75,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
     private void instanciar() {
         try {
             File fileProperties = new File("biosis/conexion.properties");
-            LOG.log(Level.INFO, "PATH DEL FICHERO DE CONEXION: {0}", fileProperties.getAbsolutePath());
+            LOG.info("PATH DEL FICHERO DE CONEXION: " + fileProperties.getAbsolutePath());
 //            fileProperties.createNewFile();            
             FileInputStream fileInputStreamProperties = new FileInputStream(fileProperties);
 
@@ -84,19 +85,24 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
             this.usuario = properties.getProperty("usuario");
             this.contrasena = properties.getProperty("contrasena");
             this.url = properties.getProperty("url");
-            this.driverManager = properties.getProperty("driverManager");
+            
 
-            this.tipoSistema = properties.getProperty("tipoSistema");
+//            this.tipoSistema = properties.getProperty("tipoSistema");
             this.tipoGestorBD = properties.getProperty("tipoBase");
+            
+            LOG.info("TIPO DE BASE DE DATOS "+tipoGestorBD);
+            
+            this.driverManager = this.getDriverManager(tipoGestorBD);
 
-            this.query = getQuery(tipoSistema, tipoGestorBD);
-            this.queryPlus = getQueryPlus(tipoSistema, tipoGestorBD);
+            LOG.info("DRIVER MANAGER: "+driverManager);
+            
+            this.query = getQuery();
 
-            LOG.log(Level.INFO, "CONSULTA: {0} {1}", new Object[]{query, queryPlus});
+            LOG.log(Level.INFO, "CONSULTA: " + query);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.FATAL, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.FATAL, null, ex);
         }
     }
 
@@ -131,22 +137,21 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
     // "Insert Code > Add Business Method")
     private void conectarBiostar() {
         try {
+            LOG.info(driverManager);
             Class.forName(driverManager);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.FATAL, null, ex);
         }
         try {
             connSQLServer = DriverManager.getConnection(url, usuario, contrasena);
         } catch (SQLException ex) {
-            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.FATAL, null, ex);
         }
     }
 
     private void cargaMasiva() {
         this.cargaMasiva(null, null);
     }
-    
-    
 
     private void cargaMasiva(Date fecha, Date hora) {
         this.conectarBiostar();
@@ -156,7 +161,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
         try {
             if (fecha == null || hora == null) {
                 ps = connSQLServer.prepareStatement(this.query);
-                LOG.log(Level.INFO, "QUERY {0}", this.query);
+                LOG.log(Level.INFO, "QUERY {0}" + this.query);
             } else {
                 java.sql.Date pFecha = new java.sql.Date(fecha.getTime());
                 Time pHora = new Time(hora.getTime());
@@ -165,9 +170,8 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
                 DateFormat dtFecha = new SimpleDateFormat("yyyy/MM/dd");
                 DateFormat dtHora = new SimpleDateFormat("HH:mm:ss");
 
-                String carga = this.query + "  AND CONVERT(DATE,reporte.dtDateTime) > '" + dtFecha.format(pFecha) + "' OR (CONVERT(DATE,reporte.dtDateTime) =  '" + dtFecha.format(pFecha) + "' AND  CONVERT(TIME,reporte.dtDateTime) >= '" + dtHora.format(pHora) + "')";
-//                String carga = this.query + "  AND date_part('year',fecha) == 2014 AND fecha > '" + dtFecha.format(pFecha) + "' OR (fecha =  '" + dtFecha.format(pFecha) + "' AND  hora >= '" + dtHora.format(pHora) + "')";
-                LOG.log(Level.INFO, "CONSULTA DE CARGA MASIVA{0}", carga);
+                String carga = this.query + "WHERE fecha > '" + dtFecha.format(pFecha) + "' OR (fecha =  '" + dtFecha.format(pFecha) + "' AND  hora >= '" + dtHora.format(pHora) + "')";
+                LOG.log(Level.INFO, "CONSULTA DE CARGA MASIVA " + carga);
                 ps = connSQLServer.prepareStatement(carga);
 
 //
@@ -179,7 +183,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
 
             this.generarInserts(rs);
 
-            LOG.log(Level.INFO, "CONTADOR: {0}", contador);
+            LOG.log(Level.INFO, "CONTADOR: " + contador);
 
 //            contador = 0;
 //            while (rs.next()) {
@@ -204,7 +208,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
 //                vistaDAO.create(vista);
 //            }
         } catch (SQLException ex) {
-            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.FATAL, null, ex);
         } finally {
             try {
                 if (this.connSQLServer != null) {
@@ -212,7 +216,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
                 }
 
             } catch (SQLException ex) {
-                Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.FATAL, null, ex);
             }
         }
 
@@ -242,6 +246,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
 
     @Override
     public Date getFechaPartida() {
+        
         return this.fechaPartida;
     }
 
@@ -260,76 +265,23 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
         return this.horaLlegada;
     }
 
-    private String getQuery(String tipo, String base) {
+    private String getQuery() {
         /*
          1. BIOSTAR
-         2. BIOADMIN
+         2. BIOADMIN 
          3. PRUEBA
          */
 
-        int tipoSistemaMarcacion = Integer.parseInt(tipo);
+//        int tipoSistemaMarcacion = Integer.parseInt(tipo);
         /*
          1. SQL SERVER
          2. MySQL
          */
-        int tipoBase = Integer.parseInt(base);
+//        int tipoBase = Integer.parseInt(base);
 
-        String consulta = "";
-        switch (tipoSistemaMarcacion) {
-            case 1:
-                break;
-            case 2:
-                switch (tipoBase) {
-                    case 1:
-                        consulta = "SELECT "
-                                + "CONVERT(DATE,reporte.dtDatetime) AS fecha, "
-                                + "CONVERT(TIME, reporte.dtdatetime) AS hora, "
-                                + "reporte.nUserID AS dni, "
-                                + "equipo.nIPAddr as equipo_ip "
-                                + "FROM tb_reportslist reporte INNER JOIN tb_device equipo ON reporte.nDeviceID = equipo.nDeviceID "
-                                + "WHERE YEAR(reporte.dtDateTime) >= 2012 AND reporte.nEvent = '55' ";
-
-                        break;
-                }
-
-                break;
-            case 3:
-                consulta = "SELECT fecha,hora,dni,equipo_ip FROM vista WHERE evento = '55'";
-                break;
-        }
+        String consulta = "SELECT dni,fecha,hora,equipo_ip FROM vista ";
         LOG.info(consulta);
         return consulta;
-    }
-
-    private String getQueryPlus(String tipo, String base) {
-        /*
-         1. BIOSTAR
-         2. BIOADMIN
-         */
-
-        int tipoSistemaMarcacion = Integer.parseInt(tipo);
-        /*
-         1. SQL SERVER
-         2. MySQL
-         */
-        int tipoBase = Integer.parseInt(base);
-
-        String consultaPlus = "";
-
-        switch (tipoSistemaMarcacion) {
-            case 1:
-                break;
-            case 2:
-                switch (tipoBase) {
-                    case 1:
-                        consultaPlus = "AND CONVERT(DATE,reporte.dtDateTime) > ? OR (CONVERT(DATE,reporte.dtDateTime) = ? AND CONVERT(TIME,reporte.dtDateTime) >= ?)";
-                        break;
-                }
-
-                break;
-        }
-        LOG.info(consultaPlus);
-        return consultaPlus;
     }
 
     @Override
@@ -371,21 +323,21 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
                 contador++;
 
                 if (contador >= 5000) {
-                    LOG.log(Level.INFO, "CONTADOR: {0}", contador+"");
-                    getEntityManager().createNativeQuery("BEGIN;"+consulta+"END;").executeUpdate();
+                    LOG.log(Level.INFO, "CONTADOR: " + contador);
+                    getEntityManager().createNativeQuery("BEGIN;" + consulta + "END;").executeUpdate();
                     contador = 0;
                     consulta = "";
                 }
             }
-            if(contador > 0){
-                getEntityManager().createNativeQuery("BEGIN;"+consulta+"END;").executeUpdate();
+            if (contador > 0) {
+                getEntityManager().createNativeQuery("BEGIN;" + consulta + "END;").executeUpdate();
                 contador = 0;
             }
             //            consulta += " END;";
-            LOG.info(consulta);            
+            LOG.info(consulta);
         } catch (SQLException ex) {
 
-            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.FATAL, null, ex);
         }
     }
 
@@ -397,8 +349,28 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal {
             ps.executeUpdate();
             LOG.info("SE LOGRO");
         } catch (SQLException ex) {
-            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UtilitarioAsistencia.class.getName()).log(Level.FATAL, null, ex);
         }
+    }
+
+    private String getDriverManager(String base) {
+        /*
+         1. SQL SERVER
+         2. MySQL
+         3. PostgreSQL
+         */
+        int tipoBase = Integer.parseInt(base);
+        
+        switch(tipoBase){
+            case 1:
+                return "com.microsoft.jdbc.sqlserver.SQLServerDriver";
+            case 2:
+                return "com.mysql.jdbc.Driver";
+            case 3:
+                return "org.postgresql.Driver";
+        }
+        
+        return "";
     }
 
 }

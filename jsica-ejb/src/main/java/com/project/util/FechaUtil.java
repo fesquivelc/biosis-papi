@@ -29,10 +29,46 @@ public class FechaUtil {
         }
     }
     
+    public static int[] milisToTime(long milis){
+        int[] hora = new int[3];
+        
+        hora[0] = milisAHoras(milis);
+        
+        milis = milis - horasAMilis(hora[0]);
+        
+        hora[1] = milisAMinutos(milis);
+        
+        milis = milis - minutosAMilis(hora[1]);
+        
+        hora[2] = milisASegundos(milis);
+        
+        return hora;
+    }
+    
     public static int ultimoDiaMes(int mes, int anio) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(anio, mes - 1, 1);
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+    
+    public static int horasAMilis(int horas){
+        return horas * 60 * 60 * 1000;
+    }
+    
+    public static int minutosAMilis(int minutos){
+        return minutos * 60 * 1000;
+    }
+    
+    public static int milisAHoras(long milis){
+        return (int) milis / (60 * 60 * 1000);
+    }
+    
+    public static int milisAMinutos(long milis){
+        return (int) milis / (60 * 1000);
+    }
+    
+    public static int milisASegundos(long milis){
+        return (int) milis / 1000;
     }
 
 
