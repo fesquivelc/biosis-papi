@@ -1,8 +1,11 @@
 package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.RegistroAsistenciaFacadeLocal;
+import com.project.jsica.ejb.dao.RegistroAsistenciaFinalFacadeLocal;
+import com.project.jsica.ejb.entidades.Area;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.RegistroAsistencia;
+import com.project.jsica.ejb.entidades.RegistroAsistencia2;
 import com.project.jsica.lazymodel.RegistroAsistenciaLazyModel;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,11 +30,12 @@ public class RegistroAsistenciaController extends AbstractController<RegistroAsi
     private RegistroAsistenciaLazyModel registroLazyModel;
     @EJB
     private RegistroAsistenciaFacadeLocal registroAsistenciaFacade;
+    @EJB
+    private RegistroAsistenciaFinalFacadeLocal registroFinalDAO;
     @Inject
     private BiometricoController biometricoIdController;
     @Inject
     private EmpleadoController empleadoIdController;
-    
     
 
     private static final Logger LOG = Logger.getLogger(DetalleHorarioController.class.getName());
@@ -229,4 +233,13 @@ public class RegistroAsistenciaController extends AbstractController<RegistroAsi
         
         return this.registroAsistenciaFacade.search(sql, parametros);
     }
+    
+    public List<RegistroAsistencia2> buscarXArea(Area area, Date fechaDesde, Date fechaHasta){
+        return registroFinalDAO.buscarXArea(area, fechaDesde, fechaHasta);
+    }
+    public List<RegistroAsistencia2> buscarXEmpleado(Empleado empleado, Date fechaDesde, Date fechaHasta){
+        return registroFinalDAO.buscarXEmpleado(empleado, fechaDesde, fechaHasta);
+    }
+    
+    
 }

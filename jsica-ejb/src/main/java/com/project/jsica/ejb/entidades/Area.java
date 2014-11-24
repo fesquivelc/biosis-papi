@@ -54,6 +54,17 @@ public class Area implements Serializable {
     private Sucursal sucursalId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "areaId")
     private List<Servicio> servicioList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "area")
+    private List<Empleado> empleadoList;
+
+    public List<Empleado> getEmpleadoList() {
+        return empleadoList;
+    }
+
+    public void setEmpleadoList(List<Empleado> empleadoList) {
+        this.empleadoList = empleadoList;
+    }
+    
 
     public Area() {
     }

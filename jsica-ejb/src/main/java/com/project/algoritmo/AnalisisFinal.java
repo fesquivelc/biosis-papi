@@ -92,6 +92,8 @@ public class AnalisisFinal implements AnalisisFinalLocal {
 
                 cal.setTime(fechaFin);
                 int mesFin = cal.get(Calendar.MONTH);
+                
+                
 
                 LOG.info("PARAMETROS DE FIN");
                 if (mesInicio < mesFin) {

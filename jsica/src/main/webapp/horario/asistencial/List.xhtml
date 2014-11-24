@@ -36,16 +36,16 @@
 
                             <p:column filterBy="#{empleadoHorario.empleadoId.fichaLaboral.codigoTrabajador}"> 
                                 <f:facet name="header">
-                                    <h:outputText value="DNI / Código"/>
+                                    <h:outputText value="#{myBundle.codigo_header}"/>
                                 </f:facet>
-                                <h:outputText value="#{empleadoHorario.empleadoId}" converter="codigoConverter"/>
+                                <h:outputText value="#{empleadoHorario.empleadoId.codigo}"/>
                             </p:column>
 
                             <p:column filterBy="#{empleadoHorario.empleadoId.empleado.toLowerCase()}" filterMatchMode="contains" >
                                 <f:facet name="header">
                                     <h:outputText value="Empleado"/>
                                 </f:facet>
-                                <h:outputText value="#{empleadoHorario.empleadoId.apellidos} #{empleadoHorario.empleadoId.nombres}"/>
+                                <h:outputText value="#{empleadoHorario.empleadoId.nombreCompleto}"/>
                             </p:column>
 
                             <p:column>

@@ -5,6 +5,8 @@
  */
 package com.project.jsica.ejb.dao;
 
+import com.project.jsica.ejb.entidades.Area;
+import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.RegistroAsistencia2;
 import java.util.Date;
 import java.util.List;
@@ -39,5 +41,11 @@ public interface RegistroAsistenciaFinalFacadeLocal {
     void analizar();
 
     List<RegistroAsistencia2> busquedaXFecha(Date fechaInicio, Date fechaFin);
+
+    List<RegistroAsistencia2> buscarXEmpleadoHE(Empleado empleado, Date fechaDesde, Date fechaHasta);
+
+    List<RegistroAsistencia2> buscarXArea(Area area, Date fechaDesde, Date fechaHasta);
+
+    List<RegistroAsistencia2> buscarXEmpleado(Empleado empleado, Date fechaDesde, Date fechaHasta);
     
 }

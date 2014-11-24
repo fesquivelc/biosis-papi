@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template.xhtml">
+
+            <ui:define name="title">
+                Registro de asistencia por departamento
+            </ui:define>
+
+            <ui:define name="body">
+                <h:form>
+                    <p:growl id="growl" sticky="false" life="5000"/>
+                    <p:panel header="Buscar registro de asistencia">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Departamento / Area:"/>
+                            
+
+                            <h:outputLabel value="Desde:" for="fechaInicio"/>
+                            <p:inputMask id="fechaInicio"
+                                         value="#{registroAsistenciaController.fechaInicio}"
+                                         mask="99/99/9999"
+                                         required="true"
+                                         requiredMessage="Indique fecha desde la que se mostrará la asistencia">  
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:inputMask>
+
+                            <h:outputLabel value="Hasta:" for="fechaFin"/>
+                            <p:inputMask id="fechaFin"
+                                         value="#{registroAsistenciaController.fechaInicio}"
+                                         mask="99/99/9999"
+                                         required="true"
+                                         requiredMessage="Indique fecha hasta la que se mostrará la asistencia">  
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:inputMask>
+                            
+                            <h:panelGroup />
+                            <p:commandButton action=""/>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

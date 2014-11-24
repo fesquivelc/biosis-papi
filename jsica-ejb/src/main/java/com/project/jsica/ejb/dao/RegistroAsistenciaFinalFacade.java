@@ -8,6 +8,7 @@ package com.project.jsica.ejb.dao;
 import com.project.algoritmo.AnalisisAsistenciaLocal;
 import com.project.algoritmo.AnalisisFinalLocal;
 import static com.project.jsica.ejb.dao.AbstractFacade.biosis_PU;
+import com.project.jsica.ejb.entidades.Area;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.RegistroAsistencia2;
 import java.util.Date;
@@ -77,6 +78,50 @@ public class RegistroAsistenciaFinalFacade extends AbstractFacade<RegistroAsiste
         
         return this.search(jpql, variables);
     }
+
+    @Override
+    public List<RegistroAsistencia2> buscarXEmpleadoHE(Empleado empleado, Date fechaDesde, Date fechaHasta) {
+        String jpql = "SELECT r FROM RegistroAsistencia2 r "
+                + "WHERE r.milisegundosExtra > 0 AND r.empleado = :empleado AND r.fecha BETWEEN :fechaDesde AND :fechaHasta";
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("empleado", empleado);
+        variables.put("fechaDesde", fechaDesde);
+        variables.put("fechaHasta", fechaHasta);
+        
+        return this.search(jpql, variables);
+        
+    }
+
+    @Override
+    public List<RegistroAsistencia2> buscarXArea(Area area, Date fechaDesde, Date fechaHasta) {
+        String jpql = "SELECT r FROM RegistrAsistencia2 r "
+                + "WHERE r.empleado.servicioId.areaId = :area AND r.fecha BETWEEN :fechaDesde AND :fechaHasta";
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("area", area);
+        variables.put("fechaDesde", fechaDesde);
+        variables.put("fechaHasta", fechaHasta);
+        
+        return this.search(jpql, variables);
+        
+    }
+
+    @Override
+    public List<RegistroAsistencia2> buscarXEmpleado(Empleado empleado, Date fechaDesde, Date fechaHasta) {
+        String jpql = "SELECT r FROM RegistrAsistencia2 r "
+                + "WHERE r.empleado = :empleado AND r.fecha BETWEEN :fechaDesde AND :fechaHasta";
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("empleado", empleado);
+        variables.put("fechaDesde", fechaDesde);
+        variables.put("fechaHasta", fechaHasta);
+        
+        return this.search(jpql, variables);
+    }
+    
+    
+    
+    
+    
+    
     
     
 }

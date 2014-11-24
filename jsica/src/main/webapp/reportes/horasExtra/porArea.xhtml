@@ -43,11 +43,93 @@
                             <p:inputMask value="#{reporteBean.hasta}" mask="99/99/9999" requiredMessage="Defina hasta que fecha se mostrará">
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </p:inputMask>
+                            
+                            <p:outputLabel value="Con sustento"/>
+                            <p:selectBooleanCheckbox value="#{reporteBean.conGoce}" />
 
                             <p:commandButton ajax="false" value="Generar reporte" action="#{reporteBean.reporteHorasExtra(2)}" update="growl"/>
                         </p:panelGrid>
 
                     </p:panel>
+                    <p:panel>
+                        <p:panelGrid columns="2" >
+                            <p:commandLink ajax="false" value="Exportar a excel">
+                                <p:dataExporter type="xls" target="datalist"/>
+                            </p:commandLink>
+                            <p:commandLink ajax="false" value="Exportar a csv">
+                                <p:dataExporter type="csv" target="datalist"/>
+                            </p:commandLink>
+                        </p:panelGrid>
+                    </p:panel>
+                    <p:dataTable
+                        id="datalist"
+                        value="#{reporteBean.reportePermisos}"
+                        var="reporte"
+                        paginator="false"
+                        emptyMessage="No hay datos">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="CODIGO"/>
+                            </f:facet>
+                            <p:outputLabel value="#{reporte.codigo}"/>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="APELLIDOS Y NOMBRE"/>
+                            </f:facet>
+                            <p:outputLabel value="#{reporte.nombre}"/>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="FECHA REAL"/>
+                            </f:facet>
+                            <p:outputLabel value="#{reporte.fechaReal}">
+                                <f:convertDateTime pattern="dd.MM.yyyy" />
+                            </p:outputLabel>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="INICIO"/>
+                            </f:facet>
+                            <p:outputLabel value="#{reporte.horaInicio}">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </p:outputLabel>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="FIN"/>
+                            </f:facet>
+                            <p:outputLabel value="#{reporte.horaFin}">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </p:outputLabel>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="HORAS"/>
+                            </f:facet>
+                            <p:outputLabel value="#{reporte.horas}"/>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="MINUTOS"/>
+                            </f:facet>
+                            <p:outputLabel value="#{reporte.minutos}"/>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="MOTIVO"/>
+                            </f:facet>
+                            <p:outputLabel value="#{reporte.motivo}"/>
+                        </p:column>
+                        
+                    </p:dataTable>
                 </h:form>
             </ui:define>
 

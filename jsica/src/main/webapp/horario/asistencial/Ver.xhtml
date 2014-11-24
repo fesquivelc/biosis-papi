@@ -22,16 +22,70 @@
                 <h:form>
                     <p:panel header="HORARIO DE #{empleadoHorarioController.selected.empleadoId.apellidos} #{empleadoHorarioController.selected.empleadoId.nombres}" >
                         <p:commandButton action="#{empleadoHorarioController.reset}" value="Regresar a la lista"/>
-                        
+
                         <p:panelGrid columns="2">
                             <p:outputLabel value="Mes de vigencia:"/>
                             <p:outputLabel value="#{empleadoHorarioController.selected.horarioId.fecha}">
                                 <f:convertDateTime pattern="MM"/>
                             </p:outputLabel>
                         </p:panelGrid>
-                        
+
                     </p:panel>
 
+                </h:form>
+
+                <h:form>
+                    <p:panel header="Dias de trabajo">
+                        <p:commandButton id="btnAgregarTurnos" icon="ui-icon-plusthick" value="Agregar turnos" actionListener="#{empleadoHorarioController.crearDetalleHorario}" update=":JornadaSeleccionadaForm :JornadaSeleccionadaForm:display" oncomplete="PF('JornadasDlg').show()"/>
+                        <p:dataTable id="datalist"                                              
+                                     value="#{empleadoHorarioController.selected.horarioId.detalleHorarioList}"
+                                     var="detalle"
+                                     paginator="false"                                             
+                                     emptyMessage="No hay dias agregados"
+                                     >                                    
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Fecha"/>
+                                </f:facet>
+                                <h:outputText value="#{detalle.fecha}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Jornada"/>
+                                </f:facet>
+                                <h:outputText value="#{detalle.jornadaCodigo.nombre}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Hora de entrada"/>
+                                </f:facet>
+                                <h:outputText value="#{detalle.jornadaCodigo.HEntrada}">
+                                    <f:convertDateTime pattern="HH:mm"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Hora de salida"/>
+                                </f:facet>
+                                <h:outputText value="#{detalle.jornadaCodigo.HSalida}">
+                                    <f:convertDateTime pattern="HH:mm"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="¿Termina al dia siguiente?"/>
+                                </f:facet>
+                                <h:selectBooleanCheckbox value="#{detalle.jornadaCodigo.terminaDiaSiguiente}" disabled="true" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
                 </h:form>
             </ui:define>
 

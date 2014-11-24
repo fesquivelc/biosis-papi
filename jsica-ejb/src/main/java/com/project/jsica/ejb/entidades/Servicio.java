@@ -49,8 +49,8 @@ public class Servicio implements Serializable {
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioId")
     private List<Jornada> jornadaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioId")
-    private List<Empleado> empleadoList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioId")
+//    private List<Empleado> empleadoList;
     @JoinColumn(name = "area_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Area areaId;
@@ -100,14 +100,14 @@ public class Servicio implements Serializable {
         this.jornadaList = jornadaList;
     }
 
-    @XmlTransient
-    public List<Empleado> getEmpleadoList() {
-        return empleadoList;
-    }
-
-    public void setEmpleadoList(List<Empleado> empleadoList) {
-        this.empleadoList = empleadoList;
-    }
+//    @XmlTransient
+//    public List<Empleado> getEmpleadoList() {
+//        return empleadoList;
+//    }
+//
+//    public void setEmpleadoList(List<Empleado> empleadoList) {
+//        this.empleadoList = empleadoList;
+//    }
 
     public Area getAreaId() {
         return areaId;

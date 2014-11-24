@@ -10,18 +10,7 @@
             <p:menubar>
                 <p:menuitem value="#{myBundle.Home}" outcome="/index" icon="ui-icon-home"/>
                 <p:submenu label="Asistencia">
-                    
-                    <p:menuitem value="Resumen de Asistencia" outcome="/registroAsistencia/index"/>
-                   
-                    
-                    
-                    <p:submenu label="Licencias">
-                        
-                        <p:menuitem value="Papeleta" outcome="/papeleta/index"/>
-                        <p:menuitem value="Permisos" outcome="/permiso/index" />
-                      
-                        
-                    </p:submenu>
+                    <p:menuitem value="Permisos licencias y vacaciones" outcome="/permiso/index"/>
                     
                  </p:submenu>
                 <p:submenu label="Horarios">
@@ -50,19 +39,13 @@
                 </p:submenu>
                 <p:submenu label="Reportes">
                     <p:submenu label="Reporte de permisos">
-                        <p:menuitem value="Por área" outcome="/reportes/permisos/porArea"/>
+                        <p:menuitem value="Todo" outcome="/reportes/permisos/todo"/>
                         <p:menuitem value="Por empleado" outcome="/reportes/permisos/porEmpleado"/>
-                    </p:submenu>             
-                    <p:submenu label="Reporte de horas trabajadas">
-                        <p:menuitem value="Por área" outcome="/reportes/horasTrabajadas/porArea"/>
-                        <p:menuitem value="Por empleado" outcome="/reportes/horasTrabajadas/porEmpleado"/>
                     </p:submenu>
-                    <p:submenu label="Reporte de tardanzas">
-                        
-                    </p:submenu>
-                    <p:submenu label="Reporte de horas extra">
-                        
-                    </p:submenu>
+                    <p:submenu label="Reporte de asistencia">
+                        <p:menuitem value="Por area o departamento" outcome="/reportes/asistencia/porArea"/>
+                        <p:menuitem value="Por empleado" outcome="/reportes/asistencia/porEmpleado"/>
+                    </p:submenu> 
                 </p:submenu>
                 <p:submenu label="Configuración">
                     <p:submenu label="Año">

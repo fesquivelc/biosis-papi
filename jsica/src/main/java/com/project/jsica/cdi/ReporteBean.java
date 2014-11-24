@@ -13,6 +13,7 @@ import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.EmpleadoPermiso;
 import com.project.jsica.ejb.entidades.Permiso;
 import com.project.jsica.ejb.entidades.RegistroAsistencia;
+import com.project.jsica.ejb.entidades.RegistroAsistencia2;
 import com.project.jsica.ejb.entidades.Servicio;
 import com.project.util.FechaUtil;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -43,7 +45,7 @@ import org.apache.log4j.Logger;
  * @author RyuujiMD
  */
 @Named(value = "reporteBean")
-@RequestScoped
+@ConversationScoped
 public class ReporteBean implements Serializable {
 
     @Inject
@@ -52,12 +54,40 @@ public class ReporteBean implements Serializable {
     private AreaController areaController;
     @Inject
     private RegistroAsistenciaController registroAsistenciaController;
+    @Inject
+    private EmpleadoController empleadoController;
     private Date desde;
     private Date hasta;
     private Empleado empleado;
     private Area areaSeleccionada;
+    private Boolean conGoce;
     private int opcion = 1;
     private List<ReportePermisoBean> reportePermisos;
+    private List<RegistroAsistencia2> registroAsistencia;
+    
+    
+    private RegistroAsistencia2 registroSeleccionado;
+
+    public RegistroAsistencia2 getRegistroSeleccionado() {
+        return registroSeleccionado;
+    }
+
+    public void setRegistroSeleccionado(RegistroAsistencia2 registroSeleccionado) {
+        this.registroSeleccionado = registroSeleccionado;
+    }
+
+    public Boolean getConGoce() {
+        return conGoce;
+    }
+
+    public void setConGoce(Boolean conGoce) {
+        this.conGoce = conGoce;
+    }
+
+
+    public void setReportePermisos(List<ReportePermisoBean> reportePermisos) {
+        this.reportePermisos = reportePermisos;
+    }
 
     private static final java.util.logging.Logger LOG = java.util.logging.Logger.getLogger(ReporteBean.class.getName());
 
@@ -71,6 +101,7 @@ public class ReporteBean implements Serializable {
     }
 
     public void setOpcion(int opcion) {
+        LOG.info("OPCION "+opcion);
         this.opcion = opcion;
     }
 
@@ -107,10 +138,19 @@ public class ReporteBean implements Serializable {
         LOG.info("SE SELECCIONA UN AREA");
         this.areaSeleccionada = areaSeleccionada;
     }
+    
+    
 
-    /**
-     * Creates a new instance of ReporteBean
-     */
+    public List<RegistroAsistencia2> getReporteAsistencias(){
+        if(opcion == 1){
+            LOG.info("REPORTE DE ASISTENCIA POR EMPLEADO");
+            return registroAsistenciaController.buscarXEmpleado(empleado, desde, hasta);
+        }else{
+            LOG.info("REPORTE DE ASISTENCIA POR AREA");
+            return registroAsistenciaController.buscarXArea(areaSeleccionada, desde, hasta);
+        }
+    }
+    
     public ReporteBean() {
     }
 
@@ -133,21 +173,14 @@ public class ReporteBean implements Serializable {
             }
         }
     }
-
+    
     private List<Empleado> getEmpleados(int opcion) {
         List<Empleado> empleados = new ArrayList<>();
         if (opcion == 1) {
             LOG.info("SE AGREGA EMPLEADO");
             empleados.add(empleado);
         } else if (opcion == 2) {
-            LOG.info("AREA SELECCIONADA " + this.areaSeleccionada);
-            for (Servicio servicio : this.areaSeleccionada.getServicioList()) {
-                LOG.info("NO ES NULL EL AREA SELECCIONADA");
-                if (!servicio.getEmpleadoList().isEmpty()) {
-                    empleados.addAll(servicio.getEmpleadoList());
-                }
-
-            }
+            empleados.addAll(this.empleadoController.buscarTodos());
         }
         return empleados;
     }
@@ -161,6 +194,57 @@ public class ReporteBean implements Serializable {
 
         OutputStream out = null;
 
+    }
+    
+    public List getReporteHorasExtraTotal() {
+        List<Empleado> empleados = this.getEmpleados(opcion);
+        List<EmpleadoPermiso> permisos;
+        List<ReportePermisoBean> reporte = new ArrayList<>();
+        LOG.info("VIENE AL METODO REPORTE PERMISOS");
+        for (Empleado emp : empleados) {
+            permisos = this.empleadoPermisoController.buscarXEmpleado(emp, desde, hasta, conGoce);
+
+            List<DetalleRegistroAsistencia> detalles;
+            for (EmpleadoPermiso permiso : permisos) {
+                
+                detalles = permiso.getRegistroList();
+
+                if (!detalles.isEmpty()) {
+                    DetalleRegistroAsistencia detalleEntrada = detalles.get(0);
+                    DetalleRegistroAsistencia detalleSalida = detalles.get(1);
+                    DetalleRegistroAsistencia aux;
+
+                    if (detalleEntrada.getCarga() != 23 && detalleEntrada.getCarga() != 23) {
+                        if (detalleEntrada.getHora().compareTo(detalleSalida.getHora()) < 0) {
+                            aux = detalleEntrada;
+                            detalleEntrada = detalleSalida;
+                            detalleSalida = aux;
+                        }
+
+                        long milisegundosDiferencia = detalleEntrada.getHora().getTime() - detalleSalida.getHora().getTime();
+
+                        int hora[] = FechaUtil.milisToTime(milisegundosDiferencia);
+
+                        ReportePermisoBean reporteBean = new ReportePermisoBean();
+                        reporteBean.setCodigo(emp.getFichaLaboral().getCodigoTrabajador());
+                        reporteBean.setNombre(emp.getApellidos() + " " +emp.getNombres());
+                        reporteBean.setHoraInicio(detalleSalida.getHora());
+                        reporteBean.setHoraFin(detalleEntrada.getHora());
+                        reporteBean.setHoras(hora[0]);
+                        reporteBean.setMinutos(hora[1]);
+                        reporteBean.setSegundos(hora[2]);
+                        reporteBean.setFechaReal(detalleEntrada.getFecha());
+                        reporteBean.setMotivo(permiso.getPermisoId().getMotivoPermisoCodigo().getNombre());
+
+                        reporte.add(reporteBean);
+
+                    }
+                }
+
+            }
+        }
+
+        return reporte;
     }
 
     public void reporteHorasExtra(int opcion) {
@@ -242,54 +326,58 @@ public class ReporteBean implements Serializable {
         }
     }
 
-    public void reportePermisos(Boolean conGoce, int opcion) {
+    public List getReportePermisos() {
         List<Empleado> empleados = this.getEmpleados(opcion);
         List<EmpleadoPermiso> permisos;
         List<ReportePermisoBean> reporte = new ArrayList<>();
+        LOG.info("VIENE AL METODO REPORTE PERMISOS");
         for (Empleado emp : empleados) {
             permisos = this.empleadoPermisoController.buscarXEmpleado(emp, desde, hasta, conGoce);
 
             List<DetalleRegistroAsistencia> detalles;
             for (EmpleadoPermiso permiso : permisos) {
+                
                 detalles = permiso.getRegistroList();
 
-                DetalleRegistroAsistencia detalleEntrada = detalles.get(0);
-                DetalleRegistroAsistencia detalleSalida = detalles.get(1);
-                DetalleRegistroAsistencia aux;
+                if (!detalles.isEmpty()) {
+                    DetalleRegistroAsistencia detalleEntrada = detalles.get(0);
+                    DetalleRegistroAsistencia detalleSalida = detalles.get(1);
+                    DetalleRegistroAsistencia aux;
 
-                if (detalleEntrada.getCarga() != 23 && detalleEntrada.getCarga() != 23) {
-                    if (detalleEntrada.getHora().compareTo(detalleSalida.getHora()) < 0) {
-                        aux = detalleEntrada;
-                        detalleEntrada = detalleSalida;
-                        detalleSalida = aux;
+                    if (detalleEntrada.getCarga() != 23 && detalleEntrada.getCarga() != 23) {
+                        if (detalleEntrada.getHora().compareTo(detalleSalida.getHora()) < 0) {
+                            aux = detalleEntrada;
+                            detalleEntrada = detalleSalida;
+                            detalleSalida = aux;
+                        }
+
+                        long milisegundosDiferencia = detalleEntrada.getHora().getTime() - detalleSalida.getHora().getTime();
+
+                        int hora[] = FechaUtil.milisToTime(milisegundosDiferencia);
+
+                        ReportePermisoBean reporteBean = new ReportePermisoBean();
+                        reporteBean.setCodigo(emp.getFichaLaboral().getCodigoTrabajador());
+                        reporteBean.setNombre(emp.getApellidos() + " " +emp.getNombres());
+                        reporteBean.setHoraInicio(detalleSalida.getHora());
+                        reporteBean.setHoraFin(detalleEntrada.getHora());
+                        reporteBean.setHoras(hora[0]);
+                        reporteBean.setMinutos(hora[1]);
+                        reporteBean.setSegundos(hora[2]);
+                        reporteBean.setFechaReal(detalleEntrada.getFecha());
+                        reporteBean.setMotivo(permiso.getPermisoId().getMotivoPermisoCodigo().getNombre());
+
+                        reporte.add(reporteBean);
+
                     }
-
-                    long milisegundosDiferencia = detalleEntrada.getHora().getTime() - detalleSalida.getHora().getTime();
-
-                    int hora[] = FechaUtil.milisToTime(milisegundosDiferencia);
-
-                    ReportePermisoBean reporteBean = new ReportePermisoBean();
-                    reporteBean.setCodigo(emp.getFichaLaboral().getCodigoTrabajador());
-                    reporteBean.setNombre(emp.getNombres());
-                    reporteBean.setHoraInicio(detalleSalida.getHora());
-                    reporteBean.setHoraFin(detalleEntrada.getHora());
-                    reporteBean.setHoras(hora[0]);
-                    reporteBean.setMinutos(hora[1]);
-                    reporteBean.setSegundos(hora[2]);
-                    reporteBean.setFechaReal(detalleEntrada.getFecha());
-                    reporteBean.setMotivo(permiso.getPermisoId().getMotivoPermisoCodigo().getNombre());                    
-
-                    reporte.add(reporteBean);
-
                 }
 
             }
         }
 
-        reportePermisos = reporte;
+        return reporte;
     }
 
-    public void reportePermisos(int opcion) {
+//    public void reportePermisos(int opcion) {
 //        this.opcion = opcion;
 //        SimpleDateFormat dtFecha = new SimpleDateFormat("dd.MM.yyyy");
 //        SimpleDateFormat dtHora = new SimpleDateFormat("HH:mm");
@@ -381,9 +469,7 @@ public class ReporteBean implements Serializable {
 //                }
 //            }
 //        }
-
-    }
-
+//    }
     public void agregarHoja(Workbook libro, String nombre) {
 
     }

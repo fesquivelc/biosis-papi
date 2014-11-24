@@ -54,12 +54,12 @@ public class ServicioController extends AbstractController<Servicio> {
      *
      * @return navigation outcome for Empleado page
      */
-    public String navigateEmpleadoList() {
-        if (this.getSelected() != null) {
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Empleado_items", this.getSelected().getEmpleadoList());
-        }
-        return "/empleado/index";
-    }
+//    public String navigateEmpleadoList() {
+//        if (this.getSelected() != null) {
+//            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Empleado_items", this.getSelected().getEmpleadoList());
+//        }
+//        return "/empleado/index";
+//    }
 
     /**
      * Sets the "selected" attribute of the Area controller in order to display

@@ -85,7 +85,7 @@
                 </p:column>
 
             </p:dataTable>
-            
+
             <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{permisoController.prepareCreate}" update=":PermisoCreateForm" oncomplete="PF('PermisoCreateDialog').show()"/>
             <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":PermisoViewForm" oncomplete="PF('PermisoViewDialog').show()" disabled="#{empty permisoController.selected}"/>
             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PermisoEditForm" oncomplete="PF('PermisoEditDialog').show()" disabled="#{empty permisoController.selected}"/>
@@ -93,7 +93,7 @@
                 <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
             </p:commandButton>
 
-        </p:panel>
+        </p:panel>        
         <ui:include src="/confirmation.xhtml"/>
     </h:form>
 

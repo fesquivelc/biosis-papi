@@ -91,9 +91,12 @@ public class Empleado implements Serializable {
     @JoinColumn(name = "empleado_id", referencedColumnName = "id")
     @ManyToOne(optional = true)
     private Empleado empleadoId;
+//    @JoinColumn(name = "servicio_id", referencedColumnName = "id")
+//    @ManyToOne(optional = true)
+//    private Servicio servicioId;
     @JoinColumn(name = "servicio_id", referencedColumnName = "id")
     @ManyToOne(optional = true)
-    private Servicio servicioId;
+    private Area area;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "jefeInmediatoId")
     private List<CambioTurno> cambioTurnoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoIdempleado")
@@ -233,6 +236,14 @@ public class Empleado implements Serializable {
         this.foto = foto;
     }
 
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
     public String getEmpleado() {
         return this.apellidos + " " + this.nombres + " - DNI:" + this.docIdentidad;
     }
@@ -246,12 +257,8 @@ public class Empleado implements Serializable {
         Sucursal sucursal = this.detalleContratoList.get(0).getAreaId().getSucursalId();
         return sucursal;
     }
-
-    public Area getArea() {
-        Area area = this.detalleContratoList.get(0).getAreaId();
-        return area;
-    }
-
+    
+    
     public FichaGeneralEmpleado getFicha() {
         return this.fichaGeneralEmpleadoList.get(0);
     }
@@ -311,13 +318,13 @@ public class Empleado implements Serializable {
         this.empleadoId = empleadoId;
     }
 
-    public Servicio getServicioId() {
-        return servicioId;
-    }
-
-    public void setServicioId(Servicio servicioId) {
-        this.servicioId = servicioId;
-    }
+//    public Servicio getServicioId() {
+//        return servicioId;
+//    }
+//
+//    public void setServicioId(Servicio servicioId) {
+//        this.servicioId = servicioId;
+//    }
 
     @XmlTransient
     public List<CambioTurno> getCambioTurnoList() {
@@ -451,5 +458,14 @@ public class Empleado implements Serializable {
     public String toString() {
         return "com.project.jsica.ejb.entidades.Empleado[ id=" + id + " ]";
     }
-
+    
+    
+    
+    public String getCodigo(){
+        return this.docIdentidad;
+    }
+    
+    public String getNombreCompleto(){
+        return this.apellidos + " " + this.nombres;
+    }
 }

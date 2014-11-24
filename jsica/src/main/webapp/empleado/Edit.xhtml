@@ -74,6 +74,16 @@
                         
                         <p:tab id="EmpleadoTab2" title="Datos Ficha General">
                             <p:panelGrid columns="2" columnClasses="column">  
+                                <p:outputLabel value="Departamento / Área:" for="area" />
+                                <p:selectOneMenu id="area" value="#{empleadoController.selected.fichaLaboral.tipoEmpleadoId}" converter="areaConverter">
+                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}" noSelectionOption="true"/>
+                                    <f:selectItems value="#{areaController.items}"
+                                                   var="area"
+                                                   itemValue="#{area}"
+                                                   itemLabel="#{area.nombre}"
+                                                   />
+
+                                </p:selectOneMenu>
                                 
                                 <p:outputLabel value="#{myBundle.CreateFichaLaboralEmpleadoLabel_codigoTrabajador}" for="codigoTrabajador" />
                                 <p:inputText id="codigoTrabajador" value="#{empleadoController.selected.fichaLaboral.codigoTrabajador}" title="#{myBundle.CreateFichaLaboralEmpleadoTitle_codigoTrabajador}" size="70" maxlength="70"/>

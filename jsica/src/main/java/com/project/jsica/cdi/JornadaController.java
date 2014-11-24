@@ -49,6 +49,7 @@ public class JornadaController extends AbstractController<Jornada> {
     /**
      * Metodos getter and setters
      *
+     * @return 
      */
     public Sucursal getSucursalSeleccionado() {
         return sucursalSeleccionado;

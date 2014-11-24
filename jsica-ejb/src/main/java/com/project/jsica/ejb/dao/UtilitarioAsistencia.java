@@ -291,7 +291,7 @@ public class UtilitarioAsistencia implements UtilitarioAsistenciaLocal,Serializa
 
     private void generarInserts(ResultSet rs) {
         try {
-//            String consulta = "BEGIN ";
+//            String consulta = "BEGIN ";            
             String consulta = "";
             DateFormat dtFecha = new SimpleDateFormat("yyyy/MM/dd");
             DateFormat dtHora = new SimpleDateFormat("HH:mm:ss");

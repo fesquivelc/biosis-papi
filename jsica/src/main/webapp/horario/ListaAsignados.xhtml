@@ -24,9 +24,9 @@
                         <p:column colspan="2" headerText="Empleado"/>
                         <p:column rowspan="2" headerText="Grupo"/>
                         <p:column colspan="2" headerText="Horario"/>
-                    </p:row>                   
+                    </p:row>
                     <p:row>
-                        <p:column headerText="Codigo"/>
+                        <p:column headerText="#{myBundle.codigo_header}"/>
                         <p:column headerText="Nombre completo"/>
                         <p:column headerText="Nombre"/>
                         <p:column headerText="Descripcion"/>
@@ -34,11 +34,11 @@
                 </p:columnGroup>
 
                 <p:column>
-                    <h:outputText value="#{item.empleadoId.fichaLaboral.codigoTrabajador}" />
+                    <h:outputText value="#{item.empleadoId.codigo}" />
                 </p:column>
 
                 <p:column>
-                    <h:outputText value="#{item.empleadoId.apellidos} #{item.empleadoId.nombres}" />
+                    <h:outputText value="#{item.empleadoId.nombreCompleto}" />
                 </p:column>
 
                 <p:column >

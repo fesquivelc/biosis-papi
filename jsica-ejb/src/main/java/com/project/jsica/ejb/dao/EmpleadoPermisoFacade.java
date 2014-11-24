@@ -64,7 +64,7 @@ public class EmpleadoPermisoFacade extends AbstractFacade<EmpleadoPermiso> imple
         String jpql = "SELECT p FROM EmpleadoPermiso p "
                 + "WHERE p.empleadoId = :empleado "
                 + "AND "
-                + "p.permisoId.motivoPermisoCodigo.conGoce = :goce"
+                + "p.permisoId.motivoPermisoCodigo.conGoce = :goce "
                 + "AND "
                 + "p.permisoId.fechaInicio BETWEEN :fechaInicio AND :fechaFin ";
         Map<String, Object> parametros = new HashMap<>();

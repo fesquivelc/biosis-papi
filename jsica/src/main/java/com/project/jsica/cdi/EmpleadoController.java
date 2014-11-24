@@ -2,14 +2,12 @@ package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.EmpleadoFacadeLocal;
 import com.project.jsica.ejb.entidades.Area;
-import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.FichaGeneralEmpleado;
 import com.project.jsica.ejb.entidades.FichaLaboralEmpleado;
 import com.project.jsica.ejb.entidades.Servicio;
 import com.project.jsica.ejb.entidades.Sucursal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +19,6 @@ import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
-import static org.postgresql.jdbc2.EscapedFunctions.LOG;
 
 @Named(value = "empleadoController")
 @ViewScoped
@@ -38,6 +34,7 @@ public class EmpleadoController extends AbstractController<Empleado> {
     private boolean isAreaSeleccionado;
     private Servicio servicioSeleccionado;
     private boolean isServicioSeleccionado;
+    
 
     @EJB
     private EmpleadoFacadeLocal empleadoFacade;
@@ -45,6 +42,8 @@ public class EmpleadoController extends AbstractController<Empleado> {
     @Inject
     private BitacoraController bitacoraC;
 
+    @Inject
+    private AreaController areaController;
     @Inject
     private RegistroAsistenciaController registroAsistenciaListController;
     @Inject
@@ -82,6 +81,10 @@ public class EmpleadoController extends AbstractController<Empleado> {
     @Inject
     private FichaLaboralEmpleadoController fichaLaboralEmpleadoListController;
 
+    public List<Empleado> buscarTodos(){
+        return this.empleadoFacade.buscarTodos();
+    }
+    
     public EmpleadoController() {
         // Inform the Abstract parent controller of the concrete Empleado?cap_first Entity
         super(Empleado.class);
@@ -234,9 +237,9 @@ public class EmpleadoController extends AbstractController<Empleado> {
      *
      * @param event Event object for the widget that triggered an action
      */
-    public void prepareServicioId(ActionEvent event) {
+    public void prepareArea(ActionEvent event) {
         if (this.getSelected() != null && servicioIdController.getSelected() == null) {
-            servicioIdController.setSelected(this.getSelected().getServicioId());
+            areaController.setSelected(this.getSelected().getArea());
         }
     }
 

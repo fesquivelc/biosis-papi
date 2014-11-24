@@ -21,27 +21,128 @@
             <ui:define name="body">
                 <h:form>                    
                     <p:growl id="growl" showDetail="true" sticky="false" life="500"  /> 
-                    <p:panel header="Reporte de permisos por empleado">
+                    <p:panel header="Reporte de permisos / licencias / vacaciones por empleado">
 
-                        <p:panelGrid columns="2">                            
-
+                        <p:panelGrid columns="2">       
                             <p:outputLabel value="Empleado"/>
                             <p:autoComplete id="txtEmpleado" value="#{reporteBean.empleado}"
-                                            var="empleado" itemLabel="#{empleado.empleado}" completeMethod="#{empleadoController.metodo}" itemValue="#{empleado}" converter="empleadoConverter" size="70" />
-
+                                            var="empleado"
+                                            itemLabel="#{empleado.empleado}"
+                                            completeMethod="#{empleadoController.metodo}"
+                                            itemValue="#{empleado}"
+                                            converter="empleadoConverter"
+                                            required="true"
+                                            requiredMessage="Seleccione el empleado"
+                                            size="70" />
+                            
+                            
                             <p:outputLabel value="Desde"/>
-                            <p:inputMask value="#{reporteBean.desde}" mask="99/99/9999" requiredMessage="Defina desde que fecha se mostrará">
+                            <p:inputMask value="#{reporteBean.desde}" mask="99/99/9999" required="true" requiredMessage="Defina desde que fecha se mostrará">
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </p:inputMask>
 
+                            
                             <p:outputLabel value="Hasta"/>
-                            <p:inputMask value="#{reporteBean.hasta}" mask="99/99/9999" requiredMessage="Defina hasta que fecha se mostrará">
+                            <p:inputMask value="#{reporteBean.hasta}" mask="99/99/9999" required="false" requiredMessage="Defina hasta que fecha se mostrará">
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </p:inputMask>
 
-                            <p:commandButton ajax="false" value="Generar reporte" action="#{reporteBean.reportePermisos(1)}" update="growl"/>
+                            
+                            <p:outputLabel value="¿Con sustento?"/>
+                            <p:selectBooleanCheckbox value="#{reporteBean.conGoce}" />
+                            
+                            <p:outputLabel value="Tipo:"/>
+                            
+                            
+
+                            
+                            <p:commandButton value="Generar reporte" action="#{reporteBean.setOpcion(1)}" update="growl datalist xls"/>
                         </p:panelGrid>
 
+                    </p:panel>
+                    <p:panel header="Resultado">
+                        <p:dataTable
+                            id="datalist"
+                            value="#{reporteBean.reportePermisos}"
+                            var="reporte"
+                            rowKey="#{reporte}"
+                            paginator="true"
+                            emptyMessage="No hay datos">
+                            
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="CODIGO"/>
+                                </f:facet>
+                                <h:outputText value="#{reporte.codigo}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="APELLIDOS Y NOMBRE"/>
+                                </f:facet>
+                                <h:outputText value="#{reporte.nombre}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="FECHA REAL"/>
+                                </f:facet>
+                                <h:outputText value="#{reporte.fechaReal}">
+                                    <f:convertDateTime pattern="dd.MM.yyyy" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="INICIO"/>
+                                </f:facet>
+                                <h:outputText value="#{reporte.horaInicio}">
+                                    <f:convertDateTime pattern="HH:mm" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="FIN"/>
+                                </f:facet>
+                                <h:outputText value="#{reporte.horaFin}">
+                                    <f:convertDateTime pattern="HH:mm" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="HORAS"/>
+                                </f:facet>
+                                <h:outputText value="#{reporte.horas}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="MINUTOS"/>
+                                </f:facet>
+                                <h:outputText value="#{reporte.minutos}"/>
+                            </p:column>
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="MOTIVO"/>
+                                </f:facet>
+                                <h:outputText value="#{reporte.motivo}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:panel>
+
+                    <p:panel>
+                        <p:panelGrid columns="2" >
+                            <h:commandLink value="Exportar a excel" id="xls">
+                                <p:dataExporter type="xls" target="datalist" fileName="reporte" pageOnly="true"/>
+                            </h:commandLink>
+                            <h:commandLink value="Exportar a csv">
+                                <p:dataExporter type="csv" target="datalist" fileName="reporte" pageOnly="true"/>
+                            </h:commandLink>
+                        </p:panelGrid>
                     </p:panel>
                 </h:form>
             </ui:define>

@@ -72,6 +72,27 @@ public class AlgoritmoFinal {
             if (turno.getHorarioId().getPorFecha()) {
                 LOG.info("ANALIZANDO HORARIO DE EMERGENCIA");
                 //ANALIZAR CAMBIOS DE TURNO
+                CambioTurno cambioTurno = getCambioTurno(turno, cambiosTurnoXMes);
+                DetalleHorario turnoAnalizar;
+                DetalleHorario turnoCambio = null;
+
+                if (cambioTurno != null) {
+                    if (cambioTurno.getDetalleHorarioOriginal().equals(turno)) {
+                        turnoAnalizar = cambioTurno.getDetalleHorarioReemplazo();
+                        turnoCambio = cambioTurno.getDetalleHorarioOriginal();
+                    } else {
+                        turnoAnalizar = cambioTurno.getDetalleHorarioOriginal();
+                        turnoCambio = cambioTurno.getDetalleHorarioReemplazo();
+                    }
+                } else {
+                    turnoAnalizar = turno;
+                }
+
+                RegistroAsistencia2 registro = analizarTurnoAsistencial(empleado, fechaInicio, horaInicio, fechaFin, horaFin, turnoAnalizar, turnoCambio, permisosXMes, marcacionesXMes);
+
+                if (registro != null) {
+                    registrosXMes.add(registro);
+                }
 
             } else {
                 LOG.info("ANALIZANDO HORARIO ADMINISTRATIVO");
@@ -80,6 +101,17 @@ public class AlgoritmoFinal {
         }
 
         return registrosXMes;
+    }
+
+    private CambioTurno getCambioTurno(DetalleHorario turno, List<CambioTurno> cambiosTurnoXMes) {
+        for (CambioTurno cambioTurno : cambiosTurnoXMes) {
+            if (cambioTurno.getDetalleHorarioOriginal().equals(turno)) {
+                return cambioTurno;
+            } else if (cambioTurno.getDetalleHorarioReemplazo().equals(turno)) {
+                return cambioTurno;
+            }
+        }
+        return null;
     }
 
     private List<RegistroAsistencia2> analizarTurnoAdministrativo(
@@ -162,7 +194,7 @@ public class AlgoritmoFinal {
         Calendar horaSalida = Calendar.getInstance();
         horaSalida.setTime(turno.getJornadaCodigo().getHSalida());
         horaSalida.add(Calendar.MINUTE, MINUTOS_DESPUES_DE_HORA_SALIDA);
-        
+
         boolean falta = false;
 
         if (FechaUtil.compararFechaHora(fechaInicio, horaInicio, fechaSalida.getTime(), horaSalida.getTime()) <= 0
@@ -171,8 +203,8 @@ public class AlgoritmoFinal {
             LOG.info("SE COMPARO LAS FECHAS Y HORAS, SE DA INICIO AL ANALISIS");
             RegistroAsistencia2 registro = new RegistroAsistencia2();
             registro.setEmpleado(empleado);
-            registro.setFecha(fecha);            
-            
+            registro.setFecha(fecha);
+
             String tipo;
             //SE PROCEDE A ANALIZAR CADA DETALLE 
             EmpleadoPermiso permisoXFecha = tienePermisoXFecha(fecha, permisosXMes);
@@ -293,10 +325,9 @@ public class AlgoritmoFinal {
                             draEntrada.setMilisegundosTardanza(tardanza);
                             tardanza += tardanzaEntrada;
 
-                        }else{
+                        } else {
                             falta = true;
                         }
-                        
 
                         detalle.add(draEntrada);
                     }
@@ -362,7 +393,7 @@ public class AlgoritmoFinal {
                                 Long diferencia = this.milisegundosDiferencia(jornada.getHEntradaRefrigerio(), draEntradaRefrigerio.getHora(), 0);
                                 draEntradaRefrigerio.setMilisegundosTardanza(diferencia);
                                 tardanza += diferencia;
-                            }else{
+                            } else {
                                 falta = true;
                             }
 
@@ -371,12 +402,11 @@ public class AlgoritmoFinal {
                             detalle.add(draEntradaRefrigerio);
                         }
                     }
-                    if(falta){
+                    if (falta) {
                         tipo = "A";
-                    }
-                    else if(tardanza > 0){
+                    } else if (tardanza > 0) {
                         tipo = "T";
-                    }else{
+                    } else {
                         tipo = "R";
                     }
                     registro.setTurnoOriginal(turno);
@@ -389,7 +419,7 @@ public class AlgoritmoFinal {
                 }
 
             } else {
-                LOG.warn("NO ES DIA LABORAL "+fecha);
+                LOG.warn("NO ES DIA LABORAL " + fecha);
                 return null;
             }
 
@@ -414,7 +444,7 @@ public class AlgoritmoFinal {
     private boolean isDiaLaboral(Date fecha, DetalleHorario turno) {
         Calendar dia = Calendar.getInstance();
         dia.setTime(fecha);
-        
+
         int comparacion = dia.get(Calendar.DAY_OF_WEEK);
 
         return diasLaborables(turno.getHorarioId().getLunes(), turno.getHorarioId().getMartes(), turno.getHorarioId().getMiercoles(), turno.getHorarioId().getJueves(), turno.getHorarioId().getViernes(), turno.getHorarioId().getSabado(), turno.getHorarioId().getDomingo()).contains(comparacion);
@@ -649,6 +679,19 @@ public class AlgoritmoFinal {
 
         return detalleRegistroAsistencia;
 
+    }
+
+    private RegistroAsistencia2 analizarTurnoAsistencial(Empleado empleado, Date fechaInicio, Date horaInicio, Date fechaFin, Date horaFin, DetalleHorario turnoAnalizar, DetalleHorario turnoCambio, List<EmpleadoPermiso> permisosXMes, List<Vista> marcacionesXMes) {
+        RegistroAsistencia2 registro;
+        LOG.info("ENTRA A ANALIZAR EL REGISTRO");
+        registro = analizarRegistro(empleado, turnoAnalizar, turnoAnalizar.getFecha(), horaInicio, fechaFin, horaFin, marcacionesXMes, permisosXMes);
+
+        if (registro != null && turnoCambio != null) {
+            LOG.info("SE ASIGNA EL TURNO POR EL QUE FUE CAMBIADO");
+            registro.setTurnoReemplazo(turnoCambio);
+        }
+
+        return registro;
     }
 
 }

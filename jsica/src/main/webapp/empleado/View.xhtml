@@ -43,6 +43,9 @@
                         <p:tab title="Datos FichaGeneral">
                             <p:panelGrid columns="2" columnClasses="column" rendered="#{empleadoController.selected != null}">
                                 
+                                <h:outputText value="Departamento / Área:" />
+                                <h:outputText value="#{empleadoController.selected.area.nombre}"  />
+                                
                                 <h:outputText value="#{myBundle.ViewFichaLaboralEmpleadoLabel_codigoTrabajador}"/>
                                 <h:outputText value="#{empleadoController.selected.fichaLaboral.codigoTrabajador}" title="#{myBundle.ViewFichaLaboralEmpleadoTitle_codigoTrabajador}"/>
                                 

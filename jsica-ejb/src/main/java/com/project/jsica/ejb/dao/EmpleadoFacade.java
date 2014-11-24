@@ -7,6 +7,7 @@
 package com.project.jsica.ejb.dao;
 
 import com.project.jsica.ejb.entidades.Empleado;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +29,12 @@ public class EmpleadoFacade extends AbstractFacade<Empleado> implements Empleado
     public EmpleadoFacade() {
         super(Empleado.class);
     }
+
+    @Override
+    public List<Empleado> buscarTodos() {
+        return this.search("SELECT e FROM Empleado e");
+    }
+    
+    
     
 }

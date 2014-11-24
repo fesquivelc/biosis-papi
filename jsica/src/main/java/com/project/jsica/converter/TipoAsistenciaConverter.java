@@ -17,18 +17,20 @@ public class TipoAsistenciaConverter implements Converter {
     public String getAsString(FacesContext fc, UIComponent uic, Object o) {
         String valor = o.toString();
         String retorno = "";
-        if(valor.equalsIgnoreCase("AT")){
-            retorno = "ASISTENCIA";
-        }else if(valor.equalsIgnoreCase("TT")){
+        if(valor.equalsIgnoreCase("R")){
+            retorno = "REGULAR";
+        }else if(valor.equalsIgnoreCase("T")){
             retorno = "TARDANZA";
-        }else if(valor.equalsIgnoreCase("FT")){
-            retorno = "FALTA";
-        }else if(valor.equalsIgnoreCase("AC")){
-            retorno = "ASISTENCIA A CT";
-        }else if(valor.equalsIgnoreCase("TC")){
-            retorno = "TARDANZA A CT";
-        }else if(valor.equalsIgnoreCase("FC")){
-            retorno = "FALTA a CT";
+        }else if(valor.equalsIgnoreCase("A")){
+            retorno = "ABSENTISMO";
+        }else if(valor.equalsIgnoreCase("V")){
+            retorno = "VACACIONEs";
+        }else if(valor.equalsIgnoreCase("O")){
+            retorno = "ONOMÁSTICO";
+        }else if(valor.equalsIgnoreCase("L")){
+            retorno = "LICENCIA";
+        }else if(valor.equalsIgnoreCase("F")){
+            retorno = "FERIADO";
         }
         return retorno;
     }

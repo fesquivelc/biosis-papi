@@ -15,7 +15,7 @@
                 <h:panelGroup id="display" rendered="#{jornadaController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="¿Es turno de emergencia?" for="asistencial"/>
+                        <p:outputLabel value="¿Es turno por fecha?" for="asistencial"/>
                         <p:selectBooleanCheckbox id="asistencial" value="#{jornadaController.selected.asistencial}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_porFecha}"/>
 
                         <p:outputLabel value="#{myBundle.CreateJornadaLabel_codigo}" for="codigo" />
@@ -42,7 +42,7 @@
                         <p:inputMask id="HSalida" value="#{jornadaController.selected.HSalida}" mask="99:99" title="#{myBundle.CreateJornadaTitle_HSalida}">
                             <f:convertDateTime pattern="HH:mm"/>
                         </p:inputMask> 
-
+<!--
                         <p:outputLabel value="¿Tiene salida a refrigerio?"/>
                         <p:selectBooleanCheckbox value="#{jornadaController.selected.jornadaConRefrigerio}"/>
 
@@ -62,7 +62,7 @@
                         <p:outputLabel value="Tolerancia tardanza de entrada de refrigerio"/>
                         <p:inputText value="#{jornadaController.selected.minutosToleranciaTardanzaEntradaRefrigerio}"/>
 
-
+-->
 
                     </p:panelGrid>
                     <p:commandButton actionListener="#{jornadaController.saveNew}" value="#{myBundle.Save}" update="display,:JornadaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('JornadaCreateDialog'));">

@@ -37,5 +37,7 @@ public interface EmpleadoFacadeLocal {
     List<Empleado> search(String namedQuery, Map<String, Object> parametros, int inicio, int tamanio);
 
     int count();
+
+    List<Empleado> buscarTodos();
     
 }

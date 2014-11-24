@@ -411,14 +411,14 @@ public class PapeletaController extends AbstractController<Papeleta> {
         }
     }
     
-    public List<Empleado> getEmpleados(){
-        if(this.isServicioSeleccionado){
-            LOG.log(Level.INFO, "ID DEL SERVICIO:{0}", this.servicioSeleccionado.getId());
-            return this.servicioSeleccionado.getEmpleadoList();
-        }else{
-            return null;
-        }
-    }
+//    public List<Empleado> getEmpleados(){
+//        if(this.isServicioSeleccionado){
+//            LOG.log(Level.INFO, "ID DEL SERVICIO:{0}", this.servicioSeleccionado.getId());
+//            return this.servicioSeleccionado.getEmpleadoList();
+//        }else{
+//            return null;
+//        }
+//    }
     
     public void onEmpleadoSeleccionado(){
         if(this.empleadoSeleccionado!=null){
