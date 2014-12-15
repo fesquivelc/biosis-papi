@@ -46,16 +46,10 @@
                                                    itemLabel="#{grupoHorarioIdItem.nombre}"
                                                    />
                                 </p:selectOneMenu>
-
+                                
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoId}" for="empleadoId" />
-                                <p:selectOneMenu id="empleadoId" value="#{empleadoController.selected.empleadoId}" converter="empleadoConverter">
-                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                    <f:selectItems value="#{empleadoController.items}"
-                                                   var="empleadoIdItem"
-                                                   itemValue="#{empleadoIdItem}"
-                                                   itemLabel="#{empleadoIdItem.apellidos} #{empleadoIdItem.nombres} "
-                                                   />
-                                </p:selectOneMenu>
+                                <p:autoComplete id="empleadoId" value="#{empleadoController.selected.empleadoId}" completeMethod="#{empleadoController.metodo}"
+                                                var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="55"/>
                                 
                                 <p:outputLabel value="#{myBundle.CreateFichaLaboralEmpleadoLabel_tipoEmpleadoId}" for="tipoEmpleadoId" />
                                 <p:selectOneMenu id="tipoEmpleadoId" value="#{empleadoController.selected.fichaLaboral.tipoEmpleadoId}" converter="tipoEmpleadoConverter">
@@ -75,7 +69,7 @@
                         <p:tab id="EmpleadoTab2" title="Datos Ficha General">
                             <p:panelGrid columns="2" columnClasses="column">  
                                 <p:outputLabel value="Departamento / Área:" for="area" />
-                                <p:selectOneMenu id="area" value="#{empleadoController.selected.fichaLaboral.tipoEmpleadoId}" converter="areaConverter">
+                                <p:selectOneMenu id="area" value="#{empleadoController.selected.area}" converter="areaConverter">
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}" noSelectionOption="true"/>
                                     <f:selectItems value="#{areaController.items}"
                                                    var="area"
