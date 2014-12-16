@@ -42,7 +42,6 @@
                         <p:inputMask id="HSalida" value="#{jornadaController.selected.HSalida}" mask="99:99" title="#{myBundle.CreateJornadaTitle_HSalida}">
                             <f:convertDateTime pattern="HH:mm"/>
                         </p:inputMask> 
-<!--
                         <p:outputLabel value="¿Tiene salida a refrigerio?"/>
                         <p:selectBooleanCheckbox value="#{jornadaController.selected.jornadaConRefrigerio}"/>
 
@@ -61,8 +60,6 @@
 
                         <p:outputLabel value="Tolerancia tardanza de entrada de refrigerio"/>
                         <p:inputText value="#{jornadaController.selected.minutosToleranciaTardanzaEntradaRefrigerio}"/>
-
--->
 
                     </p:panelGrid>
                     <p:commandButton actionListener="#{jornadaController.saveNew}" value="#{myBundle.Save}" update="display,:JornadaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('JornadaCreateDialog'));">

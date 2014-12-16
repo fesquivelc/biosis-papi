@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InterrupcionVacacionalCreateDlg" widgetVar="InterrupcionVacacionalCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{cadenas.CreateInterrupcionVacacionalTitle}">
+            <h:form id="InterrupcionVacacionalCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{interrupcionVacacionalController.selected != null}">
+                        <p:outputLabel value="#{cadenas.CreateInterrupcionVacacionalLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{interrupcionVacacionalController.selected.id}" title="#{cadenas.CreateInterrupcionVacacionalTitle_id}" required="true" requiredMessage="#{cadenas.CreateInterrupcionVacacionalRequiredMessage_id}"/>
+                        <p:outputLabel value="#{cadenas.CreateInterrupcionVacacionalLabel_fechafin}" for="fechafin" />
+                        <p:calendar id="fechafin" pattern="MM/dd/yyyy" value="#{interrupcionVacacionalController.selected.fechafin}" title="#{cadenas.EditInterrupcionVacacionalTitle_fechafin}"  showOn="button"/>
+                        <p:outputLabel value="#{cadenas.CreateInterrupcionVacacionalLabel_fechainicio}" for="fechainicio" />
+                        <p:calendar id="fechainicio" pattern="MM/dd/yyyy" value="#{interrupcionVacacionalController.selected.fechainicio}" title="#{cadenas.EditInterrupcionVacacionalTitle_fechainicio}"  showOn="button"/>
+                        <p:outputLabel value="#{cadenas.CreateInterrupcionVacacionalLabel_fechainterrupcion}" for="fechainterrupcion" />
+                        <p:calendar id="fechainterrupcion" pattern="MM/dd/yyyy" value="#{interrupcionVacacionalController.selected.fechainterrupcion}" title="#{cadenas.EditInterrupcionVacacionalTitle_fechainterrupcion}"  showOn="button"/>
+                        <p:outputLabel value="#{cadenas.CreateInterrupcionVacacionalLabel_empleadoId}" for="empleadoId" />
+                        <p:selectOneMenu id="empleadoId" value="#{interrupcionVacacionalController.selected.empleadoId}" >
+                            <f:selectItems value="#{empleadoController.itemsAvailableSelectOne}"
+                                           var="empleadoIdItem"
+                                           itemValue="#{empleadoIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{cadenas.CreateInterrupcionVacacionalLabel_anioId}" for="anioId" />
+                        <p:selectOneMenu id="anioId" value="#{interrupcionVacacionalController.selected.anioId}" >
+                            <f:selectItems value="#{anioController.itemsAvailableSelectOne}"
+                                           var="anioIdItem"
+                                           itemValue="#{anioIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{interrupcionVacacionalController.create}" value="#{cadenas.Save}" update="display,:InterrupcionVacacionalListForm:datalist,:growl" oncomplete="handleSubmit(args,'InterrupcionVacacionalCreateDialog');"/>
+                    <p:commandButton value="#{cadenas.Cancel}" onclick="InterrupcionVacacionalCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

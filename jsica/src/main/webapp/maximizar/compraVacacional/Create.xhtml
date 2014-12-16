@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CompraVacacionalCreateDlg" widgetVar="CompraVacacionalCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCompraVacacionalTitle}">
+            <h:form id="CompraVacacionalCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{compraVacacionalController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateCompraVacacionalLabel_fechaRegistro}" for="fechaRegistro" />
+                        <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy" value="#{compraVacacionalController.selected.fechaRegistro}" title="#{bundle.EditCompraVacacionalTitle_fechaRegistro}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateCompraVacacionalLabel_numeroDias}" for="numeroDias" />
+                        <p:inputText id="numeroDias" value="#{compraVacacionalController.selected.numeroDias}" title="#{bundle.CreateCompraVacacionalTitle_numeroDias}" />
+                        <p:outputLabel value="#{bundle.CreateCompraVacacionalLabel_empleado}" for="empleado" />
+                        <p:selectOneMenu id="empleado" value="#{compraVacacionalController.selected.empleado}" required="true" requiredMessage="#{bundle.EditCompraVacacionalRequiredMessage_empleado}">
+                            <f:selectItems value="#{empleadoController.itemsAvailableSelectOne}"
+                                           var="empleadoItem"
+                                           itemValue="#{empleadoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCompraVacacionalLabel_anio}" for="anio" />
+                        <p:selectOneMenu id="anio" value="#{compraVacacionalController.selected.anio}" required="true" requiredMessage="#{bundle.EditCompraVacacionalRequiredMessage_anio}">
+                            <f:selectItems value="#{anioController.itemsAvailableSelectOne}"
+                                           var="anioItem"
+                                           itemValue="#{anioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCompraVacacionalLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{compraVacacionalController.selected.id}" title="#{bundle.CreateCompraVacacionalTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{compraVacacionalController.create}" value="#{bundle.Save}" update="display,:CompraVacacionalListForm:datalist,:growl" oncomplete="handleSubmit(args,'CompraVacacionalCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CompraVacacionalCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

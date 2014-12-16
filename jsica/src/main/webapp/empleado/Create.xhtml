@@ -19,25 +19,25 @@
                         <p:tab id="EmpleadoTab1" title="Datos Empleado">
                             <p:panelGrid columns="2" columnClasses="column">
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_nombres}" for="nombres" />
-                                <p:inputText id="nombres" value="#{empleadoController.selected.nombres}" title="#{myBundle.CreateEmpleadoTitle_nombres}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_nombres}" size="70" maxlength="70"/>
+                                <p:inputText id="nombres" value="#{empleadoController.selected.nombres}" title="#{myBundle.CreateEmpleadoTitle_nombres}" size="70" maxlength="70"/>
 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_apellidos}" for="apellidos" />
-                                <p:inputText id="apellidos" value="#{empleadoController.selected.apellidos}" title="#{myBundle.CreateEmpleadoTitle_apellidos}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_apellidos}" size="70" maxlength="70"/>
+                                <p:inputText id="apellidos" value="#{empleadoController.selected.apellidos}" title="#{myBundle.CreateEmpleadoTitle_apellidos}"  size="70" maxlength="70"/>
 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_docIdentidad}" for="docIdentidad" />
-                                <p:inputText id="docIdentidad" value="#{empleadoController.selected.docIdentidad}" title="#{myBundle.CreateEmpleadoTitle_docIdentidad}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_docIdentidad}" size="45" maxlength="8" />
+                                <p:inputText id="docIdentidad" value="#{empleadoController.selected.docIdentidad}" title="#{myBundle.CreateEmpleadoTitle_docIdentidad}"  size="45" maxlength="8" />
                                 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_empleadoId}" for="empleadoId" />
                                 <p:autoComplete id="empleadoId" value="#{empleadoController.selected.empleadoId}" completeMethod="#{empleadoController.metodo}"
                                                 var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="55"/>
                                                                
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_fechaNacimiento}" for="fechaNacimiento" />
-                                <p:inputMask id="fechaNacimiento" value="#{empleadoController.selected.fechaNacimiento}" mask="99/99/9999" title="#{myBundle.CreateEmpleadoTitle_fechaNacimiento}" required="true" requiredMessage="#{myBundle.CreateEmpleadoRequiredMessage_fechaNacimiento}">
+                                <p:inputMask id="fechaNacimiento" value="#{empleadoController.selected.fechaNacimiento}" mask="99/99/9999" title="#{myBundle.CreateEmpleadoTitle_fechaNacimiento}" >
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                                 </p:inputMask>
                                 
                                 <p:outputLabel value="#{myBundle.CreateEmpleadoLabel_sexo}" for="idgeneros" />
-                                <p:selectOneMenu id="idgeneros" value="#{empleadoController.selected.sexo}" required="true" >
+                                <p:selectOneMenu id="idgeneros" value="#{empleadoController.selected.sexo}"  >
                                     <f:selectItem itemLabel="Seleccione Uno" itemValue="" noSelectionOption="true" />                                  
                                     <f:selectItem itemLabel="FEMENINO" itemValue="F"  />
                                     <f:selectItem itemLabel="MASCULINO" itemValue="M" />
@@ -129,10 +129,10 @@
                                 
                                 <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_ubigeoCodigo}" for="ubigeoCodigo"  />
                                 <p:autoComplete id="ubigeoCodigo" value="#{empleadoController.selected.ficha.ubigeoCodigo}" completeMethod="#{ubigeoController.metodo}"
-                                                var="ubigeo" itemLabel="#{ubigeo.ubigeo}" itemValue="#{ubigeo}" converter="ubigeoConverter" size="70" required="true"/>
+                                                var="ubigeo" itemLabel="#{ubigeo.ubigeo}" itemValue="#{ubigeo}" converter="ubigeoConverter" size="70" />
                                 
                                 <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_estadoCivil}"  />                       
-                                <p:selectOneMenu id="idgenero" value="#{empleadoController.selected.ficha.estadoCivil}" required="true">
+                                <p:selectOneMenu id="idgenero" value="#{empleadoController.selected.ficha.estadoCivil}" >
                                     <f:selectItem itemLabel="Seleccione Uno" />                                  
                                     <f:selectItem itemLabel="SOLTERO(A)" itemValue="SO"  />
                                     <f:selectItem itemLabel="CASADO(A)" itemValue="CA" />
@@ -140,7 +140,7 @@
                                 </p:selectOneMenu>                    
 
                                 <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_nivelEducativoId}" for="nivelEducativoId" />
-                                <p:selectOneMenu id="nivelEducativoId" value="#{empleadoController.selected.ficha.nivelEducativoId}" requiredMessage="#{myBundle.CreateFichaGeneralEmpleadoRequiredMessage_nivelEducativoId}" converter="nivelEducativoConverter">
+                                <p:selectOneMenu id="nivelEducativoId" value="#{empleadoController.selected.ficha.nivelEducativoId}" converter="nivelEducativoConverter">
                                     <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{nivelEducativoController.items}"
                                                    var="nivelEducativoIdItem"

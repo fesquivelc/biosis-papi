@@ -32,7 +32,7 @@
                 </p:column>
 
 
-                <p:column >
+                <p:column filterBy="#{item.nombre}" filterMatchMode="contains">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListJornadaTitle_nombre}"/>
                     </f:facet>
@@ -42,7 +42,7 @@
 
                 <p:column >
                     <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListJornadaTitle_HEntrada}"/>
+                        <h:outputText value="HE"/>
                     </f:facet>
                     <h:outputText value="#{item.HEntrada}">
                         <f:convertDateTime pattern="HH:mm:ss" />
@@ -51,33 +51,49 @@
                 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="Termina al día siguiente?"/>
+                        <h:outputText value="¿Termina al día siguiente?"/>
                     </f:facet>
-                    <h:selectBooleanCheckbox value="#{item.terminaDiaSiguiente}" title="#{myBundle.EditPermisoTitle_porFecha}" required="true" requiredMessage="#{myBundle.EditPermisoRequiredMessage_porFecha}" disabled="true"/>   
+                    <h:selectBooleanCheckbox value="#{item.terminaDiaSiguiente}" disabled="true"/>   
                 </p:column>
 
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListJornadaTitle_HSalida}"/>
+                        <h:outputText value="HS"/>
                     </f:facet>
                     <h:outputText value="#{item.HSalida}">
                         <f:convertDateTime pattern="HH:mm:ss" />
                     </h:outputText>
                 </p:column>
-
                 
-
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="¿Es por fecha?"/>
+                        <h:outputText value="¿Refrigerio?"/>
                     </f:facet>
-                    <h:selectBooleanCheckbox  value="#{item.asistencial}" title="#{myBundle.EditPermisoTitle_porFecha}" required="true" requiredMessage="#{myBundle.EditPermisoRequiredMessage_porFecha}" disabled="true"/>      
+                    <h:selectBooleanCheckbox value="#{item.jornadaConRefrigerio}" disabled="true"/>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="HSR"/>
+                    </f:facet>
+                    <h:outputText value="#{item.HSalidaRefrigerio}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+                
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="HER"/>
+                    </f:facet>
+                    <h:outputText value="#{item.HEntradaRefrigerio}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
                 </p:column>
                 <p:column>
                     <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListJornadaTitle_servicioId}"/>
+                        <h:outputText value="¿Es asistencial?"/>
                     </f:facet>
-                    <h:outputText value="#{item.servicioId.nombre}"/>
+                    <h:selectBooleanCheckbox value="#{item.asistencial}" disabled="true"/>
                 </p:column>
 
 

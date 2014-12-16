@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InterrupcionVacacionalViewDlg" widgetVar="InterrupcionVacacionalViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{cadenas.ViewInterrupcionVacacionalTitle}">
+            <h:form id="InterrupcionVacacionalViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{interrupcionVacacionalController.selected != null}">
+                        <h:outputText value="#{cadenas.ViewInterrupcionVacacionalLabel_id}"/>
+                        <h:outputText value="#{interrupcionVacacionalController.selected.id}" title="#{cadenas.ViewInterrupcionVacacionalTitle_id}"/>
+                        <h:outputText value="#{cadenas.ViewInterrupcionVacacionalLabel_fechafin}"/>
+                        <h:outputText value="#{interrupcionVacacionalController.selected.fechafin}" title="#{cadenas.ViewInterrupcionVacacionalTitle_fechafin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{cadenas.ViewInterrupcionVacacionalLabel_fechainicio}"/>
+                        <h:outputText value="#{interrupcionVacacionalController.selected.fechainicio}" title="#{cadenas.ViewInterrupcionVacacionalTitle_fechainicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{cadenas.ViewInterrupcionVacacionalLabel_fechainterrupcion}"/>
+                        <h:outputText value="#{interrupcionVacacionalController.selected.fechainterrupcion}" title="#{cadenas.ViewInterrupcionVacacionalTitle_fechainterrupcion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{cadenas.ViewInterrupcionVacacionalLabel_empleadoId}"/>
+                        <h:outputText value="#{interrupcionVacacionalController.selected.empleadoId}" title="#{cadenas.ViewInterrupcionVacacionalTitle_empleadoId}"/>
+                        <h:outputText value="#{cadenas.ViewInterrupcionVacacionalLabel_anioId}"/>
+                        <h:outputText value="#{interrupcionVacacionalController.selected.anioId}" title="#{cadenas.ViewInterrupcionVacacionalTitle_anioId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{cadenas.Close}" onclick="InterrupcionVacacionalViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

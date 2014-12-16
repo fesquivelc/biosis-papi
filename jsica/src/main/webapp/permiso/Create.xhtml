@@ -39,22 +39,15 @@
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                                 </p:inputMask>
 
-                                <p:outputLabel value="#{myBundle.CreatePermisoLabel_tipo}" for="tipo" />
-                                <p:selectOneMenu id="tipo" value="#{permisoController.selected.tipo}" required="true">
-                                    <f:selectItem itemLabel="Seleccione un tipo"/>
-                                    <f:selectItem itemLabel="LICENCIA" itemValue="LI"/>
-                                    <f:selectItem itemLabel="PERMISO" itemValue="PE"/>
-                                    <f:selectItem itemLabel="AUSENCIA" itemValue="AU"/>
-                                </p:selectOneMenu>
                                 <p:outputLabel value="#{myBundle.CreatePermisoLabel_porFecha}" for="porFecha" />
                                 <p:selectBooleanCheckbox id="porFecha" value="#{permisoController.selected.porFecha}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_porFecha}"/>
 
                                 <p:outputLabel value="Sin papeleta?" for="porPapeleta"/>
                                 <p:selectBooleanCheckbox id="porPapeleta" value="#{permisoController.porPapeleta}" required="true" />
                                 
-                                <p:outputLabel value="#{myBundle.CreatePermisoLabel_motivoPermisoCodigo}" for="motivoPermisoCodigo" />
+                                <p:outputLabel value="Tipo:" for="motivoPermisoCodigo" />
                                 <p:selectOneMenu id="motivoPermisoCodigo" value="#{permisoController.selected.motivoPermisoCodigo}" required="true" requiredMessage="#{myBundle.CreatePermisoRequiredMessage_motivoPermisoCodigo}" converter="motivoPermisoConverter">
-                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                    <f:selectItem itemLabel="Seleccione el tipo"/>
                                     <f:selectItems value="#{motivoPermisoController.items}"
                                                    var="motivoPermisoCodigoItem"
                                                    itemValue="#{motivoPermisoCodigoItem}"

@@ -94,7 +94,7 @@ public class RegistroAsistenciaFinalFacade extends AbstractFacade<RegistroAsiste
 
     @Override
     public List<RegistroAsistencia2> buscarXArea(Area area, Date fechaDesde, Date fechaHasta) {
-        String jpql = "SELECT r FROM RegistrAsistencia2 r "
+        String jpql = "SELECT r FROM RegistroAsistencia2 r "
                 + "WHERE r.empleado.servicioId.areaId = :area AND r.fecha BETWEEN :fechaDesde AND :fechaHasta";
         Map<String, Object> variables = new HashMap<>();
         variables.put("area", area);
@@ -107,7 +107,7 @@ public class RegistroAsistenciaFinalFacade extends AbstractFacade<RegistroAsiste
 
     @Override
     public List<RegistroAsistencia2> buscarXEmpleado(Empleado empleado, Date fechaDesde, Date fechaHasta) {
-        String jpql = "SELECT r FROM RegistrAsistencia2 r "
+        String jpql = "SELECT r FROM RegistroAsistencia2 r "
                 + "WHERE r.empleado = :empleado AND r.fecha BETWEEN :fechaDesde AND :fechaHasta";
         Map<String, Object> variables = new HashMap<>();
         variables.put("empleado", empleado);

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InterrupcionVacacionalEditDlg" widgetVar="InterrupcionVacacionalEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditInterrupcionVacacionalTitle}">
+            <h:form id="InterrupcionVacacionalEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{interrupcionVacacionalController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditInterrupcionVacacionalLabel_empleado}" for="empleado" />
+                        <p:selectOneMenu id="empleado" value="#{interrupcionVacacionalController.selected.empleado}" required="true" requiredMessage="#{bundle.EditInterrupcionVacacionalRequiredMessage_empleado}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadoController.itemsAvailableSelectOne}"
+                                           var="empleadoItem"
+                                           itemValue="#{empleadoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditInterrupcionVacacionalLabel_anio}" for="anio" />
+                        <p:selectOneMenu id="anio" value="#{interrupcionVacacionalController.selected.anio}" required="true" requiredMessage="#{bundle.EditInterrupcionVacacionalRequiredMessage_anio}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{anioController.itemsAvailableSelectOne}"
+                                           var="anioItem"
+                                           itemValue="#{anioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditInterrupcionVacacionalLabel_fechaInicio}" for="fechaInicio" />
+                        <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{interrupcionVacacionalController.selected.fechaInicio}" title="#{bundle.EditInterrupcionVacacionalTitle_fechaInicio}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditInterrupcionVacacionalLabel_fechaFin}" for="fechaFin" />
+                        <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{interrupcionVacacionalController.selected.fechaFin}" title="#{bundle.EditInterrupcionVacacionalTitle_fechaFin}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditInterrupcionVacacionalLabel_fechaInterrupcion}" for="fechaInterrupcion" />
+                        <p:calendar id="fechaInterrupcion" pattern="MM/dd/yyyy" value="#{interrupcionVacacionalController.selected.fechaInterrupcion}" title="#{bundle.EditInterrupcionVacacionalTitle_fechaInterrupcion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditInterrupcionVacacionalLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{interrupcionVacacionalController.selected.id}" title="#{bundle.EditInterrupcionVacacionalTitle_id}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{interrupcionVacacionalController.update}" value="#{bundle.Save}" update="display,:InterrupcionVacacionalListForm:datalist,:growl" oncomplete="handleSubmit(args, 'InterrupcionVacacionalEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="InterrupcionVacacionalEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

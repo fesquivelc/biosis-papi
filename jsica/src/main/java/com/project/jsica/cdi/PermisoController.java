@@ -1,13 +1,11 @@
 package com.project.jsica.cdi;
 
 import com.project.jsica.ejb.dao.PermisoFacadeLocal;
-import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.EmpleadoPermiso;
 import com.project.jsica.ejb.entidades.Papeleta;
 import com.project.jsica.ejb.entidades.Permiso;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -18,16 +16,15 @@ import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 @Named(value = "permisoController")
 @ViewScoped
 public class PermisoController extends AbstractController<Permiso> {
-    
+
     private Permiso permisoSeleccionado;
     private EmpleadoPermiso empleadoPermisoSeleccionado;
     private Papeleta papeletaSeleccionada;
-    
+
     @EJB
     private PermisoFacadeLocal permisoFacade;
 
@@ -40,7 +37,7 @@ public class PermisoController extends AbstractController<Permiso> {
     private EmpleadoPermisoController empleadoPermisoListController;
     private Empleado empleadoSeleccionado;
     private boolean porPapeleta;
-    
+
     public PermisoController() {
         // Inform the Abstract parent controller of the concrete Permiso?cap_first Entity
         super(Permiso.class);
@@ -78,8 +75,7 @@ public class PermisoController extends AbstractController<Permiso> {
     public void setPorPapeleta(boolean porPapeleta) {
         this.porPapeleta = porPapeleta;
     }
-    
-    
+
     /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
@@ -121,17 +117,17 @@ public class PermisoController extends AbstractController<Permiso> {
         Permiso permiso = new Permiso();
         this.empleadoPermisoSeleccionado = new EmpleadoPermiso();
         this.papeletaSeleccionada = new Papeleta();
-        
+
         permiso.setEmpleadoPermisoList(new ArrayList<EmpleadoPermiso>());
         this.empleadoPermisoSeleccionado.setPapeletaList(new ArrayList<Papeleta>());
-        
+
         this.empleadoPermisoSeleccionado.setEmpleadoId(this.empleadoSeleccionado);
         this.empleadoPermisoSeleccionado.setPermisoId(permiso);
         this.papeletaSeleccionada.setEmpleadoPermisoId(this.empleadoPermisoSeleccionado);
-    
+
         permiso.getEmpleadoPermisoList().add(this.empleadoPermisoSeleccionado);
         this.empleadoPermisoSeleccionado.getPapeletaList().add(this.papeletaSeleccionada);
-           
+
         this.setSelected(permiso);
         LOG.log(Level.INFO, "llego aqui permiso2");
         return permiso;
@@ -139,13 +135,12 @@ public class PermisoController extends AbstractController<Permiso> {
 
     @Override
     public void saveNew(ActionEvent event) {
-        if(this.porPapeleta){
+        if (this.porPapeleta) {
             LOG.log(Level.INFO, "pasa check");
             this.getSelected().getEmpleadoPermiso().setPapeleta(null);
         }
         super.saveNew(event); //To change body of generated methods, choose Tools | Templates.
     }
-
 
     @Override
     protected void edit(Permiso objeto) {
@@ -298,59 +293,59 @@ public class PermisoController extends AbstractController<Permiso> {
     @Override
     protected void remove(Permiso objeto) {
         this.permisoFacade.remove(objeto);
-
-        Permiso antes = this.find(this.selected.getId());
-
-        String horaInicio1 = antes.getHoraInicio().toString();
-        String horaFin1 = antes.getHoraFin().toString();
-        String fechaInicio1 = antes.getFechaInicio().toString();
-        String fechaFin1 = antes.getFechaFin().toString();
-        String tipo1 = antes.getTipo();
-        String porFecha1 = String.valueOf(antes.getPorFecha());
-        String motivoPermisoCodigo1 = antes.getMotivoPermisoCodigo().toString();
-
-        //----Bitacora----
-        Bitacora bitacora = new Bitacora();
-        //Fecha y hora//          
-        Date fechas = new Date();
-        //Ip Cliente
-        String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-
-        //Datos
-        bitacora.setUsuario("JC");
-        bitacora.setIpCliente(ip_cliente);
-        bitacora.setFecha(fechas);
-        bitacora.setHora(fechas);
-        bitacora.setTabla("PERMISO");
-        bitacora.setColumna("HORA_INICIO");
-        bitacora.setAccion("ELIMINAR");
-        bitacora.setValorAct(" ");
-        bitacora.setValorAnt(horaInicio1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("HORA_FIN");
-        bitacora.setValorAnt(horaFin1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("FECHA_INICIO");
-        bitacora.setValorAnt(fechaInicio1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("FECHA_FIN");
-        bitacora.setValorAnt(fechaFin1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("TIPO");
-        bitacora.setValorAnt(tipo1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("POR_FECHA");
-        bitacora.setValorAnt(porFecha1);
-        bitacoraC.edit(bitacora);
-        
-        bitacora.setColumna("MOTIVO_PERMISO_CODIGO");
-        bitacora.setValorAnt(motivoPermisoCodigo1);
-        bitacoraC.edit(bitacora);
+//
+//        Permiso antes = this.find(this.selected.getId());
+//
+//        String horaInicio1 = antes.getHoraInicio().toString();
+//        String horaFin1 = antes.getHoraFin().toString();
+//        String fechaInicio1 = antes.getFechaInicio().toString();
+//        String fechaFin1 = antes.getFechaFin().toString();
+//        String tipo1 = antes.getTipo();
+//        String porFecha1 = String.valueOf(antes.getPorFecha());
+//        String motivoPermisoCodigo1 = antes.getMotivoPermisoCodigo().toString();
+//
+//        //----Bitacora----
+//        Bitacora bitacora = new Bitacora();
+//        //Fecha y hora//          
+//        Date fechas = new Date();
+//        //Ip Cliente
+//        String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
+//
+//        //Datos
+//        bitacora.setUsuario("JC");
+//        bitacora.setIpCliente(ip_cliente);
+//        bitacora.setFecha(fechas);
+//        bitacora.setHora(fechas);
+//        bitacora.setTabla("PERMISO");
+//        bitacora.setColumna("HORA_INICIO");
+//        bitacora.setAccion("ELIMINAR");
+//        bitacora.setValorAct(" ");
+//        bitacora.setValorAnt(horaInicio1);
+//        bitacoraC.edit(bitacora);
+//        
+//        bitacora.setColumna("HORA_FIN");
+//        bitacora.setValorAnt(horaFin1);
+//        bitacoraC.edit(bitacora);
+//        
+//        bitacora.setColumna("FECHA_INICIO");
+//        bitacora.setValorAnt(fechaInicio1);
+//        bitacoraC.edit(bitacora);
+//        
+//        bitacora.setColumna("FECHA_FIN");
+//        bitacora.setValorAnt(fechaFin1);
+//        bitacoraC.edit(bitacora);
+//        
+//        bitacora.setColumna("TIPO");
+//        bitacora.setValorAnt(tipo1);
+//        bitacoraC.edit(bitacora);
+//        
+//        bitacora.setColumna("POR_FECHA");
+//        bitacora.setValorAnt(porFecha1);
+//        bitacoraC.edit(bitacora);
+//        
+//        bitacora.setColumna("MOTIVO_PERMISO_CODIGO");
+//        bitacora.setValorAnt(motivoPermisoCodigo1);
+//        bitacoraC.edit(bitacora);
     }
 
     @Override
@@ -378,4 +373,4 @@ public class PermisoController extends AbstractController<Permiso> {
         return this.permisoFacade.search(namedQuery, parametros, inicio, tamanio);
     }
 
-    }
+}

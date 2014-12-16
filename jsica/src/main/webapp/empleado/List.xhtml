@@ -38,11 +38,18 @@
                 </p:column>
 
 
-                <p:column filterBy="#{item.nombreCompleto}">
+                <p:column filterBy="#{item.apellidos}" filterMatchMode="contains">
                     <f:facet name="header">
-                        <h:outputText value="Apellidos y nombres"/>
+                        <h:outputText value="Apellidos"/>
                     </f:facet>
-                    <h:outputText value="#{item.nombreCompleto}" />
+                    <h:outputText value="#{item.apellidos}" />
+                </p:column>
+                
+                <p:column filterBy="#{item.nombres}" filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Nombre"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombres}" />
                 </p:column>
                 
                 <p:column>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CompraVacacionalEditDlg" widgetVar="CompraVacacionalEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{cadenas.EditCompraVacacionalTitle}">
+            <h:form id="CompraVacacionalEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{compraVacacionalController.selected != null}">
+                        <p:calendar id="fechaRegistro" pattern="dd/MM/yyyy" value="#{compraVacacionalController.selected.fechaRegistro}" title="#{cadenas.EditCompraVacacionalTitle_fechaRegistro}"  showOn="button"/>
+                        <p:outputLabel value="Días que se comprarán:" for="numeroDias" />
+                        <p:inputText id="numeroDias" value="#{compraVacacionalController.selected.numeroDias}" title="#{cadenas.CreateCompraVacacionalTitle_numeroDias}" />
+                        <p:outputLabel value="Empleado:"/>
+                        <h:outputText value="#{compraVacacionalController.selected.empleado.nombreCompleto}"/>
+                        <p:outputLabel value="Año:"  />
+                        <h:outputText value="#{compraVacacionalController.selected.anio.anio}"/>
+                    </p:panelGrid>
+                    
+                    
+                    <p:commandButton actionListener="#{compraVacacionalController.update}" value="#{cadenas.Save}" update="display,:CompraVacacionalListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CompraVacacionalEditDialog');"/>
+                    <p:commandButton value="#{cadenas.Cancel}" onclick="CompraVacacionalEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
