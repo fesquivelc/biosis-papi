@@ -8,6 +8,7 @@
             <description>Keep a copy of the generated servlet class' java code.</description>
         </property>
     </jsp-config>
+    <!--
     <security-role-mapping>
         <role-name>ACCESO</role-name>
         <group-name>Biosis-acceso</group-name>
@@ -20,4 +21,5 @@
         <role-name>ADMINISTRADOR</role-name>
         <group-name>Biosis-admin</group-name>
     </security-role-mapping>
+    -->
 </glassfish-web-app>
