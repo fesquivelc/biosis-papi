@@ -7,7 +7,9 @@ package com.project.jsica.ejb.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -45,58 +48,73 @@ public class RegistroAsistencia implements Serializable {
     @Basic(optional = true)
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Basic(optional = true)
-    @Temporal(TemporalType.TIME)
-    private Date hora;
     @JoinColumn(name = "biometrico_id", referencedColumnName = "id", nullable = true)
     @ManyToOne(optional = true)
     private Biometrico biometricoId;
     @JoinColumn(name = "empleado_id", referencedColumnName = "id", nullable = true)
     @ManyToOne(optional = true)
-    private Empleado empleadoId;
-    @Column(name = "e_o_s")
-    private Boolean eOS;
-    @Column(name = "refrigerio")
-    private Boolean refrigerio;
-    private String tipo;
+    private Empleado empleado;
+    private char tipo; // V = VACACION, L = LICENCIA, P = PERMISO, E = FERIADO, T = TARDANZA, F = FALTA, R = ASIST. REGULAR
     @JoinColumn(name = "turno_original", referencedColumnName = "id", nullable = true)
     @ManyToOne
     private DetalleHorario turnoOriginal;
     @JoinColumn(name = "turno_reemplazo", referencedColumnName = "id", nullable = true)
     @ManyToOne
     private DetalleHorario turnoReemplazo;
+    @Column(name = "tardanza_total")
+    private long milisTardanzaTotal;
+    @Column(name = "trabajo_total")
+    private long milisTrabajoTotal;
     @JoinColumn(name = "permiso_id", referencedColumnName = "id", nullable = true)
     @ManyToOne
     private Permiso permisoId;
+    @JoinColumn(name = "feriado_id", referencedColumnName = "id", nullable = true)
+    @ManyToOne
+    private Feriado feriado;
+    @OneToMany(mappedBy = "registroAsistencia",cascade = CascadeType.ALL)
+    private List<DetalleRegistroAsistencia> detalleRegistroAsistenciaList;
 
-    public Boolean getRefrigerio() {
-        return refrigerio;
+    public Feriado getFeriado() {
+        return feriado;
     }
 
-    public void setRefrigerio(Boolean refrigerio) {
-        this.refrigerio = refrigerio;
+    public void setFeriado(Feriado feriado) {
+        this.feriado = feriado;
     }
 
     
-    public Boolean iseOS() {
-        return eOS;
-    }
-
-    public void seteOS(Boolean eOS) {
-        this.eOS = eOS;
-    }
-
-    public String getTipo() {
+    public char getTipo() {
         return tipo;
     }
-    
-    public boolean getEOS(){
-        return this.eOS;
-    }
 
-    public void setTipo(String tipo) {
+    public void setTipo(char tipo) {
         this.tipo = tipo;
     }
+
+    public long getMilisTardanzaTotal() {
+        return milisTardanzaTotal;
+    }
+
+    public void setMilisTardanzaTotal(long milisTardanzaTotal) {
+        this.milisTardanzaTotal = milisTardanzaTotal;
+    }
+
+    public long getMilisTrabajoTotal() {
+        return milisTrabajoTotal;
+    }
+
+    public void setMilisTrabajoTotal(long milisTrabajoTotal) {
+        this.milisTrabajoTotal = milisTrabajoTotal;
+    }
+
+    public List<DetalleRegistroAsistencia> getDetalleRegistroAsistenciaList() {
+        return detalleRegistroAsistenciaList;
+    }
+
+    public void setDetalleRegistroAsistenciaList(List<DetalleRegistroAsistencia> detalleRegistroAsistenciaList) {
+        this.detalleRegistroAsistenciaList = detalleRegistroAsistenciaList;
+    }
+    
 
     public DetalleHorario getTurnoOriginal() {
         return turnoOriginal;
@@ -129,12 +147,6 @@ public class RegistroAsistencia implements Serializable {
         this.id = id;
     }
 
-    public RegistroAsistencia(Long id, Date fecha, Date hora) {
-        this.id = id;
-        this.fecha = fecha;
-        this.hora = hora;
-    }
-
     public Long getId() {
         return id;
     }
@@ -151,14 +163,6 @@ public class RegistroAsistencia implements Serializable {
         this.fecha = fecha;
     }
 
-    public Date getHora() {
-        return hora;
-    }
-
-    public void setHora(Date hora) {
-        this.hora = hora;
-    }
-
     public Biometrico getBiometricoId() {
         return biometricoId;
     }
@@ -167,12 +171,12 @@ public class RegistroAsistencia implements Serializable {
         this.biometricoId = biometricoId;
     }
 
-    public Empleado getEmpleadoId() {
-        return empleadoId;
+    public Empleado getEmpleado() {
+        return empleado;
     }
 
-    public void setEmpleadoId(Empleado empleadoId) {
-        this.empleadoId = empleadoId;
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
     }
 
     @Override
@@ -193,11 +197,6 @@ public class RegistroAsistencia implements Serializable {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "RegistroAsistencia{" + "id=" + id + ", fecha=" + fecha+ ", hora=" + hora + ", biometricoId=" + biometricoId + ", empleadoId=" + empleadoId + ", eOS=" + eOS + ", tipo=" + tipo + ", turnoOriginal=" + turnoOriginal + ", turnoReemplazo=" + turnoReemplazo + ", permisoId=" + permisoId + '}';
     }
 
 }

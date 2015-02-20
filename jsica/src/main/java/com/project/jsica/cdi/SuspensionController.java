@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.SuspensionFacadeLocal;
+import dao.SuspensionFacadeLocal;
 import com.project.jsica.ejb.entidades.Suspension;
 import java.util.List;
 import java.util.Map;

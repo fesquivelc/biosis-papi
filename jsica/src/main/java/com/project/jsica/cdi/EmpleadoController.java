@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.EmpleadoFacadeLocal;
+import dao.EmpleadoFacadeLocal;
 import com.project.jsica.ejb.entidades.Area;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.FichaGeneralEmpleado;

@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.UsuarioFacadeLocal;
+import dao.UsuarioFacadeLocal;
 import com.project.jsica.ejb.entidades.Usuario;
 import java.util.List;
 import java.util.Map;

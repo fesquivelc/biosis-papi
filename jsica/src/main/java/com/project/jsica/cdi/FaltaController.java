@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.FaltaFacadeLocal;
+import dao.FaltaFacadeLocal;
 import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.Falta;
 import java.util.Date;

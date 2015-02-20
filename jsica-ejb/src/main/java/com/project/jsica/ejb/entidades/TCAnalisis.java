@@ -1,97 +1,59 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.project.jsica.ejb.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.annotation.Generated;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- *
- * @author fesquivelc
- */
 @Entity
-@Table(name = "tc_analisis")
+@Table(name="tc_analisis")
 public class TCAnalisis implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
+    @Column(unique=false,updatable=true,insertable=true,nullable=false,length=255,scale=0,precision=0)
     @Temporal(TemporalType.TIME)
+    @Basic
     private Date hora;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Empleado empleado;
+    @Column(unique=false,updatable=true,insertable=true,nullable=false,length=255,scale=0,precision=0)
+    @Temporal(TemporalType.DATE)
+    @Basic
+    private Date fecha;
+    @Id
+    @Column(name="empleado_nro_documento",unique=false,updatable=true,insertable=true,nullable=true,length=255,scale=0,precision=0)    
+    private String empleado;
 
-    public Date getFecha() {
-        return fecha;
+    public TCAnalisis() {
+
     }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
+   
     public Date getHora() {
-        return hora;
+        return this.hora;
     }
 
     public void setHora(Date hora) {
         this.hora = hora;
     }
-
-    public Empleado getEmpleado() {
-        return empleado;
+   
+    public Date getFecha() {
+        return this.fecha;
     }
 
-    public void setEmpleado(Empleado empleado) {
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+   
+    public String getEmpleado() {
+        return this.empleado;
+    }
+
+    public void setEmpleado(String empleado) {
         this.empleado = empleado;
     }
-    
-    
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TCAnalisis)) {
-            return false;
-        }
-        TCAnalisis other = (TCAnalisis) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.project.jsica.ejb.entidades.TCAnalisis[ id=" + id + " ]";
-    }
-    
 }

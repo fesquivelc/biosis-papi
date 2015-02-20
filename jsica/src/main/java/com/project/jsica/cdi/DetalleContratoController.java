@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.DetalleContratoFacadeLocal;
+import dao.DetalleContratoFacadeLocal;
 import com.project.jsica.ejb.entidades.DetalleContrato;
 import java.util.List;
 import java.util.Map;

@@ -2,7 +2,7 @@ package com.project.jsica.converter;
 
 import com.project.jsica.ejb.entidades.Usuario;
 import com.project.jsica.cdi.util.JsfUtil;
-import com.project.jsica.ejb.dao.UsuarioFacadeLocal;
+import dao.UsuarioFacadeLocal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;

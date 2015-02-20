@@ -3,7 +3,7 @@ package com.project.jsica.cdi;
 import com.project.jsica.ejb.entidades.CompraVacacional;
 import com.project.jsica.cdi3.util.JsfUtil;
 import com.project.jsica.cdi3.util.JsfUtil.PersistAction;
-import com.project.jsica.ejb.dao.CompraVacacionalFacadeLocal;
+import dao.CompraVacacionalFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;

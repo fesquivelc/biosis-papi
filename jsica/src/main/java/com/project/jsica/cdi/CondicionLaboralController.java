@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.CondicionLaboralFacadeLocal;
+import dao.CondicionLaboralFacadeLocal;
 import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.CondicionLaboral;
 import java.text.SimpleDateFormat;

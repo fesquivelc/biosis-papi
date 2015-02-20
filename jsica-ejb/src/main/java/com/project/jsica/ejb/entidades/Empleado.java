@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -32,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author RyuujiMD
  */
+@Table(name = "empleado")
 @Entity
 @XmlRootElement
 @NamedQueries({
@@ -79,7 +81,7 @@ public class Empleado implements Serializable {
     private Character sexo;
     @Size(max = 255)
     private String foto;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
     private List<RegistroAsistencia> registroAsistenciaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoId")
     private List<DetalleContrato> detalleContratoList;
@@ -462,7 +464,7 @@ public class Empleado implements Serializable {
     
     
     public String getCodigo(){
-        return this.docIdentidad;
+        return this.getFichaLaboral().getCodigoTrabajador();
     }
     
     public String getNombreCompleto(){

@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.OcupacionFacadeLocal;
+import dao.OcupacionFacadeLocal;
 import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.Ocupacion;
 import java.util.Date;

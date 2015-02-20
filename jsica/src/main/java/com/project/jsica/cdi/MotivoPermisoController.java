@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.MotivoPermisoFacadeLocal;
+import dao.MotivoPermisoFacadeLocal;
 import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.MotivoPermiso;
 import java.util.Date;

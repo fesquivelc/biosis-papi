@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -26,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author RyuujiMD
  */
+@Table(name = "logs")
 @Entity
 @XmlRootElement
 @NamedQueries({

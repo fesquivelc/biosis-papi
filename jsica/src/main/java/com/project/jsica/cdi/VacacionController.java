@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.VacacionFacadeLocal;
+import dao.VacacionFacadeLocal;
 import com.project.jsica.ejb.entidades.Vacacion;
 import java.util.List;
 import java.util.Map;

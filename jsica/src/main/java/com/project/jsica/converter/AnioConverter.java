@@ -1,8 +1,8 @@
 package com.project.jsica.converter;
 
 import com.project.jsica.cdi.util.JsfUtil;
-import com.project.jsica.ejb.dao.AnioFacade;
-import com.project.jsica.ejb.dao.AnioFacadeLocal;
+import dao.AnioFacade;
+import dao.AnioFacadeLocal;
 import com.project.jsica.ejb.entidades.Anio;
 import java.util.logging.Level;
 import java.util.logging.Logger;

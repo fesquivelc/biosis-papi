@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.GrupoHorarioFacadeLocal;
+import dao.GrupoHorarioFacadeLocal;
 import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.GrupoHorario;
 import java.util.Date;

@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -30,6 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author RyuujiMD
  */
+@Table(name = "horario")
 @Entity
 @XmlRootElement
 @NamedQueries({
@@ -85,11 +87,18 @@ public class Horario implements Serializable {
     @NotNull
     @Column(name = "por_fecha")
     private boolean porFecha;
+//    @Temporal(TemporalType.DATE)
+//    @Column(name = "fecha_inicio")
+//    private Date fechaInicio;
+//    @Temporal(TemporalType.DATE)
+//    @Column(name = "fecha_fin")
+//    private Date fechaFin;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "horarioId")
     private List<DetalleHorario> detalleHorarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "horarioId")
     private List<EmpleadoHorario> empleadoHorarioList;
 
+    
     public Horario() {
     }
 

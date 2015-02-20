@@ -1,11 +1,9 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.RegistroAsistenciaFacadeLocal;
-import com.project.jsica.ejb.dao.RegistroAsistenciaFinalFacadeLocal;
+import dao.RegistroAsistenciaFacadeLocal;
 import com.project.jsica.ejb.entidades.Area;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.RegistroAsistencia;
-import com.project.jsica.ejb.entidades.RegistroAsistencia2;
 import com.project.jsica.lazymodel.RegistroAsistenciaLazyModel;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,7 +29,7 @@ public class RegistroAsistenciaController extends AbstractController<RegistroAsi
     @EJB
     private RegistroAsistenciaFacadeLocal registroAsistenciaFacade;
     @EJB
-    private RegistroAsistenciaFinalFacadeLocal registroFinalDAO;
+    private RegistroAsistenciaFacadeLocal registroFinalDAO;
     @Inject
     private BiometricoController biometricoIdController;
     @Inject
@@ -118,7 +116,7 @@ public class RegistroAsistenciaController extends AbstractController<RegistroAsi
         if (registros != null) {
             int faltas = 0;
             for (RegistroAsistencia r : registros) {
-                if (r.getTipo().charAt(0) == 'F') {
+                if (r.getTipo() == 'F') {
                     faltas++;
                 }
             }
@@ -132,7 +130,7 @@ public class RegistroAsistenciaController extends AbstractController<RegistroAsi
         if (registros != null) {
             int tardanza = 0;
             for (RegistroAsistencia r : registros) {
-                if (r.getTipo().charAt(0) == 'T') {
+                if (r.getTipo() == 'T') {
                     tardanza++;
                 }
             }
@@ -177,7 +175,7 @@ public class RegistroAsistenciaController extends AbstractController<RegistroAsi
      */
     public void prepareEmpleadoId(ActionEvent event) {
         if (this.getSelected() != null && empleadoIdController.getSelected() == null) {
-            empleadoIdController.setSelected(this.getSelected().getEmpleadoId());
+            empleadoIdController.setSelected(this.getSelected().getEmpleado());
         }
     }
 
@@ -234,10 +232,10 @@ public class RegistroAsistenciaController extends AbstractController<RegistroAsi
         return this.registroAsistenciaFacade.search(sql, parametros);
     }
     
-    public List<RegistroAsistencia2> buscarXArea(Area area, Date fechaDesde, Date fechaHasta){
+    public List<RegistroAsistencia> buscarXArea(Area area, Date fechaDesde, Date fechaHasta){
         return registroFinalDAO.buscarXArea(area, fechaDesde, fechaHasta);
     }
-    public List<RegistroAsistencia2> buscarXEmpleado(Empleado empleado, Date fechaDesde, Date fechaHasta){
+    public List<RegistroAsistencia> buscarXEmpleado(Empleado empleado, Date fechaDesde, Date fechaHasta){
         return registroFinalDAO.buscarXEmpleado(empleado, fechaDesde, fechaHasta);
     }
     

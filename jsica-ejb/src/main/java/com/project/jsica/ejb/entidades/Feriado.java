@@ -9,6 +9,7 @@ package com.project.jsica.ejb.entidades;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -48,10 +49,12 @@ public class Feriado implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_inicio")
     private Date fechaInicio;
     @Basic(optional = false)
     @NotNull
     @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_fin")
     private Date fechaFin;
     @JoinColumn(name = "anio_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

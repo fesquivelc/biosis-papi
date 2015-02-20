@@ -1,8 +1,8 @@
 package com.project.jsica.converter;
 
 import com.project.jsica.cdi.util.JsfUtil;
-import com.project.jsica.ejb.dao.EmpleadoPermisoFacade;
-import com.project.jsica.ejb.dao.EmpleadoPermisoFacadeLocal;
+import dao.EmpleadoPermisoFacade;
+import dao.EmpleadoPermisoFacadeLocal;
 import com.project.jsica.ejb.entidades.EmpleadoPermiso;
 import java.util.logging.Level;
 import java.util.logging.Logger;

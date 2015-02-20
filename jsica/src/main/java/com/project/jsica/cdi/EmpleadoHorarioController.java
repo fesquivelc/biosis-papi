@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.EmpleadoHorarioFacadeLocal;
+import dao.EmpleadoHorarioFacadeLocal;
 import com.project.jsica.ejb.entidades.Anio;
 import com.project.jsica.ejb.entidades.DetalleHorario;
 import com.project.jsica.ejb.entidades.Empleado;

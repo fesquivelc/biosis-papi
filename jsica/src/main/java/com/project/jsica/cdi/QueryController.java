@@ -5,7 +5,7 @@
  */
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.UtilitarioAsistenciaLocal;
+import dao.UtilitarioAsistenciaLocal;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;

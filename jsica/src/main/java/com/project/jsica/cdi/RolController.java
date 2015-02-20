@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.RolFacadeLocal;
+import dao.RolFacadeLocal;
 import com.project.jsica.ejb.entidades.Rol;
 import java.util.List;
 import java.util.Map;

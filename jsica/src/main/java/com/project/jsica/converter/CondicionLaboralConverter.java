@@ -1,8 +1,8 @@
 package com.project.jsica.converter;
 
 import com.project.jsica.cdi.util.JsfUtil;
-import com.project.jsica.ejb.dao.CondicionLaboralFacade;
-import com.project.jsica.ejb.dao.CondicionLaboralFacadeLocal;
+import dao.CondicionLaboralFacade;
+import dao.CondicionLaboralFacadeLocal;
 import com.project.jsica.ejb.entidades.CondicionLaboral;
 import java.util.logging.Level;
 import java.util.logging.Logger;

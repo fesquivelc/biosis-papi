@@ -26,33 +26,95 @@ public class DetalleRegistroAsistencia implements Serializable {
     private Long id;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_inicio")
+    private Date fechaInicio;
     
-    private Date fecha;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_fin")
+    private Date fechaFin;
+    
+    @Column(name = "orden")
+    private int orden;
 
+    private char resultado; //OPCIONES: T = TARDANZA; F = FALTA; R = REGULAR
+    
     @Temporal(TemporalType.TIME)
-    @Column(nullable = true)
-    private Date hora;
-
-    @Column(name = "tipo_evento", length = 1) //E = Entrada o S = Salida
-    private String tipoEvento;
+    @Column(nullable = true,name = "hora_inicio")
+    private Date horaInicio;
+    
+    @Temporal(TemporalType.TIME)
+    @Column(nullable = true, name = "hora_fin")
+    private Date horaFin;
     
     @Column(name = "tipo_registro", length = 1) // P = Permiso x hora, R = refrigerio, T = turno
-    private String tipoRegistro;
-    
-    private Integer carga; //numero a sumar, aun no tengo idea para que xD
+    private char tipoRegistro;
     
     @JoinColumn(name = "empleado_permiso_id", referencedColumnName = "id", nullable = true)
     @ManyToOne
     private EmpleadoPermiso permiso;
     
-    @Column(name = "tardanza")
-    private Boolean tardanza;
     
     @Column(name = "milisegundos_tardanza")
     private Long milisegundosTardanza;
     
     @Column(name = "milisegundos_extra")
     private Long milisegundosExtra;
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public int getOrden() {
+        return orden;
+    }
+
+    public void setOrden(int orden) {
+        this.orden = orden;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public char getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(char resultado) {
+        this.resultado = resultado;
+    }
+
+    public Date getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(Date horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public Date getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(Date horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    public char getTipoRegistro() {
+        return tipoRegistro;
+    }
+
+    public void setTipoRegistro(char tipoRegistro) {
+        this.tipoRegistro = tipoRegistro;
+    }
 
     public Long getMilisegundosExtra() {
         return milisegundosExtra;
@@ -62,23 +124,14 @@ public class DetalleRegistroAsistencia implements Serializable {
         this.milisegundosExtra = milisegundosExtra;
     }
 
-    
-    public Boolean getTardanza() {
-        return tardanza;
-    }
-
-    public void setTardanza(Boolean tardanza) {
-        this.tardanza = tardanza;
-    }
-
     public Long getMilisegundosTardanza() {
         return milisegundosTardanza;
     }
 
     public void setMilisegundosTardanza(Long milisegundosTardanza) {
         this.milisegundosTardanza = milisegundosTardanza;
-    }
-
+    }    
+    
     public EmpleadoPermiso getPermiso() {
         return permiso;
     }
@@ -95,62 +148,22 @@ public class DetalleRegistroAsistencia implements Serializable {
         this.id = id;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public Date getHora() {
-        return hora;
-    }
-
-    public void setHora(Date hora) {
-        this.hora = hora;
-    }
-
-    public String getTipoEvento() {
-        return tipoEvento;
-    }
-
-    public void setTipoEvento(String tipoEvento) {
-        this.tipoEvento = tipoEvento;
-    }
-
-    public String getTipoRegistro() {
-        return tipoRegistro;
-    }
-
-    public void setTipoRegistro(String tipoRegistro) {
-        this.tipoRegistro = tipoRegistro;
-    }
-
-    public Integer getCarga() {
-        return carga;
-    }
-
-    public void setCarga(Integer carga) {
-        this.carga = carga;
-    }
-
-    public RegistroAsistencia2 getRegistroAsistencia() {
-        return registroAsistencia;
-    }
-
-    public void setRegistroAsistencia(RegistroAsistencia2 registroAsistencia) {
-        this.registroAsistencia = registroAsistencia;
-    }
-
     
     
     @JoinColumn(name = "registro_asistencia_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(targetEntity = RegistroAsistencia2.class, optional = false)
-    private RegistroAsistencia2 registroAsistencia;
+    @ManyToOne(targetEntity = RegistroAsistencia.class, optional = false)
+    private RegistroAsistencia registroAsistencia;
 
     public DetalleRegistroAsistencia() {
 
+    }
+
+    public RegistroAsistencia getRegistroAsistencia() {
+        return registroAsistencia;
+    }
+
+    public void setRegistroAsistencia(RegistroAsistencia registroAsistencia) {
+        this.registroAsistencia = registroAsistencia;
     }
 
 

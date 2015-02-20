@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.FichaLaboralEmpleadoFacadeLocal;
+import dao.FichaLaboralEmpleadoFacadeLocal;
 import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.FichaLaboralEmpleado;
 import java.util.Date;

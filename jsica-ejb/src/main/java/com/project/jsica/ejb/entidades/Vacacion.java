@@ -48,8 +48,38 @@ public class Vacacion implements Serializable {
     @JoinColumn(name = "empleado_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Empleado empleadoId;
+    @Column(name = "lunes_viernes")
+    private int lunesViernes;
+    @Column(name = "sabados")
+    private int sabados;
+    @Column(name = "domingos")
+    private int domingos;
 
     public Vacacion() {
+    }
+
+    public int getLunesViernes() {
+        return lunesViernes;
+    }
+
+    public void setLunesViernes(int lunesViernes) {
+        this.lunesViernes = lunesViernes;
+    }
+
+    public int getSabados() {
+        return sabados;
+    }
+
+    public void setSabados(int sabados) {
+        this.sabados = sabados;
+    }
+
+    public int getDomingos() {
+        return domingos;
+    }
+
+    public void setDomingos(int domingos) {
+        this.domingos = domingos;
     }
 
     public Vacacion(Long idvacaciones) {

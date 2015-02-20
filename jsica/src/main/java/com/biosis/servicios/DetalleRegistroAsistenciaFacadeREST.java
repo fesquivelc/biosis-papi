@@ -5,7 +5,7 @@
  */
 package com.biosis.servicios;
 
-import com.project.jsica.ejb.dao.AbstractFacade;
+import dao.AbstractFacade;
 import com.project.jsica.ejb.entidades.DetalleRegistroAsistencia;
 import java.util.List;
 import javax.ejb.Stateless;

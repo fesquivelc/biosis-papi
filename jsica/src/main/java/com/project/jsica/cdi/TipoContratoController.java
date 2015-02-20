@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.TipoContratoFacadeLocal;
+import dao.TipoContratoFacadeLocal;
 import com.project.jsica.ejb.entidades.TipoContrato;
 import java.util.List;
 import java.util.Map;

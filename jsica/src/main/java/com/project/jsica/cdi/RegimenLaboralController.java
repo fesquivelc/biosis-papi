@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.RegimenLaboralFacadeLocal;
+import dao.RegimenLaboralFacadeLocal;
 import com.project.jsica.ejb.entidades.RegimenLaboral;
 import java.util.List;
 import java.util.Map;

@@ -1,8 +1,8 @@
 package com.project.jsica.converter;
 
 import com.project.jsica.cdi.util.JsfUtil;
-import com.project.jsica.ejb.dao.BiometricoFacade;
-import com.project.jsica.ejb.dao.BiometricoFacadeLocal;
+import dao.BiometricoFacade;
+import dao.BiometricoFacadeLocal;
 import com.project.jsica.ejb.entidades.Biometrico;
 import java.util.logging.Level;
 import java.util.logging.Logger;

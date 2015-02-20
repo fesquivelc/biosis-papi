@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.UbigeoFacadeLocal;
+import dao.UbigeoFacadeLocal;
 import com.project.jsica.ejb.entidades.Ubigeo;
 import java.util.HashMap;
 import java.util.List;

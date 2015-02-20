@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.NivelEducativoFacadeLocal;
+import dao.NivelEducativoFacadeLocal;
 import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.NivelEducativo;
 import java.util.Date;

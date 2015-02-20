@@ -16,7 +16,7 @@
             </p:panelGrid>
             
         </p:dialog>
-        <p:commandButton value="RECARGAR MARCACIONES" action="#{analisisAsistenciaBean.recargar()}" update="datalist"/>
+        <p:commandButton value="RECARGAR MARCACIONES" action="#{analisisAsistenciaBean.analizar()}" update="datalist"/>
         <p:panel header="#{myBundle.ListRegistroAsistenciaTitle}">
             <p:dataTable id="datalist"
                          value="#{registroAsistenciaController.lazyModel}"
@@ -41,26 +41,9 @@
 
                 <p:column >
                     <f:facet name="header">
-                        <h:outputText value="Hora"/>
-                    </f:facet>
-                    <h:outputText value="#{item.hora}">
-                        <f:convertDateTime pattern="HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
-
-
-                <p:column >
-                    <f:facet name="header">
                         <h:outputText value="Empleado"/>
                     </f:facet>
-                    <h:outputText value="#{item.empleadoId.apellidos} #{item.empleadoId.nombres}"/>
-                </p:column>
-
-                <p:column >
-                    <f:facet name="header">
-                        <h:outputText value="Evento"/>
-                    </f:facet>
-                    <h:outputText value="#{item.EOS}" converter="eventoAsistenciaConverter"/>
+                    <h:outputText value="#{item.empleado.apellidos} #{item.empleado.nombres}"/>
                 </p:column>
 
                 <p:column >

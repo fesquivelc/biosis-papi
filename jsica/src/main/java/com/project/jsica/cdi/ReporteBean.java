@@ -6,16 +6,13 @@
 package com.project.jsica.cdi;
 
 import com.biosis.reportes.entidades.ReportePermisoBean;
+import com.personal.utiles.FechaUtil;
 import com.project.jsica.cdi.util.JsfUtil;
 import com.project.jsica.ejb.entidades.Area;
 import com.project.jsica.ejb.entidades.DetalleRegistroAsistencia;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.EmpleadoPermiso;
-import com.project.jsica.ejb.entidades.Permiso;
 import com.project.jsica.ejb.entidades.RegistroAsistencia;
-import com.project.jsica.ejb.entidades.RegistroAsistencia2;
-import com.project.jsica.ejb.entidades.Servicio;
-import com.project.util.FechaUtil;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -25,7 +22,6 @@ import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -63,16 +59,16 @@ public class ReporteBean implements Serializable {
     private Boolean conGoce;
     private int opcion = 1;
     private List<ReportePermisoBean> reportePermisos;
-    private List<RegistroAsistencia2> registroAsistencia;
+    private List<RegistroAsistencia> registroAsistencia;
     
     
-    private RegistroAsistencia2 registroSeleccionado;
+    private RegistroAsistencia registroSeleccionado;
 
-    public RegistroAsistencia2 getRegistroSeleccionado() {
+    public RegistroAsistencia getRegistroSeleccionado() {
         return registroSeleccionado;
     }
 
-    public void setRegistroSeleccionado(RegistroAsistencia2 registroSeleccionado) {
+    public void setRegistroSeleccionado(RegistroAsistencia registroSeleccionado) {
         this.registroSeleccionado = registroSeleccionado;
     }
 
@@ -141,7 +137,7 @@ public class ReporteBean implements Serializable {
     
     
 
-    public List<RegistroAsistencia2> getReporteAsistencias(){
+    public List<RegistroAsistencia> getReporteAsistencias(){
         if(opcion == 1){
             LOG.info("REPORTE DE ASISTENCIA POR EMPLEADO");
             return registroAsistenciaController.buscarXEmpleado(empleado, desde, hasta);
@@ -196,186 +192,186 @@ public class ReporteBean implements Serializable {
 
     }
     
-    public List getReporteHorasExtraTotal() {
-        List<Empleado> empleados = this.getEmpleados(opcion);
-        List<EmpleadoPermiso> permisos;
-        List<ReportePermisoBean> reporte = new ArrayList<>();
-        LOG.info("VIENE AL METODO REPORTE PERMISOS");
-        for (Empleado emp : empleados) {
-            permisos = this.empleadoPermisoController.buscarXEmpleado(emp, desde, hasta, conGoce);
+//    public List getReporteHorasExtraTotal() {
+//        List<Empleado> empleados = this.getEmpleados(opcion);
+//        List<EmpleadoPermiso> permisos;
+//        List<ReportePermisoBean> reporte = new ArrayList<>();
+//        LOG.info("VIENE AL METODO REPORTE PERMISOS");
+//        for (Empleado emp : empleados) {
+//            permisos = this.empleadoPermisoController.buscarXEmpleado(emp, desde, hasta, conGoce);
+//
+//            List<DetalleRegistroAsistencia> detalles;
+//            for (EmpleadoPermiso permiso : permisos) {
+//                
+//                detalles = permiso.getRegistroList();
+//
+//                if (!detalles.isEmpty()) {
+//                    DetalleRegistroAsistencia detalleEntrada = detalles.get(0);
+//                    DetalleRegistroAsistencia detalleSalida = detalles.get(1);
+//                    DetalleRegistroAsistencia aux;
+//
+//                    if (detalleEntrada.getCarga() != 23 && detalleEntrada.getCarga() != 23) {
+//                        if (detalleEntrada.getHora().compareTo(detalleSalida.getHora()) < 0) {
+//                            aux = detalleEntrada;
+//                            detalleEntrada = detalleSalida;
+//                            detalleSalida = aux;
+//                        }
+//
+//                        long milisegundosDiferencia = detalleEntrada.getHora().getTime() - detalleSalida.getHora().getTime();
+//
+//                        int hora[] = FechaUtil.milisToTime(milisegundosDiferencia);
+//
+//                        ReportePermisoBean reporteBean = new ReportePermisoBean();
+//                        reporteBean.setCodigo(emp.getFichaLaboral().getCodigoTrabajador());
+//                        reporteBean.setNombre(emp.getApellidos() + " " +emp.getNombres());
+//                        reporteBean.setHoraInicio(detalleSalida.getHora());
+//                        reporteBean.setHoraFin(detalleEntrada.getHora());
+//                        reporteBean.setHoras(hora[0]);
+//                        reporteBean.setMinutos(hora[1]);
+//                        reporteBean.setSegundos(hora[2]);
+//                        reporteBean.setFechaReal(detalleEntrada.getFecha());
+//                        reporteBean.setMotivo(permiso.getPermisoId().getMotivoPermisoCodigo().getNombre());
+//
+//                        reporte.add(reporteBean);
+//
+//                    }
+//                }
+//
+//            }
+//        }
+//
+//        return reporte;
+//    }
 
-            List<DetalleRegistroAsistencia> detalles;
-            for (EmpleadoPermiso permiso : permisos) {
-                
-                detalles = permiso.getRegistroList();
-
-                if (!detalles.isEmpty()) {
-                    DetalleRegistroAsistencia detalleEntrada = detalles.get(0);
-                    DetalleRegistroAsistencia detalleSalida = detalles.get(1);
-                    DetalleRegistroAsistencia aux;
-
-                    if (detalleEntrada.getCarga() != 23 && detalleEntrada.getCarga() != 23) {
-                        if (detalleEntrada.getHora().compareTo(detalleSalida.getHora()) < 0) {
-                            aux = detalleEntrada;
-                            detalleEntrada = detalleSalida;
-                            detalleSalida = aux;
-                        }
-
-                        long milisegundosDiferencia = detalleEntrada.getHora().getTime() - detalleSalida.getHora().getTime();
-
-                        int hora[] = FechaUtil.milisToTime(milisegundosDiferencia);
-
-                        ReportePermisoBean reporteBean = new ReportePermisoBean();
-                        reporteBean.setCodigo(emp.getFichaLaboral().getCodigoTrabajador());
-                        reporteBean.setNombre(emp.getApellidos() + " " +emp.getNombres());
-                        reporteBean.setHoraInicio(detalleSalida.getHora());
-                        reporteBean.setHoraFin(detalleEntrada.getHora());
-                        reporteBean.setHoras(hora[0]);
-                        reporteBean.setMinutos(hora[1]);
-                        reporteBean.setSegundos(hora[2]);
-                        reporteBean.setFechaReal(detalleEntrada.getFecha());
-                        reporteBean.setMotivo(permiso.getPermisoId().getMotivoPermisoCodigo().getNombre());
-
-                        reporte.add(reporteBean);
-
-                    }
-                }
-
-            }
-        }
-
-        return reporte;
-    }
-
-    public void reporteHorasExtra(int opcion) {
-        this.opcion = opcion;
-        SimpleDateFormat dtFecha = new SimpleDateFormat("dd.MM.yyyy");
-        SimpleDateFormat dtHora = new SimpleDateFormat("HH:mm");
-
-        List<Empleado> empleados = this.getEmpleados(opcion);
-
-        OutputStream out = null;
-
-        try {
-            String header = "REPORTE_DE_HORAS_EXTRA_DEL_" + dtFecha.format(desde) + "_AL_" + dtFecha.format(hasta) + ".xls";
-            out = JsfUtil.getOutputStream(header, JsfUtil.ContentType.XLS);
-
-            WritableWorkbook w = Workbook.createWorkbook(out);
-            WritableSheet hojaResumen = w.createSheet("RESUMEN", 0);
-            WritableSheet hojaDetalle = w.createSheet("DETALLE", 1);
-
-            String[] tituloResumen = {"CODIGO", "APELLIDOS Y NOMBRES", "TOTAL HORAS", "TOTAL MINUTOS", "TOTAL SEGUNDOS"};
-            String[] subtituloDetalle = {"FECHA", "HORAS", "MINUTOS", "SEGUNDOS"};
-            String[] tituloDetalle = {"CODIGO", "APELLIDOS Y NOMBRES"};
-            Integer[] anchurasResumen = {10, 40, 10, 10, 10};
-            Integer[] anchurasDetalle = {10, 10, 10, 10};
-
-            List<String[]> resumen = new ArrayList<>();
-
-            // CODIGO - APELLIDOS Y NOMBRES
-            int filaResumen = 0;
-            int filaDetalle = 0;
-
-            for (Empleado emp : empleados) {
-                List<RegistroAsistencia> registrosSalida = registroAsistenciaController.getRegistros(false, false, false, emp, desde, hasta);
-                List<String[]> detalles = new ArrayList<>();
-
-                //LLENANDO EL DETALLE
-                hojaDetalle.mergeCells(1, filaDetalle, 3, filaDetalle);
-                filaDetalle++;
-                agregarCelda(hojaDetalle, filaDetalle, 0, emp.getFichaLaboral().getCodigoTrabajador());
-                agregarCelda(hojaDetalle, filaDetalle, 1, emp.getApellidos() + emp.getNombres());
-                filaDetalle++;
-
-                int filaInicio = filaDetalle;
-                long milisegundosTotales = 0;
-
-                for (RegistroAsistencia ra : registrosSalida) {
-                    long diferencia = ra.getHora().getTime() - ra.getTurnoOriginal().getJornadaCodigo().getHSalida().getTime();
-                    if (diferencia > 0) {
-                        int horas = (int) diferencia / (60 * 60 * 1000);
-                        int minutos = (int) (Math.abs(diferencia - (horas * 60 * 60 * 1000)) / (60 * 1000));
-                        String detalle[] = {dtFecha.format(ra.getFecha()), horas + "", minutos + "", ""};
-                        detalles.add(detalle);
-                        milisegundosTotales += diferencia;
-
-                        filaDetalle++;
-                    }
-                }
-
-                //SE AGREGA LA DATA DEL DETALLE A LA HOJA
-                this.agregarData(hojaDetalle, subtituloDetalle, detalles, anchurasDetalle, filaInicio);
-
-                filaDetalle++;
-
-                //LLENADO DEL RESUMEN
-                int horas = (int) milisegundosTotales / (60 * 60 * 1000);
-                int minutos = (int) (Math.abs(milisegundosTotales - (horas * 60 * 60 * 1000)) / (60 * 1000));
-
-                String[] resmn = {emp.getFichaLaboral().getCodigoTrabajador(), emp.getApellidos() + " " + emp.getNombres(), horas + "", minutos + "", ""};
-                resumen.add(resmn);
-            }
-
-            this.agregarData(hojaResumen, tituloResumen, resumen, anchurasResumen);
-
-            w.write();
-            w.close();
-
-            FacesContext.getCurrentInstance().responseComplete();
-        } catch (Exception e) {
-        }
-    }
-
-    public List getReportePermisos() {
-        List<Empleado> empleados = this.getEmpleados(opcion);
-        List<EmpleadoPermiso> permisos;
-        List<ReportePermisoBean> reporte = new ArrayList<>();
-        LOG.info("VIENE AL METODO REPORTE PERMISOS");
-        for (Empleado emp : empleados) {
-            permisos = this.empleadoPermisoController.buscarXEmpleado(emp, desde, hasta, conGoce);
-
-            List<DetalleRegistroAsistencia> detalles;
-            for (EmpleadoPermiso permiso : permisos) {
-                
-                detalles = permiso.getRegistroList();
-
-                if (!detalles.isEmpty()) {
-                    DetalleRegistroAsistencia detalleEntrada = detalles.get(0);
-                    DetalleRegistroAsistencia detalleSalida = detalles.get(1);
-                    DetalleRegistroAsistencia aux;
-
-                    if (detalleEntrada.getCarga() != 23 && detalleEntrada.getCarga() != 23) {
-                        if (detalleEntrada.getHora().compareTo(detalleSalida.getHora()) < 0) {
-                            aux = detalleEntrada;
-                            detalleEntrada = detalleSalida;
-                            detalleSalida = aux;
-                        }
-
-                        long milisegundosDiferencia = detalleEntrada.getHora().getTime() - detalleSalida.getHora().getTime();
-
-                        int hora[] = FechaUtil.milisToTime(milisegundosDiferencia);
-
-                        ReportePermisoBean reporteBean = new ReportePermisoBean();
-                        reporteBean.setCodigo(emp.getFichaLaboral().getCodigoTrabajador());
-                        reporteBean.setNombre(emp.getApellidos() + " " +emp.getNombres());
-                        reporteBean.setHoraInicio(detalleSalida.getHora());
-                        reporteBean.setHoraFin(detalleEntrada.getHora());
-                        reporteBean.setHoras(hora[0]);
-                        reporteBean.setMinutos(hora[1]);
-                        reporteBean.setSegundos(hora[2]);
-                        reporteBean.setFechaReal(detalleEntrada.getFecha());
-                        reporteBean.setMotivo(permiso.getPermisoId().getMotivoPermisoCodigo().getNombre());
-
-                        reporte.add(reporteBean);
-
-                    }
-                }
-
-            }
-        }
-
-        return reporte;
-    }
+//    public void reporteHorasExtra(int opcion) {
+//        this.opcion = opcion;
+//        SimpleDateFormat dtFecha = new SimpleDateFormat("dd.MM.yyyy");
+//        SimpleDateFormat dtHora = new SimpleDateFormat("HH:mm");
+//
+//        List<Empleado> empleados = this.getEmpleados(opcion);
+//
+//        OutputStream out = null;
+//
+//        try {
+//            String header = "REPORTE_DE_HORAS_EXTRA_DEL_" + dtFecha.format(desde) + "_AL_" + dtFecha.format(hasta) + ".xls";
+//            out = JsfUtil.getOutputStream(header, JsfUtil.ContentType.XLS);
+//
+//            WritableWorkbook w = Workbook.createWorkbook(out);
+//            WritableSheet hojaResumen = w.createSheet("RESUMEN", 0);
+//            WritableSheet hojaDetalle = w.createSheet("DETALLE", 1);
+//
+//            String[] tituloResumen = {"CODIGO", "APELLIDOS Y NOMBRES", "TOTAL HORAS", "TOTAL MINUTOS", "TOTAL SEGUNDOS"};
+//            String[] subtituloDetalle = {"FECHA", "HORAS", "MINUTOS", "SEGUNDOS"};
+//            String[] tituloDetalle = {"CODIGO", "APELLIDOS Y NOMBRES"};
+//            Integer[] anchurasResumen = {10, 40, 10, 10, 10};
+//            Integer[] anchurasDetalle = {10, 10, 10, 10};
+//
+//            List<String[]> resumen = new ArrayList<>();
+//
+//            // CODIGO - APELLIDOS Y NOMBRES
+//            int filaResumen = 0;
+//            int filaDetalle = 0;
+//
+//            for (Empleado emp : empleados) {
+//                List<RegistroAsistencia> registrosSalida = registroAsistenciaController.getRegistros(false, false, false, emp, desde, hasta);
+//                List<String[]> detalles = new ArrayList<>();
+//
+//                //LLENANDO EL DETALLE
+//                hojaDetalle.mergeCells(1, filaDetalle, 3, filaDetalle);
+//                filaDetalle++;
+//                agregarCelda(hojaDetalle, filaDetalle, 0, emp.getFichaLaboral().getCodigoTrabajador());
+//                agregarCelda(hojaDetalle, filaDetalle, 1, emp.getApellidos() + emp.getNombres());
+//                filaDetalle++;
+//
+//                int filaInicio = filaDetalle;
+//                long milisegundosTotales = 0;
+//
+//                for (RegistroAsistencia ra : registrosSalida) {
+//                    long diferencia = ra.getHora().getTime() - ra.getTurnoOriginal().getJornadaCodigo().getHSalida().getTime();
+//                    if (diferencia > 0) {
+//                        int horas = (int) diferencia / (60 * 60 * 1000);
+//                        int minutos = (int) (Math.abs(diferencia - (horas * 60 * 60 * 1000)) / (60 * 1000));
+//                        String detalle[] = {dtFecha.format(ra.getFecha()), horas + "", minutos + "", ""};
+//                        detalles.add(detalle);
+//                        milisegundosTotales += diferencia;
+//
+//                        filaDetalle++;
+//                    }
+//                }
+//
+//                //SE AGREGA LA DATA DEL DETALLE A LA HOJA
+//                this.agregarData(hojaDetalle, subtituloDetalle, detalles, anchurasDetalle, filaInicio);
+//
+//                filaDetalle++;
+//
+//                //LLENADO DEL RESUMEN
+//                int horas = (int) milisegundosTotales / (60 * 60 * 1000);
+//                int minutos = (int) (Math.abs(milisegundosTotales - (horas * 60 * 60 * 1000)) / (60 * 1000));
+//
+//                String[] resmn = {emp.getFichaLaboral().getCodigoTrabajador(), emp.getApellidos() + " " + emp.getNombres(), horas + "", minutos + "", ""};
+//                resumen.add(resmn);
+//            }
+//
+//            this.agregarData(hojaResumen, tituloResumen, resumen, anchurasResumen);
+//
+//            w.write();
+//            w.close();
+//
+//            FacesContext.getCurrentInstance().responseComplete();
+//        } catch (Exception e) {
+//        }
+//    }
+//
+//    public List getReportePermisos() {
+//        List<Empleado> empleados = this.getEmpleados(opcion);
+//        List<EmpleadoPermiso> permisos;
+//        List<ReportePermisoBean> reporte = new ArrayList<>();
+//        LOG.info("VIENE AL METODO REPORTE PERMISOS");
+//        for (Empleado emp : empleados) {
+//            permisos = this.empleadoPermisoController.buscarXEmpleado(emp, desde, hasta, conGoce);
+//
+//            List<DetalleRegistroAsistencia> detalles;
+//            for (EmpleadoPermiso permiso : permisos) {
+//                
+//                detalles = permiso.getRegistroList();
+//
+//                if (!detalles.isEmpty()) {
+//                    DetalleRegistroAsistencia detalleEntrada = detalles.get(0);
+//                    DetalleRegistroAsistencia detalleSalida = detalles.get(1);
+//                    DetalleRegistroAsistencia aux;
+//
+//                    if (detalleEntrada.getCarga() != 23 && detalleEntrada.getCarga() != 23) {
+//                        if (detalleEntrada.getHora().compareTo(detalleSalida.getHora()) < 0) {
+//                            aux = detalleEntrada;
+//                            detalleEntrada = detalleSalida;
+//                            detalleSalida = aux;
+//                        }
+//
+//                        long milisegundosDiferencia = detalleEntrada.getHora().getTime() - detalleSalida.getHora().getTime();
+//
+//                        int hora[] = FechaUtil.milisToTime(milisegundosDiferencia);
+//
+//                        ReportePermisoBean reporteBean = new ReportePermisoBean();
+//                        reporteBean.setCodigo(emp.getFichaLaboral().getCodigoTrabajador());
+//                        reporteBean.setNombre(emp.getApellidos() + " " +emp.getNombres());
+//                        reporteBean.setHoraInicio(detalleSalida.getHora());
+//                        reporteBean.setHoraFin(detalleEntrada.getHora());
+//                        reporteBean.setHoras(hora[0]);
+//                        reporteBean.setMinutos(hora[1]);
+//                        reporteBean.setSegundos(hora[2]);
+//                        reporteBean.setFechaReal(detalleEntrada.getFecha());
+//                        reporteBean.setMotivo(permiso.getPermisoId().getMotivoPermisoCodigo().getNombre());
+//
+//                        reporte.add(reporteBean);
+//
+//                    }
+//                }
+//
+//            }
+//        }
+//
+//        return reporte;
+//    }
 
 //    public void reportePermisos(int opcion) {
 //        this.opcion = opcion;

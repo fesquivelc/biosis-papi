@@ -1,8 +1,8 @@
 package com.project.jsica.converter;
 
 import com.project.jsica.cdi.util.JsfUtil;
-import com.project.jsica.ejb.dao.ContratoFacade;
-import com.project.jsica.ejb.dao.ContratoFacadeLocal;
+import dao.ContratoFacade;
+import dao.ContratoFacadeLocal;
 import com.project.jsica.ejb.entidades.Contrato;
 import java.util.logging.Level;
 import java.util.logging.Logger;

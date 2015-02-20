@@ -1,8 +1,8 @@
 package com.project.jsica.converter;
 
 import com.project.jsica.cdi.util.JsfUtil;
-import com.project.jsica.ejb.dao.EmpleadoHorarioFacade;
-import com.project.jsica.ejb.dao.EmpleadoHorarioFacadeLocal;
+import dao.EmpleadoHorarioFacade;
+import dao.EmpleadoHorarioFacadeLocal;
 import com.project.jsica.ejb.entidades.EmpleadoHorario;
 import java.util.logging.Level;
 import java.util.logging.Logger;

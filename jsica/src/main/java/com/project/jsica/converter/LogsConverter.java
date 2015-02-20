@@ -1,7 +1,7 @@
 package com.project.jsica.converter;
 
 import com.project.jsica.cdi.util.JsfUtil;
-import com.project.jsica.ejb.dao.LogsFacadeLocal;
+import dao.LogsFacadeLocal;
 import com.project.jsica.ejb.entidades.Logs;
 import java.util.logging.Level;
 import java.util.logging.Logger;

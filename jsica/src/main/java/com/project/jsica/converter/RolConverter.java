@@ -2,7 +2,7 @@ package com.project.jsica.converter;
 
 import com.project.jsica.ejb.entidades.Rol;
 import com.project.jsica.cdi.util.JsfUtil;
-import com.project.jsica.ejb.dao.RolFacadeLocal;
+import dao.RolFacadeLocal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;

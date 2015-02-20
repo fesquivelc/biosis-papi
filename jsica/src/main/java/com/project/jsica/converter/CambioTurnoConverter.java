@@ -1,8 +1,8 @@
 package com.project.jsica.converter;
 
 import com.project.jsica.cdi.util.JsfUtil;
-import com.project.jsica.ejb.dao.CambioTurnoFacade;
-import com.project.jsica.ejb.dao.CambioTurnoFacadeLocal;
+import dao.CambioTurnoFacade;
+import dao.CambioTurnoFacadeLocal;
 import com.project.jsica.ejb.entidades.CambioTurno;
 import java.util.logging.Level;
 import java.util.logging.Logger;

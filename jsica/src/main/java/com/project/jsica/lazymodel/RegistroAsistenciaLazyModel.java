@@ -6,7 +6,7 @@
 
 package com.project.jsica.lazymodel;
 
-import com.project.jsica.ejb.dao.RegistroAsistenciaFacadeLocal;
+import dao.RegistroAsistenciaFacadeLocal;
 import com.project.jsica.ejb.entidades.RegistroAsistencia;
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.TipoEmpleadoFacadeLocal;
+import dao.TipoEmpleadoFacadeLocal;
 import com.project.jsica.ejb.entidades.TipoEmpleado;
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.AnioFacadeLocal;
+import dao.AnioFacadeLocal;
 import com.project.jsica.ejb.entidades.Anio;
 import com.project.jsica.ejb.entidades.Bitacora;
 import java.text.SimpleDateFormat;

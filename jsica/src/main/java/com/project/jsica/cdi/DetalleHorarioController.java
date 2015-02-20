@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.DetalleHorarioFacadeLocal;
+import dao.DetalleHorarioFacadeLocal;
 import com.project.jsica.ejb.entidades.DetalleHorario;
 import java.util.List;
 import java.util.Map;

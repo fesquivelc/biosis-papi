@@ -3,7 +3,7 @@ package com.project.jsica.cdi;
 import com.project.jsica.ejb.entidades.InterrupcionVacacional;
 import com.project.jsica.cdi3.util.JsfUtil;
 import com.project.jsica.cdi3.util.JsfUtil.PersistAction;
-import com.project.jsica.ejb.dao.InterrupcionVacacionalFacadeLocal;
+import dao.InterrupcionVacacionalFacadeLocal;
 
 import java.io.Serializable;
 import java.util.List;

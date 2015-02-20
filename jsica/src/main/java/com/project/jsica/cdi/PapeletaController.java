@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.PapeletaFacadeLocal;
+import dao.PapeletaFacadeLocal;
 import com.project.jsica.ejb.entidades.Area;
 import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.Empleado;

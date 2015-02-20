@@ -1,8 +1,8 @@
 package com.project.jsica.converter;
 
 import com.project.jsica.cdi.util.JsfUtil;
-import com.project.jsica.ejb.dao.AreaFacade;
-import com.project.jsica.ejb.dao.AreaFacadeLocal;
+import dao.AreaFacade;
+import dao.AreaFacadeLocal;
 import com.project.jsica.ejb.entidades.Area;
 import java.util.logging.Level;
 import java.util.logging.Logger;

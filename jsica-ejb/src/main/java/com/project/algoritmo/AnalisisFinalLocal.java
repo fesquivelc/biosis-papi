@@ -18,6 +18,7 @@ import javax.ejb.Local;
 @Local
 public interface AnalisisFinalLocal extends Serializable{
 
-    void iniciarAnalisis(List<Empleado> empleados, Date fechaInicio, Date horaInicio, Date fechaFin, Date horaFin);
+    public void analizarEmpleados(List<Empleado> empleados);
+
     
 }

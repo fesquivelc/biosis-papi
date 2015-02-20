@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.BiometricoFacadeLocal;
+import dao.BiometricoFacadeLocal;
 import com.project.jsica.ejb.entidades.Biometrico;
 import com.project.jsica.ejb.entidades.Bitacora;
 import java.text.SimpleDateFormat;

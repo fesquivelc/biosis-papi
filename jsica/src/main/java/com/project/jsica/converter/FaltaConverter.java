@@ -1,8 +1,8 @@
 package com.project.jsica.converter;
 
 import com.project.jsica.cdi.util.JsfUtil;
-import com.project.jsica.ejb.dao.FaltaFacade;
-import com.project.jsica.ejb.dao.FaltaFacadeLocal;
+import dao.FaltaFacade;
+import dao.FaltaFacadeLocal;
 import com.project.jsica.ejb.entidades.Falta;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -41,7 +41,7 @@ public class MotivoPermiso implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 4)
-    private String codigo;
+    private String codigo; // VAC : VACACIONES ; LIC = LICENCIAS
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)

@@ -31,7 +31,6 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.biosis.servicios.DetalleRegistroAsistenciaFacadeREST.class);
         resources.add(com.biosis.servicios.NewCrossOriginResourceSharingFilter.class);
-        resources.add(com.biosis.servicios.RegistroAsistencia2FacadeREST.class);
     }
     
 }

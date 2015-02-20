@@ -2,7 +2,7 @@ package com.project.jsica.converter;
 
 import com.project.jsica.ejb.entidades.RegimenLaboral;
 import com.project.jsica.cdi.util.JsfUtil;
-import com.project.jsica.ejb.dao.RegimenLaboralFacadeLocal;
+import dao.RegimenLaboralFacadeLocal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;

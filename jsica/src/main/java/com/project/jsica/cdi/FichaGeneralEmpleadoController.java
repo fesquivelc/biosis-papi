@@ -1,6 +1,6 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.FichaGeneralEmpleadoFacadeLocal;
+import dao.FichaGeneralEmpleadoFacadeLocal;
 import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.FichaGeneralEmpleado;
 import java.util.Date;

@@ -1,9 +1,9 @@
 package com.project.jsica.cdi;
 
-import com.project.jsica.ejb.dao.CambioTurnoFacadeLocal;
-import com.project.jsica.ejb.dao.DetalleHorarioFacade;
-import com.project.jsica.ejb.dao.DetalleHorarioFacadeLocal;
-import com.project.jsica.ejb.dao.EmpleadoHorarioFacadeLocal;
+import dao.CambioTurnoFacadeLocal;
+import dao.DetalleHorarioFacade;
+import dao.DetalleHorarioFacadeLocal;
+import dao.EmpleadoHorarioFacadeLocal;
 import com.project.jsica.ejb.entidades.Bitacora;
 import com.project.jsica.ejb.entidades.CambioTurno;
 import com.project.jsica.ejb.entidades.DetalleHorario;

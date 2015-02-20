@@ -26,12 +26,12 @@ public class LoginBean implements Serializable {
     public String logout() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        try {
-            LOG.info("ENTRA AL LOGOUT");
-            request.logout();            
-        } catch (ServletException e) {
-            context.addMessage(null, new FacesMessage("Logout failed."));
-        }
+//        try {
+//            LOG.info("ENTRA AL LOGOUT");
+//            request.logout();            
+//        } catch (Exception e) {
+//            context.addMessage(null, new FacesMessage("Logout failed."));
+//        }
         return "/index";
         
     }
