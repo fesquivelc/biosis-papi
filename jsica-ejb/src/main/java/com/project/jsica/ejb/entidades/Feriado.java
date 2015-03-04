@@ -8,6 +8,7 @@ package com.project.jsica.ejb.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,20 +31,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author RyuujiMD
  */
 @Entity
-@Table(name = "feriados")
+@Table(name = "feriado")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Feriado.findAll", query = "SELECT f FROM Feriado f"),
-    @NamedQuery(name = "Feriado.findByIdferiados", query = "SELECT f FROM Feriado f WHERE f.idferiados = :idferiados"),
-    @NamedQuery(name = "Feriado.findByNombre", query = "SELECT f FROM Feriado f WHERE f.nombre = :nombre"),
-    @NamedQuery(name = "Feriado.findByFechaInicio", query = "SELECT f FROM Feriado f WHERE f.fechaInicio = :fechaInicio"),
-    @NamedQuery(name = "Feriado.findByFechaFin",query = "SELECT f FROM Feriado f WHERE f.fechaFin = :fechaFin")})
 public class Feriado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    private Long idferiados;
+    private Long id;
     @Size(max = 45)
     private String nombre;
     @Basic(optional = false)
@@ -63,23 +58,14 @@ public class Feriado implements Serializable {
     public Feriado() {
     }
 
-    public Feriado(Long idferiados) {
-        this.idferiados = idferiados;
+    public Long getId() {
+        return id;
     }
 
-    public Feriado(Long idferiados, Date fechaInicio, Date fechaFin) {
-        this.idferiados = idferiados;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+    public void setId(Long id) {
+        this.id = id;
     }
-
-    public Long getIdferiados() {
-        return idferiados;
-    }
-
-    public void setIdferiados(Long idferiados) {
-        this.idferiados = idferiados;
-    }
+    
 
     public String getNombre() {
         return nombre;
@@ -115,27 +101,25 @@ public class Feriado implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idferiados != null ? idferiados.hashCode() : 0);
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Feriado)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Feriado other = (Feriado) object;
-        if ((this.idferiados == null && other.idferiados != null) || (this.idferiados != null && !this.idferiados.equals(other.idferiados))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Feriado other = (Feriado) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "com.project.jsica.ejb.entidades.Feriado[ idferiados=" + idferiados + " ]";
-    }
+    
     
 }

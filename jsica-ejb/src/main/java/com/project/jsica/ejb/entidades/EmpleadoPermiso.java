@@ -30,16 +30,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "empleado_permiso")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "EmpleadoPermiso.findAll", query = "SELECT e FROM EmpleadoPermiso e"),
-    @NamedQuery(name = "EmpleadoPermiso.findById", query = "SELECT e FROM EmpleadoPermiso e WHERE e.id = :id")})
 public class EmpleadoPermiso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Long id;
-    @JoinColumn(name = "empleado_id", referencedColumnName = "id")
+    @JoinColumn(name = "empleado_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = false)
     private Empleado empleadoId;
     @JoinColumn(name = "permiso_id", referencedColumnName = "id")

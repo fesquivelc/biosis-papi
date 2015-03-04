@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,15 +38,24 @@ import javax.xml.bind.annotation.XmlTransient;
 public class NivelEducativo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     private String nombre;
+    @Column
+    private String abreviatura;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "nivelEducativoId")
     private List<FichaGeneralEmpleado> fichaGeneralEmpleadoList;
+
+    public String getAbreviatura() {
+        return abreviatura;
+    }
+
+    public void setAbreviatura(String abreviatura) {
+        this.abreviatura = abreviatura;
+    }
 
     public NivelEducativo() {
     }

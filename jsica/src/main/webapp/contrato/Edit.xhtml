@@ -102,17 +102,7 @@
                                                    itemValue="#{regimenLaboralIdItem}"
                                                    itemLabel="#{regimenLaboralIdItem.nombre}"
                                                    />
-                                </p:selectOneMenu>
-                                
-                                <p:outputLabel value="#{myBundle.CreateContratoLabel_tipoContratoId}" for="tipoContratoId" />
-                                <p:selectOneMenu id="tipoContratoId" value="#{contratoController.selected.tipoContratoId}" required="true" requiredMessage="#{myBundle.CreateContratoRequiredMessage_tipoContratoId}" converter="tipoContratoConverter">
-                                    <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                                    <f:selectItems value="#{tipoContratoController.items}"
-                                                   var="tipoContratoIdItem"
-                                                   itemValue="#{tipoContratoIdItem}"
-                                                   itemLabel="#{tipoContratoIdItem.nombre}"
-                                                   />
-                                </p:selectOneMenu>                           
+                                </p:selectOneMenu>                          
                             </p:panelGrid>
                         </p:tab>                        
                     </p:tabView>

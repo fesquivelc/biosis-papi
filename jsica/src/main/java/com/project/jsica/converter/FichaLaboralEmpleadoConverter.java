@@ -46,7 +46,7 @@ public class FichaLaboralEmpleadoConverter implements Converter {
         }
         if (object instanceof FichaLaboralEmpleado) {
             FichaLaboralEmpleado o = (FichaLaboralEmpleado) object;
-            return getStringKey(o.getId());
+            return o.getCodigoTrabajador();
         } else {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), FichaLaboralEmpleado.class.getName()});
             return null;

@@ -31,11 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "empleado_horario")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "EmpleadoHorario.findAll", query = "SELECT e FROM EmpleadoHorario e"),
-    @NamedQuery(name = "EmpleadoHorario.findById", query = "SELECT e FROM EmpleadoHorario e WHERE e.id = :id"),
-    @NamedQuery(name = "EmpleadoHorario.findByFecha", query = "SELECT e FROM EmpleadoHorario e WHERE e.fecha = :fecha"),
-    @NamedQuery(name = "EmpleadoHorario.findByPorGrupo", query = "SELECT e FROM EmpleadoHorario e WHERE e.porGrupo = :porGrupo")})
 public class EmpleadoHorario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,7 +45,7 @@ public class EmpleadoHorario implements Serializable {
     @NotNull
     @Column(name = "por_grupo")
     private boolean porGrupo;
-    @JoinColumn(name = "empleado_id", referencedColumnName = "id")
+    @JoinColumn(name = "empleado_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne
     private Empleado empleadoId;
     @JoinColumn(name = "horario_id", referencedColumnName = "id")

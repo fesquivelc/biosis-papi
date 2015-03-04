@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class TCSistemaFacade extends AbstractFacade<TCSistema> implements TCSistemaFacadeLocal {
-    @PersistenceContext(unitName = "biosis-PU")
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     @Override

@@ -30,15 +30,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "regimen_laboral")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "RegimenLaboral.findAll", query = "SELECT r FROM RegimenLaboral r"),
-    @NamedQuery(name = "RegimenLaboral.findById", query = "SELECT r FROM RegimenLaboral r WHERE r.id = :id"),
-    @NamedQuery(name = "RegimenLaboral.findByCodigo", query = "SELECT r FROM RegimenLaboral r WHERE r.codigo = :codigo"),
-    @NamedQuery(name = "RegimenLaboral.findByNombre", query = "SELECT r FROM RegimenLaboral r WHERE r.nombre = :nombre")})
 public class RegimenLaboral implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer id;
     @Basic(optional = false)

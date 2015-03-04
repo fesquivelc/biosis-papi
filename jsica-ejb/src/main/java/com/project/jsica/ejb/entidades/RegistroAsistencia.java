@@ -17,13 +17,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -33,11 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "registro_asistencia")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "RegistroAsistencia.findAll", query = "SELECT r FROM RegistroAsistencia r"),
-    @NamedQuery(name = "RegistroAsistencia.findById", query = "SELECT r FROM RegistroAsistencia r WHERE r.id = :id"),
-    @NamedQuery(name = "RegistroAsistencia.findByFecha", query = "SELECT r FROM RegistroAsistencia r WHERE r.fecha = :fecha"),
-    @NamedQuery(name = "RegistroAsistencia.findByHora", query = "SELECT r FROM RegistroAsistencia r WHERE r.hora = :hora")})
 public class RegistroAsistencia implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,7 +43,7 @@ public class RegistroAsistencia implements Serializable {
     @JoinColumn(name = "biometrico_id", referencedColumnName = "id", nullable = true)
     @ManyToOne(optional = true)
     private Biometrico biometricoId;
-    @JoinColumn(name = "empleado_id", referencedColumnName = "id", nullable = true)
+    @JoinColumn(name = "empleado_doc_identidad", referencedColumnName = "doc_identidad", nullable = true)
     @ManyToOne(optional = true)
     private Empleado empleado;
     private char tipo; // V = VACACION, L = LICENCIA, P = PERMISO, E = FERIADO, T = TARDANZA, F = FALTA, R = ASIST. REGULAR

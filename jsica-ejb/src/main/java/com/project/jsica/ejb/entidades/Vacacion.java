@@ -28,10 +28,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "vacaciones")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Vacacion.findAll", query = "SELECT v FROM Vacacion v"),
-    @NamedQuery(name = "Vacacion.findByIdvacaciones", query = "SELECT v FROM Vacacion v WHERE v.idvacaciones = :idvacaciones"),
-    @NamedQuery(name = "Vacacion.findByDiasRestantes", query = "SELECT v FROM Vacacion v WHERE v.diasRestantes = :diasRestantes")})
 public class Vacacion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,7 +41,7 @@ public class Vacacion implements Serializable {
     @JoinColumn(name = "anio_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Anio anioId;
-    @JoinColumn(name = "empleado_id", referencedColumnName = "id")
+    @JoinColumn(name = "empleado_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = false)
     private Empleado empleadoId;
     @Column(name = "lunes_viernes")

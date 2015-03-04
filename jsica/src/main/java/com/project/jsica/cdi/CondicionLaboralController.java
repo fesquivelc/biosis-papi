@@ -56,108 +56,11 @@ public class CondicionLaboralController extends AbstractController<CondicionLabo
 
     @Override
     protected void edit(CondicionLaboral objeto) {
-        this.condicionLaboralFacade.edit(objeto);
-        if (this.esNuevo) {
-            Bitacora bitacora = new Bitacora();
-            //----Bitacora----
-            //Fecha y hora//          
-            Date fechas = new Date();//           
-            //Ip Cliente
-            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-            
-            String codigo = String.valueOf(this.selected.getCodigo());
-            String nombre = this.selected.getNombre();
-
-            bitacora.setUsuario("JC");
-            bitacora.setIpCliente(ip_cliente);
-            bitacora.setFecha(fechas);
-            bitacora.setHora(fechas);
-            bitacora.setTabla("CONDICION_LABORAL");
-            bitacora.setColumna("CODIGO");
-            bitacora.setAccion("CREAR");
-            bitacora.setValorAct(codigo);
-            bitacora.setValorAnt(" ");
-            bitacoraC.edit(bitacora);
-
-            bitacora.setColumna("NOMBRE");
-            bitacora.setValorAct(nombre);
-            bitacora.setValorAnt(" ");
-            bitacoraC.edit(bitacora);
-
-        } else {
-            //Datos antes de modificar
-            CondicionLaboral antes = this.find(this.selected.getId());
-            String codigo1 = String.valueOf(antes.getCodigo());
-            String nombre1 = antes.getNombre();
-            
-//            System.out.println("CODIGO: "+codigo1+" NOMBRE: "+ nombre1);
-            //Datos despues de modificar
-            String codigo2 = String.valueOf(this.selected.getCodigo());
-            String nombre2 = this.selected.getNombre();
-//            System.out.println("CODIGO2: "+codigo2+" NOMBRE2: "+ nombre2);
-            
-            //----Bitacora----
-            Bitacora bitacora = new Bitacora();
-            //Fecha y hora//          
-            Date fechas = new Date();
-//           
-            //Ip Cliente
-            String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-            
-            //Datos
-            bitacora.setUsuario("JC");
-            bitacora.setIpCliente(ip_cliente);
-            bitacora.setFecha(fechas);
-            bitacora.setHora(fechas);
-            bitacora.setTabla("CONDICION_LABORAL");
-            bitacora.setColumna("CODIGO");
-            bitacora.setAccion("MODIFICAR");
-            bitacora.setValorAnt(codigo1);
-            bitacora.setValorAct(codigo2);
-
-            if (!codigo1.equals(codigo2)) {
-                bitacoraC.edit(bitacora);
-            }
-
-            bitacora.setColumna("NOMBRE");
-            bitacora.setValorAnt(nombre1);
-            bitacora.setValorAct(nombre2);
-
-            if (!nombre1.equals(nombre2)) {
-                bitacoraC.edit(bitacora);
-            }
-        }
+        this.condicionLaboralFacade.edit(objeto);        
     }
 
     @Override
-    protected void remove(CondicionLaboral objeto) {
-        Bitacora bitacora = new Bitacora();
-        //----Bitacora----
-        //Fecha y hora//          
-        Date fechas = new Date();     
-        //Ip Cliente
-        String ip_cliente = ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRemoteAddr();
-        
-        String codigo1 = String.valueOf(this.selected.getCodigo());
-        String nombre1 = this.selected.getNombre();
-
-        //DATOS
-        bitacora.setUsuario("JC");
-        bitacora.setIpCliente(ip_cliente);
-        bitacora.setFecha(fechas);
-        bitacora.setHora(fechas);
-        bitacora.setTabla("CONDICION_LABORAL");
-        bitacora.setColumna("CODIGO");
-        bitacora.setAccion("ELIMINAR");
-        bitacora.setValorAnt(codigo1);
-        bitacora.setValorAct(" ");
-        bitacoraC.edit(bitacora);
-
-        bitacora.setColumna("NOMBRE");
-        bitacora.setValorAnt(nombre1);
-        bitacora.setValorAct(" ");
-        bitacoraC.edit(bitacora);
-        
+    protected void remove(CondicionLaboral objeto) {        
         this.condicionLaboralFacade.remove(objeto);
     }
 

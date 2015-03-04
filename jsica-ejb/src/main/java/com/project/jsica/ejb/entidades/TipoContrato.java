@@ -30,10 +30,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "tipo_contrato")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "TipoContrato.findAll", query = "SELECT t FROM TipoContrato t"),
-    @NamedQuery(name = "TipoContrato.findById", query = "SELECT t FROM TipoContrato t WHERE t.id = :id"),
-    @NamedQuery(name = "TipoContrato.findByNombre", query = "SELECT t FROM TipoContrato t WHERE t.nombre = :nombre")})
 public class TipoContrato implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,8 +40,6 @@ public class TipoContrato implements Serializable {
     @NotNull
     @Size(min = 1, max = 255)
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoContratoId")
-    private List<Contrato> contratoList;
 
     public TipoContrato() {
     }
@@ -73,15 +67,6 @@ public class TipoContrato implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre.toUpperCase();
-    }
-
-    @XmlTransient
-    public List<Contrato> getContratoList() {
-        return contratoList;
-    }
-
-    public void setContratoList(List<Contrato> contratoList) {
-        this.contratoList = contratoList;
     }
 
     @Override

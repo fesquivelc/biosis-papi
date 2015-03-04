@@ -634,7 +634,7 @@ public class HorarioController extends AbstractController<Horario> {
     public void onEmpleadoSeleccionado() {
         if (this.empleadoSeleccionado != null) {
             //LOG.log(Level.INFO, "ID DEL EMPLEADO SELECCIONADO: {0}", this.empleadoSeleccionado.getId());
-            if (this.empleadoSeleccionado.getId() != 0) {
+            if (this.empleadoSeleccionado.getDocIdentidad() != null) {
                 this.isEmpleadoSeleccionado = true;
                 return;
             }

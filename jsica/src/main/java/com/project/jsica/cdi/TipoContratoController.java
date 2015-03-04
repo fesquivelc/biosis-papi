@@ -30,20 +30,6 @@ public class TipoContratoController extends AbstractController<TipoContrato> {
     public void resetParents() {
     }
 
-    /**
-     * Sets the "items" attribute with a collection of Contrato entities that
-     * are retrieved from TipoContrato?cap_first and returns the navigation
-     * outcome.
-     *
-     * @return navigation outcome for Contrato page
-     */
-    public String navigateContratoList() {
-        if (this.getSelected() != null) {
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("Contrato_items", this.getSelected().getContratoList());
-        }
-        return "/contrato/index";
-    }
-
     @Override
     protected void edit(TipoContrato objeto) {
         this.tipoContratoFacade.edit(objeto);

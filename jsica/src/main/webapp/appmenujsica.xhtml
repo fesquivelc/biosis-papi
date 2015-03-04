@@ -8,7 +8,7 @@
     <ui:composition>
         <h:form>
             <p:menubar>
-                <p:menuitem value="#{myBundle.Home}" outcome="/index" icon="ui-icon-home"/>
+                <p:menuitem value="Inicio" outcome="/index" icon="ui-icon-home"/>
                 <p:submenu label="Asistencia">
                     <p:menuitem value="Permisos licencias y vacaciones" outcome="/permiso/index"/>
                     
@@ -33,7 +33,6 @@
                         <p:menuitem value="Nivel Educativo" outcome="/nivelEducativo/index"/>
                         <p:menuitem value="Ocupación" outcome="/ocupacion/index"/>
                         <p:menuitem value="Régimen Laboral" outcome="/regimenLaboral/index"/>
-                        <p:menuitem value="Tipo Contrato" outcome="/tipoContrato/index"/>
                         <p:menuitem value="Tipo Empleado" outcome="/tipoEmpleado/index"/>
                     </p:submenu>
                 </p:submenu>
@@ -46,6 +45,7 @@
                         <p:menuitem value="Por area o departamento" outcome="/reportes/asistencia/porArea"/>
                         <p:menuitem value="Por empleado" outcome="/reportes/asistencia/porEmpleado"/>
                     </p:submenu> 
+                    <p:menuitem value="Listado de marcaciones" outcome="/marcacion/list"/>
                 </p:submenu>
                 <p:submenu label="Configuración">
                     <p:submenu label="Año">
@@ -56,7 +56,6 @@
                     <p:menuitem value="Sucursales" outcome="/sucursal/index"/>
                     <p:menuitem value="Áreas" outcome="/area/index"/>
                     <p:menuitem value="Oficinas" outcome="/servicio/index"/>
-                    <p:menuitem value="Equipos Biométricos" outcome="/biometrico/index"/>
                 </p:submenu>
                 
                 <f:facet name="options">                       

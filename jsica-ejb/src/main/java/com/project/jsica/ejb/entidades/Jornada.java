@@ -34,13 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "jornada")
 @Entity
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Jornada.findAll", query = "SELECT j FROM Jornada j"),
-    @NamedQuery(name = "Jornada.findByCodigo", query = "SELECT j FROM Jornada j WHERE j.codigo = :codigo"),
-    @NamedQuery(name = "Jornada.findByNombre", query = "SELECT j FROM Jornada j WHERE j.nombre = :nombre"),
-    @NamedQuery(name = "Jornada.findByHEntrada", query = "SELECT j FROM Jornada j WHERE j.hEntrada = :hEntrada"),
-    @NamedQuery(name = "Jornada.findByHSalida", query = "SELECT j FROM Jornada j WHERE j.hSalida = :hSalida"),
-    @NamedQuery(name = "Jornada.findByFlexible", query = "SELECT j FROM Jornada j WHERE j.flexible = :flexible")})
 public class Jornada implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

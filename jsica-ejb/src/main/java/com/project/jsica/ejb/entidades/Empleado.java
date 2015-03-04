@@ -8,6 +8,7 @@ package com.project.jsica.ejb.entidades;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -36,22 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "empleado")
 @Entity
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e"),
-    @NamedQuery(name = "Empleado.findById", query = "SELECT e FROM Empleado e WHERE e.id = :id"),
-    @NamedQuery(name = "Empleado.findByNombres", query = "SELECT e FROM Empleado e WHERE e.nombres = :nombres"),
-    @NamedQuery(name = "Empleado.findByApellidos", query = "SELECT e FROM Empleado e WHERE e.apellidos = :apellidos"),
-    @NamedQuery(name = "Empleado.findByDocIdentidad", query = "SELECT e FROM Empleado e WHERE e.docIdentidad = :docIdentidad"),
-    @NamedQuery(name = "Empleado.findByFechaNacimiento", query = "SELECT e FROM Empleado e WHERE e.fechaNacimiento = :fechaNacimiento"),
-    @NamedQuery(name = "Empleado.findBySexo", query = "SELECT e FROM Empleado e WHERE e.sexo = :sexo"),
-    @NamedQuery(name = "Empleado.findByFoto", query = "SELECT e FROM Empleado e WHERE e.foto = :foto")})
 public class Empleado implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    private Long id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -60,6 +48,7 @@ public class Empleado implements Serializable {
     @NotNull
     @Size(min = 1, max = 255)
     private String apellidos;
+    @Id
     @Basic(optional = false)
     @NotNull
     @Pattern(regexp = "(\\d{1,8})", message = "Formato de DNI Invalido")
@@ -71,11 +60,6 @@ public class Empleado implements Serializable {
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
-//    @Basic(optional = false)
-//    @NotNull
-//    @Size(min = 1, max = 45)
-//    @Column(name = "situacion_trabajador")
-//    private String situacionTrabajador;
     @Basic(optional = false)
     @NotNull
     private Character sexo;
@@ -90,13 +74,13 @@ public class Empleado implements Serializable {
     private GrupoHorario grupoHorarioId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoId")
     private List<Empleado> empleadoList;
-    @JoinColumn(name = "empleado_id", referencedColumnName = "id")
+    @JoinColumn(name = "empleado_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = true)
     private Empleado empleadoId;
 //    @JoinColumn(name = "servicio_id", referencedColumnName = "id")
 //    @ManyToOne(optional = true)
 //    private Servicio servicioId;
-    @JoinColumn(name = "servicio_id", referencedColumnName = "id")
+    @JoinColumn(name = "area_id", referencedColumnName = "id")
     @ManyToOne(optional = true)
     private Area area;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "jefeInmediatoId")
@@ -158,28 +142,6 @@ public class Empleado implements Serializable {
     }
 
     public Empleado() {
-    }
-
-    public Empleado(Long id) {
-        this.id = id;
-    }
-
-    public Empleado(Long id, String nombres, String apellidos, String docIdentidad, Date fechaNacimiento, String situacionTrabajador, Character sexo) {
-        this.id = id;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.docIdentidad = docIdentidad;
-        this.fechaNacimiento = fechaNacimiento;
-//        this.situacionTrabajador = situacionTrabajador;
-        this.sexo = sexo;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNombres() {
@@ -435,33 +397,6 @@ public class Empleado implements Serializable {
     public void setFichaLaboralEmpleadoList(List<FichaLaboralEmpleado> fichaLaboralEmpleadoList) {
         this.fichaLaboralEmpleadoList = fichaLaboralEmpleadoList;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Empleado)) {
-            return false;
-        }
-        Empleado other = (Empleado) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.project.jsica.ejb.entidades.Empleado[ id=" + id + " ]";
-    }
-    
-    
     
     public String getCodigo(){
         return this.getFichaLaboral().getCodigoTrabajador();
@@ -470,4 +405,28 @@ public class Empleado implements Serializable {
     public String getNombreCompleto(){
         return this.apellidos + " " + this.nombres;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.docIdentidad);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Empleado other = (Empleado) obj;
+        if (!Objects.equals(this.docIdentidad, other.docIdentidad)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

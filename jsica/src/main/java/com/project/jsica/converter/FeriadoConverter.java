@@ -46,7 +46,7 @@ public class FeriadoConverter implements Converter {
         }
         if (object instanceof Feriado) {
             Feriado o = (Feriado) object;
-            return getStringKey(o.getIdferiados());
+            return getStringKey(o.getId());
         } else {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Feriado.class.getName()});
             return null;

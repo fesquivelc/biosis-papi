@@ -8,11 +8,10 @@ package com.project.jsica.ejb.entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -30,17 +29,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "condicion_laboral")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CondicionLaboral.findAll", query = "SELECT c FROM CondicionLaboral c"),
-    @NamedQuery(name = "CondicionLaboral.findById", query = "SELECT c FROM CondicionLaboral c WHERE c.id = :id"),
-    @NamedQuery(name = "CondicionLaboral.findByCodigo", query = "SELECT c FROM CondicionLaboral c WHERE c.codigo = :codigo"),
-    @NamedQuery(name = "CondicionLaboral.findByNombre", query = "SELECT c FROM CondicionLaboral c WHERE c.nombre = :nombre")})
 public class CondicionLaboral implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    private Long id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -53,24 +44,6 @@ public class CondicionLaboral implements Serializable {
     private List<Contrato> contratoList;
 
     public CondicionLaboral() {
-    }
-
-    public CondicionLaboral(Long id) {
-        this.id = id;
-    }
-
-    public CondicionLaboral(Long id, String codigo, String nombre) {
-        this.id = id;
-        this.codigo = codigo;
-        this.nombre = nombre;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getCodigo() {
@@ -100,27 +73,24 @@ public class CondicionLaboral implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.codigo);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CondicionLaboral)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        CondicionLaboral other = (CondicionLaboral) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CondicionLaboral other = (CondicionLaboral) obj;
+        if (!Objects.equals(this.codigo, other.codigo)) {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.project.jsica.ejb.entidades.CondicionLaboral[ id=" + id + " ]";
     }
     
 }

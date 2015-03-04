@@ -47,7 +47,7 @@ public class Usuario implements Serializable {
     @NotNull
     @Size(min = 1, max = 255)
     private String password;
-    @JoinColumn(name = "empleado_id", referencedColumnName = "id")
+    @JoinColumn(name = "empleado_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = false)
     private Empleado empleadoId;
     @JoinColumn(name = "rol_id", referencedColumnName = "id")

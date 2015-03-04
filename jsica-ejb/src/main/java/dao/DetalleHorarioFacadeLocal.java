@@ -8,6 +8,7 @@ package dao;
 
 import com.project.jsica.ejb.entidades.DetalleHorario;
 import com.project.jsica.ejb.entidades.Empleado;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -40,5 +41,7 @@ public interface DetalleHorarioFacadeLocal {
     int count();
 
     List<DetalleHorario> buscarXEmpleado(Empleado empleado, Integer mes, Integer anio);
+
+    public List<DetalleHorario> buscarXEmpleadoXFecha(Empleado empleado, Date fecha);
     
 }

@@ -21,7 +21,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CompraVacacionalFacade extends AbstractFacade<CompraVacacional> implements CompraVacacionalFacadeLocal {
-    @PersistenceContext(unitName = "biosis-PU")
+    @PersistenceContext(unitName = biosis_PU)
     private EntityManager em;
 
     @Override

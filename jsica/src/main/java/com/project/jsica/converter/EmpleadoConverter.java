@@ -47,7 +47,7 @@ public class EmpleadoConverter implements Converter {
         }
         if (object instanceof Empleado) {
             Empleado o = (Empleado) object;
-            return getStringKey(o.getId());
+            return o.getDocIdentidad();
         } else {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Empleado.class.getName()});
             return null;

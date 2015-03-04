@@ -21,8 +21,8 @@ import org.apache.log4j.Logger;
  */
 @Stateless
 public class MarcacionFacade extends AbstractFacade<Marcacion> implements MarcacionFacadeLocal {
-    @PersistenceContext(unitName = "biosis-PU")
-    private EntityManager em;
+    @PersistenceContext(unitName = biostar_PU)
+    private EntityManager em; 
 
     @Override
     protected EntityManager getEntityManager() {

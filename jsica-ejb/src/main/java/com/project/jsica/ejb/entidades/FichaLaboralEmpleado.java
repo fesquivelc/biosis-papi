@@ -8,6 +8,7 @@ package com.project.jsica.ejb.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,20 +32,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "ficha_laboral_empleado")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "FichaLaboralEmpleado.findAll", query = "SELECT f FROM FichaLaboralEmpleado f"),
-    @NamedQuery(name = "FichaLaboralEmpleado.findById", query = "SELECT f FROM FichaLaboralEmpleado f WHERE f.id = :id"),
-    @NamedQuery(name = "FichaLaboralEmpleado.findByCodigoTrabajador", query = "SELECT f FROM FichaLaboralEmpleado f WHERE f.codigoTrabajador = :codigoTrabajador")})
 public class FichaLaboralEmpleado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    private Long id;
     @Size(max = 45)
     @Column(name = "codigo_trabajador",nullable = false)    
     private String codigoTrabajador;
-    @JoinColumn(name = "empleado_id", referencedColumnName = "id")
+    @JoinColumn(name = "empleado_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = false)
     private Empleado empleadoId;
     @JoinColumn(name = "tipo_empleado_id", referencedColumnName = "id")
@@ -63,18 +57,6 @@ public class FichaLaboralEmpleado implements Serializable {
     }        
 
     public FichaLaboralEmpleado() {
-    }
-
-    public FichaLaboralEmpleado(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getCodigoTrabajador() {
@@ -103,27 +85,25 @@ public class FichaLaboralEmpleado implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.codigoTrabajador);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FichaLaboralEmpleado)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        FichaLaboralEmpleado other = (FichaLaboralEmpleado) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final FichaLaboralEmpleado other = (FichaLaboralEmpleado) obj;
+        if (!Objects.equals(this.codigoTrabajador, other.codigoTrabajador)) {
             return false;
         }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "com.project.jsica.ejb.entidades.FichaLaboralEmpleado[ id=" + id + " ]";
-    }
+    
     
 }

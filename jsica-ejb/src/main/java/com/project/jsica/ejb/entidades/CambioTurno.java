@@ -31,11 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "cambio_turno")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CambioTurno.findAll", query = "SELECT c FROM CambioTurno c"),
-    @NamedQuery(name = "CambioTurno.findById", query = "SELECT c FROM CambioTurno c WHERE c.id = :id"),
-    @NamedQuery(name = "CambioTurno.findByFechaPedido", query = "SELECT c FROM CambioTurno c WHERE c.fechaPedido = :fechaPedido"),
-    @NamedQuery(name = "CambioTurno.findByHoraPedido", query = "SELECT c FROM CambioTurno c WHERE c.horaPedido = :horaPedido")})
 public class CambioTurno implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,14 +53,14 @@ public class CambioTurno implements Serializable {
     @JoinColumn(name = "detalle_horario_reemplazo", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private DetalleHorario detalleHorarioReemplazo;
-    @JoinColumn(name = "jefe_inmediato_id", referencedColumnName = "id")
+    @JoinColumn(name = "jefe_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = false)
     private Empleado jefeInmediatoId;
     
-    @JoinColumn(name = "empleado2_id", referencedColumnName = "id")
+    @JoinColumn(name = "empleado2_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne
     private Empleado empleado2Id;
-    @JoinColumn(name = "empleado1_id", referencedColumnName = "id")
+    @JoinColumn(name = "empleado1_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne
     private Empleado empleado1Id;
 

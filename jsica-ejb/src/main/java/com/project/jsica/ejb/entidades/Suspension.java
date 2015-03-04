@@ -56,7 +56,7 @@ public class Suspension implements Serializable {
     @Column(name = "fecha_fin")
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
-    @JoinColumn(name = "empleado_idempleado", referencedColumnName = "id")
+    @JoinColumn(name = "empleado_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = false)
     private Empleado empleadoIdempleado;
 

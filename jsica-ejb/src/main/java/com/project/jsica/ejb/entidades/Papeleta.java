@@ -40,13 +40,13 @@ public class Papeleta implements Serializable {
     private Long id;
     @Size(max = 45)
     private String codigo;
-    @JoinColumn(name = "empleado_idempleado", referencedColumnName = "id")
+    @JoinColumn(name = "solicitante_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = false)
     private Empleado empleadoIdempleado;
-    @JoinColumn(name = "empleado_idjefe_inmediato", referencedColumnName = "id")
+    @JoinColumn(name = "jefe_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = false)
     private Empleado empleadoIdjefeInmediato;
-    @JoinColumn(name = "empleado_idjefe_personal", referencedColumnName = "id")
+    @JoinColumn(name = "personal_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = false)
     private Empleado empleadoIdjefePersonal;
     @JoinColumn(name = "empleado_permiso_id", referencedColumnName = "id")

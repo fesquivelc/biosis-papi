@@ -34,7 +34,7 @@ public class CompraVacacional implements Serializable {
     private Date fechaRegistro;
     @Column(name="numero_dias")
     private Integer numeroDias;
-    @JoinColumn(name = "empleado_id", referencedColumnName = "id")
+    @JoinColumn(name = "empleado_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = false)
     private Empleado empleado;
     @JoinColumn(name = "anio_id", referencedColumnName = "id")

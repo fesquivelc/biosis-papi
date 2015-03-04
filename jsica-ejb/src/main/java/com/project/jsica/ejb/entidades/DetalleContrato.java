@@ -30,11 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "detalle_contrato")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "DetalleContrato.findAll", query = "SELECT d FROM DetalleContrato d"),
-    @NamedQuery(name = "DetalleContrato.findById", query = "SELECT d FROM DetalleContrato d WHERE d.id = :id"),
-    @NamedQuery(name = "DetalleContrato.findByFInicio", query = "SELECT d FROM DetalleContrato d WHERE d.fInicio = :fInicio"),
-    @NamedQuery(name = "DetalleContrato.findByFFin", query = "SELECT d FROM DetalleContrato d WHERE d.fFin = :fFin")})
 public class DetalleContrato implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,7 +48,7 @@ public class DetalleContrato implements Serializable {
     @JoinColumn(name = "contrato_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Contrato contratoId;
-    @JoinColumn(name = "empleado_id", referencedColumnName = "id")
+    @JoinColumn(name = "empleado_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = false)
     private Empleado empleadoId;
 

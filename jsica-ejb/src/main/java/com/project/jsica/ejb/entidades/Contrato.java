@@ -35,13 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "contrato")
 @Entity
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Contrato.findAll", query = "SELECT c FROM Contrato c"),
-    @NamedQuery(name = "Contrato.findById", query = "SELECT c FROM Contrato c WHERE c.id = :id"),
-    @NamedQuery(name = "Contrato.findByFechaInicio", query = "SELECT c FROM Contrato c WHERE c.fechaInicio = :fechaInicio"),
-    @NamedQuery(name = "Contrato.findByFechaFin", query = "SELECT c FROM Contrato c WHERE c.fechaFin = :fechaFin"),
-    @NamedQuery(name = "Contrato.findByCodigo", query = "SELECT c FROM Contrato c WHERE c.codigo = :codigo"),
-    @NamedQuery(name = "Contrato.findBySueldoBasico", query = "SELECT c FROM Contrato c WHERE c.sueldoBasico = :sueldoBasico")})
 public class Contrato implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,7 +54,7 @@ public class Contrato implements Serializable {
     private Double sueldoBasico;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contratoId")
     private List<DetalleContrato> detalleContratoList;
-    @JoinColumn(name = "condicion_laboral_id", referencedColumnName = "id")
+    @JoinColumn(name = "condicion_laboral_codigo", referencedColumnName = "codigo")
     @ManyToOne(optional = false)
     private CondicionLaboral condicionLaboralId;
     @JoinColumn(name = "regimen_laboral_id", referencedColumnName = "id")
@@ -70,9 +63,6 @@ public class Contrato implements Serializable {
     @JoinColumn(name = "anio_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Anio anioId;
-    @JoinColumn(name = "tipo_contrato_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private TipoContrato tipoContratoId;
     @JoinColumn(name = "ocupacion_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Ocupacion ocupacionId;
@@ -168,14 +158,6 @@ public class Contrato implements Serializable {
 
     public void setAnioId(Anio anioId) {
         this.anioId = anioId;
-    }
-
-    public TipoContrato getTipoContratoId() {
-        return tipoContratoId;
-    }
-
-    public void setTipoContratoId(TipoContrato tipoContratoId) {
-        this.tipoContratoId = tipoContratoId;
     }
 
     public Ocupacion getOcupacionId() {

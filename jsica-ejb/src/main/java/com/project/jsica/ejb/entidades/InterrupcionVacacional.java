@@ -35,7 +35,7 @@ public class InterrupcionVacacional implements Serializable {
     private Date fechaFin;
     @Temporal(TemporalType.DATE)
     private Date fechaInterrupcion;
-    @JoinColumn(name = "empleado_id", referencedColumnName = "id")
+    @JoinColumn(name = "empleado_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = false)
     private Empleado empleado;
     @JoinColumn(name = "anio_id", referencedColumnName = "id")

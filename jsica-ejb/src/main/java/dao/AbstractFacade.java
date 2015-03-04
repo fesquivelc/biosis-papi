@@ -21,8 +21,7 @@ import org.apache.log4j.Logger;
 public abstract class AbstractFacade<T> implements Serializable{
 
     protected static final String biosis_PU = "biosis-PU";
-    @PersistenceContext(name = biosis_PU)
-    private EntityManager em;
+    protected static final String biostar_PU = "biostar-PU";
 
     private final Class<T> entityClass;
     private static final Logger LOG = Logger.getLogger(AbstractFacade.class.getName());
@@ -38,9 +37,7 @@ public abstract class AbstractFacade<T> implements Serializable{
     }
 
     
-    protected EntityManager getEntityManager(){
-        return em;
-    }
+    protected abstract EntityManager getEntityManager();
 
     public void create(T entity) {
         LOG.info("SE CREA LA ENTIDAD");

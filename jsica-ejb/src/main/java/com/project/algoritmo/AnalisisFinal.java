@@ -236,8 +236,10 @@ public class AnalisisFinal implements AnalisisFinalLocal {
     }
 
     private List<DetalleHorario> obtenerTurnos(Empleado empleado, Date fInicio) {
-        List<DetalleHorario> detalles = new ArrayList<>();
+        List<DetalleHorario> detalles;
 
+        detalles = turnosControlador.buscarXEmpleadoXFecha(empleado, fInicio);
+        
         return detalles;
     }
 

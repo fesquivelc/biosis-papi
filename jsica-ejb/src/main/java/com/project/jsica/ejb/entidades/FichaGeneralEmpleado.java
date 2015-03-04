@@ -29,16 +29,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "ficha_general_empleado")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "FichaGeneralEmpleado.findAll", query = "SELECT f FROM FichaGeneralEmpleado f"),
-    @NamedQuery(name = "FichaGeneralEmpleado.findById", query = "SELECT f FROM FichaGeneralEmpleado f WHERE f.id = :id"),
-    @NamedQuery(name = "FichaGeneralEmpleado.findByTelefonoFijo", query = "SELECT f FROM FichaGeneralEmpleado f WHERE f.telefonoFijo = :telefonoFijo"),
-    @NamedQuery(name = "FichaGeneralEmpleado.findByTelefonoCelular", query = "SELECT f FROM FichaGeneralEmpleado f WHERE f.telefonoCelular = :telefonoCelular"),
-    @NamedQuery(name = "FichaGeneralEmpleado.findByDireccion", query = "SELECT f FROM FichaGeneralEmpleado f WHERE f.direccion = :direccion"),
-    @NamedQuery(name = "FichaGeneralEmpleado.findByDireccionTipoZona", query = "SELECT f FROM FichaGeneralEmpleado f WHERE f.direccionTipoZona = :direccionTipoZona"),
-    @NamedQuery(name = "FichaGeneralEmpleado.findByDireccionTipoVia", query = "SELECT f FROM FichaGeneralEmpleado f WHERE f.direccionTipoVia = :direccionTipoVia"),
-    @NamedQuery(name = "FichaGeneralEmpleado.findByEstadoCivil", query = "SELECT f FROM FichaGeneralEmpleado f WHERE f.estadoCivil = :estadoCivil"),
-    @NamedQuery(name = "FichaGeneralEmpleado.findByEmail", query = "SELECT f FROM FichaGeneralEmpleado f WHERE f.email = :email")})
 public class FichaGeneralEmpleado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -65,7 +55,7 @@ public class FichaGeneralEmpleado implements Serializable {
     //@Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message="Formato de email Invalido")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 255)
     private String email;
-    @JoinColumn(name = "empleado_id", referencedColumnName = "id")
+    @JoinColumn(name = "empleado_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = false)
     private Empleado empleadoId;
     @JoinColumn(name = "ubigeo_codigo", referencedColumnName = "codigo")

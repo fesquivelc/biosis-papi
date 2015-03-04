@@ -30,10 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "falta")
 @Entity
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Falta.findAll", query = "SELECT f FROM Falta f"),
-    @NamedQuery(name = "Falta.findById", query = "SELECT f FROM Falta f WHERE f.id = :id"),
-    @NamedQuery(name = "Falta.findByFecha", query = "SELECT f FROM Falta f WHERE f.fecha = :fecha")})
 public class Falta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,7 +40,7 @@ public class Falta implements Serializable {
     @NotNull
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @JoinColumn(name = "empleado_id", referencedColumnName = "id")
+    @JoinColumn(name = "empleado_doc_identidad", referencedColumnName = "doc_identidad")
     @ManyToOne(optional = false)
     private Empleado empleadoId;
 
