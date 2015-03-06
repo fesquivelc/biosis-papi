@@ -80,11 +80,11 @@ public class EmpleadoPermisoFacade extends AbstractFacade<EmpleadoPermiso> imple
     public EmpleadoPermiso buscarXDia(Empleado empleado, Date fecha) {
         String jpql = "SELECT p FROM EmpleadoPermiso p "
                 + "WHERE p.empleadoId = :empleado "
-                + "AND :fecha BETWEEN p.permisoId.fechaInicio AND p.permisoId.fechaFin "
-                + "AND p.permisoId.porFecha = TRUE";
+                + "AND (:fecha BETWEEN p.permisoId.fechaInicio AND p.permisoId.fechaFin) "
+                + "AND (p.permisoId.porFecha = TRUE)";
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("empleado", empleado);
-        parametros.put(":fecha", fecha);
+        parametros.put("fecha", fecha);
 
         List<EmpleadoPermiso> lista = this.search(jpql, parametros, -1, 1);
         

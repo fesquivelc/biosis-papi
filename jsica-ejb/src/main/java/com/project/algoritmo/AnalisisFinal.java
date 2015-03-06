@@ -6,17 +6,22 @@
 package com.project.algoritmo;
 
 import com.personal.utiles.FechaUtil;
+import com.project.jsica.ejb.entidades.Area;
 import dao.CambioTurnoFacadeLocal;
 import dao.DetalleHorarioFacadeLocal;
 import dao.EmpleadoPermisoFacadeLocal;
 import com.project.jsica.ejb.entidades.DetalleHorario;
 import com.project.jsica.ejb.entidades.DetalleRegistroAsistencia;
 import com.project.jsica.ejb.entidades.Empleado;
+import com.project.jsica.ejb.entidades.EmpleadoPermiso;
+import com.project.jsica.ejb.entidades.Feriado;
 import com.project.jsica.ejb.entidades.Marcacion;
 import com.project.jsica.ejb.entidades.RegistroAsistencia;
 import com.project.jsica.ejb.entidades.TCAnalisis;
 import com.project.jsica.ejb.entidades.TCSistema;
+import com.project.jsica.ejb.entidades.Vacacion;
 import dao.EmpleadoHorarioFacadeLocal;
+import dao.FeriadoFacadeLocal;
 import dao.HorarioFacadeLocal;
 import dao.JornadaFacadeLocal;
 import dao.MarcacionFacadeLocal;
@@ -29,6 +34,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -37,6 +43,8 @@ import javax.ejb.Stateless;
 @Stateless
 public class AnalisisFinal implements AnalisisFinalLocal {
 
+    @EJB
+    private FeriadoFacadeLocal feriadoControlador;
     @EJB
     private DetalleHorarioFacadeLocal turnosControlador;
     @EJB
@@ -70,13 +78,19 @@ public class AnalisisFinal implements AnalisisFinalLocal {
             Date contrato = empleado.getFichaLaboral().getFechaContrato();
             Date fechaCero = sistema.getFechaCero();
 
-            if (contrato.compareTo(fechaCero) < 0) {
+            if (contrato == null) {
                 partida.setFecha(fechaCero);
                 partida.setHora(sistema.getHoraCero());
             } else {
-                partida.setFecha(contrato);
-                partida.setHora(contrato);
+                if (contrato.compareTo(fechaCero) < 0) {
+                    partida.setFecha(fechaCero);
+                    partida.setHora(sistema.getHoraCero());
+                } else {
+                    partida.setFecha(contrato);
+                    partida.setHora(contrato);
+                }
             }
+
         }
         return partida;
     }
@@ -99,6 +113,10 @@ public class AnalisisFinal implements AnalisisFinalLocal {
             List<RegistroAsistencia> registros = procesarEmpleado(e, partida, llegada);
 
             if (!registros.isEmpty()) {
+                LOG.info("GUARDANDO REGISTROS");
+                for(RegistroAsistencia ra : registros){
+                    LOG.info("REGISTRO: "+ra.getFecha()+" "+ra.getTipo()+" "+ra.getEmpleado().getApellidos());
+                }
                 registroControlador.guardarLote(registros);
                 llegada.setEmpleado(e.getDocIdentidad());
                 analisisControlador.edit(llegada);
@@ -109,32 +127,6 @@ public class AnalisisFinal implements AnalisisFinalLocal {
         }
     }
 
-//    public List<RegistroAsistencia> analizarEmpleados(List<Empleado> empleados) {
-//        //LA FECHA Y HORA DE FINAL DEL ANALISIS ES LA MISMA DE LA CONSULTA
-//        List<RegistroAsistencia> registros = new ArrayList<>();
-//        TCAnalisis llegada = obtenerPuntoLlegada();
-//        for (Empleado empleado : empleados) {
-//            //OBTENEMOS LA FECHA Y HORA DE PARTIDA DEL ANALISIS
-//            TCAnalisis partida = obtenerPuntoPartida(empleado);
-//
-//            //OBTENEMOS LOS HORARIOS DEL EMPLEADO
-//            List<Horario> horarios = obtenerHorarios(empleado);
-//
-//            //ANALIZAMOS POR HORARIO
-//            for (Horario horario : horarios) {
-//
-//                registros.addAll(analizarHorario(empleado, horario, partida, llegada));
-//            }
-//            if (!registros.isEmpty()) {
-//                this.rac.guardarLote(registros);
-//                llegada.setEmpleado(empleado.getNroDocumento());
-//                this.tcac.modificar(llegada);
-//            }
-//
-//            registros.clear();
-//        }
-//        return registros;
-//    }
     private List<RegistroAsistencia> procesarEmpleado(Empleado empleado, TCAnalisis partida, TCAnalisis llegada) {
         List<RegistroAsistencia> registros = new ArrayList<>();
 
@@ -161,7 +153,7 @@ public class AnalisisFinal implements AnalisisFinalLocal {
                     registro = analizarAsistencial(empleado, turno, turnoReemplazo, fInicio, fFin, hInicio, hFin);
                 } else {
                     //SE ANALIZA TURNO ADMINISTRATIVO =) 
-                    registro = analizarAdministrativo(empleado, turno, fInicio);
+                    registro = analizarAdministrativo(empleado, turno, fInicio, fFin, hInicio, hFin);
                 }
 
                 if (registro != null) {
@@ -239,7 +231,7 @@ public class AnalisisFinal implements AnalisisFinalLocal {
         List<DetalleHorario> detalles;
 
         detalles = turnosControlador.buscarXEmpleadoXFecha(empleado, fInicio);
-        
+
         return detalles;
     }
 
@@ -255,8 +247,101 @@ public class AnalisisFinal implements AnalisisFinalLocal {
         return calEmpleado.getTime().compareTo(fInicio) == 0;
     }
 
-    private RegistroAsistencia analizarAdministrativo(Empleado empleado, DetalleHorario turno, Date fInicio) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private RegistroAsistencia analizarAdministrativo(Empleado empleado, DetalleHorario turno, Date fInicio, Date fFin, Date hInicio, Date hFin) {
+        LOG.info("ANALISIS ADMINISTRATIVO PARA EL TURNO: " + turno.getId() + " FECHA: " + fInicio.toString());
+        cal.setTime(turno.getJornadaCodigo().getHSalida());
+        cal.add(Calendar.HOUR, 2);
+        RegistroAsistencia registro = new RegistroAsistencia();
+        registro.setFecha(fInicio);
+        registro.setEmpleado(empleado);
+        Date turnoHastaSalida = cal.getTime();
+        if (FechaUtil.compararFechaHora(fInicio, hInicio, fInicio, turnoHastaSalida) <= 0
+                && FechaUtil.compararFechaHora(fFin, hFin, fInicio, turnoHastaSalida) >= 0) {
+            LOG.info("PASO");
+            EmpleadoPermiso permisoXFecha = this.empleadoPermisoControlador.buscarXDia(empleado, fInicio);
+            LOG.info("ANALIZANDO EMPLEADO: "+empleado.getApellidos()+ " " +empleado.getNombres());
+            
+            if (permisoXFecha != null) {
+                //SE GUARDA EL REGISTRO COMO UN PERMISO
+                registro.setPermisoId(permisoXFecha.getPermisoId());
+                registro.setTipo('P');
+            } else {
+//                Vacacion vacacion = this.vc.buscarXDia(empleado.getNroDocumento(), fInicio);
+
+//                if (vacacion != null) {
+//                    //SE GUARDA EL REGISTRO COMO VACACION
+//                    registro.setVacacion(vacacion);
+//                    registro.setTipoAsistencia('V');
+//
+//                } else {
+                boolean diaLaboral = isDiaLaboral(fInicio, turno);
+                if (diaLaboral) {
+                    //TOMAMOS EN CUENTA QUE SEA FERIADO
+                    Feriado feriado = this.feriadoControlador.buscarXDia(fInicio);
+                    if (feriado != null) {
+                        //SE REGISTRA COMO FERIADO
+                        registro.setFeriado(feriado);
+                        registro.setTipo('E'); //RECORDAR QUE E PERTENECE A LOS FERIADOS
+                    } else {
+                        //TOMAMOS EN CUENTA EL ONOMASTICO
+                        if (isOnomastico(empleado, fInicio)) {
+                            //SE REGISTRA COMO ONOMASTICO
+                        } else {
+                            //SE PROCEDE AL ANALISIS DE LA JORNADA
+                            List<DetalleRegistroAsistencia> detalles = new ArrayList<>();
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.set(1970, 0, 1, 4, 0, 0);
+                            Date desde = FechaUtil.soloHora(calendar.getTime());
+                            calendar.setTime(turno.getJornadaCodigo().getHEntrada());
+                            calendar.add(Calendar.MINUTE, turno.getJornadaCodigo().getMinutosToleranciaRegularEntradaJornada());
+                            
+                            Date tolerancia = calendar.getTime();
+                            
+                            calendar.add(Calendar.MINUTE, turno.getJornadaCodigo().getMinutosToleranciaTardanzaEntradaJornada());
+                            
+                            Date entradaMax = calendar.getTime();
+                            
+                            calendar.set(Calendar.HOUR_OF_DAY, 23);
+                            calendar.set(Calendar.MINUTE, 59);
+                            calendar.set(Calendar.SECOND, 0);
+                            
+                            DetalleRegistroAsistencia detalleTurno = analizarTurno(
+                                    empleado, 
+                                    registro, 
+                                    fInicio, 
+                                    fFin, 
+                                    desde, 
+                                    tolerancia, 
+                                    entradaMax, 
+                                    turno.getJornadaCodigo().getHSalida(), 
+                                    FechaUtil.soloHora(calendar.getTime()));                                                        
+                            
+                            detalles.add(detalleTurno);
+                            
+                            registro.setDetalleRegistroAsistenciaList(detalles);
+                            registro.setTipo(detalleTurno.getResultado());
+                            
+                            
+                            if (registro != null) {
+                                registro.setTurnoOriginal(turno);
+                            }
+                        }
+                    }
+                } else if (isOnomastico(empleado, fInicio)) {
+                        //SE BUSCA EL DIA LABORAL MAS CERCANO PARA ASIGNARLE EL PERMISO POR ONOMASTICO
+                    //Y SE AGREGA AL REGISTRO
+                } else {
+                    //NO HAY SUCESO SUSCEPTIBLE A REGISTRO
+                    registro = null;
+                }
+//                }
+//                }// FIN DEL ELSE PRINCIPAL
+            }
+        } else {
+            registro = null;
+        }
+
+        return registro;
     }
 
     private final Calendar cal = Calendar.getInstance();
@@ -335,7 +420,16 @@ public class AnalisisFinal implements AnalisisFinalLocal {
             Date turnoSalida,
             Date turnoMaximaSalida) {
 
+        LOG.info("FECHA INICIO: "+fechaInicio);
+        LOG.info("FECHA FIN: "+fechaFin);
+        LOG.info("TURNO DESDE: "+turnoDesde);
+        LOG.info("TURNO TOLERANCIA: "+turnoTolerancia);
+        LOG.info("TURNO MAXIMA ENTRADA: "+turnoMaximaEntrada);
+        LOG.info("TURNO SALIDA: "+turnoSalida);
+        LOG.info("TURNO MAXIMA SALIDA: "+turnoMaximaSalida);
+        
         String empleadoId = getCodigoEmpleado(empleado);
+        LOG.info("CODIGO DE TRABAJADOR: "+empleadoId);
 
         DetalleRegistroAsistencia detalle = new DetalleRegistroAsistencia();
         detalle.setOrden(0);
@@ -393,6 +487,21 @@ public class AnalisisFinal implements AnalisisFinalLocal {
     }
 
     private String getCodigoEmpleado(Empleado empleado) {
-        return empleado.getDocIdentidad();
+        return empleado.getFichaLaboral().getCodigoTrabajador();
+    }
+    private static final Logger LOG = Logger.getLogger(AnalisisFinal.class.getName());
+
+    @Override
+    public void analizarEmpleados(Area area) {
+        List<Empleado> empleados = area.getEmpleadoList();
+        LOG.info("EMPLEADOS: " + empleados.size());
+        for(Empleado e : empleados){
+            LOG.info("EMPLEADO: "+e.getApellidos()+ " " +e.getNombres());
+        }
+        this.analizarEmpleados(empleados);
+    }
+
+    private boolean isDiaLaboral(Date fInicio, DetalleHorario turno) {
+        return true;
     }
 }

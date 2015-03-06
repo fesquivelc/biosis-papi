@@ -43,7 +43,7 @@ public class RegistroAsistenciaFacade extends AbstractFacade<RegistroAsistencia>
     @Override
     public void guardarLote(List<RegistroAsistencia> lista){
         for(RegistroAsistencia r : lista){
-            this.create(r);
+            this.edit(r);
         }
     }
 

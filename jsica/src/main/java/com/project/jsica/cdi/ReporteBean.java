@@ -7,6 +7,7 @@ package com.project.jsica.cdi;
 
 import com.biosis.reportes.entidades.ReportePermisoBean;
 import com.personal.utiles.FechaUtil;
+import com.project.algoritmo.AnalisisFinalLocal;
 import com.project.jsica.cdi.util.JsfUtil;
 import com.project.jsica.ejb.entidades.Area;
 import com.project.jsica.ejb.entidades.DetalleRegistroAsistencia;
@@ -20,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
@@ -52,6 +54,8 @@ public class ReporteBean implements Serializable {
     private RegistroAsistenciaController registroAsistenciaController;
     @Inject
     private EmpleadoController empleadoController;
+    @EJB
+    private AnalisisFinalLocal analisisService;
     private Date desde;
     private Date hasta;
     private Empleado empleado;
@@ -99,6 +103,7 @@ public class ReporteBean implements Serializable {
     public void setOpcion(int opcion) {
         LOG.info("OPCION "+opcion);
         this.opcion = opcion;
+        realizarAnalisis();
     }
 
     public Date getDesde() {
@@ -525,6 +530,13 @@ public class ReporteBean implements Serializable {
                     Logger.getLogger(ReporteBean.class.getName()).log(Level.WARN, null, ex);
                 }
             }
+        }
+    }
+
+    private void realizarAnalisis() {
+        if(opcion == 2){
+            LOG.info("SE REALIZA EL ANALISIS POR AREA");
+            analisisService.analizarEmpleados(areaSeleccionada);
         }
     }
 

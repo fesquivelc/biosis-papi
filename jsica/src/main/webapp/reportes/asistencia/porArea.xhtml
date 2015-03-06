@@ -16,6 +16,7 @@
 
             <ui:define name="body">
                 <h:form>
+
                     <p:growl id="growl" showDetail="true" sticky="false" life="500"  /> 
                     <p:panel header="Parámetros de configuración del reporte">
 
@@ -44,6 +45,11 @@
 
                             <p:commandButton value="Generar reporte" action="#{reporteBean.setOpcion(2)}" update="growl datalist"/>
                         </p:panelGrid>
+                        <p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;">
+                            <f:facet name="start">
+                                <h:outputLabel value="Espere un momento..." />
+                            </f:facet>
+                        </p:ajaxStatus>
 
                     </p:panel>
                     <p:panel header="Resultado">
@@ -108,14 +114,14 @@
                                 <f:facet name="header">
                                     <h:outputText value="Tardanza (minutos)"/>
                                 </f:facet>
-                                <h:outputText value="#{reporte.milisegundosTardanza}" converter="milisAMinutos"/>
+                                <h:outputText value="#{reporte.milisTardanzaTotal}" converter="milisAMinutos"/>
                             </p:column>
 
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Tiempo extra (minutos)"/>
                                 </f:facet>
-                                <h:outputText value="#{reporte.milisegundosExtra}" converter="milisAMinutos"/>
+                                <h:outputText value="#{reporte.milis}" converter="milisAMinutos"/>
                             </p:column>
 
                         </p:dataTable>

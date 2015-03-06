@@ -5,6 +5,7 @@
  */
 package com.project.algoritmo;
 
+import com.project.jsica.ejb.entidades.Area;
 import com.project.jsica.ejb.entidades.Empleado;
 import java.io.Serializable;
 import java.util.Date;
@@ -19,6 +20,8 @@ import javax.ejb.Local;
 public interface AnalisisFinalLocal extends Serializable{
 
     public void analizarEmpleados(List<Empleado> empleados);
+    
+    void analizarEmpleados(Area area);
 
     
 }

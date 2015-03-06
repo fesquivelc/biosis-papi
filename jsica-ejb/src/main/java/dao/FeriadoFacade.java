@@ -45,7 +45,7 @@ public class FeriadoFacade extends AbstractFacade<Feriado> implements FeriadoFac
     @Override
     public Feriado buscarXDia(Date fecha) {
         String jpql = "SELECT f FROM Feriado f WHERE "
-                + ":fecha BETWEEN f,fechaInicio AND f.fechaFin";
+                + ":fecha BETWEEN f.fechaInicio AND f.fechaFin";
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("fecha", fecha);
 

@@ -89,7 +89,7 @@
                                 <p:inputText id="direccion" value="#{empleadoController.selected.ficha.direccion}" title="#{myBundle.CreateFichaGeneralEmpleadoTitle_direccion}" size="70" maxlength="70"/>
                                 
                                 <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_direccionTipoZona}" for="direccionTipoZona" />                        
-                                <p:selectOneMenu id="direccionTipoZona" value="#{empleadoController.selected.ficha.direccionTipoZona}"  >
+                                <p:selectOneMenu id="direccionTipoZona" value="#{empleadoController.selected.ficha.direccionTipoZona}" required="true" requiredMessage="Indique el tipo de zona de la dirección" >
                                     <f:selectItem itemLabel="Seleccione Uno" /> 
                                     <f:selectItem itemLabel="U.R. URBANIZACIÓN" itemValue="U.R."  />
                                     <f:selectItem itemLabel="A.H. ASENTAMIENTO HU" itemValue="A.H."  />
@@ -104,8 +104,8 @@
                                     <f:selectItem itemLabel="Z.I. ZONA INDUSTRIAL" itemValue="Z.I." />
                                 </p:selectOneMenu> 
                                 
-                                <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_direccionTipoVia}" for="direccionTipoVia" />                       
-                                <p:selectOneMenu id="direccionTipoVia" value="#{empleadoController.selected.ficha.direccionTipoVia}" >
+                                <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_direccionTipoVia}" for="direccionTipoVia"/>                       
+                                <p:selectOneMenu id="direccionTipoVia" value="#{empleadoController.selected.ficha.direccionTipoVia}" required="true" requiredMessage="Indique el tipo de vía de la dirección">
                                     <f:selectItem itemLabel="Seleccione Uno" />                                  
                                     <f:selectItem itemLabel="AV. AVENIDA" itemValue="AV"  />
                                     <f:selectItem itemLabel="AL. ALAMEDA" itemValue="AL"  />
@@ -131,7 +131,7 @@
                                                 var="ubigeo" itemLabel="#{ubigeo.ubigeo}" itemValue="#{ubigeo}" converter="ubigeoConverter" size="70" required="true"/>
                                 
                                 <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_estadoCivil}" />                       
-                                <p:selectOneMenu id="idgenero" value="#{empleadoController.selected.ficha.estadoCivil}" >
+                                <p:selectOneMenu id="idgenero" value="#{empleadoController.selected.ficha.estadoCivil}" required="true" requiredMessage="Seleccione estado civil" >
                                     <f:selectItem itemLabel="Seleccione Uno" />                                  
                                     <f:selectItem itemLabel="SOLTERO(A)" itemValue="SO"  />
                                     <f:selectItem itemLabel="CASADO(A)" itemValue="CA" />
