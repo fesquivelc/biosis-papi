@@ -160,6 +160,7 @@ public class AnalisisFinal implements AnalisisFinalLocal {
                     registros.add(registro);
                 }
             }
+            
 
 //            AsignacionPermiso permisoXFecha = this.apc.buscarXDia(empleado.get, fInicio);
 //
