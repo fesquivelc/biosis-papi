@@ -17,6 +17,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -40,11 +41,15 @@ public class RegistroAsistenciaFacade extends AbstractFacade<RegistroAsistencia>
      *
      * @param lista
      */
+    
+    private static final Logger LOG = Logger.getLogger(RegistroAsistenciaFacade.class.getName());
     @Override
     public void guardarLote(List<RegistroAsistencia> lista){
         for(RegistroAsistencia r : lista){
-            this.edit(r);
+            LOG.info(r.getEmpleado().getApellidos());
+                this.create(r);            
         }
+        getEntityManager().flush();
     }
 
     @Override

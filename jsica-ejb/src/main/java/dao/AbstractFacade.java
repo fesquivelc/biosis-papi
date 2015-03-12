@@ -18,36 +18,42 @@ import org.apache.log4j.Logger;
  * @author RyuujiMD
  * @param <T>
  */
-public abstract class AbstractFacade<T> implements Serializable{
+public abstract class AbstractFacade<T> implements Serializable {
 
     protected static final String biosis_PU = "biosis-PU";
     protected static final String biostar_PU = "biostar-PU";
 
     private final Class<T> entityClass;
     private static final Logger LOG = Logger.getLogger(AbstractFacade.class.getName());
-    
-    
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
-    
-    public void limpiar(){
+
+    public void limpiar() {
         getEntityManager().clear();
     }
 
-    
     protected abstract EntityManager getEntityManager();
 
     public void create(T entity) {
-        LOG.info("SE CREA LA ENTIDAD");
-        getEntityManager().persist(entity);
+
+        try {            
+            getEntityManager().persist(entity);
+            LOG.info("SE CREA LA ENTIDAD: " + entity);
+        } catch (Exception e) {
+            LOG.warn(e);
+        }
 
     }
 
     public void edit(T entity) {
-        LOG.info("SE EDITA LA ENTIDAD");
-        getEntityManager().merge(entity);
+        try {
+            LOG.info("SE EDITA LA ENTIDAD");
+            getEntityManager().merge(entity);
+        } catch (Exception e) {
+            LOG.warn(e);
+        }
 
     }
 
@@ -113,7 +119,7 @@ public abstract class AbstractFacade<T> implements Serializable{
 
         return lista;
     }
-    
+
     public int contar(String queryJPQL, Map<String, Object> parametros) {
         try {
             Query query = getEntityManager().createQuery(queryJPQL);
@@ -124,7 +130,7 @@ public abstract class AbstractFacade<T> implements Serializable{
                 }
             }
 
-            Long conteo = (Long)query.getSingleResult();
+            Long conteo = (Long) query.getSingleResult();
 
             return conteo.intValue();
         } catch (Exception e) {

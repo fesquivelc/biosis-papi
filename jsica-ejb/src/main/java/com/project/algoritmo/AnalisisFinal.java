@@ -71,7 +71,7 @@ public class AnalisisFinal implements AnalisisFinalLocal {
 
     private TCAnalisis obtenerPuntoPartida(Empleado empleado) {
         sistemaControlador.limpiar();
-        TCAnalisis partida = analisisControlador.find(empleado.getDocIdentidad());
+        TCAnalisis partida = analisisControlador.find((String) empleado.getDocIdentidad());
         if (partida == null) {
             partida = new TCAnalisis();
             TCSistema sistema = sistemaControlador.find("BIOSIS");
@@ -114,9 +114,10 @@ public class AnalisisFinal implements AnalisisFinalLocal {
 
             if (!registros.isEmpty()) {
                 LOG.info("GUARDANDO REGISTROS");
-                for(RegistroAsistencia ra : registros){
-                    LOG.info("REGISTRO: "+ra.getFecha()+" "+ra.getTipo()+" "+ra.getEmpleado().getApellidos());
+                for (RegistroAsistencia ra : registros) {
+                    LOG.info("REGISTRO: " + ra.getFecha() + " " + ra.getTipo() + " " + ra.getEmpleado().getApellidos());
                 }
+                
                 registroControlador.guardarLote(registros);
                 llegada.setEmpleado(e.getDocIdentidad());
                 analisisControlador.edit(llegada);
@@ -160,7 +161,6 @@ public class AnalisisFinal implements AnalisisFinalLocal {
                     registros.add(registro);
                 }
             }
-            
 
 //            AsignacionPermiso permisoXFecha = this.apc.buscarXDia(empleado.get, fInicio);
 //
@@ -260,8 +260,8 @@ public class AnalisisFinal implements AnalisisFinalLocal {
                 && FechaUtil.compararFechaHora(fFin, hFin, fInicio, turnoHastaSalida) >= 0) {
             LOG.info("PASO");
             EmpleadoPermiso permisoXFecha = this.empleadoPermisoControlador.buscarXDia(empleado, fInicio);
-            LOG.info("ANALIZANDO EMPLEADO: "+empleado.getApellidos()+ " " +empleado.getNombres());
-            
+            LOG.info("ANALIZANDO EMPLEADO: " + empleado.getApellidos() + " " + empleado.getNombres());
+
             if (permisoXFecha != null) {
                 //SE GUARDA EL REGISTRO COMO UN PERMISO
                 registro.setPermisoId(permisoXFecha.getPermisoId());
@@ -295,51 +295,52 @@ public class AnalisisFinal implements AnalisisFinalLocal {
                             Date desde = FechaUtil.soloHora(calendar.getTime());
                             calendar.setTime(turno.getJornadaCodigo().getHEntrada());
                             calendar.add(Calendar.MINUTE, turno.getJornadaCodigo().getMinutosToleranciaRegularEntradaJornada());
-                            
+
                             Date tolerancia = calendar.getTime();
-                            
+
                             calendar.add(Calendar.MINUTE, turno.getJornadaCodigo().getMinutosToleranciaTardanzaEntradaJornada());
-                            
+
                             Date entradaMax = calendar.getTime();
-                            
+
                             calendar.set(Calendar.HOUR_OF_DAY, 23);
                             calendar.set(Calendar.MINUTE, 59);
                             calendar.set(Calendar.SECOND, 0);
-                            
+
                             DetalleRegistroAsistencia detalleTurno = analizarTurno(
-                                    empleado, 
-                                    registro, 
-                                    fInicio, 
-                                    fFin, 
-                                    desde, 
-                                    tolerancia, 
-                                    entradaMax, 
-                                    turno.getJornadaCodigo().getHSalida(), 
-                                    FechaUtil.soloHora(calendar.getTime()));                                                        
-                            
+                                    empleado,
+                                    registro,
+                                    fInicio,
+                                    fFin,
+                                    desde,
+                                    tolerancia,
+                                    entradaMax,
+                                    turno.getJornadaCodigo().getHSalida(),
+                                    FechaUtil.soloHora(calendar.getTime()));
+
                             detalles.add(detalleTurno);
-                            
+
                             registro.setDetalleRegistroAsistenciaList(detalles);
                             registro.setTipo(detalleTurno.getResultado());
-                            
-                            
+
                             if (registro != null) {
                                 registro.setTurnoOriginal(turno);
                             }
                         }
                     }
                 } else if (isOnomastico(empleado, fInicio)) {
-                        //SE BUSCA EL DIA LABORAL MAS CERCANO PARA ASIGNARLE EL PERMISO POR ONOMASTICO
+                    //SE BUSCA EL DIA LABORAL MAS CERCANO PARA ASIGNARLE EL PERMISO POR ONOMASTICO
                     //Y SE AGREGA AL REGISTRO
                 } else {
                     //NO HAY SUCESO SUSCEPTIBLE A REGISTRO
                     registro = null;
+                    LOG.info("Registro null o.o");
                 }
 //                }
 //                }// FIN DEL ELSE PRINCIPAL
             }
         } else {
             registro = null;
+            LOG.info("Registro null o.o");
         }
 
         return registro;
@@ -407,6 +408,8 @@ public class AnalisisFinal implements AnalisisFinalLocal {
             registro.setDetalleRegistroAsistenciaList(detalles);
             return registro;
         } else {
+            LOG.info("Registro null o.o");
+
             return null;
         }
     }
@@ -421,16 +424,16 @@ public class AnalisisFinal implements AnalisisFinalLocal {
             Date turnoSalida,
             Date turnoMaximaSalida) {
 
-        LOG.info("FECHA INICIO: "+fechaInicio);
-        LOG.info("FECHA FIN: "+fechaFin);
-        LOG.info("TURNO DESDE: "+turnoDesde);
-        LOG.info("TURNO TOLERANCIA: "+turnoTolerancia);
-        LOG.info("TURNO MAXIMA ENTRADA: "+turnoMaximaEntrada);
-        LOG.info("TURNO SALIDA: "+turnoSalida);
-        LOG.info("TURNO MAXIMA SALIDA: "+turnoMaximaSalida);
-        
+        LOG.info("FECHA INICIO: " + fechaInicio);
+        LOG.info("FECHA FIN: " + fechaFin);
+        LOG.info("TURNO DESDE: " + turnoDesde);
+        LOG.info("TURNO TOLERANCIA: " + turnoTolerancia);
+        LOG.info("TURNO MAXIMA ENTRADA: " + turnoMaximaEntrada);
+        LOG.info("TURNO SALIDA: " + turnoSalida);
+        LOG.info("TURNO MAXIMA SALIDA: " + turnoMaximaSalida);
+
         String empleadoId = getCodigoEmpleado(empleado);
-        LOG.info("CODIGO DE TRABAJADOR: "+empleadoId);
+        LOG.info("CODIGO DE TRABAJADOR: " + empleadoId);
 
         DetalleRegistroAsistencia detalle = new DetalleRegistroAsistencia();
         detalle.setOrden(0);
@@ -496,8 +499,8 @@ public class AnalisisFinal implements AnalisisFinalLocal {
     public void analizarEmpleados(Area area) {
         List<Empleado> empleados = area.getEmpleadoList();
         LOG.info("EMPLEADOS: " + empleados.size());
-        for(Empleado e : empleados){
-            LOG.info("EMPLEADO: "+e.getApellidos()+ " " +e.getNombres());
+        for (Empleado e : empleados) {
+            LOG.info("EMPLEADO: " + e.getApellidos() + " " + e.getNombres());
         }
         this.analizarEmpleados(empleados);
     }

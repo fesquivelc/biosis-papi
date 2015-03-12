@@ -1,9 +1,9 @@
 package com.project.jsica.converter;
 
 import com.project.jsica.cdi.util.JsfUtil;
+import com.project.jsica.ejb.entidades.Empleado;
 import dao.EmpleadoFacade;
 import dao.EmpleadoFacadeLocal;
-import com.project.jsica.ejb.entidades.Empleado;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -12,18 +12,26 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import static org.apache.log4j.LogMF.log;
+import org.jfree.util.Log;
 
 @FacesConverter(value = "empleadoConverter")
 public class EmpleadoConverter implements Converter {
 
+    private static final Logger LOG = Logger.getLogger(EmpleadoConverter.class.getName());
+    
     @EJB
     private EmpleadoFacadeLocal ejbFacade;
+    
+    
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
         if (value == null || value.length() == 0 || JsfUtil.isDummySelectItem(component, value)) {
+            LOG.info(value);
             return null;
         }
+        LOG.info(value);
         return this.ejbFacade.find(value);
     }
 
@@ -47,9 +55,11 @@ public class EmpleadoConverter implements Converter {
         }
         if (object instanceof Empleado) {
             Empleado o = (Empleado) object;
+            LOG.info(o.getApellidos()+" "+ o.getNombreCompleto()+" "+ o.getDocIdentidad());
             return o.getDocIdentidad();
         } else {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Empleado.class.getName()});
+            LOG.info("null");
             return null;
         }
     }
