@@ -24,20 +24,20 @@ public class EmpleadoConverter implements Converter {
         if (value == null || value.length() == 0 || JsfUtil.isDummySelectItem(component, value)) {
             return null;
         }
-        return this.ejbFacade.find(getKey(value));
+        return this.ejbFacade.find(value);
     }
 
-    java.lang.Long getKey(String value) {
-        java.lang.Long key;
-        key = Long.valueOf(value);
-        return key;
-    }
-
-    String getStringKey(java.lang.Long value) {
-        StringBuffer sb = new StringBuffer();
-        sb.append(value);
-        return sb.toString();
-    }
+//    java.lang.Long getKey(String value) {
+//        java.lang.Long key;
+//        key = Long.valueOf(value);
+//        return key;
+//    }
+//
+//    String getStringKey(java.lang.Long value) {
+//        StringBuffer sb = new StringBuffer();
+//        sb.append(value);
+//        return sb.toString();
+//    }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
