@@ -84,7 +84,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="Apellidos y nombres"/>
                                 </f:facet>
-                                <h:outputText value="#{reporte.empleado.codigo}"/>
+                                <h:outputText value="#{reporte.empleado.apellidos} #{reporte.empleado.nombres}"/>
                             </p:column>
 
                             <p:column>
@@ -121,7 +121,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="Tiempo extra (minutos)"/>
                                 </f:facet>
-                                <h:outputText value="#{reporte.milis}" converter="milisAMinutos"/>
+                                <h:outputText value="#{reporte.milisTrabajoTotal}" converter="milisAMinutos"/>
                             </p:column>
 
                         </p:dataTable>

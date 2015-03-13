@@ -67,7 +67,7 @@ public class RegistroAsistenciaFacade extends AbstractFacade<RegistroAsistencia>
     public List<RegistroAsistencia> buscarXArea(Area area, Date fechaDesde, Date fechaHasta) {
         String jpql = "SELECT r FROM RegistroAsistencia r WHERE "
                 + "r.empleado.area = :area AND "
-                + "r.fecha BETWEEN :fechaDesde AND :fechaHasta";
+                + "r.fecha BETWEEN :fechaDesde AND :fechaHasta ORDER BY r.empleado.apellidos, r.fecha";
         
         Map<String, Object> map = new HashMap<>();
         map.put("area", area);
@@ -82,7 +82,7 @@ public class RegistroAsistenciaFacade extends AbstractFacade<RegistroAsistencia>
     public List<RegistroAsistencia> buscarXEmpleado(Empleado empleado, Date fechaDesde, Date fechaHasta) {
         String jpql = "SELECT r FROM RegistroAsistencia r WHERE "
                 + "r.empleado = :empleado AND "
-                + "r.fecha BETWEEN :fechaDesde AND :fechaHasta";
+                + "r.fecha BETWEEN :fechaDesde AND :fechaHasta ORDER BY r.empleado.apellidos, r.fecha";
         
         Map<String, Object> map = new HashMap<>();
         map.put("empleado", empleado);

@@ -21,7 +21,7 @@ public class TipoAsistenciaConverter implements Converter {
             retorno = "REGULAR";
         }else if(valor.equalsIgnoreCase("T")){
             retorno = "TARDANZA";
-        }else if(valor.equalsIgnoreCase("A")){
+        }else if(valor.equalsIgnoreCase("F")){
             retorno = "ABSENTISMO";
         }else if(valor.equalsIgnoreCase("V")){
             retorno = "VACACIONEs";
@@ -29,7 +29,7 @@ public class TipoAsistenciaConverter implements Converter {
             retorno = "ONOMÁSTICO";
         }else if(valor.equalsIgnoreCase("L")){
             retorno = "LICENCIA";
-        }else if(valor.equalsIgnoreCase("F")){
+        }else if(valor.equalsIgnoreCase("E")){
             retorno = "FERIADO";
         }
         return retorno;

@@ -28,6 +28,14 @@ public class TCAnalisisFacade extends AbstractFacade<TCAnalisis> implements TCAn
         return em;
     }
 
+    @Override
+    public void edit(TCAnalisis entity) {
+        super.edit(entity); //To change body of generated methods, choose Tools | Templates.
+        getEntityManager().flush();
+    }
+    
+    
+
     public TCAnalisisFacade() {
         super(TCAnalisis.class);
     }
