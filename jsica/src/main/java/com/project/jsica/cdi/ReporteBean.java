@@ -56,6 +56,7 @@ public class ReporteBean implements Serializable {
     private EmpleadoController empleadoController;
     @EJB
     private AnalisisFinalLocal analisisService;
+    private boolean nuevo = true;
     private Date desde;
     private Date hasta;
     private Empleado empleado;
@@ -64,8 +65,7 @@ public class ReporteBean implements Serializable {
     private int opcion = 1;
     private List<ReportePermisoBean> reportePermisos;
     private List<RegistroAsistencia> registroAsistencia;
-    
-    
+
     private RegistroAsistencia registroSeleccionado;
 
     public RegistroAsistencia getRegistroSeleccionado() {
@@ -84,7 +84,6 @@ public class ReporteBean implements Serializable {
         this.conGoce = conGoce;
     }
 
-
     public void setReportePermisos(List<ReportePermisoBean> reportePermisos) {
         this.reportePermisos = reportePermisos;
     }
@@ -101,9 +100,11 @@ public class ReporteBean implements Serializable {
     }
 
     public void setOpcion(int opcion) {
-        LOG.info("OPCION "+opcion);
+        LOG.info("OPCION " + opcion);
         this.opcion = opcion;
+        this.nuevo = true;
         realizarAnalisis();
+
     }
 
     public Date getDesde() {
@@ -139,19 +140,23 @@ public class ReporteBean implements Serializable {
         LOG.info("SE SELECCIONA UN AREA");
         this.areaSeleccionada = areaSeleccionada;
     }
-    
-    
 
-    public List<RegistroAsistencia> getReporteAsistencias(){
-        if(opcion == 1){
-            LOG.info("REPORTE DE ASISTENCIA POR EMPLEADO");
-            return registroAsistenciaController.buscarXEmpleado(empleado, desde, hasta);
-        }else{
-            LOG.info("REPORTE DE ASISTENCIA POR AREA");
-            return registroAsistenciaController.buscarXArea(areaSeleccionada, desde, hasta);
-        }
+    public List<RegistroAsistencia> getReporteAsistencias() {
+        if (nuevo) {
+            if (opcion == 1) {
+                LOG.info("REPORTE DE ASISTENCIA POR EMPLEADO");
+                registroAsistencia = registroAsistenciaController.buscarXEmpleado(empleado, desde, hasta);
+            } else {
+                LOG.info("REPORTE DE ASISTENCIA POR AREA");
+                registroAsistencia = registroAsistenciaController.buscarXArea(areaSeleccionada, desde, hasta);
+            }
+            nuevo = false;
+        } 
+        
+        return registroAsistencia;
+
     }
-    
+
     public ReporteBean() {
     }
 
@@ -174,7 +179,7 @@ public class ReporteBean implements Serializable {
             }
         }
     }
-    
+
     private List<Empleado> getEmpleados(int opcion) {
         List<Empleado> empleados = new ArrayList<>();
         if (opcion == 1) {
@@ -196,7 +201,7 @@ public class ReporteBean implements Serializable {
         OutputStream out = null;
 
     }
-    
+
 //    public List getReporteHorasExtraTotal() {
 //        List<Empleado> empleados = this.getEmpleados(opcion);
 //        List<EmpleadoPermiso> permisos;
@@ -247,7 +252,6 @@ public class ReporteBean implements Serializable {
 //
 //        return reporte;
 //    }
-
 //    public void reporteHorasExtra(int opcion) {
 //        this.opcion = opcion;
 //        SimpleDateFormat dtFecha = new SimpleDateFormat("dd.MM.yyyy");
@@ -377,7 +381,6 @@ public class ReporteBean implements Serializable {
 //
 //        return reporte;
 //    }
-
 //    public void reportePermisos(int opcion) {
 //        this.opcion = opcion;
 //        SimpleDateFormat dtFecha = new SimpleDateFormat("dd.MM.yyyy");
@@ -534,7 +537,7 @@ public class ReporteBean implements Serializable {
     }
 
     private void realizarAnalisis() {
-        if(opcion == 2){
+        if (opcion == 2) {
             LOG.info("SE REALIZA EL ANALISIS POR AREA");
             analisisService.analizarEmpleados(areaSeleccionada);
         }

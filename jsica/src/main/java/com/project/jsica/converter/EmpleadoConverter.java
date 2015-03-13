@@ -27,6 +27,7 @@ public class EmpleadoConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+        LOG.info("-------------EL VALOR ES "+value);
         if (value == null || value.length() == 0 || JsfUtil.isDummySelectItem(component, value)) {
             LOG.info(value);
             return null;
