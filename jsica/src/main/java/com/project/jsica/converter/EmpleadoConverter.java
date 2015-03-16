@@ -2,7 +2,6 @@ package com.project.jsica.converter;
 
 import com.project.jsica.cdi.util.JsfUtil;
 import com.project.jsica.ejb.entidades.Empleado;
-import dao.EmpleadoFacade;
 import dao.EmpleadoFacadeLocal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,9 +10,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
-import static org.apache.log4j.LogMF.log;
-import org.jfree.util.Log;
 
 @FacesConverter(value = "empleadoConverter")
 public class EmpleadoConverter implements Converter {

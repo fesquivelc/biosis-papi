@@ -6,6 +6,7 @@
 package com.project.jsica.cdi;
 
 import com.biosis.reportes.entidades.ReportePermisoBean;
+import com.opencsv.CSVWriter;
 import com.personal.utiles.FechaUtil;
 import com.project.algoritmo.AnalisisFinalLocal;
 import com.project.jsica.cdi.util.JsfUtil;
@@ -14,9 +15,14 @@ import com.project.jsica.ejb.entidades.DetalleRegistroAsistencia;
 import com.project.jsica.ejb.entidades.Empleado;
 import com.project.jsica.ejb.entidades.EmpleadoPermiso;
 import com.project.jsica.ejb.entidades.RegistroAsistencia;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.Serializable;
+import java.io.Writer;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -151,10 +157,54 @@ public class ReporteBean implements Serializable {
                 registroAsistencia = registroAsistenciaController.buscarXArea(areaSeleccionada, desde, hasta);
             }
             nuevo = false;
-        } 
-        
+        }
+
         return registroAsistencia;
 
+    }
+
+    public void reporteAsistenciaCSV() {
+        DateFormat dfFecha = new SimpleDateFormat("dd.MM.yyyy");
+        List<RegistroAsistencia> registros = getReporteAsistencias();
+
+        OutputStream out = null;
+        try {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
+
+            response.reset(); // Some JSF component library or some Filter might have set some headers in the buffer beforehand. We want to get rid of them, else it may collide.
+            response.setContentType("text/csv");
+            response.setHeader("Content-Disposition", "attachment; filename=reporte-asistencia.csv"); // The Save As popup magic is done here. You can give it any file name you want, this only won't work in MSIE, it will use current request URL as file name instead.
+
+            out = response.getOutputStream();
+
+            CSVWriter writer = new CSVWriter(new OutputStreamWriter(out), ',');
+            String[] linea = new String[7];
+
+            for (RegistroAsistencia reg : registros) {
+                linea[0] = reg.getEmpleado().getFichaLaboral().getCodigoTrabajador();
+                linea[1] = String.format("%s %s", reg.getEmpleado().getApellidos(), reg.getEmpleado().getNombres());
+                linea[2] = dfFecha.format(reg.getFecha());
+                linea[3] = reg.getTurnoOriginal().getJornadaCodigo().getNombre();
+
+                writer.writeNext(linea, true);
+            }
+            
+            writer.flush();
+            out.flush();
+            writer.close();
+            FacesContext.getCurrentInstance().responseComplete();
+        } catch (IOException ex) {
+            Logger.getLogger(ReporteBean.class.getName()).log(Level.WARN, null, ex);
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(ReporteBean.class.getName()).log(Level.WARN, null, ex);
+                }
+            }
+        }
     }
 
     public ReporteBean() {
